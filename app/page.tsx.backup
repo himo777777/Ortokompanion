@@ -1,0 +1,181 @@
+'use client';
+
+import { useState } from 'react';
+import { EducationLevel } from '@/types/education';
+import LevelSelector from '@/components/LevelSelector';
+import ChatInterface from '@/components/ChatInterface';
+import CaseStudyViewer from '@/components/CaseStudyViewer';
+import { MessageSquare, FileText, BookOpen, Settings } from 'lucide-react';
+
+type Tab = 'chat' | 'cases' | 'modules';
+
+export default function Home() {
+  const [selectedLevel, setSelectedLevel] = useState<EducationLevel | null>(null);
+  const [activeTab, setActiveTab] = useState<Tab>('chat');
+
+  if (!selectedLevel) {
+    return (
+      <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 py-12">
+        <LevelSelector
+          selectedLevel={selectedLevel}
+          onSelectLevel={setSelectedLevel}
+        />
+      </main>
+    );
+  }
+
+  return (
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+      {/* Header */}
+      <div className="bg-white border-b border-gray-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-800">Ortokompanion</h1>
+              <p className="text-sm text-gray-600">AI-driven ortopediutbildning</p>
+            </div>
+            <button
+              onClick={() => setSelectedLevel(null)}
+              className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+            >
+              Byt nivå
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Tab Navigation */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex gap-1">
+            <button
+              onClick={() => setActiveTab('chat')}
+              className={`flex items-center gap-2 px-6 py-4 font-medium transition-all border-b-2 ${
+                activeTab === 'chat'
+                  ? 'border-blue-500 text-blue-600'
+                  : 'border-transparent text-gray-600 hover:text-gray-800'
+              }`}
+            >
+              <MessageSquare className="w-5 h-5" />
+              AI-Handledare
+            </button>
+            <button
+              onClick={() => setActiveTab('cases')}
+              className={`flex items-center gap-2 px-6 py-4 font-medium transition-all border-b-2 ${
+                activeTab === 'cases'
+                  ? 'border-blue-500 text-blue-600'
+                  : 'border-transparent text-gray-600 hover:text-gray-800'
+              }`}
+            >
+              <FileText className="w-5 h-5" />
+              Fallstudier
+            </button>
+            <button
+              onClick={() => setActiveTab('modules')}
+              className={`flex items-center gap-2 px-6 py-4 font-medium transition-all border-b-2 ${
+                activeTab === 'modules'
+                  ? 'border-blue-500 text-blue-600'
+                  : 'border-transparent text-gray-600 hover:text-gray-800'
+              }`}
+            >
+              <BookOpen className="w-5 h-5" />
+              Kunskapsmoduler
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        {activeTab === 'chat' && <ChatInterface level={selectedLevel} />}
+        {activeTab === 'cases' && <CaseStudyViewer level={selectedLevel} />}
+        {activeTab === 'modules' && <KnowledgeModules level={selectedLevel} />}
+      </div>
+    </main>
+  );
+}
+
+// Placeholder komponent för kunskapsmoduler
+function KnowledgeModules({ level }: { level: EducationLevel }) {
+  const modules = [
+    {
+      title: 'Anatomi och Fysiologi',
+      description: 'Grundläggande muskuloskeletala strukturer',
+      topics: ['Axel', 'Armbåge', 'Handled och hand', 'Höft', 'Knä', 'Fot och fotled', 'Ryggrad']
+    },
+    {
+      title: 'Frakturer och Luxationer',
+      description: 'Diagnos och behandling av skelettskador',
+      topics: ['Frakturläkning', 'AO-klassifikation', 'Reposition och fixation', 'Komplikationer']
+    },
+    {
+      title: 'Ledsjukdomar',
+      description: 'Degenerativa och inflammatoriska ledsjukdomar',
+      topics: ['Artros', 'Reumatoid artrit', 'Kristallartropati', 'Septisk artrit']
+    },
+    {
+      title: 'Sportskador',
+      description: 'Vanliga idrottsskador och deras behandling',
+      topics: ['Korsbandsskador', 'Meniskskador', 'Rotator cuff', 'Achillesruptur']
+    },
+    {
+      title: 'Kirurgiska Tekniker',
+      description: 'Operativa metoder inom ortopedi',
+      topics: ['Artroskopi', 'Artroplastik', 'Osteotomi', 'Frakturbehandling']
+    },
+    {
+      title: 'Pediatrisk Ortopedi',
+      description: 'Ortopediska tillstånd hos barn',
+      topics: ['Höftluxation', 'Klumpfot', 'Skolios', 'Tillväxtstörningar']
+    }
+  ];
+
+  return (
+    <div className="w-full max-w-6xl mx-auto">
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">
+        Kunskapsmoduler
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {modules.map((module, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow"
+          >
+            <div className="flex items-start gap-4 mb-4">
+              <div className="p-3 bg-blue-100 rounded-lg">
+                <BookOpen className="w-6 h-6 text-blue-600" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                  {module.title}
+                </h3>
+                <p className="text-sm text-gray-600 mb-4">
+                  {module.description}
+                </p>
+              </div>
+            </div>
+            <div className="border-t border-gray-200 pt-4">
+              <p className="text-sm font-medium text-gray-700 mb-2">Innehåll:</p>
+              <ul className="space-y-1">
+                {module.topics.map((topic, i) => (
+                  <li key={i} className="text-sm text-gray-600 flex items-center gap-2">
+                    <span className="text-blue-500">•</span>
+                    {topic}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <button className="mt-4 w-full py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium">
+              Starta modul
+            </button>
+          </div>
+        ))}
+      </div>
+      <div className="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-xl">
+        <p className="text-center text-gray-700">
+          💡 Modulerna anpassas automatiskt efter din valda nivå och visar relevant innehåll för dig som är på nivå <strong>{level.toUpperCase()}</strong>.
+        </p>
+      </div>
+    </div>
+  );
+}
