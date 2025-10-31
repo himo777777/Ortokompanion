@@ -17,7 +17,7 @@ import {
 } from '@/lib/integrated-helpers';
 import DailyPlanDashboard from '@/components/progression/DailyPlanDashboard';
 import ExamModulesHub from '@/components/exam/ExamModulesHub';
-import ActivityViewer from '@/components/progression/ActivityViewer';
+import ActivitySession from '@/components/progression/ActivitySession';
 import QuestionBankBrowser from '@/components/learning/QuestionBankBrowser';
 import {
   MessageSquare,
@@ -508,19 +508,37 @@ export default function Home() {
         )}
       </div>
 
-      {/* Activity Viewer Modal */}
+      {/* Activity Session Modal */}
       {activeActivity && (
-        <ActivityViewer
+        <ActivitySession
           activityId={activeActivity.id}
           activityType={activeActivity.type}
-          domain={activeActivity.domain}
-          onComplete={() => {
+          domain={activeActivity.domain as any}
+          userLevel={profile.role}
+          onComplete={(results) => {
             trackEvent('activity_completed', {
               activityId: activeActivity.id,
               type: activeActivity.type,
               domain: activeActivity.domain,
               userId: profile.id,
+              questionsCompleted: results.questionsCompleted,
+              correctAnswers: results.correctAnswers,
+              totalXP: results.totalXP,
+              timeSpent: results.timeSpent,
             });
+
+            // Award XP
+            const newXP = profile.gamification.xp + results.totalXP;
+            const newLevel = Math.floor(newXP / 100) + 1;
+
+            handleUpdateProfile({
+              gamification: {
+                ...profile.gamification,
+                xp: newXP,
+                level: newLevel,
+              },
+            });
+
             setActiveActivity(null);
             // Refresh daily mix after completion
             refreshDailyMix();
