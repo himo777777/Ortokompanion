@@ -1,0 +1,248 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "lastUpdated": "2025-10-31",
+    "description": "Collection of orthodontic clinical cases with source citations"
+  },
+  "cases": [
+    {
+      "id": "case_001",
+      "title": "Klass II Division 1 Malokklusion med Överbett",
+      "category": "Class II malocclusion",
+      "difficulty": "moderate",
+      "ageGroup": "adolescent",
+      "presentation": {
+        "chiefComplaint": "Patient with protruding front teeth and deep overbite",
+        "clinicalFindings": [
+          "Class II molar relationship bilaterally",
+          "8mm overjet",
+          "Deep overbite (100% coverage)",
+          "Retrognathic mandible",
+          "Proclined maxillary incisors",
+          "Competent lip closure with strain"
+        ],
+        "cephalometricAnalysis": {
+          "ANB": "7 degrees",
+          "SNA": "82 degrees",
+          "SNB": "75 degrees",
+          "GoGn-SN": "32 degrees",
+          "U1-SN": "110 degrees"
+        }
+      },
+      "diagnosis": "Skeletal Class II malocclusion with dental compensation, increased overjet and deep bite",
+      "treatmentPlan": {
+        "approach": "Growth modification with functional appliance followed by fixed appliances",
+        "appliances": [
+          "Twin-block functional appliance (12-18 months)",
+          "Full fixed appliances (18-24 months)",
+          "Hawley retainer (indefinite retention)"
+        ],
+        "mechanics": [
+          "Mandibular advancement with Twin-block",
+          "Class II elastics if needed",
+          "Intrusion of maxillary incisors",
+          "Leveling and alignment"
+        ],
+        "extractionPattern": "Non-extraction approach",
+        "estimatedDuration": "30-36 months total treatment time"
+      },
+      "outcomes": {
+        "skeletal": "ANB reduced to 4 degrees, improved mandibular position",
+        "dental": "Class I molar and canine relationship achieved, overjet reduced to 3mm, normal overbite",
+        "soft tissue": "Improved profile, reduced lip strain",
+        "stability": "Excellent stability at 5-year follow-up with good retention compliance"
+      },
+      "sources": [
+        {
+          "sourceId": "ref_001",
+          "relevance": "Treatment approach based on Proffit's guidelines for Class II correction",
+          "pages": "456-489",
+          "chapters": ["15"]
+        },
+        {
+          "sourceId": "ref_004",
+          "relevance": "Evidence for functional appliance effectiveness in Class II treatment",
+          "specificFindings": "Twin-block shows 2-3mm additional mandibular growth compared to controls"
+        },
+        {
+          "sourceId": "ref_003",
+          "relevance": "Retention protocol based on long-term stability studies",
+          "specificFindings": "Indefinite retention recommended for Class II cases"
+        }
+      ],
+      "evidenceLevel": "Level 1",
+      "lastReviewed": "2025-10-31",
+      "reviewedBy": "Clinical Expert Panel",
+      "keywords": ["Class II", "functional appliance", "twin-block", "growth modification", "adolescent"]
+    },
+    {
+      "id": "case_002",
+      "title": "Trängsel i Underkäken med Mild Klass I",
+      "category": "Crowding",
+      "difficulty": "mild",
+      "ageGroup": "adult",
+      "presentation": {
+        "chiefComplaint": "Crooked lower front teeth",
+        "clinicalFindings": [
+          "Class I molar and canine relationship",
+          "Moderate lower arch crowding (6mm)",
+          "Mild upper arch crowding (3mm)",
+          "Normal overbite and overjet",
+          "Adequate lip support",
+          "No TMJ symptoms"
+        ],
+        "cephalometricAnalysis": {
+          "ANB": "2 degrees",
+          "SNA": "82 degrees",
+          "SNB": "80 degrees",
+          "GoGn-SN": "30 degrees",
+          "IMPA": "95 degrees"
+        }
+      },
+      "diagnosis": "Class I malocclusion with moderate lower arch crowding and mild upper arch crowding",
+      "treatmentPlan": {
+        "approach": "Extraction-based orthodontic treatment",
+        "appliances": [
+          "Full fixed appliances (upper and lower)",
+          "Clear aligner alternative possible",
+          "Fixed lingual retainer (lower)",
+          "Essix retainer (upper)"
+        ],
+        "mechanics": [
+          "Extraction of lower first premolars",
+          "Space closure with sliding mechanics",
+          "Leveling and alignment",
+          "Midline coordination",
+          "Detail and finish"
+        ],
+        "extractionPattern": "Lower first premolars (34, 44)",
+        "estimatedDuration": "18-22 months"
+      },
+      "outcomes": {
+        "skeletal": "Maintained skeletal Class I relationship",
+        "dental": "Excellent alignment achieved, Class I relationship maintained, stable occlusion",
+        "soft tissue": "No significant profile changes, maintained lip support",
+        "stability": "Good stability with bonded retainer at 3-year follow-up"
+      },
+      "sources": [
+        {
+          "sourceId": "ref_001",
+          "relevance": "Extraction guidelines for crowding management",
+          "pages": "290-310",
+          "chapters": ["11"]
+        },
+        {
+          "sourceId": "ref_003",
+          "relevance": "Retention protocol and long-term stability data",
+          "specificFindings": "Bonded retainers show best stability for lower anterior alignment"
+        },
+        {
+          "sourceId": "ref_006",
+          "relevance": "Clear aligner option as alternative treatment modality",
+          "specificFindings": "Clear aligners effective for mild to moderate crowding cases"
+        }
+      ],
+      "evidenceLevel": "Level 1",
+      "lastReviewed": "2025-10-31",
+      "reviewedBy": "Clinical Expert Panel",
+      "keywords": ["crowding", "extraction", "Class I", "adult orthodontics", "retention"]
+    },
+    {
+      "id": "case_003",
+      "title": "Öppet Bett med Digitalt Suga",
+      "category": "Anterior open bite",
+      "difficulty": "high",
+      "ageGroup": "child",
+      "presentation": {
+        "chiefComplaint": "Front teeth don't touch, thumb sucking habit",
+        "clinicalFindings": [
+          "6mm anterior open bite",
+          "Active thumb sucking habit",
+          "Class I molar relationship",
+          "Narrow maxillary arch",
+          "Proclined maxillary incisors",
+          "Tongue thrust swallow pattern",
+          "Lip incompetence"
+        ],
+        "cephalometricAnalysis": {
+          "ANB": "3 degrees",
+          "SNA": "81 degrees",
+          "SNB": "78 degrees",
+          "GoGn-SN": "38 degrees",
+          "U1-SN": "115 degrees",
+          "L1-MP": "98 degrees"
+        },
+        "habits": ["Thumb sucking (active)", "Tongue thrust"]
+      },
+      "diagnosis": "Anterior open bite secondary to thumb sucking habit with associated tongue thrust and hyperdivergent growth pattern",
+      "treatmentPlan": {
+        "approach": "Habit cessation first, then comprehensive orthodontic treatment",
+        "phases": [
+          {
+            "phase": "Phase 1 - Habit Intervention",
+            "duration": "6-12 months",
+            "goals": ["Cessation of thumb sucking", "Myofunctional therapy for tongue posture"],
+            "appliances": ["Habit crib or tongue guard", "Positive reinforcement program"]
+          },
+          {
+            "phase": "Phase 2 - Growth Observation",
+            "duration": "12-24 months",
+            "goals": ["Monitor spontaneous bite closure", "Assess need for comprehensive treatment"]
+          },
+          {
+            "phase": "Phase 3 - Comprehensive Treatment (if needed)",
+            "duration": "24 months",
+            "goals": ["Complete bite closure", "Stable occlusion"],
+            "appliances": ["Full fixed appliances", "Possible TADs for intrusion"]
+          }
+        ],
+        "mechanics": [
+          "Habit appliance installation",
+          "Myofunctional therapy referral",
+          "Maxillary expansion if needed",
+          "Posterior intrusion (TADs if severe)",
+          "Anterior extrusion",
+          "Retention with nighttime appliance"
+        ],
+        "extractionPattern": "Non-extraction anticipated",
+        "estimatedDuration": "36-48 months total (including observation)"
+      },
+      "outcomes": {
+        "habitCessation": "Thumb sucking stopped within 3 months of habit crib placement",
+        "biteClosure": "4mm spontaneous closure after habit cessation, 2mm residual open bite treated with orthodontics",
+        "dental": "Complete bite closure achieved, stable Class I occlusion",
+        "soft tissue": "Improved lip competence, normalized tongue posture",
+        "stability": "Good stability at 2-year follow-up with excellent habit control and myofunctional training compliance"
+      },
+      "sources": [
+        {
+          "sourceId": "ref_001",
+          "relevance": "Open bite diagnosis and treatment strategies",
+          "pages": "520-545",
+          "chapters": ["17"]
+        },
+        {
+          "sourceId": "ref_002",
+          "relevance": "Habit appliance design and effectiveness",
+          "pages": "380-395",
+          "specificFindings": "80-90% success rate with habit cribs when combined with behavior modification"
+        },
+        {
+          "sourceId": "ref_007",
+          "relevance": "TAD use for posterior intrusion in open bite cases",
+          "specificFindings": "TADs effective for intrusion of posterior teeth in hyperdivergent patients"
+        },
+        {
+          "sourceId": "ref_009",
+          "relevance": "Biological considerations for tooth movement in open bite treatment",
+          "specificFindings": "Intrusive forces create bone remodeling patterns that support bite closure"
+        }
+      ],
+      "evidenceLevel": "Level 2",
+      "lastReviewed": "2025-10-31",
+      "reviewedBy": "Clinical Expert Panel",
+      "keywords": ["open bite", "thumb sucking", "habit appliance", "myofunctional therapy", "TADs", "pediatric orthodontics"],
+      "notes": "Early intervention critical for habit cessation. Myofunctional therapy essential for long-term stability."
+    }
+  ]
+}

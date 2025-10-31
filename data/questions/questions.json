@@ -1,0 +1,211 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "lastUpdated": "2025-10-31",
+    "description": "Collection of clinical questions and answers with evidence-based sources"
+  },
+  "questions": [
+    {
+      "id": "q_001",
+      "category": "treatment_planning",
+      "difficulty": "intermediate",
+      "question": "Vilka är indikationerna för extraktion av premolarer vid behandling av trängsel?",
+      "questionEnglish": "What are the indications for premolar extraction in crowding treatment?",
+      "answer": {
+        "summary": "Extraktion av premolarer är indicerat vid måttlig till svår trängsel (>6mm per käkhalva), bimaxillär protrusion, och när icke-extraktionsbehandling skulle resultera i instabilitet eller komprometterad estetik.",
+        "detailedAnswer": "Indikationer för premolarextraktion inkluderar:\n\n1. **Måttlig till svår trängsel**: >6mm diskrepans per käkhalva där expansion eller distalisering inte är tillräckligt\n\n2. **Bimaxillär protrusion**: Framskjutna läppar och tänder där retraktion av fronttänderna förbättrar profilen\n\n3. **Överslut och överbett**: När reduktion av incisalvinkeln krävs för korrektion\n\n4. **Kompensation för skelettdiskrepans**: Dental kamouflage för lätt till måttlig Klass II eller III malokklusion\n\n5. **Relaps-riskreduktion**: När icke-extraktionsbehandling skulle expandera bågen bortom stabilitets gränser\n\n6. **Vertikala problem**: Hos djupbettspatienter kan extraktion hjälpa till att rotera mandibeln bakåt\n\n**Kontraindikationer:**\n- Balanserad profil som skulle försämras av retraktion\n- Lätt trängsel (<4mm) som kan hanteras med IPR eller expansion\n- Växande patienter där tillväxt kan tillhandahålla utrymme\n- Patienter med redan retrusive profiler",
+        "clinicalPearls": [
+          "Bolton-analys bör göras innan extraktion för att säkerställa korrekt overbite/overjet efter behandling",
+          "Överväg extraktionsmönster: symmetrisk vs asymmetrisk baserat på malokklusion",
+          "Första premolarer (P1) är vanligast, men P2-extraktion kan vara lämplig vid djupbett eller Klass III",
+          "Visualisera slutresultatet med VTO (Visual Treatment Objective) innan extraktion"
+        ]
+      },
+      "sources": [
+        {
+          "sourceId": "ref_001",
+          "relevance": "Comprehensive guidelines for extraction decisions",
+          "pages": "290-310",
+          "chapters": ["11"],
+          "specificFindings": "Extraction indicated when space requirement exceeds 6mm per quadrant"
+        },
+        {
+          "sourceId": "ref_002",
+          "relevance": "Extraction patterns and their effects on facial profile",
+          "pages": "245-267",
+          "specificFindings": "First premolar extraction provides 7-8mm space per quadrant on average"
+        },
+        {
+          "sourceId": "ref_008",
+          "relevance": "Diagnosis and treatment planning considerations for extractions",
+          "specificFindings": "VTO analysis essential for predicting post-extraction profile changes"
+        }
+      ],
+      "evidenceLevel": "Level 1",
+      "lastReviewed": "2025-10-31",
+      "tags": ["extraction", "treatment planning", "crowding", "premolars"]
+    },
+    {
+      "id": "q_002",
+      "category": "biomechanics",
+      "difficulty": "advanced",
+      "question": "Hur fungerar biomechaniken vid användning av TADs (temporary anchorage devices)?",
+      "questionEnglish": "How does the biomechanics work when using TADs (temporary anchorage devices)?",
+      "answer": {
+        "summary": "TADs ger skelettalt förankring genom osseointegration eller mekanisk retention, vilket möjliggör tandförflyttning utan oönskade reciproka rörelser. De distribuerar krafter direkt till skelettet istället för till tänderna.",
+        "detailedAnswer": "TAD-biomechanik baseras på flera principer:\n\n**1. Absolut förankring:**\n- TADs ger skeletal förankring som eliminerar Newtons tredje lag (action-reaction) på andra tänder\n- Möjliggör kropplig rörelse utan behov av extra förankring från tänder\n\n**2. Kraft-applicering:**\n- Ideala krafter: 150-200g för tandförflyttning\n- Högre krafter möjliga (upp till 300g) eftersom TAD inte påverkas av root resorption\n- Kraftvektor viktigt: Ska passera genom center of resistance för kropplig rörelse\n\n**3. Stabilitet:**\n- **Primär stabilitet**: Mekanisk retention i ben (insertion torque >5 Ncm optimalt)\n- **Sekundär stabilitet**: Begränsad osseointegration (mindre än implantat, därför lättare att ta bort)\n- Diameter 1.2-2.0mm, längd 6-12mm beroende på plats och benkvalitet\n\n**4. Kliniska applikationer:**\n- **Intrusion**: Främre eller bakre tänder (särskilt effektivt för öppet bett)\n- **Distalisering**: Molar distalisering utan headgear\n- **Mesial rörelse**: Protesskydd eller space closure\n- **En-masse retraktion**: Fronttänder utan förankringsförlust\n\n**5. Placering:**\n- **Inter-radikulärt**: Mellan tandrötter (kräver 2mm safe zone)\n- **Extra-alveolär**: Palatinalt, retromolart, zygomatic pillar\n- **Vinkel**: 30-45° till ytan för optimal stabilitet\n\n**Fördelar:**\n- Patient-oberoende compliance\n- Reducerad behandlingstid (15-30%)\n- Förutsägbar mekanik\n- Möjliggör behandlingar som tidigare krävde kirurgi\n\n**Risker och komplikationer:**\n- Misslyckandefrekvens: 10-20% (högre i underkäke, mjukt ben)\n- Inflammation av mjukvävnad (vanligast)\n- Rotkontakt eller skada (vid felaktig placering)\n- Fraktur vid insertion eller borttagning",
+        "clinicalPearls": [
+          "CBCT rekommenderas för optimal placering i posteriora regioner",
+          "Oral hygien kring TAD kritisk för att förhindra inflammation",
+          "Aktivera TAD-krafter inom 2-4 veckor efter insertion för bästa stabilitet",
+          "Ha alltid backup TAD-platser planerade för 10-20% misslyckande",
+          "Mindre diameter (1.3mm) har högre misslyckandefrekvens men lättare insertion"
+        ]
+      },
+      "sources": [
+        {
+          "sourceId": "ref_007",
+          "relevance": "Comprehensive review of TAD biomechanics and clinical applications",
+          "specificFindings": "Success rates 80-90% with proper placement and loading protocols. Inter-radicular placement shows best stability."
+        },
+        {
+          "sourceId": "ref_001",
+          "relevance": "Biomechanical principles and force systems with TADs",
+          "pages": "345-378",
+          "chapters": ["13"],
+          "specificFindings": "TADs allow forces up to 300g compared to 150g maximum for tooth-supported anchorage"
+        },
+        {
+          "sourceId": "ref_009",
+          "relevance": "Biological response to TAD loading",
+          "specificFindings": "Limited osseointegration beneficial for removal. Immediate loading (within 4 weeks) shows no difference in success compared to delayed loading."
+        }
+      ],
+      "evidenceLevel": "Level 2",
+      "lastReviewed": "2025-10-31",
+      "tags": ["TAD", "biomechanics", "anchorage", "mini-screws", "skeletal anchorage"]
+    },
+    {
+      "id": "q_003",
+      "category": "retention",
+      "difficulty": "intermediate",
+      "question": "Hur länge ska retainers användas efter avslutad aktiv behandling?",
+      "questionEnglish": "How long should retainers be used after active treatment completion?",
+      "answer": {
+        "summary": "Evidens stödjer livslång retention för optimal stabilitet. Minimum rekommendation är 10 år, men många kliniker förordar 'retention for life' approach, särskilt för underkäksfronten.",
+        "detailedAnswer": "Retentionsprotokoll baserat på aktuell evidens:\n\n**Generella riktlinjer:**\n\n**1. Första året:**\n- **Heltid**: 22-24 timmar/dag\n- **Typ**: Kombination av fast retainer (underkäksfront) + avtagbar retainer (båda käkar)\n- **Rationell**: Högsta risken för relaps under denna period\n\n**2. År 2-5:**\n- **Nattetid**: Varje natt\n- **Typ**: Fortsatt fast retainer + avtagbar på natten\n- **Rationell**: Fortsatt stabilisering av behandlingsresultat\n\n**3. År 5-10+:**\n- **Långtidsretention**: 2-3 nätter/vecka eller permanenta fast retainers\n- **Rationell**: Tänderna fortsätter att röra sig genom hela livet (maturational changes)\n\n**Specifika fall med högre relaps-risk:**\n- **Rotationskorrigeringar**: Livslång retention krävs (hög relaps-risk pga supracrestala fiber-minne)\n- **Diastema-stängning**: Långvarig retention, överväg frenektomi\n- **Vuxenbehandling**: Högre relaps-risk, längre retentionstid\n- **Öppet bett**: Livslång retention, särskilt om habit history\n- **Extraktionsfall**: Stabil men kräver långvarig retention\n- **Stor expansion**: Hög relaps-risk, långvarig retention\n\n**Typer av retainers:**\n\n**Fast retainer (bonded):**\n- **Placering**: Underkäksfront (33-43), ibland överkäksfront\n- **Fördelar**: Patient-oberoende, kontinuerlig retention\n- **Nackdelar**: Hygienproblem, kan lossna, behöver regelbundna kontroller\n- **Evidens**: Bästa stabilitet för underkäksfronten\n\n**Avtagbar retainer:**\n- **Hawley**: Traditionell, justerbar, hållbar\n- **Essix/Clear**: Estetisk, täcker alla tänder, kortare livslängd\n- **Wrap-around**: Kombination av fördelar\n- **Fördelar**: Täcker alla tänder, kan användas deltid\n- **Nackdelar**: Compliance-beroende\n\n**'Retention for Life' Approach:**\nModern ortodonti rekommenderar allt mer livslång retention baserat på:\n1. Tänder rör sig genom hela livet (även obehandlade)\n2. Mycket låg risk/kostnad för fortsatt retention\n3. Hög patienttillfredsställelse med stabilt resultat\n4. Evidens visar fortsatt relaps även efter 10+ år\n\n**Kontrollintervaller:**\n- Var 3-6:e månad första året\n- Var 6-12:e månad därefter\n- Kontrollera fast retainer, ersätt avtagbar vid behov",
+        "clinicalPearls": [
+          "Informera patienter om 'retention for life' redan vid behandlingsstart",
+          "Fast retainer i underkäken ger bäst compliance och stabilitet",
+          "Ha ersättnings-retainers tillgängliga för patienter",
+          "Dokumentera retention-instruktioner skriftligt",
+          "Även perfekt behandlade fall kan relapsera utan retention",
+          "Third molar-extraktion diskutabelt för att förhindra trängsel (evidens svag)"
+        ]
+      },
+      "sources": [
+        {
+          "sourceId": "ref_003",
+          "relevance": "Long-term stability data and retention protocols",
+          "specificFindings": "Studies show continued relapse even 10-20 years post-treatment without retention. Bonded retainers show superior stability compared to removable-only retention."
+        },
+        {
+          "sourceId": "ref_001",
+          "relevance": "Retention principles and strategies",
+          "pages": "595-620",
+          "chapters": ["19"],
+          "specificFindings": "Rotated teeth have highest relapse risk due to supracrestal fiber memory lasting years. Permanent retention recommended."
+        },
+        {
+          "sourceId": "ref_005",
+          "relevance": "AAO clinical practice guidelines for retention",
+          "specificFindings": "Recommends minimum 10 years retention, with many clinicians advocating lifelong retention especially for lower anterior teeth"
+        }
+      ],
+      "evidenceLevel": "Level 1",
+      "lastReviewed": "2025-10-31",
+      "tags": ["retention", "relapse", "stability", "retainers", "long-term"]
+    },
+    {
+      "id": "q_004",
+      "category": "digital_orthodontics",
+      "difficulty": "intermediate",
+      "question": "Vilka är fördelarna och begränsningarna med clear aligner-behandling jämfört med fasta apparater?",
+      "questionEnglish": "What are the advantages and limitations of clear aligner treatment compared to fixed appliances?",
+      "answer": {
+        "summary": "Clear aligners erbjuder estetik, komfort och hygien-fördelar men har begränsningar för komplexa tandförflyttningar. Fasta apparater ger bättre kontroll för svåra fall men med estetiska och hygieniska kompromisser.",
+        "detailedAnswer": "**CLEAR ALIGNER FÖRDELAR:**\n\n**1. Estetik:**\n- Nästan osynliga\n- Viktigt för vuxna och image-medvetna tonåringar\n- Inga synliga brackets eller trådar\n\n**2. Komfort:**\n- Inga brackets som irriterar slemhinnor\n- Inga nödbesök för lösa brackets\n- Mjukare material än metall\n\n**3. Oral hygien:**\n- Normal borstning och tandtråd\n- Lättare att hålla rent\n- Lägre risk för karies och gingivit\n- Kan tas ur för måltider\n\n**4. Förutsägbarhet:**\n- Digital treatment planning (ClinCheck, etc.)\n- Visualisering av slutresultat innan start\n- Antal aligners/behandlingstid planeras i förväg\n\n**5. Patient-upplevelse:**\n- Färre akutbesök\n- Längre intervaller mellan besök (8-12 veckor)\n- Kan äta allt utan restriktioner\n\n**CLEAR ALIGNER BEGRÄNSNINGAR:**\n\n**1. Tandförflyttningar med begränsad effektivitet:**\n- **Svårt**: Rotationskorrigering av runda rötter (caniner, premolarer)\n- **Svårt**: Extrusion av tänder\n- **Svårt**: Parallellisering av rötter\n- **Svårt**: Korrigering av stora vertikala diskrepanser\n- **Måttligt svårt**: Stora bodily movements\n- **Måttligt svårt**: Kraftig torque-korrigering\n\n**2. Compliance-beroende:**\n- Kräver 20-22 timmar/dag för optimal effekt\n- Tonåringar kan ha sämre compliance\n- Ingen behandling om aligners inte bärs\n- Svårt att verifiera compliance\n\n**3. Tekniska begränsningar:**\n- Kräver attachments för många förflyttningar (påverkar estetik)\n- IPR (interproximal reduction) ofta nödvändig\n- Elastics kan behövas (synliga)\n- Mid-course corrections ofta nödvändiga\n\n**4. Behandlingstid:**\n- Kan vara längre för komplexa fall\n- Refinements lägger till tid\n- Mindre effektiv tandförflyttning per tidsenhet\n\n**FASTA APPARATER FÖRDELAR:**\n\n**1. Biomechanisk kontroll:**\n- Exakt kontroll av alla tand-dimensioner\n- Effektiva för alla typer av tandförflyttningar\n- Kontinuerliga krafter 24/7\n- Bättre för komplexa fall\n\n**2. Compliance-oberoende:**\n- Fungerar oavsett patient-compliance\n- Bättre för tonåringar och mindre motiverade patienter\n\n**3. Behandlingseffektivitet:**\n- Ofta snabbare för komplexa fall\n- Färre refinements nödvändiga\n- Mer förutsägbar tandförflyttning\n\n**4. Mångsidighet:**\n- Kan kombineras med alla auxiliary (TADs, elastics, springs, etc.)\n- Lämplig för alla typer av malokklusioner\n\n**FASTA APPARATER NACKDELAR:**\n\n**1. Estetik:**\n- Synliga (även ceramic brackets)\n- Kan påverka självförtroende\n\n**2. Hygien:**\n- Svårare att rengöra\n- Högre risk för white spot lesions\n- Ökad gingivit-risk\n- Food impaction\n\n**3. Komfort:**\n- Irritation av slemhinnor\n- Ulcers möjliga\n- Akutbesök för lösa brackets\n\n**4. Restriktioner:**\n- Kost-begränsningar\n- Svårighet med vissa sporter (behöver mouthguard)\n\n**EVIDENSBASERAD JÄMFÖRELSE:**\n\n**Behandlingstid:**\n- Liknande för enkla till måttliga fall\n- Fasta snabbare för komplexa fall\n\n**Kvalitet:**\n- ABO-OGS scores: Fasta apparater marginellt bättre finishing\n- Skillnaden minskar med erfarenhet och modern aligner-teknologi\n\n**Patient satisfaction:**\n- Högre för clear aligners (komfort, estetik)\n- Liknande för slutresultat\n\n**BEHANDLINGSVAL - INDIKATIONER:**\n\n**Clear aligners lämpliga för:**\n- Lätt till måttlig trängsel (<6mm)\n- Diastemastängning\n- Relapsfall\n- Enkla Klass II/III (dental kompensation)\n- Vuxna patienter med god compliance\n- Patienter med specifika estetiska krav\n\n**Fasta apparater föredragna för:**\n- Komplex Klass II/III correction\n- Stora vertikala problem\n- Svåra rotationer\n- Root parallelling-behov\n- Extraktionsfall med stora space closures\n- Tonåringar med tveksam compliance\n- Kombination med ortognatisk kirurgi",
+        "clinicalPearls": [
+          "Hybrid-approach: Använd fasta för svåra segment, sedan aligners for finishing",
+          "Overcorrect rotationer med aligners (planera 10° extra)",
+          "Power ridges och attachments förbättrar aligner-effektivitet markant",
+          "Assess patient compliance vid första konsultation för modalitets-val",
+          "Digital scanning gör aligner-behandling mer tillgänglig och exakt"
+        ]
+      },
+      "sources": [
+        {
+          "sourceId": "ref_006",
+          "relevance": "Comprehensive review of clear aligner biomechanics and clinical applications",
+          "specificFindings": "Clear aligners less effective for extrusion, rotation of round-rooted teeth, and achieving parallel roots. Attachments improve efficacy by 40-60%."
+        },
+        {
+          "sourceId": "ref_001",
+          "relevance": "Comparison of treatment modalities",
+          "pages": "425-445",
+          "chapters": ["14"],
+          "specificFindings": "Treatment time similar for mild-moderate cases. Patient satisfaction higher with aligners due to comfort and aesthetics."
+        },
+        {
+          "sourceId": "ref_010",
+          "relevance": "Digital orthodontics review including aligner technology",
+          "specificFindings": "Modern aligner systems with improved materials, attachments, and planning software show outcomes approaching fixed appliances for most cases."
+        }
+      ],
+      "evidenceLevel": "Level 1",
+      "lastReviewed": "2025-10-31",
+      "tags": ["clear aligners", "fixed appliances", "treatment modalities", "biomechanics", "patient selection"]
+    },
+    {
+      "id": "q_005",
+      "category": "growth_and_development",
+      "difficulty": "basic",
+      "question": "När är den optimala tidpunkten för att påbörja ortodontisk behandling av Klass II hos växande patienter?",
+      "questionEnglish": "When is the optimal timing to start orthodontic treatment for Class II in growing patients?",
+      "answer": {
+        "summary": "Optimal timing för Klass II-behandling är under peak pubertal growth spurt (ca 11-13 år för flickor, 13-15 år för pojkar) för funktionell apparatbehandling. Early treatment kan övervägas för severe cases eller psychosocial indications.",
+        "detailedAnswer": "**TIMING FÖR KLASS II BEHANDLING:**\n\n**1. TIDIG BEHANDLING (Blandad tandvård, 7-9 år):**\n\n**Indikationer:**\n- Extrem överslut (>10mm) med social stigma\n- Risk för trauma på framtänder\n- Mandibulär displacement som hindrar normal tillväxt\n- Severe skeletal discrepancy som kräver senare kirurgi (förbered patient/föräldrar tidigt)\n\n**Approach:**\n- Headgear (cervical eller high-pull) för maxillär restriktion\n- Functional appliance möjlig men mindre effektiv före pubertet\n- Ofta behövs Phase 2 senare\n\n**Fördelar:**\n- Minskar trauma-risk\n- Förbättrar självförtroende tidigt\n- Kan reducera maxillär tillväxt hos vissa patienter\n\n**Nackdelar:**\n- Längre total behandlingstid\n- Compliance-utmaning för unga patienter\n- Ofta behövs ytterligare behandling senare\n- Ökad kostnad\n\n**2. OPTIMAL TIMING (Peak pubertal growth, 11-15 år):**\n\n**Identifiering av peak growth:**\n- **Skeletal maturation indicators:**\n  - Hand-wrist radiograph (MP3 capping stage)\n  - Cervical vertebral maturation (CVMS Stage 3-4)\n  - Menarche hos flickor (peak 6-12 månader före)\n- **Kliniska tecken:**\n  - Snabb höjdökning\n  - Voice change hos pojkar\n  - Utveckling av sekundära könskaraktärer\n\n**Genomsnittlig timing:**\n- **Flickor**: 11-13 år (ca 12 år i genomsnitt)\n- **Pojkar**: 13-15 år (ca 14 år i genomsnitt)\n- Individuell variation betydande (±2 år)\n\n**Approach:**\n- Functional appliances (Twin-block, Herbst, Forsus)\n- Maximal mandibulär tillväxt-respons\n- Ofta 1 phase behandling med fasta efteråt\n\n**Fördelar:**\n- Maximal skeletal effekt av funktionella apparater\n- 2-3mm extra mandibulär tillväxt möjlig\n- Kortare total behandlingstid\n- Bättre compliance (äldre patient)\n- Mest kostnadseffektiv\n\n**3. SEN BEHANDLING (Post-peak, >15-16 år):**\n\n**Situation:**\n- Tillväxt avtagande eller avslutad\n- Skeletal modifikation minimal\n\n**Approach:**\n- **Lätt Klass II**: Dental kompensation, Klass II elastics\n- **Måttlig Klass II**: Extraktion (ofta överkäks-premolarer)\n- **Severe Klass II**: Ortognatisk kirurgi (om skeletal growth avslutad)\n\n**4. VUXEN BEHANDLING (Growth complete):**\n\n**Approach:**\n- Dental kompensation\n- Extraktion för camouflage\n- Ortognatisk kirurgi för skeletal correction\n- TADs för maximal anchorage\n\n**EVIDENS FÖR OPTIMAL TIMING:**\n\n**Functional appliance effectiveness:**\n- **Pre-peak**: 1-1.5mm extra mandibular growth\n- **Peak**: 2-3mm extra mandibular growth\n- **Post-peak**: <1mm extra mandibular growth\n\n**Två-fas vs En-fas behandling:**\n- Evidens visar liknande slutresultat\n- En-fas (vid peak) ofta kortare total tid och lägre kostnad\n- Två-fas kan vara indicerad för psychosocial reasons eller extreme cases\n\n**BESLUTSFAKTORER:**\n\n1. **Severity av malokklusion**\n2. **Skeletal vs dental component**\n3. **Tillväxt-potential (skeletal maturation)**\n4. **Psychosocial factors**\n5. **Patient/förälder motivation och compliance**\n6. **Ekonomiska överväganden**\n\n**REKOMMENDATIONER:**\n\n**Generellt:**\n- Utvärdera alla Klass II-patienter tidigt (7-8 år) för screening\n- Monitor tillväxt och skeletal maturation\n- Påbörja aktiv treatment vid peak growth om möjligt\n- Individualize beslut baserat på patient-specifika faktorer\n\n**För specifika scenarios:**\n- **Severe overjet (>10mm)**: Överväg tidig behandling\n- **Moderate Klass II**: Vänta till peak growth\n- **Mild Klass II**: En-fas behandling i permanent tandvård\n- **Adult**: Dental kompensation eller kirurgi",
+        "clinicalPearls": [
+          "CVMS Stage 3 (CS3) är optimal start för functional appliances",
+          "Handwrist radiograph mer exakt än clinical signs ensamt",
+          "Following height charts kan hjälpa predict growth spurt",
+          "Diskutera treatment options tidigt men starta vid optimal timing",
+          "Dokumentera pre-treatment records inklusive skeletal maturity indicators"
+        ]
+      },
+      "sources": [
+        {
+          "sourceId": "ref_001",
+          "relevance": "Growth and development timing for Class II treatment",
+          "pages": "88-125, 456-489",
+          "chapters": ["4", "15"],
+          "specificFindings": "Peak pubertal growth provides 2-3mm additional mandibular growth with functional appliances. Pre-peak treatment shows 1-1.5mm effect."
+        },
+        {
+          "sourceId": "ref_004",
+          "relevance": "Evidence for functional appliance effectiveness at different developmental stages",
+          "specificFindings": "Systematic review shows maximal skeletal response when treatment coincides with peak growth velocity. CVMS Stage 3-4 optimal."
+        },
+        {
+          "sourceId": "ref_002",
+          "relevance": "Two-phase vs single-phase treatment outcomes",
+          "pages": "412-435",
+          "specificFindings": "Studies show similar final outcomes but single-phase treatment at peak growth more cost-effective and shorter total treatment time."
+        }
+      ],
+      "evidenceLevel": "Level 1",
+      "lastReviewed": "2025-10-31",
+      "tags": ["Class II", "growth and development", "timing", "functional appliances", "peak growth", "skeletal maturation"]
+    }
+  ]
+}

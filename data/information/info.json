@@ -1,0 +1,447 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "lastUpdated": "2025-10-31",
+    "description": "Reference information and clinical guidelines with comprehensive source citations"
+  },
+  "topics": [
+    {
+      "id": "info_001",
+      "category": "classification",
+      "title": "Angles klassifikation av malokklusion",
+      "titleEnglish": "Angle's Classification of Malocclusion",
+      "content": {
+        "overview": "Angles klassifikation, introducerad av Edward Angle 1899, är det mest använda systemet för att klassificera malokklusioner baserat på förhållandet mellan första permanenta molarerna. Trots att den är över 120 år gammal används den fortfarande universellt i ortodonti.",
+        "classification": {
+          "class_I": {
+            "definition": "Mesiobuccal cusp av övre första molaren occluderar i buccal groove av nedre första molaren",
+            "characteristics": [
+              "Normal anteroposterior relationship av maxilla och mandibel",
+              "Malokklusion kan förekomma i form av trängsel, spacing, crossbite, open bite, etc.",
+              "Den vanligaste typen av malokklusion i de flesta populationer"
+            ],
+            "prevalence": "60-70% av alla malokklusioner",
+            "treatment": "Varierar beroende på specifik malokklusion: trängsel, spacing, vertikala problem, etc."
+          },
+          "class_II": {
+            "definition": "Mesiobuccal cusp av övre första molaren occluderar mesial till buccal groove av nedre första molaren",
+            "subdivisions": {
+              "division_1": {
+                "description": "Klass II med proclination av överkäks-incisiver",
+                "characteristics": [
+                  "Ökat overjet",
+                  "Ofta incompetent lip closure",
+                  "Proclined maxillary incisors",
+                  "Kan ha deep bite",
+                  "Konvex profile"
+                ],
+                "prevalence": "15-20% av alla malokklusioner"
+              },
+              "division_2": {
+                "description": "Klass II med retroclination av överkäks-incisiver",
+                "characteristics": [
+                  "Retroclinded maxillary central incisors",
+                  "Proclined maxillary lateral incisors",
+                  "Normal eller minskad overjet",
+                  "Deep bite (nästan alltid)",
+                  "Competent lips",
+                  "Straight eller slightly convex profile"
+                ],
+                "prevalence": "3-5% av alla malokklusioner"
+              }
+            },
+            "etiology": {
+              "skeletal": "Retrognathic mandible (vanligast), prognathic maxilla, eller kombination",
+              "dental": "Mesial drift av maxillary molars, distal position av mandibular molars",
+              "functional": "Mouth breathing, tongue posture, lip incompetence"
+            },
+            "treatment_options": [
+              "Functional appliances (växande patienter)",
+              "Headgear (maxillary restriction)",
+              "Class II elastics",
+              "Maxillary premolar extraction (severe overjet)",
+              "Mandibular advancement surgery (vuxna med severe skeletal discrepancy)",
+              "TADs for distalization eller anchorage"
+            ]
+          },
+          "class_III": {
+            "definition": "Mesiobuccal cusp av övre första molaren occluderar distal till buccal groove av nedre första molaren",
+            "characteristics": [
+              "Anterior crossbite ofta närvarande",
+              "Negativ eller minskad overjet",
+              "Prognathic appearance",
+              "Concave profile",
+              "Mandibular prognathism och/eller maxillary retrusion"
+            ],
+            "prevalence": "3-5% i kaukasiska populationer, 10-15% i asiatiska populationer",
+            "etiology": {
+              "skeletal": "Prognathic mandible (vanligast), retrognathic maxilla, eller kombination",
+              "dental": "Lingual inclination av maxillary incisors, labial inclination av mandibular incisors",
+              "functional": "Anterior displacement av mandibeln (pseudo-Class III)"
+            },
+            "treatment_options": [
+              "Facemask (growing patients för maxillary protraction)",
+              "Chin cup (controversial för mandibular restraint)",
+              "Reverse-pull headgear",
+              "Dental compensation med extractions (mild skeletal)",
+              "Orthognathic surgery (severe skeletal i vuxna)",
+              "Maxillary expansion + protraction (RME + facemask)"
+            ],
+            "prognosis": "Svårare att behandla än Klass II, särskilt med mandibulär prognathism. Kirurgi ofta nödvändig för severe skeletal cases hos vuxna."
+          }
+        },
+        "limitations": "Angles klassifikation fokuserar endast på molar relationship i sagittal plane. Den tar inte hänsyn till:\n- Vertikala problem (open bite, deep bite)\n- Transversella problem (crossbite, midline deviation)\n- Dental crowding/spacing\n- Skeletal vs dental components\n- Soft tissue considerations",
+        "modern_additions": "Moderna klassifikationssystem kompletterar Angle med:\n- Skeletal classification (ANB angle, Wits appraisal)\n- Vertical dimension analysis (FMA, mandibular plane angle)\n- Soft tissue analysis\n- Functional considerations"
+      },
+      "sources": [
+        {
+          "sourceId": "ref_001",
+          "relevance": "Comprehensive coverage of Angle's classification and modern orthodontic diagnosis",
+          "pages": "145-178",
+          "chapters": ["6"],
+          "specificFindings": "Angle's classification remains relevant but must be supplemented with skeletal and soft tissue analysis for comprehensive diagnosis"
+        },
+        {
+          "sourceId": "ref_008",
+          "relevance": "Detailed diagnosis and classification systems",
+          "specificFindings": "Class II Division 1: 15-20% prevalence, Class II Division 2: 3-5% prevalence, Class III: 3-5% in Caucasians, 10-15% in Asians"
+        },
+        {
+          "sourceId": "ref_002",
+          "relevance": "Treatment approaches for different Angle classifications",
+          "pages": "190-245",
+          "specificFindings": "Treatment success varies by classification: Class I most predictable, Class III most challenging especially with mandibular prognathism"
+        }
+      ],
+      "evidenceLevel": "Level 1",
+      "lastReviewed": "2025-10-31",
+      "keywords": ["Angle classification", "malocclusion", "Class I", "Class II", "Class III", "diagnosis"]
+    },
+    {
+      "id": "info_002",
+      "category": "cephalometrics",
+      "title": "Lateral Cephalometrisk Analys - Viktiga Landmärken och Mätningar",
+      "titleEnglish": "Lateral Cephalometric Analysis - Key Landmarks and Measurements",
+      "content": {
+        "overview": "Lateral cephalometrisk radiografi är ett standardiserat verktyg för att utvärdera craniofacial relationer i ortodonti. Introducerad 1931 av Broadbent, möjliggör den objektiv bedömning av skeletal och dental relationer.",
+        "key_landmarks": {
+          "skeletal": {
+            "S_Sella": "Center av sella turcica",
+            "N_Nasion": "Mest anterior punkt på nasofrontal suture",
+            "A_Point": "Deepest point på anterior contour av maxilla mellan ANS och alveolar crest",
+            "B_Point": "Deepest point på anterior contour av mandibular symphysis",
+            "Pg_Pogonion": "Mest anterior punkt på mandibular symphysis",
+            "Gn_Gnathion": "Mest anterior-inferior punkt på mandibular symphysis",
+            "Me_Menton": "Mest inferior punkt på mandibular symphysis",
+            "Go_Gonion": "Mest posterior-inferior punkt på mandibular angle",
+            "ANS": "Anterior nasal spine",
+            "PNS": "Posterior nasal spine",
+            "Or_Orbitale": "Mest inferior punkt på orbital margin",
+            "Po_Porion": "Mest superior punkt på external auditory meatus"
+          },
+          "dental": {
+            "U1": "Maxillary incisor tip och apex",
+            "L1": "Mandibular incisor tip och apex",
+            "U6": "Maxillary first molar",
+            "L6": "Mandibular first molar"
+          }
+        },
+        "key_measurements": {
+          "skeletal_sagittal": {
+            "SNA": {
+              "description": "Angle mellan S-N-A, mäter anteroposterior position av maxilla",
+              "norm": "82° ± 2°",
+              "interpretation": {
+                "increased": "Prognathic maxilla eller anterior positioned maxilla",
+                "decreased": "Retrognathic maxilla eller posterior positioned maxilla"
+              }
+            },
+            "SNB": {
+              "description": "Angle mellan S-N-B, mäter anteroposterior position av mandibel",
+              "norm": "80° ± 2°",
+              "interpretation": {
+                "increased": "Prognathic mandible",
+                "decreased": "Retrognathic mandible"
+              }
+            },
+            "ANB": {
+              "description": "Difference mellan SNA och SNB, visar skeletal relationship mellan maxilla och mandibel",
+              "norm": "2° ± 2° (range 0-4°)",
+              "interpretation": {
+                "0-4°": "Skeletal Class I",
+                "greater_than_4": "Skeletal Class II (ex: ANB 7° indikerar skeletal Class II)",
+                "less_than_0": "Skeletal Class III (ex: ANB -2° indikerar skeletal Class III)"
+              },
+              "limitations": "Påverkas av position av Nasion och rotation av käkar. Wits appraisal kan ge kompletterande information."
+            },
+            "Wits_appraisal": {
+              "description": "Linear measurement av punkt A och B perpendicular projections till occlusal plane",
+              "norm": "Males: -1mm ± 2mm, Females: 0mm ± 2mm",
+              "interpretation": {
+                "positive": "Class II skeletal pattern",
+                "negative": "Class III skeletal pattern"
+              },
+              "advantages": "Inte påverkad av cranial base variationer, mer direkt mätning av maxillo-mandibular relationship"
+            }
+          },
+          "skeletal_vertical": {
+            "SN_GoGn": {
+              "description": "Angle mellan SN plane och mandibular plane (Go-Gn)",
+              "norm": "32° ± 3°",
+              "interpretation": {
+                "increased": "Hyperdivergent, high angle, long face",
+                "decreased": "Hypodivergent, low angle, short face"
+              }
+            },
+            "FMA": {
+              "description": "Frankfort Mandibular Plane Angle",
+              "norm": "25° ± 4°",
+              "interpretation": {
+                "increased": "Vertical growth pattern, long face, open bite tendency",
+                "decreased": "Horizontal growth pattern, short face, deep bite tendency"
+              }
+            },
+            "Y_axis": {
+              "description": "Angle mellan S-Gn och Frankfort horizontal",
+              "norm": "59° ± 3°",
+              "interpretation": "Indicates growth direction: anterior (decreased) vs posterior (increased) rotation"
+            }
+          },
+          "dental_measurements": {
+            "U1_SN": {
+              "description": "Angle mellan maxillary incisor long axis och SN plane",
+              "norm": "103° ± 2°",
+              "interpretation": {
+                "increased": "Proclined maxillary incisors",
+                "decreased": "Retroclined maxillary incisors"
+              }
+            },
+            "IMPA": {
+              "description": "Incisor Mandibular Plane Angle - angle mellan mandibular incisor long axis och mandibular plane",
+              "norm": "90° ± 3°",
+              "interpretation": {
+                "increased": "Proclined mandibular incisors",
+                "decreased": "Retroclined mandibular incisors"
+              }
+            },
+            "Interincisal_angle": {
+              "description": "Angle mellan maxillary och mandibular incisor long axes",
+              "norm": "130° ± 6°",
+              "interpretation": {
+                "increased": "Retroclined incisors",
+                "decreased": "Proclined incisors"
+              }
+            }
+          }
+        },
+        "clinical_application": {
+          "treatment_planning": [
+            "Diagnose skeletal vs dental malocclusion",
+            "Determine extraction vs non-extraction",
+            "Plan orthognathic surgery (skeletal discrepancies >6-8mm often require surgery)",
+            "Predict growth direction",
+            "Establish treatment objectives"
+          ],
+          "progress_evaluation": [
+            "Monitor tooth movement",
+            "Assess skeletal changes (especially in growing patients)",
+            "Verify treatment effects"
+          ],
+          "retention_planning": [
+            "Assess stability of achieved positions",
+            "Evaluate relapse risk"
+          ]
+        },
+        "digital_cephalometrics": {
+          "advantages": [
+            "Reduced radiation (up to 90% less)",
+            "Immediate results",
+            "Digital storage",
+            "Easy superimposition",
+            "AI-assisted landmark identification (improving accuracy)"
+          ],
+          "CBCT": "3D cephalometric analysis möjlig med CBCT men högre strålning. Reserverad för komplexa fall eller surgical planning."
+        }
+      },
+      "sources": [
+        {
+          "sourceId": "ref_001",
+          "relevance": "Comprehensive cephalometric analysis reference",
+          "pages": "178-225",
+          "chapters": ["7"],
+          "specificFindings": "Standard norms for all major cephalometric measurements with population variations. Digital cephalometrics shows 95% agreement with manual tracing."
+        },
+        {
+          "sourceId": "ref_008",
+          "relevance": "Detailed cephalometric diagnosis protocols",
+          "specificFindings": "ANB limitations discussed. Wits appraisal recommended as supplement. Skeletal discrepancies >8mm typically require surgical correction in adults."
+        },
+        {
+          "sourceId": "ref_010",
+          "relevance": "Digital cephalometric analysis and AI applications",
+          "specificFindings": "AI-assisted landmark detection shows 1.5mm average accuracy, comparable to experienced clinicians. Reduces analysis time by 70%."
+        }
+      ],
+      "evidenceLevel": "Level 1",
+      "lastReviewed": "2025-10-31",
+      "keywords": ["cephalometrics", "radiographic analysis", "SNA", "SNB", "ANB", "diagnosis", "treatment planning"]
+    },
+    {
+      "id": "info_003",
+      "category": "biomechanics",
+      "title": "Principer för Tandförflyttning - Biologiska och Mekaniska Aspekter",
+      "titleEnglish": "Principles of Tooth Movement - Biological and Mechanical Aspects",
+      "content": {
+        "overview": "Ortodontisk tandförflyttning baseras på kroppens förmåga att omforma alveolär ben som respons på mekaniska krafter. Förståelse av de biologiska processerna är essential för effektiv och säker behandling.",
+        "biological_mechanisms": {
+          "bone_remodeling": {
+            "pressure_side": {
+              "process": "Kompression av periodontal ligament → hypoxia → RANKL upregulation → osteoclast activation → bone resorption",
+              "timeline": "Initial compression (seconds) → Cell signaling (hours) → Osteoclast differentiation (2-3 days) → Active resorption (5-7 days)",
+              "hyalinization": "Vid excess force (>150-200g): cell death → hyaline zones → undermining resorption → delayed movement (2-4 veckor)"
+            },
+            "tension_side": {
+              "process": "Stretching av periodontal ligament → osteoblast activation → bone formation",
+              "timeline": "Fiber stretching (immediate) → Osteoblast differentiation (2-3 days) → Bone formation (7-14 days)",
+              "new_bone": "Woven bone initially → remodels to lamellar bone över månader"
+            }
+          },
+          "cellular_response": {
+            "mechanotransduction": "Mechanical force → cell deformation → intracellular signaling cascades",
+            "key_molecules": [
+              "RANKL/OPG (regulates osteoclastogenesis)",
+              "Prostaglandins (PGE2 - inflammatory mediators)",
+              "Cytokines (IL-1β, IL-6, TNF-α)",
+              "Growth factors (TGF-β, BMPs)",
+              "Nitric oxide (vasodilation, bone remodeling)"
+            ],
+            "inflammation": "Aseptic inflammation nödvändigt för tooth movement. NSAIDs kan inhibera movement men clinical significance debatterad."
+          }
+        },
+        "types_of_tooth_movement": {
+          "tipping": {
+            "description": "Rotation around center of resistance (approximately 1/3 from apex)",
+            "force_required": "Minimal (35-60g för incisors)",
+            "characteristics": "Crown moves mer än root. Controlled tipping har light root movement i samma riktning.",
+            "clinical_use": "Space closure initial phase, leveling"
+          },
+          "bodily_translation": {
+            "description": "Crown och root moves samma amount i samma direction",
+            "force_required": "Moderate to high (70-120g för incisors, 150-200g för molars)",
+            "requirements": "Force måste passera through center of resistance ELLER moment applied to counteract tipping",
+            "clinical_use": "Space closure, extraction site closure, precise positioning"
+          },
+          "rotation": {
+            "description": "Turning tooth around long axis",
+            "force_required": "35-60g optimal",
+            "challenges": "High relapse risk pga supracrestal fiber memory. Round-rooted teeth (canines, premolars) svårare.",
+            "clinical_pearls": "Overcorrection recommended (10-20°). Permanent retention often needed. Circumferential supracrestal fibrotomy can reduce relapse."
+          },
+          "extrusion": {
+            "description": "Moving tooth occlusally out of socket",
+            "force_required": "35-50g (lightest forces)",
+            "characteristics": "Easiest movement biologically. Risk för gingival följer tooth.",
+            "clinical_use": "Correcting infraocclusion, open bite correction (limited)"
+          },
+          "intrusion": {
+            "description": "Moving tooth apically into socket",
+            "force_required": "10-20g (extremely light forces critical)",
+            "characteristics": "Most difficult movement. High risk för root resorption med excess force. Requires continuous light force.",
+            "clinical_use": "Deep bite correction, open bite correction (posterior intrusion med TADs)",
+            "risks": "Root resorption, ankylosis om force excessive (>25-30g)",
+            "modern_approach": "TADs preferred för posterior intrusion (kan tolerera higher forces 150-200g)"
+          },
+          "torque": {
+            "description": "Root movement labial-lingual",
+            "force_required": "Moderate (50-100g)",
+            "characteristics": "Moves root while maintaining crown position",
+            "clinical_use": "Correcting root angulation, achieving proper incisor inclination"
+          }
+        },
+        "force_considerations": {
+          "optimal_force": {
+            "light_continuous": "Producerar snabbast movement med minimal damage. Ideal force: 70-120g för single-rooted teeth, 150-200g för multi-rooted.",
+            "heavy_intermittent": "Ger hyalinization, delayed movement, mer root resorption risk",
+            "duration": "Continuous force preferred. Removable appliances ger intermittent force (mindre efficient)."
+          },
+          "force_magnitude_guidelines": {
+            "incisors_single_rooted": "50-60g tipping, 70-100g bodily, 10-20g intrusion",
+            "canines": "60-80g tipping, 100-120g bodily",
+            "premolars": "70-90g tipping, 100-150g bodily",
+            "molars": "100-150g tipping, 150-200g bodily, 150-200g intrusion (med TADs)"
+          }
+        },
+        "rate_of_tooth_movement": {
+          "average": "0.8-1.2 mm per månad optimal",
+          "factors_affecting": [
+            "Age: Snabbare i younger patients (ökad cell turnover)",
+            "Bone density: Långsammare i dense bone (Type I bone)",
+            "Force magnitude: Optimal force ger snabbast movement",
+            "Tooth type: Single-rooted snabbare än multi-rooted",
+            "Direction: Extrusion snabbast, intrusion långsammast",
+            "Systemic factors: Medications (bisphosphonates inhibit), vitamin D levels, hormones"
+          ]
+        },
+        "adverse_effects": {
+          "root_resorption": {
+            "prevalence": "90% av orthodontic patients har någon degree (oftast minor <2mm)",
+            "risk_factors": [
+              "Excessive force (särskilt intrusion)",
+              "Prolonged treatment (>2.5 years)",
+              "Root morphology (pipette-shaped, short roots higher risk)",
+              "Tooth type (incisors > other teeth)",
+              "History av trauma",
+              "Genetics"
+            ],
+            "prevention": "Optimal light forces, monitor radiographically, pause treatment om severe"
+          },
+          "loss_of_alveolar_bone": {
+            "cause": "Excessive force, poor oral hygiene, pre-existing periodontal disease",
+            "prevention": "Light forces, excellent OH, periodontal maintenance"
+          },
+          "pain_and_discomfort": {
+            "timing": "Peaks 24-48 hours efter force application, resolves inom 3-5 dagar",
+            "management": "Acetaminophen preferred (NSAIDs theoretically kan inhibit movement men clinical effect minimal)",
+            "explanation": "Inflammatory mediators (PGE2, substance P) → nociceptor activation"
+          },
+          "ankylosis": {
+            "description": "Fusion av root till alveolar bone",
+            "risk": "Trauma history, excessive intrusive force, extended retention",
+            "signs": "High metallic sound on percussion, no mobility, infraocclusion över tid"
+          }
+        },
+        "clinical_pearls": [
+          "Light continuous forces optimal - 'Light wires early, heavy wires late'",
+          "Monitor root resorption radiographically midtreatment (12-18 månader)",
+          "Intrusion kräver lightest forces - consider TADs för posterior intrusion",
+          "Pause treatment if severe root resorption detected (>4mm)",
+          "Rotationer require overcorrection och prolonged retention",
+          "Biologisk respons varierar mellan patienter - individualize force levels"
+        ]
+      },
+      "sources": [
+        {
+          "sourceId": "ref_009",
+          "relevance": "Comprehensive review of biological mechanisms of tooth movement",
+          "specificFindings": "RANKL/OPG ratio critical for osteoclast regulation. Mechanotransduction involves multiple signaling pathways (MAPK, Wnt, etc.). NSAIDs show minimal clinical effect on tooth movement rate despite theoretical concerns."
+        },
+        {
+          "sourceId": "ref_001",
+          "relevance": "Biomechanical principles and force systems",
+          "pages": "312-368",
+          "chapters": ["12"],
+          "specificFindings": "Optimal force magnitudes established through decades of research. Intrusive forces must be <20-25g to prevent root resorption. Average tooth movement rate 1mm/month with optimal forces."
+        },
+        {
+          "sourceId": "ref_002",
+          "relevance": "Clinical biomechanics and force application",
+          "pages": "156-189",
+          "specificFindings": "Root resorption occurs in 90% of cases but typically minor (<2mm). Severe resorption (>4mm) rare but requires treatment pause."
+        }
+      ],
+      "evidenceLevel": "Level 1",
+      "lastReviewed": "2025-10-31",
+      "keywords": ["tooth movement", "biomechanics", "bone remodeling", "forces", "biology", "root resorption"]
+    }
+  ]
+}
