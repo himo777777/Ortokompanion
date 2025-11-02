@@ -1,0 +1,66 @@
+{
+  "validCount": 10,
+  "invalidCount": 0,
+  "results": [
+    {
+      "questionId": "sport-021",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "sport-022",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "sport-023",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "sport-024",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "sport-025",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "sport-026",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "sport-027",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "sport-028",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "sport-029",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "sport-030",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    }
+  ]
+}

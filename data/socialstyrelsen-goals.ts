@@ -11,8 +11,8 @@ export interface SocialstyrelseMål {
   category: string;
   title: string;
   description: string;
-  level: 'student' | 'at' | 'st1' | 'st2' | 'st3' | 'st4' | 'st5';
-  competencyArea: 'medicinsk-kunskap' | 'klinisk-färdighet' | 'kommunikation' | 'professionalism' | 'samverkan' | 'utveckling';
+  level: 'student' | 'at' | 'st1' | 'st2' | 'st3' | 'st4' | 'st5' | 'st-allmänmedicin' | 'st-akutsjukvård' | 'specialist-ortopedi' | 'specialist-allmänmedicin' | 'specialist-akutsjukvård';
+  competencyArea: 'medicinsk-kunskap' | 'klinisk-färdighet' | 'kirurgisk-färdighet' | 'kommunikation' | 'professionalism' | 'samverkan' | 'utveckling' | 'ledarskap';
   required: boolean;
   assessmentCriteria: string[];
 }
@@ -511,16 +511,652 @@ export const ST_ORTOPEDI_MÅL: Record<'st1' | 'st2' | 'st3' | 'st4' | 'st5', Soc
   ],
 };
 
+// ST-ALLMÄNMEDICIN MÅL - För ST-allmänmedicin med ortopedi-placering
+export const ST_ALLMÄNMEDICIN_ORTOPEDI_MÅL: SocialstyrelseMål[] = [
+  {
+    id: 'st-am-01',
+    category: 'Muskuloskeletal anamnes',
+    title: 'Anamnesupptagning vid muskuloskeletala besvär',
+    description: 'Strukturerat ta anamnes vid vanliga muskuloskeletala symtom i primärvården',
+    level: 'st-allmänmedicin',
+    competencyArea: 'klinisk-färdighet',
+    required: true,
+    assessmentCriteria: [
+      'Kartlägger smärtans karaktär, duration och förlopp',
+      'Frågar om riskfaktorer (rökning, alkohol, tidigare skador)',
+      'Bedömer funktionsbegränsning i dagliga aktiviteter',
+      'Identifierar red flags för allvarlig patologi',
+    ],
+  },
+  {
+    id: 'st-am-02',
+    category: 'Klinisk undersökning',
+    title: 'Ortopedisk statusundersökning',
+    description: 'Utföra fokuserad ortopedisk undersökning av stora leder',
+    level: 'st-allmänmedicin',
+    competencyArea: 'klinisk-färdighet',
+    required: true,
+    assessmentCriteria: [
+      'Undersöker axel metodiskt (impingement, rotator cuff)',
+      'Undersöker knä systematiskt (ligament, menisk)',
+      'Undersöker höft (rörlighet, smärta)',
+      'Dokumenterar fynd strukturerat',
+    ],
+  },
+  {
+    id: 'st-am-03',
+    category: 'Primärvårdsortopedi',
+    title: 'Handlägga vanliga ortopediska tillstånd',
+    description: 'Självständigt handlägga vanliga ortopediska besvär i primärvården',
+    level: 'st-allmänmedicin',
+    competencyArea: 'medicinsk-kunskap',
+    required: true,
+    assessmentCriteria: [
+      'Diagnostiserar och behandlar artros',
+      'Handlägger ländryggsbesvär enligt riktlinjer',
+      'Behandlar tendinopatier konservativt',
+      'Känner igen indikationer för remiss till ortoped',
+    ],
+  },
+  {
+    id: 'st-am-04',
+    category: 'Remisshantering',
+    title: 'Adekvat remittering till ortoped',
+    description: 'Bedöma när remiss till ortopedspecialist är indicerad',
+    level: 'st-allmänmedicin',
+    competencyArea: 'klinisk-färdighet',
+    required: true,
+    assessmentCriteria: [
+      'Känner igen red flags',
+      'Bedömer när konservativ behandling är uttömd',
+      'Skriver strukturerad remiss med relevant information',
+      'Prioriterar patienter korrekt',
+    ],
+  },
+  {
+    id: 'st-am-05',
+    category: 'Rehabilitering',
+    title: 'Koordinera rehabilitering',
+    description: 'Samordna rehabilitering vid muskuloskeletala besvär',
+    level: 'st-allmänmedicin',
+    competencyArea: 'samverkan',
+    required: true,
+    assessmentCriteria: [
+      'Ordinerar fysioterapi vid behov',
+      'Samarbetar med arbetsterapeut',
+      'Följer upp rehabiliteringsförlopp',
+      'Bedömer arbetsförmåga',
+    ],
+  },
+];
+
+// ST-AKUTSJUKVÅRD MÅL - För ST-akutsjukvård med ortopedi-placering
+export const ST_AKUTSJUKVÅRD_ORTOPEDI_MÅL: SocialstyrelseMål[] = [
+  {
+    id: 'st-aku-01',
+    category: 'Akut traumahandläggning',
+    title: 'Primär bedömning av trauma',
+    description: 'Bedöma och prioritera traumapatienter enligt ATLS-principer',
+    level: 'st-akutsjukvård',
+    competencyArea: 'klinisk-färdighet',
+    required: true,
+    assessmentCriteria: [
+      'Utför systematisk ABCDE-bedömning',
+      'Identifierar livshotande skador',
+      'Prioriterar interventioner korrekt',
+      'Aktiverar traumalarm vid behov',
+    ],
+  },
+  {
+    id: 'st-aku-02',
+    category: 'Frakturhandläggning akut',
+    title: 'Akut handläggning av frakturer',
+    description: 'Diagnostisera och initialt handlägga frakturer på akutmottagning',
+    level: 'st-akutsjukvård',
+    competencyArea: 'klinisk-färdighet',
+    required: true,
+    assessmentCriteria: [
+      'Beställer adekvat bilddiagnostik',
+      'Bedömer frakturstabilitet och dislokation',
+      'Ger initial behandling (reposition, gips, analgetika)',
+      'Konsulterar ortoped vid behov',
+    ],
+  },
+  {
+    id: 'st-aku-03',
+    category: 'Kompartmentsyndrom',
+    title: 'Känna igen kompartmentsyndrom',
+    description: 'Identifiera och handlägga misstänkt kompartmentsyndrom',
+    level: 'st-akutsjukvård',
+    competencyArea: 'klinisk-färdighet',
+    required: true,
+    assessmentCriteria: [
+      'Känner igen kliniska tecken (5 P)',
+      'Utesluter kompartmentsyndrom systematiskt',
+      'Kontaktar ortopedjouren akut vid misstanke',
+      'Förbereder för akut fasciotomi',
+    ],
+  },
+  {
+    id: 'st-aku-04',
+    category: 'Luxationer',
+    title: 'Reponera vanliga luxationer',
+    description: 'Diagnostisera och reponera vanliga luxationer',
+    level: 'st-akutsjukvård',
+    competencyArea: 'klinisk-färdighet',
+    required: true,
+    assessmentCriteria: [
+      'Reponerar axelluxation',
+      'Reponerar patellaluxation',
+      'Kontrollerar neurovaskulär status före/efter',
+      'Ordinerar adekvat uppföljning',
+    ],
+  },
+  {
+    id: 'st-aku-05',
+    category: 'Smärtlindring',
+    title: 'Optimal smärtlindring vid trauma',
+    description: 'Ge adekvat smärtlindring vid muskuloskeletala skador',
+    level: 'st-akutsjukvård',
+    competencyArea: 'klinisk-färdighet',
+    required: true,
+    assessmentCriteria: [
+      'Bedömer smärta systematiskt (VAS/NRS)',
+      'Ger titrerad analgesi',
+      'Använder regional blockad vid behov',
+      'Följer upp smärtlindring',
+    ],
+  },
+];
+
+// SPECIALIST FORTBILDNING MÅL - För alla specialist-nivåer
+export const SPECIALIST_FORTBILDNING_MÅL: SocialstyrelseMål[] = [
+  {
+    id: 'spec-fort-01',
+    category: 'Evidensbaserad medicin',
+    title: 'Uppdatera kunskaper kontinuerligt',
+    description: 'Hålla sig uppdaterad med aktuell forskning och riktlinjer',
+    level: 'specialist-ortopedi',
+    competencyArea: 'utveckling',
+    required: true,
+    assessmentCriteria: [
+      'Följer aktuell forskning i facktidskrifter',
+      'Deltar i nationella konferenser',
+      'Implementerar nya riktlinjer',
+      'Utvärderar egen praxis',
+    ],
+  },
+  {
+    id: 'spec-fort-02',
+    category: 'Komplicerade fall',
+    title: 'Handlägga komplicerade fall',
+    description: 'Behålla kompetens att handlägga komplexa ortopediska tillstånd',
+    level: 'specialist-ortopedi',
+    competencyArea: 'medicinsk-kunskap',
+    required: true,
+    assessmentCriteria: [
+      'Hanterar revisionskirurgi',
+      'Diagnostiserar ovanliga tillstånd',
+      'Handlägger komplikationer',
+      'Konsulterar subspecialister vid behov',
+    ],
+  },
+  {
+    id: 'spec-fort-03',
+    category: 'Handledning',
+    title: 'Handleda yngre läkare',
+    description: 'Aktivt handleda och utbilda AT- och ST-läkare',
+    level: 'specialist-ortopedi',
+    competencyArea: 'samverkan',
+    required: true,
+    assessmentCriteria: [
+      'Handleder ST-läkare i kirurgi',
+      'Ger strukturerad feedback',
+      'Bedömer kompetens objektivt',
+      'Bidrar till utbildningsprogram',
+    ],
+  },
+  {
+    id: 'spec-fort-04',
+    category: 'Kvalitetsarbete',
+    title: 'Delta i kvalitetsregister',
+    description: 'Bidra till och använda nationella kvalitetsregister',
+    level: 'specialist-ortopedi',
+    competencyArea: 'utveckling',
+    required: true,
+    assessmentCriteria: [
+      'Registrerar patienter i kvalitetsregister',
+      'Analyserar egna resultat',
+      'Jämför med nationella data',
+      'Implementerar förbättringsåtgärder',
+    ],
+  },
+  {
+    id: 'spec-fort-05',
+    category: 'Patientsäkerhet',
+    title: 'Upprätthålla patientsäkerhet',
+    description: 'Säkerställa hög patientsäkerhet i klinisk praxis',
+    level: 'specialist-ortopedi',
+    competencyArea: 'professionalism',
+    required: true,
+    assessmentCriteria: [
+      'Följer hygienrutiner strikt',
+      'Rapporterar avvikelser',
+      'Deltar i morbiditet/mortalitetskonferenser',
+      'Implementerar säkerhetsrutiner',
+    ],
+  },
+];
+
+/**
+ * AT-TENTAMEN FÖRBEREDELSEMÅL
+ * Specifika mål för förberedelse inför AT-kunskapsprov
+ */
+export const AT_TENTAMEN_MÅL: SocialstyrelseMål[] = [
+  {
+    id: 'at-exam-01',
+    title: 'Basala läkemedelskunskaper inom ortopedi',
+    description: 'Kunna ordinera och dosera vanliga läkemedel inom ortopedi inkl. antikoagulantia, analgetika, antibiotika',
+    category: 'medicinal-kunskap',
+    level: 'at',
+    competencyArea: 'medicinsk-kunskap',
+    required: true,
+    assessmentCriteria: [
+      'Korrekt dosering av NSAID, paracetamol, opioider',
+      'Trombosprofylax enligt riktlinjer',
+      'Antibiotika vid frakturer och operation',
+      'Kända interaktioner och kontraindikationer',
+    ],
+  },
+  {
+    id: 'at-exam-02',
+    title: 'Differentialdiagnostik skelettsmärta',
+    description: 'Kunna differentiera mellan trauma, infektion, tumör, reumatologisk sjukdom och övrig skelettsmärta',
+    category: 'differential-diagnostik',
+    level: 'at',
+    competencyArea: 'medicinsk-kunskap',
+    required: true,
+    assessmentCriteria: [
+      'Anamnes och status för skelettsmärta',
+      'Red flags för tumör och infektion',
+      'Kliniska tecken på fraktur',
+      'Remitteringskriterier till ortoped',
+    ],
+  },
+  {
+    id: 'at-exam-03',
+    title: 'Journalföring och medicinjuridik',
+    description: 'Korrekt journalföring enligt patientdatalagen, informerat samtycke, Lex Maria-rapportering',
+    category: 'professionalism',
+    level: 'at',
+    competencyArea: 'professionalism',
+    required: true,
+    assessmentCriteria: [
+      'Komplett SAML-dokumentation',
+      'Journalföring enligt patientdatalagen',
+      'Hantering av avvikelser',
+      'Informerat samtycke dokumenterat',
+    ],
+  },
+  {
+    id: 'at-exam-04',
+    title: 'Tvärspecialitet samverkan',
+    description: 'Samarbete med anestesi, radiologi, infektionsklinik vid ortopediska tillstånd',
+    category: 'samverkan',
+    level: 'at',
+    competencyArea: 'samverkan',
+    required: true,
+    assessmentCriteria: [
+      'Korrekt remittering till anestesi',
+      'Konferens med radiologi',
+      'Samverkan infektionsklinik vid osteomyelit',
+      'Teamwork på akutmottagning',
+    ],
+  },
+  {
+    id: 'at-exam-05',
+    title: 'Etik och resurshushållning',
+    description: 'Etiska överväganden vid prioritering, resursanvändning, samtycke och patientautonomi',
+    category: 'professionalism',
+    level: 'at',
+    competencyArea: 'professionalism',
+    required: true,
+    assessmentCriteria: [
+      'Prioritering enligt nationella riktlinjer',
+      'Etiska dilemman i akutsituationer',
+      'Resurshushållning',
+      'Respekt för patientautonomi',
+    ],
+  },
+];
+
+/**
+ * SPECIALISTEXAMEN FÖRBEREDELSEMÅL
+ * Specifika mål för förberedelse inför specialistexamen i ortopedi
+ */
+export const SPECIALISTEXAMEN_MÅL: SocialstyrelseMål[] = [
+  {
+    id: 'spec-exam-01',
+    title: 'Forskningsmetodik och evidensbaserad medicin',
+    description: 'Förstå och kritiskt granska vetenskapliga studier, forskningsdesign, statistik och evidensgrader',
+    category: 'evidens-forskning',
+    level: 'specialist-ortopedi',
+    competencyArea: 'utveckling',
+    required: true,
+    assessmentCriteria: [
+      'Kritisk granskning av RCT-studier',
+      'Förstå statistiska begrepp (p-värde, konfidensintervall)',
+      'Evidensgrader enligt GRADE',
+      'Tolka meta-analyser och systematiska översikter',
+    ],
+  },
+  {
+    id: 'spec-exam-02',
+    title: 'Komplikationshantering och revision',
+    description: 'Hantera komplikationer efter ortopedisk kirurgi inkl. infektioner, instabilitet, luxation, nervskada',
+    category: 'komplikationer',
+    level: 'specialist-ortopedi',
+    competencyArea: 'klinisk-färdighet',
+    required: true,
+    assessmentCriteria: [
+      'Diagnostik och handläggning protesinfektioner (PJI)',
+      'Revision vid instabilitet',
+      'Hantering nervskador',
+      'Reoperation vid malunion/nonunion',
+    ],
+  },
+  {
+    id: 'spec-exam-03',
+    title: 'Kvalitetsregister och uppföljning',
+    description: 'Kunna använda och tolka data från nationella kvalitetsregister (SHR, SKAR, etc)',
+    category: 'kvalitet',
+    level: 'specialist-ortopedi',
+    competencyArea: 'utveckling',
+    required: true,
+    assessmentCriteria: [
+      'Registrera korrekt i SHR/SKAR',
+      'Tolka registerdata för egen klinik',
+      'Använd data för kvalitetsförbättring',
+      'Förstå riskadjustering och case-mix',
+    ],
+  },
+  {
+    id: 'spec-exam-04',
+    title: 'Riktlinjer och standardiserad vård',
+    description: 'Känna till och applicera nationella och internationella guidelines (BOAST, AO, AAOS, NICE)',
+    category: 'guidelines',
+    level: 'specialist-ortopedi',
+    competencyArea: 'medicinsk-kunskap',
+    required: true,
+    assessmentCriteria: [
+      'BOAST guidelines för frakturer',
+      'AO-klassifikation för frakturer',
+      'AAOS rekommendationer',
+      'NICE guidelines för artros',
+    ],
+  },
+  {
+    id: 'spec-exam-05',
+    title: 'Ledarskap och utbildning',
+    description: 'Handleda ST-läkare, leda team, bedriva undervisning och kvalitetsarbete',
+    category: 'ledarskap',
+    level: 'specialist-ortopedi',
+    competencyArea: 'ledarskap',
+    required: true,
+    assessmentCriteria: [
+      'Handledning av ST-läkare',
+      'Leda traumateam',
+      'Bedriva utbildning',
+      'Kvalitetsarbete och förbättringsarbete',
+    ],
+  },
+];
+
+/**
+ * SUBSPECIALITET-MÅL
+ * Specifika mål för fördjupning inom ortopediska subspecialiteter
+ */
+
+// Fotkirurgi
+export const FOTKIRURGI_MÅL: SocialstyrelseMål[] = [
+  {
+    id: 'foot-01',
+    title: 'Hallux valgus kirurgi',
+    description: 'Diagnostik och kirurgisk behandling av hallux valgus inkl. olika osteotomier',
+    category: 'subspeciality-foot',
+    level: 'specialist-ortopedi',
+    competencyArea: 'kirurgisk-färdighet',
+    required: false,
+    assessmentCriteria: [
+      'Indikationsställning för operation',
+      'Val av osteotomiteknik (Scarf, Chevron, etc)',
+      'Hantering komplikationer',
+      'Postoperativ rehabilitering',
+    ],
+  },
+  {
+    id: 'foot-02',
+    title: 'Achillesruptur och tendinopati',
+    description: 'Konservativ och kirurgisk behandling av achillesruptur samt kronisk tendinopati',
+    category: 'subspeciality-foot',
+    level: 'specialist-ortopedi',
+    competencyArea: 'klinisk-färdighet',
+    required: false,
+    assessmentCriteria: [
+      'Klinisk diagnostik',
+      'Val mellan konservativ och kirurgisk behandling',
+      'Kirurgisk teknik vid ruptur',
+      'Rehabiliteringsprotokoll',
+    ],
+  },
+  {
+    id: 'foot-03',
+    title: 'Ankelartros och artrodés',
+    description: 'Handläggning av svår ankelartros inkl. artrodés och ankelprotes',
+    category: 'subspeciality-foot',
+    level: 'specialist-ortopedi',
+    competencyArea: 'kirurgisk-färdighet',
+    required: false,
+    assessmentCriteria: [
+      'Indikationer för artrodés vs protes',
+      'Kirurgisk teknik artrodés',
+      'Ankelprotes-teknik',
+      'Komplikationshantering',
+    ],
+  },
+];
+
+// Handkirurgi
+export const HANDKIRURGI_MÅL: SocialstyrelseMål[] = [
+  {
+    id: 'hand-01',
+    title: 'Karpaltunnelsyndrom',
+    description: 'Diagnostik och kirurgisk dekompression vid karpaltunnelsyndrom',
+    category: 'subspeciality-hand',
+    level: 'specialist-ortopedi',
+    competencyArea: 'kirurgisk-färdighet',
+    required: false,
+    assessmentCriteria: [
+      'Klinisk diagnostik inkl. Phalens test',
+      'Tolka EMG/neurografi',
+      'Kirurgisk dekompression',
+      'Hantering komplikationer',
+    ],
+  },
+  {
+    id: 'hand-02',
+    title: 'Handled och distalradiusfrakturer',
+    description: 'Kirurgisk behandling av komplexa distalradiusfrakturer och handledsskador',
+    category: 'subspeciality-hand',
+    level: 'specialist-ortopedi',
+    competencyArea: 'kirurgisk-färdighet',
+    required: false,
+    assessmentCriteria: [
+      'Klassifikation enligt AO',
+      'Indikationer för kirurgi',
+      'Volär platteosteosyntés',
+      'Hantering ledband och TFCC-skador',
+    ],
+  },
+  {
+    id: 'hand-03',
+    title: 'Seninflammation och trigger finger',
+    description: 'Behandling av De Quervains tenosynovit, trigger finger och andra senlidelser',
+    category: 'subspeciality-hand',
+    level: 'specialist-ortopedi',
+    competencyArea: 'kirurgisk-färdighet',
+    required: false,
+    assessmentCriteria: [
+      'Klinisk diagnostik',
+      'Injektion-teknik',
+      'Kirurgisk release trigger finger',
+      'Release De Quervains',
+    ],
+  },
+];
+
+// Sportortopedi
+export const SPORTORTOPEDI_MÅL: SocialstyrelseMål[] = [
+  {
+    id: 'sport-01',
+    title: 'ACL-rekonstruktion',
+    description: 'Diagnostik och kirurgisk rekonstruktion av främre korsbandet',
+    category: 'subspeciality-sport',
+    level: 'specialist-ortopedi',
+    competencyArea: 'kirurgisk-färdighet',
+    required: false,
+    assessmentCriteria: [
+      'Klinisk diagnostik (Lachman, pivot shift)',
+      'MR-tolkning',
+      'Artroskopisk ACL-rekonstruktion',
+      'Val av graft (hamstring vs patellarsena)',
+    ],
+  },
+  {
+    id: 'sport-02',
+    title: 'Meniskkirurgi',
+    description: 'Artroskopisk menisk resektion och sutur',
+    category: 'subspeciality-sport',
+    level: 'specialist-ortopedi',
+    competencyArea: 'kirurgisk-färdighet',
+    required: false,
+    assessmentCriteria: [
+      'Indikationer för resektion vs sutur',
+      'Artroskopisk teknik',
+      'Menisk-sutur-tekniker',
+      'Postoperativ rehabilitering',
+    ],
+  },
+  {
+    id: 'sport-03',
+    title: 'Skulderinstabilitet',
+    description: 'Handläggning av akut och kronisk skulder luxation/instabilitet',
+    category: 'subspeciality-sport',
+    level: 'specialist-ortopedi',
+    competencyArea: 'kirurgisk-färdighet',
+    required: false,
+    assessmentCriteria: [
+      'Klinisk bedömning instabilitet',
+      'Tolka MR artrografi',
+      'Artroskopisk Bankart',
+      'Indicering för öppen Latarjet',
+    ],
+  },
+];
+
+// Tumörortopedi
+export const TUMÖRORTOPEDI_MÅL: SocialstyrelseMål[] = [
+  {
+    id: 'tumor-01',
+    title: 'Skelettmetastaser handläggning',
+    description: 'Diagnostik och behandling av skelettmetastaser inkl. profylaktisk fixation',
+    category: 'subspeciality-tumor',
+    level: 'specialist-ortopedi',
+    competencyArea: 'medicinsk-kunskap',
+    required: false,
+    assessmentCriteria: [
+      'Mirels score för frakturrisk',
+      'Indikationer profylaktisk fixation',
+      'Kirurgiska alternativ',
+      'MDT-konferens vid metastaser',
+    ],
+  },
+  {
+    id: 'tumor-02',
+    title: 'Primära bentumörer',
+    description: 'Grundläggande diagnostik och remittering vid misstänkt primär bentumör',
+    category: 'subspeciality-tumor',
+    level: 'specialist-ortopedi',
+    competencyArea: 'medicinsk-kunskap',
+    required: false,
+    assessmentCriteria: [
+      'Red flags för malignitet',
+      'Korrekt utredning (rtg, MR, biopsi)',
+      'Akut remittering till sarkomcentrum',
+      'Kommunikation med patient',
+    ],
+  },
+];
+
+// Barnortopedi
+export const BARNORTOPEDI_MÅL: SocialstyrelseMål[] = [
+  {
+    id: 'ped-01',
+    title: 'Höftledsdysplasi (DDH)',
+    description: 'Screening, diagnostik och behandling av developmental dysplasia of the hip',
+    category: 'subspeciality-pediatric',
+    level: 'specialist-ortopedi',
+    competencyArea: 'klinisk-färdighet',
+    required: false,
+    assessmentCriteria: [
+      'Klinisk undersökning spädbarn (Barlow, Ortolani)',
+      'Ultraljudsscreening',
+      'Indikation för Pavlik bandage',
+      'Uppföljning och remittering',
+    ],
+  },
+  {
+    id: 'ped-02',
+    title: 'Suprakondylära humerusfrakturer barn',
+    description: 'Akut handläggning och kirurgisk behandling av suprakondylära frakturer',
+    category: 'subspeciality-pediatric',
+    level: 'specialist-ortopedi',
+    competencyArea: 'kirurgisk-färdighet',
+    required: false,
+    assessmentCriteria: [
+      'Klassifikation (Gartland)',
+      'Bedömning neurovaskulär status',
+      'Perkutan pinnfixation',
+      'Komplikationer (compartment, nervskada)',
+    ],
+  },
+];
+
+// Samla alla subspecialitet-mål
+export const SUBSPECIALITET_MÅL: SocialstyrelseMål[] = [
+  ...FOTKIRURGI_MÅL,
+  ...HANDKIRURGI_MÅL,
+  ...SPORTORTOPEDI_MÅL,
+  ...TUMÖRORTOPEDI_MÅL,
+  ...BARNORTOPEDI_MÅL,
+];
+
 // Utility functions
-export function getMålForLevel(level: 'student' | 'at' | 'st1' | 'st2' | 'st3' | 'st4' | 'st5'): SocialstyrelseMål[] {
+export function getMålForLevel(level: 'student' | 'at' | 'st1' | 'st2' | 'st3' | 'st4' | 'st5' | 'st-allmänmedicin' | 'st-akutsjukvård' | 'specialist-ortopedi' | 'specialist-allmänmedicin' | 'specialist-akutsjukvård'): SocialstyrelseMål[] {
   if (level === 'student') return LÄKARPROGRAMMET_MÅL;
-  if (level === 'at') return AT_MÅL;
-  return ST_ORTOPEDI_MÅL[level] || [];
+  if (level === 'at') return [...AT_MÅL, ...AT_TENTAMEN_MÅL];
+  if (level === 'st-allmänmedicin') return ST_ALLMÄNMEDICIN_ORTOPEDI_MÅL;
+  if (level === 'st-akutsjukvård') return ST_AKUTSJUKVÅRD_ORTOPEDI_MÅL;
+  if (level === 'specialist-ortopedi') return [...SPECIALIST_FORTBILDNING_MÅL, ...SPECIALISTEXAMEN_MÅL];
+  if (level.startsWith('specialist')) return SPECIALIST_FORTBILDNING_MÅL;
+  // Must be an ST ortho level (st1-st5)
+  if (level in ST_ORTOPEDI_MÅL) return ST_ORTOPEDI_MÅL[level as keyof typeof ST_ORTOPEDI_MÅL];
+  return [];
 }
 
-export function getAllMålForLevel(level: 'student' | 'at' | 'st1' | 'st2' | 'st3' | 'st4' | 'st5'): SocialstyrelseMål[] {
-  // För ST-läkare, inkludera även tidigare års mål
-  if (level.startsWith('st')) {
+export function getAllMålForLevel(level: 'student' | 'at' | 'st1' | 'st2' | 'st3' | 'st4' | 'st5' | 'st-allmänmedicin' | 'st-akutsjukvård' | 'specialist-ortopedi' | 'specialist-allmänmedicin' | 'specialist-akutsjukvård'): SocialstyrelseMål[] {
+  // För ST-ortopedi (st1-st5), inkludera även tidigare års mål
+  if (level.startsWith('st') && level.match(/^st[1-5]$/)) {
     const stYear = parseInt(level.replace('st', ''));
     let allMål: SocialstyrelseMål[] = [];
 
@@ -532,6 +1168,7 @@ export function getAllMålForLevel(level: 'student' | 'at' | 'st1' | 'st2' | 'st
     return allMål;
   }
 
+  // För andra ST-typer och specialister, returnera bara deras specifika mål
   return getMålForLevel(level);
 }
 
@@ -559,3 +1196,63 @@ export function calculateMålProgress(userProgress: MålProgress[], level: strin
     percentage: allMål.length > 0 ? Math.round((achieved / allMål.length) * 100) : 0,
   };
 }
+
+/**
+ * Get all goals across all levels
+ */
+export function getAllMål(): SocialstyrelseMål[] {
+  const allGoals = [
+    ...LÄKARPROGRAMMET_MÅL,
+    ...AT_MÅL,
+    ...AT_TENTAMEN_MÅL,
+    ...Object.values(ST_ORTOPEDI_MÅL).flat(),
+    ...ST_ALLMÄNMEDICIN_ORTOPEDI_MÅL,
+    ...ST_AKUTSJUKVÅRD_ORTOPEDI_MÅL,
+    ...SPECIALIST_FORTBILDNING_MÅL,
+    ...SPECIALISTEXAMEN_MÅL,
+    ...SUBSPECIALITET_MÅL,
+  ];
+
+  // Remove duplicates by ID
+  const uniqueGoals = Array.from(
+    new Map(allGoals.map(goal => [goal.id, goal])).values()
+  );
+
+  return uniqueGoals;
+}
+
+/**
+ * Get goals for a specific subspecialty
+ */
+export function getMålForSubspecialty(subspecialty: 'fotkirurgi' | 'handkirurgi' | 'sportortopedi' | 'tumörortopedi' | 'barnortopedi' | 'ryggradskirurgi'): SocialstyrelseMål[] {
+  switch (subspecialty) {
+    case 'fotkirurgi':
+      return FOTKIRURGI_MÅL;
+    case 'handkirurgi':
+      return HANDKIRURGI_MÅL;
+    case 'sportortopedi':
+      return SPORTORTOPEDI_MÅL;
+    case 'tumörortopedi':
+      return TUMÖRORTOPEDI_MÅL;
+    case 'barnortopedi':
+      return BARNORTOPEDI_MÅL;
+    case 'ryggradskirurgi':
+      // TODO: Add spine surgery goals
+      return [];
+    default:
+      return [];
+  }
+}
+
+/**
+ * Competency areas for categorization
+ */
+export const COMPETENCY_AREAS = {
+  'Diagnostik och behandling': 'Diagnostik och behandling',
+  'Kirurgiska färdigheter': 'Kirurgiska färdigheter',
+  'Akut omhändertagande': 'Akut omhändertagande',
+  'Rehabilitering': 'Rehabilitering',
+  'Kommunikation': 'Kommunikation',
+  'Professionalism': 'Professionalism',
+  'Ledarskap': 'Ledarskap',
+} as const;

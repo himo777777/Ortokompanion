@@ -1,0 +1,48 @@
+{
+  "validCount": 7,
+  "invalidCount": 0,
+  "results": [
+    {
+      "questionId": "trauma-001",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "trauma-002",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "trauma-003-001",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "trauma-003-002",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "trauma-003-003",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "trauma-006",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "trauma-007",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    }
+  ]
+}

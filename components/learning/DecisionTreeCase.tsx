@@ -38,7 +38,7 @@ export default function DecisionTreeCase({
     specificFeedback: Array<{
       decision: string;
       feedback: string;
-      severity: 'info' | 'warning' | 'critical';
+      improvement: string;
     }>;
     overallRecommendation: string;
   } | null>(null);
@@ -92,11 +92,12 @@ export default function DecisionTreeCase({
       const result = await analyzeDecisionMaking({
         caseId: caseStudy.id,
         userDecisions: fullPath.map((decision, index) => ({
-          step: index + 1,
-          decision,
           nodeId: currentNodeId,
+          optionChosen: decision,
+          isOptimal: false, // TODO: Track optimal path
+          timeSpent: 0, // TODO: Track time per decision
         })),
-        caseContext: caseStudy.scenario,
+        caseContext: caseStudy.description,
       });
       setAiAnalysis(result);
     } catch (error) {
@@ -172,7 +173,7 @@ export default function DecisionTreeCase({
           <Target className="w-5 h-5 text-blue-600" />
           Kliniskt Scenario
         </h2>
-        <p className="text-gray-800 leading-relaxed">{caseStudy.scenario}</p>
+        <p className="text-gray-800 leading-relaxed">{caseStudy.description}</p>
       </div>
 
       {/* Current Decision Node */}
@@ -293,7 +294,7 @@ export default function DecisionTreeCase({
                       Viktiga lärdomar
                     </h4>
                     <ul className="space-y-1">
-                      {finalOutcome.teachingPoints.map((point, idx) => (
+                      {finalOutcome.teachingPoints.map((point: string, idx: number) => (
                         <li key={idx} className="text-sm text-gray-800 flex items-start gap-2">
                           <span className="text-purple-500 mt-0.5">•</span>
                           <span>{point}</span>
@@ -386,18 +387,13 @@ export default function DecisionTreeCase({
                     {aiAnalysis.specificFeedback.map((feedback, idx) => (
                       <div
                         key={idx}
-                        className={`p-3 rounded-lg border-l-4 ${
-                          feedback.severity === 'critical'
-                            ? 'bg-red-50 border-red-500'
-                            : feedback.severity === 'warning'
-                            ? 'bg-yellow-50 border-yellow-500'
-                            : 'bg-blue-50 border-blue-500'
-                        }`}
+                        className="p-3 rounded-lg border-l-4 bg-blue-50 border-blue-500"
                       >
                         <p className="text-sm font-medium text-gray-900 mb-1">
                           Beslut: {feedback.decision}
                         </p>
-                        <p className="text-sm text-gray-700">{feedback.feedback}</p>
+                        <p className="text-sm text-gray-700 mb-2">{feedback.feedback}</p>
+                        <p className="text-sm text-blue-700 italic">{feedback.improvement}</p>
                       </div>
                     ))}
                   </div>

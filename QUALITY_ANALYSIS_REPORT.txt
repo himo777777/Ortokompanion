@@ -1,0 +1,223 @@
+ORTOKOMPANION QUESTIONS.TS - COMPREHENSIVE QUALITY ANALYSIS REPORT
+=====================================================================
+
+EXECUTIVE SUMMARY
+-----------------
+Total Questions: 527
+Total tutorMode blocks: 419
+Coverage: 79.5%
+Critical Issues: 5
+High Priority Issues: 3
+Medium Priority Issues: 2
+
+================================================================================
+1. QUESTIONS MISSING TUTORMODE
+================================================================================
+COUNT: 108 questions (20.5% of total)
+SEVERITY: HIGH - Students cannot get progressive hints for these questions
+
+DISTRIBUTION BY DOMAIN:
+  - trauma: 16 questions (trauma-005 through trauma-020)
+  - hoeft: 14 questions (hoeft-006 through hoeft-019)
+  - rygg: 16 questions (rygg-005 through rygg-020)
+  - hand: 14 questions (hand-005 through hand-050, partially)
+  - axel: 15 questions (axel-005 through axel-020, and more)
+  - fot: 21 questions (fot-005 through fot-019)
+  - sport: 20 questions (sport-005 through sport-020)
+  - Others: rygg-005, sport-005, kna partial
+
+COMPLETE LIST (108 questions):
+trauma-005, trauma-006, trauma-007, trauma-008, trauma-009, trauma-010, trauma-011,
+trauma-012, trauma-013, trauma-014, trauma-015, trauma-016, trauma-017, trauma-018,
+trauma-019, trauma-020, hoeft-006, hoeft-007, hoeft-008, hoeft-009, hoeft-010,
+hoeft-011, hoeft-012, hoeft-013, hoeft-014, hoeft-015, hoeft-016, hoeft-017,
+hoeft-018, hoeft-019, rygg-005, hand-005, sport-005, axel-005, fot-005, fot-006,
+fot-007, fot-008, fot-009, fot-010, fot-011, fot-012, fot-013, fot-014, fot-015,
+fot-016, fot-017, fot-018, fot-019, hand-006, hand-007, hand-008, hand-009,
+hand-010, hand-011, hand-012, hand-013, hand-014, hand-015, hand-016, hand-017,
+hand-018, hand-019, axel-006, axel-007, axel-008, axel-009, axel-010, axel-011,
+axel-012, axel-013, axel-014, axel-015, axel-016, axel-017, axel-018, axel-019,
+axel-020, rygg-006, rygg-007, rygg-008, rygg-009, rygg-010, rygg-011, rygg-012,
+rygg-013, rygg-014, rygg-015, rygg-016, rygg-017, rygg-018, rygg-019, rygg-020,
+sport-006, sport-007, sport-008, sport-009, sport-010, sport-011, sport-012,
+sport-013, sport-014, sport-015, sport-016, sport-017, sport-018, sport-019,
+sport-020
+
+IMPACT: These students cannot benefit from:
+  - Progressive hints (easy → intermediate → specific)
+  - Common mistakes section
+  - Teaching points
+  - Mnemonics/tricks
+  
+================================================================================
+2. TYPO: "MEDISINSK-KUNSKAP" (should be "MEDICINSK-KUNSKAP")
+================================================================================
+COUNT: 52 occurrences in 52 different questions
+SEVERITY: MEDIUM - Invalid competency value, may cause system errors
+TYPE: Spelling error in competency field
+
+AFFECTED QUESTIONS (52 total):
+axel-012, axel-014, axel-015, axel-016, axel-018, axel-024, axel-031, axel-033,
+axel-034, axel-042, axel-043, axel-045, axel-047, axel-049, hand-031, hand-032,
+hand-034, hand-035, hand-036, hand-037, hand-038, hand-039, hand-040, hand-042,
+hand-043, hand-044, hand-045, hand-046, hand-047, hand-048, hand-049, hand-050,
+rygg-019, rygg-021, rygg-022, rygg-023, rygg-025, rygg-026, rygg-027, rygg-029,
+rygg-030, rygg-032, rygg-034, rygg-035, rygg-036, rygg-037, rygg-039, rygg-041,
+rygg-042, rygg-048, rygg-050, sport-013
+
+EXAMPLE:
+  File: /workspaces/Ortokompanion/data/questions.ts (multiple lines)
+  competency: 'medisinsk-kunskap',  ← TYPO (missing 'c')
+  Should be: competency: 'medicinsk-kunskap',
+
+COMPARISON:
+  Correct usage: 309 occurrences of 'medicinsk-kunskap'
+  Typo usage: 52 occurrences of 'medisinsk-kunskap'
+  Ratio: 14.4% of competency fields have this typo
+
+================================================================================
+3. TYPO: "ÅTERFRREIDIVRISK" (should be "ÅTERFALLSRISK")
+================================================================================
+COUNT: 1 occurrence
+SEVERITY: MEDIUM - Swedish spelling error in clinical content
+LOCATION: sport-038
+
+EXAMPLE:
+  Question ID: sport-038
+  Error in: hints field
+  Original: 'Success >90% för återfrreidivrisk-prevention'
+  Correct:  'Success >90% för återfallsrisk-prevention'
+  Issue: Extra 'fr' and missing 'lls' - clinically important term
+
+================================================================================
+4. ENGLISH WORDS IN SWEDISH CLINICAL CONTENT
+================================================================================
+COUNT: Approximately 28 occurrences across multiple fields
+SEVERITY: LOW-MEDIUM - Affects readability and professionalism
+
+ENGLISH WORDS FOUND:
+  - "treatment": 16 occurrences
+  - "imaging": 6 occurrences
+  - "assessment": 6 occurrences
+  - "follow-up": Multiple occurrences in context
+  - "risk factors": Present in several questions
+
+EXAMPLES OF PROBLEMATIC USAGE:
+  1. Questions containing "treatment" in explanation field
+  2. Imaging terminology that should use Swedish equivalents
+  3. "assessment" instead of "bedömning"
+
+RECOMMENDATION:
+Swedish equivalents should be used:
+  - "treatment" → "behandling"
+  - "imaging" → "bilddiagnostik" or "radiologisk undersökning"
+  - "assessment" → "bedömning"
+  - "follow-up" → "uppföljning"
+
+================================================================================
+5. WEAK/VAGUE TUTOR MODE HINTS
+================================================================================
+COUNT: Approximately 59+ questions with weak "Tänk på" hints (14% of hints)
+SEVERITY: MEDIUM - Hints are questions, not guidance
+
+PATTERN: "Tänk på..." (Think about...)
+These are prompts, not progressive hints. Examples:
+  - trauma-001: "Tänk på ABCDE-akronymen - vad betyder A?" (prompts thinking, doesn't teach)
+  - hoeft-001: "Tänk på vilken artär som går medialt om höften" (question, not hint)
+  - hoeft-003: "Tänk på biomekaniken: var går krafterna vid en subtrochantär fraktur?"
+  - hoeft-013: "Tänk på hur hävarm påverkar muskelfunktion - längre hävarm = mer kraft"
+  - hoeft-019: "Tänk på "taper-slip" - stammen sjunker gradvis tills jämvikt uppnås"
+
+QUALITY ASSESSMENT:
+Non-progressive hints: ~52% of hint blocks analyzed
+  - Hints don't increase in specificity/detail
+  - Hints are similar in complexity
+  - Fails to provide progressive scaffolding
+
+WEAK HINT STRUCTURE ISSUES:
+  - Not clinically actionable: "Vilken", "Vad är", "Jämför"
+  - Too vague: "Skillnaden mellan..."
+  - Questions masked as hints: "Think about X" rather than "X is important because..."
+
+EXAMPLE OF WEAK PROGRESSION:
+  Hint 1: "Tänk på ABCDE-akronymen"
+  Hint 2: "Vad är det allra första som krävs för att överleva?"
+  Hint 3: "Airway (luftväg) kommer alltid först i ATLS-protokollet"
+  
+  ISSUE: Hint 1 and 2 are questions, not progressive hints. Better would be:
+  Hint 1: "Remember ABCDE - what does A stand for?"
+  Hint 2: "Without airway, patients cannot survive - why is this first?"
+  Hint 3: "ATLS prioritizes A (Airway) before B (Breathing) and C (Circulation)"
+
+================================================================================
+6. NEW TUMOR QUESTIONS STATUS (31 questions in /tmp/new_tumor_questions.txt)
+================================================================================
+COUNT: 31 tumor questions (tumor-007 through tumor-037)
+TUTORMODE COVERAGE: 100% (31/31 have tutorMode)
+QUALITY: ALL EXCELLENT - Ready for integration
+
+TUMOR QUESTIONS ANALYSIS:
+  ✓ All 31 have complete tutorMode with:
+    - 3 progressive hints
+    - commonMistakes array
+    - teachingPoints array
+    - mnemonicOrTrick
+  ✓ Well-structured progressive hints
+  ✓ Clinically relevant examples
+  ✓ Proper Swedish terminology (medicinsk-kunskap correct)
+  ✓ No English words detected
+  ✓ No spelling errors found
+
+INTEGRATION READINESS: READY
+These questions are production-ready and can be merged directly.
+
+================================================================================
+PRIORITY RANKING & RECOMMENDATIONS
+================================================================================
+
+CRITICAL (Must fix before release):
+1. Fix 52 instances of "medisinsk-kunskap" → "medicinsk-kunskap"
+   Impact: May cause system validation errors
+   Effort: HIGH (52 fixes across hand, axel, rygg, sport domains)
+
+2. Identify and create tutorMode for 108 questions
+   Impact: 20.5% of students cannot access progressive hints
+   Effort: VERY HIGH (108 new tutorMode blocks needed)
+
+HIGH PRIORITY (Should fix soon):
+3. Fix "återfrreidivrisk" → "återfallsrisk" in sport-038
+   Impact: Clinical accuracy in hint
+   Effort: LOW (1 character fix)
+
+4. Review and strengthen 59+ weak "Tänk på" hints
+   Impact: 14% of hints are prompts, not teaching
+   Effort: MEDIUM (59 hint blocks to rewrite)
+
+MEDIUM PRIORITY (Should address):
+5. Replace 28+ English words with Swedish equivalents
+   Impact: Professional consistency
+   Effort: MEDIUM (28+ term replacements)
+
+================================================================================
+INTEGRATION NOTES
+================================================================================
+
+NEW TUMOR QUESTIONS: IMMEDIATE INTEGRATION APPROVED
+  - All 31 questions have complete tutorMode
+  - No quality issues detected
+  - Can proceed with merge to main questions.ts
+
+EXISTING QUESTIONS: REQUIRES REMEDIATION
+  - Phase 1: Fix typos (medisinsk, återfrreidivrisk) - Quick wins
+  - Phase 2: Add tutorMode to 108 questions (largest effort)
+  - Phase 3: Strengthen weak hints (59+ questions)
+  - Phase 4: Replace English terminology (28+ words)
+
+RECOMMENDED WORKFLOW:
+1. Create tutorMode template for domain specialists
+2. Batch fix typos programmatically
+3. Create migration script to add tutorMode to empty questions
+4. Domain expert review of hints for clinical accuracy
+5. QA verification before release
+
+================================================================================

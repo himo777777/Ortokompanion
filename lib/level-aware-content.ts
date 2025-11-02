@@ -22,7 +22,11 @@ export const LEVEL_HIERARCHY: EducationLevel[] = [
   'st3',
   'st4',
   'st5',
-  'specialist',
+  'st-allmänmedicin',
+  'st-akutsjukvård',
+  'specialist-ortopedi',
+  'specialist-allmänmedicin',
+  'specialist-akutsjukvård',
 ];
 
 /**
@@ -192,14 +196,18 @@ export function getContentStatsByLevel(
  */
 export function getRecommendedBandForLevel(level: EducationLevel): DifficultyBand {
   const bandMap: Record<EducationLevel, DifficultyBand> = {
-    student: 'A',
-    at: 'B',
-    st1: 'B',
-    st2: 'C',
-    st3: 'C',
-    st4: 'D',
-    st5: 'D',
-    specialist: 'E',
+    'student': 'A',
+    'at': 'B',
+    'st1': 'B',
+    'st2': 'C',
+    'st3': 'C',
+    'st4': 'D',
+    'st5': 'D',
+    'st-allmänmedicin': 'D',
+    'st-akutsjukvård': 'D',
+    'specialist-ortopedi': 'E',
+    'specialist-allmänmedicin': 'E',
+    'specialist-akutsjukvård': 'E',
   };
 
   return bandMap[level];
@@ -275,14 +283,18 @@ export function estimateLevelCompletionTime(
   // - Multiply by complexity factor
 
   const complexityFactor: Record<EducationLevel, number> = {
-    student: 1.0,
-    at: 1.2,
-    st1: 1.3,
-    st2: 1.5,
-    st3: 1.7,
-    st4: 2.0,
-    st5: 2.2,
-    specialist: 2.5,
+    'student': 1.0,
+    'at': 1.2,
+    'st1': 1.3,
+    'st2': 1.5,
+    'st3': 1.7,
+    'st4': 2.0,
+    'st5': 2.2,
+    'st-allmänmedicin': 2.0,
+    'st-akutsjukvård': 2.0,
+    'specialist-ortopedi': 2.5,
+    'specialist-allmänmedicin': 2.5,
+    'specialist-akutsjukvård': 2.5,
   };
 
   const band = getRecommendedBandForLevel(level);
@@ -316,7 +328,8 @@ export function shouldAdvanceLevel(
   // 3. Time: At least 14 days at level (except student)
   // 4. Not already at highest level
 
-  if (currentLevel === 'specialist') {
+  const maxLevels = ['specialist-ortopedi', 'specialist-allmänmedicin', 'specialist-akutsjukvård'];
+  if (maxLevels.includes(currentLevel)) {
     return false; // Already at max
   }
 
@@ -403,12 +416,40 @@ export function getLevelDisplayInfo(level: EducationLevel): {
       description: 'Specialiseringstjänstgöring – senior',
       focusAreas: ['Självständiga operationer', 'Handledning', 'Forskning'],
     },
-    specialist: {
-      name: 'Specialist',
+    'st-allmänmedicin': {
+      name: 'ST Allmänmedicin',
+      shortName: 'ST-AM',
+      color: 'purple',
+      description: 'ST-läkare allmänmedicin med ortopedi-placering',
+      focusAreas: ['Primärvårdsortopedi', 'Vanliga skelettbesvär', 'Remissbedömning'],
+    },
+    'st-akutsjukvård': {
+      name: 'ST Akutsjukvård',
+      shortName: 'ST-Akut',
+      color: 'purple',
+      description: 'ST-läkare akutsjukvård med ortopedi-placering',
+      focusAreas: ['Akut ortopedi', 'Fraktur handläggning', 'Traumabedömning'],
+    },
+    'specialist-ortopedi': {
+      name: 'Specialist Ortopedi',
       shortName: 'Spec',
       color: 'red',
       description: 'Specialistkompetens ortopedi',
-      focusAreas: ['Expert nivå', 'Rare cases', 'Subspecialisering fördjupning'],
+      focusAreas: ['Expertnivå', 'Sällsynta fall', 'Subspecialisering fördjupning'],
+    },
+    'specialist-allmänmedicin': {
+      name: 'Specialist Allmänmedicin',
+      shortName: 'Spec-AM',
+      color: 'red',
+      description: 'Allmänläkare med ortopedi-fortbildning',
+      focusAreas: ['MSK i primärvård', 'Differentialdiagnostik', 'Konservativ behandling'],
+    },
+    'specialist-akutsjukvård': {
+      name: 'Specialist Akutsjukvård',
+      shortName: 'Spec-Akut',
+      color: 'red',
+      description: 'Akutläkare med ortopedi-fortbildning',
+      focusAreas: ['Akut MSK-trauma', 'Snabbdiagnostik', 'Initial handläggning'],
     },
   };
 

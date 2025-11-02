@@ -16,6 +16,7 @@ import {
   loadAvailableContent,
 } from '@/lib/integrated-helpers';
 import { isGateRequirementMet } from '@/lib/domain-progression';
+import { ALL_QUESTIONS } from '@/data/questions';
 
 interface IntegratedContextType {
   profile: IntegratedUserProfile | null;
@@ -142,8 +143,7 @@ export function IntegratedProvider({ children }: IntegratedProviderProps) {
     }
 
     try {
-      const availableContent = loadAvailableContent();
-      const newMix = generateIntegratedDailyMix(profile, availableContent);
+      const newMix = generateIntegratedDailyMix(profile, ALL_QUESTIONS);
       setDailyMix(newMix);
     } catch (error) {
       console.error('Failed to generate daily mix:', error);
@@ -271,8 +271,7 @@ export function IntegratedProvider({ children }: IntegratedProviderProps) {
       setProfileState(updatedProfile);
 
       // Regenerate daily mix with recovery settings
-      const availableContent = loadAvailableContent();
-      const recoveryMix = generateIntegratedDailyMix(updatedProfile, availableContent);
+      const recoveryMix = generateIntegratedDailyMix(updatedProfile, ALL_QUESTIONS);
       setDailyMix(recoveryMix);
 
       console.log('Recovery mode activated');

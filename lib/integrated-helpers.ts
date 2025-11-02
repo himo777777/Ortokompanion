@@ -41,6 +41,14 @@ import {
 } from './domain-progression';
 import { getDueCards, processReview } from './srs-algorithm';
 import { DOMAIN_NEIGHBORS } from '@/types/progression';
+import {
+  adaptContentForUser,
+  ContentAdaptationContext,
+  AdaptedContentRecommendation,
+} from './ai-content-adapter';
+import { MCQQuestion } from '@/data/questions';
+import { getCurrentRotation } from '@/types/rotation';
+import { RotationActivityLog } from './rotation-tracker';
 
 /**
  * Creates initial band status for a new user
@@ -149,12 +157,31 @@ export function createIntegratedProfile(
 
 /**
  * Generates daily mix for integrated profile
+ * NOW ROTATION-AWARE: Uses AI content adapter for personalized recommendations
  */
 export function generateIntegratedDailyMix(
   profile: IntegratedUserProfile,
-  availableContent: Map<Domain, string[]>
+  availableQuestions: MCQQuestion[],
+  activityLog?: RotationActivityLog[]
 ): DailyMix {
   const { progression, preferences } = profile;
+
+  // Build AI adaptation context
+  const context: ContentAdaptationContext = {
+    profile,
+    completedGoalIds: profile.socialstyrelseMålProgress
+      .filter((p) => p.achieved)
+      .map((p) => p.goalId),
+    activityLog: activityLog || [],
+    recentPerformance: {
+      accuracy: progression.bandStatus.recentPerformance.correctRate * 100,
+      averageTime: 30, // TODO: Track actual average time
+      hintsUsed: progression.bandStatus.recentPerformance.hintUsage,
+    },
+  };
+
+  // Get AI-adapted content recommendations based on rotation/placement
+  const aiRecommendation = adaptContentForUser(context, availableQuestions);
 
   // Day 1 is always easier
   const isDay1 = progression.history.bandAdjustments.length === 0;
@@ -162,16 +189,38 @@ export function generateIntegratedDailyMix(
     ? getDayOneBand(progression.bandStatus.currentBand)
     : progression.bandStatus.currentBand;
 
+  // Use AI-recommended focus domains (rotation-aware)
+  const focusDomains =
+    aiRecommendation.focusDomains.length > 0
+      ? aiRecommendation.focusDomains
+      : [progression.primaryDomain];
+
+  // Convert AI-recommended questions to Map format for domain-progression
+  const availableContent = new Map<Domain, string[]>();
+  focusDomains.forEach((domain) => {
+    // Filter questions by domain and recommended IDs
+    const domainQuestions = availableQuestions
+      .filter(
+        (q) =>
+          q.domain === domain &&
+          (aiRecommendation.questionIds.length === 0 ||
+            aiRecommendation.questionIds.includes(q.id))
+      )
+      .map((q) => q.id);
+    availableContent.set(domain, domainQuestions);
+  });
+
   const completedDomains = getCompletedDomains(progression.domainStatuses);
 
+  // Generate daily mix with rotation-aware parameters
   return generateDailyMix({
-    primaryDomain: progression.primaryDomain,
+    primaryDomain: focusDomains[0], // Use AI-determined primary focus
     targetBand,
     srsCards: progression.srs.cards,
     availableNewContent: availableContent,
     completedDomains,
     isRecoveryDay: preferences?.recoveryMode || false,
-    targetMinutes: preferences?.targetMinutesPerDay || 10,
+    targetMinutes: aiRecommendation.dailyTarget || preferences?.targetMinutesPerDay || 10,
   });
 }
 
@@ -539,10 +588,15 @@ export function migrateToIntegratedProfile(
 }
 
 /**
- * Loads available content for a domain
- * TODO: Replace with actual content loading
+ * Loads available content for a domain from actual question bank
+ * @param allQuestions - Full question bank
+ * @param targetDomain - Optional domain filter
+ * @returns Map of domain to question IDs
  */
-export function loadAvailableContent(domain?: Domain): Map<Domain, string[]> {
+export function loadAvailableContent(
+  allQuestions: MCQQuestion[],
+  targetDomain?: Domain
+): Map<Domain, string[]> {
   const content = new Map<Domain, string[]>();
   const domains: Domain[] = [
     'trauma',
@@ -556,14 +610,14 @@ export function loadAvailableContent(domain?: Domain): Map<Domain, string[]> {
     'tumör',
   ];
 
-  domains.forEach((d) => {
-    content.set(d, [
-      `${d}-item-1`,
-      `${d}-item-2`,
-      `${d}-item-3`,
-      `${d}-item-4`,
-      `${d}-item-5`,
-    ]);
+  // Filter domains if specific domain requested
+  const domainsToLoad = targetDomain ? [targetDomain] : domains;
+
+  domainsToLoad.forEach((d) => {
+    const domainQuestions = allQuestions
+      .filter((q) => q.domain === d)
+      .map((q) => q.id);
+    content.set(d, domainQuestions);
   });
 
   return content;

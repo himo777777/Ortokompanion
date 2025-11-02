@@ -130,8 +130,30 @@ export function getUnlockRequirements(level: EducationLevel): LevelUnlockRequire
         miniOSCEPassed: true,
       },
     },
-    specialist: {
-      level: 'specialist',
+    'st-allmänmedicin': {
+      level: 'st-allmänmedicin',
+      prerequisites: {
+        previousLevelComplete: true,
+        minQuestionsCompleted: 30,
+        minCasesCompleted: 10,
+        minAccuracy: 0.75,
+        minDaysAtPreviousLevel: 14,
+        miniOSCEPassed: false,
+      },
+    },
+    'st-akutsjukvård': {
+      level: 'st-akutsjukvård',
+      prerequisites: {
+        previousLevelComplete: true,
+        minQuestionsCompleted: 30,
+        minCasesCompleted: 10,
+        minAccuracy: 0.75,
+        minDaysAtPreviousLevel: 14,
+        miniOSCEPassed: false,
+      },
+    },
+    'specialist-ortopedi': {
+      level: 'specialist-ortopedi',
       prerequisites: {
         previousLevelComplete: true,
         minQuestionsCompleted: 50,
@@ -139,6 +161,28 @@ export function getUnlockRequirements(level: EducationLevel): LevelUnlockRequire
         minAccuracy: 0.85,
         minDaysAtPreviousLevel: 60,
         miniOSCEPassed: true,
+      },
+    },
+    'specialist-allmänmedicin': {
+      level: 'specialist-allmänmedicin',
+      prerequisites: {
+        previousLevelComplete: true,
+        minQuestionsCompleted: 40,
+        minCasesCompleted: 15,
+        minAccuracy: 0.80,
+        minDaysAtPreviousLevel: 30,
+        miniOSCEPassed: false,
+      },
+    },
+    'specialist-akutsjukvård': {
+      level: 'specialist-akutsjukvård',
+      prerequisites: {
+        previousLevelComplete: true,
+        minQuestionsCompleted: 40,
+        minCasesCompleted: 15,
+        minAccuracy: 0.80,
+        minDaysAtPreviousLevel: 30,
+        miniOSCEPassed: false,
       },
     },
   };

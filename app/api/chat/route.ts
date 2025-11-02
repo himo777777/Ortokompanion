@@ -6,7 +6,7 @@ export const runtime = 'edge';
 
 export async function POST(request: NextRequest) {
   try {
-    const { messages, level, context } = await request.json();
+    const { messages, level, userContext } = await request.json();
 
     // Get OpenAI API key
     const apiKey = process.env.OPENAI_API_KEY;
@@ -20,10 +20,41 @@ export async function POST(request: NextRequest) {
 
     const levelInfo = educationLevels.find(l => l.id === level);
 
+    // Build context-aware system prompt
+    let contextInfo = '';
+    if (userContext) {
+      contextInfo = `
+ANVÄNDARENS AKTUELLA STATUS:
+${userContext.currentAccuracy ? `- Nuvarande träffsäkerhet: ${Math.round(userContext.currentAccuracy)}%` : ''}
+${userContext.currentBand ? `- Nuvarande band: ${userContext.currentBand}` : ''}
+${userContext.totalXP ? `- Total XP: ${userContext.totalXP}` : ''}
+${userContext.level ? `- Nivå: ${userContext.level}` : ''}
+${userContext.streak ? `- Streak: ${userContext.streak} dagar` : ''}
+
+${userContext.weakDomains && userContext.weakDomains.length > 0 ? `SVAGA OMRÅDEN (fokusera extra här):
+${userContext.weakDomains.map((d: string) => `- ${d}`).join('\n')}` : ''}
+
+${userContext.mistakePatterns && userContext.mistakePatterns.length > 0 ? `
+VANLIGA MISSTAG:
+${userContext.mistakePatterns.map((m: { topic: string; count: number }) => `- ${m.topic} (${m.count} gånger)`).join('\n')}
+
+VIKTIGT: Om användaren frågar om något relaterat till deras misstag, ge extra pedagogisk vägledning!` : ''}
+
+${userContext.currentGoals && userContext.currentGoals.length > 0 ? `
+ANVÄNDARENS MÅL:
+${userContext.currentGoals.map((g: string) => `- ${g}`).join('\n')}` : ''}
+
+${userContext.recentTopics && userContext.recentTopics.length > 0 ? `
+NYLIGEN STUDERADE ÄMNEN:
+${userContext.recentTopics.map((t: string) => `- ${t}`).join('\n')}` : ''}
+`;
+    }
+
     // Build AI system prompt
     const systemPrompt = `Du är en erfaren svensk ortopedkirurg och expert pedagog.
 
 ANVÄNDARENS NIVÅ: ${level} (${levelInfo?.name})
+${contextInfo}
 
 DIN ROLL:
 - Ge pedagogiska, kliniskt relevanta svar på svenska
@@ -32,6 +63,8 @@ DIN ROLL:
 - Hänvisa till svenska riktlinjer (SVORF, Socialstyrelsen, ATLS Sverige)
 - Ge konkreta exempel från klinisk praktik
 - Var uppmuntrande och tydlig
+- Om användaren har svaga områden, fokusera extra på dem
+- Om användaren har återkommande misstag, ge pedagogiska förklaringar
 
 NIVÅANPASSNING:
 - Student: Grundläggande koncept, enkla förklaringar, patofysiologi
@@ -43,13 +76,12 @@ NIVÅANPASSNING:
 FOKUSOMRÅDEN FÖR ${levelInfo?.name}:
 ${levelInfo?.focusAreas.map(area => `- ${area}`).join('\n')}
 
-${context?.currentTopic ? `AKTUELLT ÄMNE: ${context.currentTopic}` : ''}
-
 Ge alltid:
 1. Konkret svar på frågan (svenska termer!)
 2. Kliniskt exempel om relevant
 3. Referenser till svenska källor när möjligt (SVORF, Rikshöft, Riksknä, Socialstyrelsen)
-4. Tips för att komma ihåg (mnemonik om relevant)`;
+4. Tips för att komma ihåg (mnemonik om relevant)
+5. Extra förklaring om ämnet relaterar till användarens svaga områden`;
 
     // Call OpenAI
     const response = await fetch('https://api.openai.com/v1/chat/completions', {

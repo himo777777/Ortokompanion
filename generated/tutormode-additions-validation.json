@@ -1,0 +1,25 @@
+{
+  "totalQuestions": 101,
+  "successCount": 88,
+  "failureCount": 13,
+  "qualityReport": {
+    "perfectCount": 30,
+    "hasWarningsCount": 58,
+    "hasErrorsCount": 0
+  },
+  "failedQuestions": [
+    "trauma-017",
+    "trauma-018",
+    "hand-007",
+    "hand-013",
+    "hand-018",
+    "axel-009",
+    "axel-014",
+    "rygg-006",
+    "rygg-007",
+    "rygg-010",
+    "rygg-014",
+    "rygg-017",
+    "sport-011"
+  ]
+}

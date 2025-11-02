@@ -1,0 +1,113 @@
+{
+  "metadata": {
+    "domain": "knä",
+    "level": "st5",
+    "band": "A",
+    "count": 2,
+    "timestamp": "2025-11-02T01:19:54.948Z",
+    "model": "gpt-4o-mini",
+    "generatedAt": "2025-11-02T01:19:54.948Z",
+    "generator": "OrtoKompanion AI Question Generator v1.0"
+  },
+  "questions": [
+    {
+      "id": "knä-001",
+      "domain": "knä",
+      "level": "st5",
+      "band": "C",
+      "question": "En 65-årig man söker vård för smärta och svullnad i vänster knä efter att ha spelat fotboll. Han har en historia av tidigare meniskoperation. Vid klinisk undersökning noteras instabilitet vid vagusstress och smärta vid palpation av ledlinjen. Vad är den mest sannolika diagnosen?",
+      "options": [
+        "Främre korsbandsruptur",
+        "Medial meniskruptur",
+        "Patellofemoral smärtsyndrom",
+        "Artros i knäleden"
+      ],
+      "correctAnswer": "Medial meniskruptur",
+      "explanation": "Den kliniska bilden med smärta vid palpation av ledlinjen och instabilitet vid vagusstress talar starkt för en medial meniskruptur, särskilt med patientens tidigare meniskoperation. Enligt Campbell's Operative Orthopaedics (13:e upplagan) är detta en vanlig skada hos idrottare och kan bekräftas med magnetresonanstomografi (MRI). Patellofemoral smärta och artros ger oftast inte samma typ av symptom vid fysisk ansträngning och klinisk undersökning.",
+      "competency": "klinisk-färdighet",
+      "tags": [
+        "meniskruptur",
+        "knäskador",
+        "idrottsmedicin",
+        "diagnostik"
+      ],
+      "references": [
+        "campbell-13ed",
+        "ottawa-knee-rules-1997"
+      ],
+      "relatedGoals": [
+        "st5-01",
+        "st5-04"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Tänk på symptom som instabilitet och smärta vid ledlinjen.",
+          "Överväg tidigare knäskador när du formulerar din diagnos.",
+          "Kom ihåg att medial meniskruptur ofta förekommer vid sportaktiviteter."
+        ],
+        "commonMistakes": [
+          "Att tro att artros ger samma symptom som en akut meniskruptur.",
+          "Att missa vikten av tidigare knäoperation i diagnosen.",
+          "Att felaktigt prioritera patellofemoral smärta utan att undersöka ledlinjen."
+        ],
+        "teachingPoints": [
+          "Instabilitet och ledlinjesmärta är typiska för meniskrupturer.",
+          "Tidigare knäoperationer kan öka risken för framtida skador.",
+          "MRI är en viktig diagnostisk metod för att bekräfta meniskrupturer."
+        ],
+        "mnemonicOrTrick": "Mäta smärtan i knäet - Meniskens smärta kommer när det är bråttom!"
+      }
+    },
+    {
+      "id": "knä-002",
+      "domain": "knä",
+      "level": "st5",
+      "band": "C",
+      "question": "En 72-årig kvinna med svår knäartros söker vård för uttalade smärtor som påverkar hennes dagliga liv. Hon har prövat icke-kirurgiska behandlingar utan tillfredsställande resultat. Vad är den mest lämpliga kirurgiska åtgärden?",
+      "options": [
+        "Total knäprotes",
+        "Artroromi",
+        "Meniskoperation",
+        "Korsbandsrekonstruktion"
+      ],
+      "correctAnswer": "Total knäprotes",
+      "explanation": "Vid svår knäartros och brist på effektiva icke-kirurgiska behandlingar rekommenderas total knäprotes som den mest lämpliga kirurgiska åtgärden. Enligt Svenska Knäprotesregistret 2024 har total knäprotes en 5-årsöverlevnad på 96%, vilket gör det till en effektiv lösning för patienter med svår artros. Artroromi och meniskoperation är inte indicerade vid svår artros, och korsbandsrekonstruktion är inte relevant här.",
+      "competency": "kirurgisk-färdighet",
+      "tags": [
+        "knäartros",
+        "total knäprotes",
+        "kirurgi",
+        "Svenska Knäprotesregistret"
+      ],
+      "references": [
+        "rikskna-2024",
+        "campbell-13ed"
+      ],
+      "relatedGoals": [
+        "st5-02",
+        "st5-04"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Överväg kirurgiska alternativ för svår artros när icke-kirurgiska behandlingar misslyckas.",
+          "Tänk på 5-årsöverlevnad för olika kirurgiska ingrepp.",
+          "Identifiera skillnaderna mellan knäartros och andra knäskador."
+        ],
+        "commonMistakes": [
+          "Att välja meniskoperation vid svår artros.",
+          "Att tro att korsbandsrekonstruktion hjälper vid artros.",
+          "Att missa att total knäprotes har en hög överlevnadsgrad."
+        ],
+        "teachingPoints": [
+          "Total knäprotes är guldstandarden vid svår knäartros.",
+          "Svenska Knäprotesregistret visar hög 5-årsöverlevnad för knäproteser.",
+          "Icke-kirurgiska behandlingar kan vara otillräckliga vid avancerad artros."
+        ],
+        "mnemonicOrTrick": "Knee pain? Consider the total fix - the prothesis mix!"
+      }
+    }
+  ],
+  "status": "pending-review",
+  "reviewedBy": null,
+  "approvedAt": null
+}

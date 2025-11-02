@@ -1,0 +1,2015 @@
+{
+  "metadata": {
+    "totalQuestions": 101,
+    "successCount": 88,
+    "failureCount": 13,
+    "qualityReport": {
+      "perfectCount": 30,
+      "hasWarningsCount": 58,
+      "hasErrorsCount": 0
+    },
+    "generatedAt": "2025-11-02T01:57:42.876Z"
+  },
+  "results": [
+    {
+      "questionId": "trauma-006",
+      "tutorMode": {
+        "hints": [
+          "TXA ges för att minska blödning och dödlighet vid trauma, och tidsfönstret är kritiskt.",
+          "Effekten av TXA är mest uttalad om den ges inom 3 timmar efter skada, så uteslut svarsalternativ som föreslår längre tidsramar.",
+          "Tänk på att TXA ges som en initial dos på 1g IV följt av en infusion, och att effekten avtar efter 3 timmar."
+        ],
+        "commonMistakes": [
+          "Många väljer 'Inom 1 timme' eftersom det låter snabbt och effektivt, men studier visar att den optimala tiden är 3 timmar för maximal effekt.",
+          "Alternativet 'Inom 8 timmar' verkar rimligt, men effekten minskar markant efter 3 timmar, vilket gör detta val ineffektivt.",
+          "Att välja 'När som helst första dygnet' kan kännas tryggt, men fördröjning över 3 timmar kan öka risken för komplikationer och dödlighet."
+        ],
+        "teachingPoints": [
+          "CRASH-2 studien visade att TXA minskar mortalitet om den ges inom 3 timmar efter trauma.",
+          "TXA administreras initialt som 1g IV över 10 minuter, följt av 1g infusion under 8 timmar.",
+          "Att ge TXA efter 3 timmar minskar effekten, och efter 8 timmar kan det öka risken för trombos.",
+          "TXA fungerar genom att hämma fibrinolys, vilket är avgörande vid trauma för att kontrollera blödning."
+        ],
+        "mnemonicOrTrick": "3 timmar för TXA = T3X (T för TXA, 3 för tidsfönstret)"
+      }
+    },
+    {
+      "questionId": "trauma-008",
+      "tutorMode": {
+        "hints": [
+          "Flail chest involverar flera revben, vilket påverkar andningen på ett specifikt sätt.",
+          "Tänk på hur många frakturer som krävs för att skapa ett instabilt segment av bröstkorgen - det handlar om flera frakturer på flera ställen.",
+          "För att definiera flail chest behöver du fokusera på konsekutiva revben och antalet frakturer per revben."
+        ],
+        "commonMistakes": [
+          "Många väljer ≥2 revbensfrakturer på samma sida eftersom det verkar tillräckligt allvarligt, men detta definierar inte flail chest som kräver fler frakturer.",
+          "Bilateral revbensfrakturer kan verka som en allvarlig skada, men flail chest definieras specifikt av konsekutiva frakturer på samma sida.",
+          "Revbensfraktur med pneumothorax kan vara en allvarlig komplikation, men det är inte definitionen av flail chest, som handlar om antalet frakturer."
+        ],
+        "teachingPoints": [
+          "Flail chest = ≥3 konsekutiva revben med ≥2 frakturställen var.",
+          "Detta skapar ett 'flytande' segment med paradoxal andning.",
+          "Behandling inkluderar smärtlindring och andningsstöd, med kirurgisk fixation vid svår instabilitet.",
+          "Associerat med lungkontusion, vilket kräver noggrann övervakning."
+        ],
+        "mnemonicOrTrick": "Tänk '3-2 för flail' för att komma ihåg att flail chest kräver 3 revben med 2 frakturer var."
+      }
+    },
+    {
+      "questionId": "trauma-011",
+      "tutorMode": {
+        "hints": [
+          "Vid pulselessness i en extremitet är snabb intervention avgörande för att förhindra vävnadsskada.",
+          "Tänk på att varm ischemi-tid för skelettmuskulatur kan variera, men skador börjar bli irreversibla inom ett specifikt tidsfönster.",
+          "Kom ihåg att 4-6 timmar är det kritiska tidsfönstret innan risken för irreversibel vävnadsskada dramatiskt ökar."
+        ],
+        "commonMistakes": [
+          "Många väljer 1-2 timmar eftersom de tror att vävnadsskada sker snabbt, men 4-6 timmar är den mer evidensbaserade tidsramen för ischemi.",
+          "12 timmar verkar rimligt för vissa, men det är faktiskt långt över den tid då irreversible skador inträffar.",
+          "24 timmar kan tyckas som en säker tidsram för återhämtning, men i praktiken är det för länge och ökar risken för allvarliga komplikationer."
+        ],
+        "teachingPoints": [
+          "Varm ischemi-tid för skelettmuskulatur är 4-6 timmar innan irreversibel skada kan uppstå.",
+          "Risken för rabdomyolys och kompartmentsyndrom ökar dramatiskt efter 6 timmar.",
+          "Vid pulseless extremitet krävs omedelbar reponering och kärlkirurgkonsult.",
+          "Målet är att återfå 'pink, warm, well-perfused' status inom 6 timmar."
+        ],
+        "mnemonicOrTrick": "4-6 timmar = Tidsfönstret för att rädda extremiteten"
+      }
+    },
+    {
+      "questionId": "trauma-012",
+      "tutorMode": {
+        "hints": [
+          "Vid bäckenfrakturer är det viktigt att överväga både venösa och arteriella blödningskällor.",
+          "Blödning från iliaca externa är ovanlig, vilket gör att du kan fokusera på kärl som är mer involverade i bäckenblödningar.",
+          "Iliaca interna (hypogastrica) grenar är ofta involverade vid instabila bäckenfrakturer, vilket gör dem till en trolig källa till massiv blödning."
+        ],
+        "commonMistakes": [
+          "Många väljer iliaca externa eftersom den har en logisk anatomisk plats i området, men den blöder sällan vid bäckenfrakturer.",
+          "Femoralis kan verka lockande eftersom den är en stor kärlstruktur, men det är inte den vanligaste källan vid bäckenblödning.",
+          "Vena cava inferior kan också verka som en möjlig källa till blödning, men det är mycket ovanligt att den är involverad i akuta bäckenblödningar."
+        ],
+        "teachingPoints": [
+          "Vid bäckenfrakturer är venös blödning den vanligaste källan, följt av a. iliaca interna grenar.",
+          "Arteriell blödning från iliaca interna sker i ~10-20% av instabila bäckenfrakturer.",
+          "Behandling inkluderar bäckenbälte, angio-embolisering eller preperitoneal packing.",
+          "Skador på a. iliaca externa är ovanliga men kan vara katastrofala."
+        ],
+        "mnemonicOrTrick": "Iliaca interna = Bäckenblödningens huvudkälla (tänk på hypogastrica för blödning)"
+      }
+    },
+    {
+      "questionId": "trauma-014",
+      "tutorMode": {
+        "hints": [
+          "Vid behandling av nonunion är det viktigt att stimulera benläkningen genom att använda tillväxtfaktorer.",
+          "BMP-2 har visat sig ha starkast evidens för att stimulera benläkning jämfört med andra tillväxtfaktorer som PDGF och FGF.",
+          "Tänk på att BMP-2 används off-label vid recalcitrant nonunion och har dokumenterad effekt i kliniska studier."
+        ],
+        "commonMistakes": [
+          "Många väljer PDGF eftersom det är känt för sin roll i sårläkning och vävnadsregenerering, men det har inte lika stark evidens för nonunion som BMP-2.",
+          "FGF verkar lovande för benläkning, men forskning visar att BMP-2 är mer effektivt i att hantera nonunion-specifika fall.",
+          "IGF är viktigt för celltillväxt, men det saknar den specifika evidensen som BMP-2 har för att stimulera benläkning vid nonunion."
+        ],
+        "teachingPoints": [
+          "BMP-2 och BMP-7 är de tillväxtfaktorer med starkast evidens för behandling av nonunion.",
+          "Rökstopp är kritiskt; rökning ökar risken för nonunion med 3-4 gånger.",
+          "Standardbehandling för nonunion inkluderar stabilisering och autologt bentransplantat från iliac crest.",
+          "Risker med BMP-2 inkluderar heterotopisk ossifikation och inflammation, vilket är viktigt att överväga innan behandling."
+        ],
+        "mnemonicOrTrick": "Kom ihåg 'BMP är Bästa Medicinen för Protes' för att minnas att BMP-2 är det mest effektiva alternativet."
+      }
+    },
+    {
+      "questionId": "trauma-015",
+      "tutorMode": {
+        "hints": [
+          "Mangled extremity med MESS score ≥7 indikerar en allvarlig skada som kräver noggrann bedömning.",
+          "En hög MESS score innebär oftast en kombination av skelettskador och mjukdelsskador, som kan leda till svårigheter med limb salvage.",
+          "När MESS score är ≥7 och det finns tecken på ischemi och omfattande mjukdelsskador, är risken för amputation mycket hög."
+        ],
+        "commonMistakes": [
+          "Många väljer 'God prognos' eftersom de tror att modern medicin alltid kan rädda extremiteter, men en MESS score ≥7 indikerar en mycket hög risk för amputation.",
+          "Flera tror att 'Ingen användbar information' är korrekt, men MESS score är en viktig indikator för behandlingsbeslut och riskbedömning.",
+          "Vissa väljer 'Garanterad limbräddning' eftersom de hoppas på att alla skador kan bevaras, men vid MESS ≥7 finns det starka skäl att överväga amputation för att undvika komplikationer."
+        ],
+        "teachingPoints": [
+          "MESS score ≥7 har nästan 100% amputation rate.",
+          "Inkluderar faktorer som skelettskada, limbischemi, chock och patientens ålder.",
+          "Vid varm ischemi >6 timmar och massiv mjukdelsskada är risken för amputation ännu större.",
+          "Moderna metoder för limb salvage har förbättrats men är inte alltid möjliga vid hög MESS score."
+        ],
+        "mnemonicOrTrick": "MESS = Mjukdelsskada + E (ischemi) + S (skelettskada) + S (svårighetsgrad) - ju mer av detta, desto högre risk för amputation."
+      }
+    },
+    {
+      "questionId": "trauma-016",
+      "tutorMode": {
+        "hints": [
+          "Akut reponering är avgörande för att skydda den cirkulatoriska funktionen i femurhuvudet.",
+          "Dislokation av en femurfraktur kan leda till skador på viktiga blodkärl som förser femurhuvudet med blod.",
+          "Om blodflödet till femurhuvudet inte bevaras, ökar risken för avaskulär nekros betydligt."
+        ],
+        "commonMistakes": [
+          "Många väljer smärtlindring som huvudfokus eftersom det kan kännas mest omedelbart viktigt, men det adresserar inte den underliggande risken för blodförsörjning.",
+          "En del tänker att minskad blödning är avgörande, men det primära hotet är blodförsörjningen till femurhuvudet snarare än blödningen i sig.",
+          "Vissa kan fokusera på patientens komfort, men utan att bevara blodflödet kan patientens långsiktiga hälsa och funktionalitet allvarligt äventyras."
+        ],
+        "teachingPoints": [
+          "Akut reponering och fixation rekommenderas inom 6-12 timmar för att bevara blodflödet.",
+          "Dislokation i intrakapsulära frakturer ökar risken för avaskulär nekros mellan 10-45%.",
+          "Garden I-II frakturer är odislokerade och har lägre risk för avaskulär nekros än Garden III-IV frakturer.",
+          "Retinacular vessels (a. circumflexa femoris medialis) är avgörande för blodförsörjningen till femurhuvudet."
+        ],
+        "mnemonicOrTrick": "Tänk på 'Reponera för att behålla blodflödet' - ett enkelt sätt att minnas syftet med akut reponering."
+      }
+    },
+    {
+      "questionId": "trauma-017",
+      "tutorMode": null,
+      "error": "[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"null\",\n    \"path\": [\n      \"mnemonicOrTrick\"\n    ],\n    \"message\": \"Expected string, received null\"\n  }\n]"
+    },
+    {
+      "questionId": "trauma-018",
+      "tutorMode": null,
+      "error": "[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"null\",\n    \"path\": [\n      \"mnemonicOrTrick\"\n    ],\n    \"message\": \"Expected string, received null\"\n  }\n]"
+    },
+    {
+      "questionId": "trauma-019",
+      "tutorMode": {
+        "hints": [
+          "Vid periprostetiska frakturer är det viktigt att bedöma stamens stabilitet och benkvalitet för att välja rätt behandlingsmetod.",
+          "Vancouver B-klassificeringen fokuserar på frakturer runt stammen. B2 indikerar en lös stam, vilket är en avgörande faktor för behandling.",
+          "B2 innebär att benkvaliteten är god, vilket möjliggör en revision med längre stam för att stabilisera frakturen."
+        ],
+        "commonMistakes": [
+          "Många väljer 'Stabil stam, fraktur runt stammen' eftersom det låter logiskt för en fraktur, men B2 klasificerar just en lös stam, vilket är centralt för behandlingen.",
+          "Alternativet 'Lös stam, dålig benkvalitet' kan verka rimligt för en svår fraktur, men B2 definieras av god benkvalitet, vilket gör detta alternativ felaktigt.",
+          "Att välja 'Fraktur distal om stammen' kan verka som en rimlig tolkning av frakturer kring proteser, men B2 specifikt handlar om frakturer runt stammen och inte distal om den."
+        ],
+        "teachingPoints": [
+          "Vancouver B2 = lös stam + god benkvalitet.",
+          "B1 = stabil stam, B3 = lös stam + dålig benkvalitet.",
+          "Vid B2-frakturer rekommenderas ofta revision med längre stam för stabilisering.",
+          "Vancouver-klassificeringen hjälper till att bestämma behandlingsstrategi för periprostetiska frakturer."
+        ],
+        "mnemonicOrTrick": "B2 = Bra ben, Lös stam (tänk på att B står för 'Brist' i sammanhanget av stabilitet)"
+      }
+    },
+    {
+      "questionId": "trauma-020",
+      "tutorMode": {
+        "hints": [
+          "Pelvic C-type frakturer är alltid instabila, både rotations- och vertikalt.",
+          "C-typ frakturer innebär ofta en disruption av den posteriora sakroiliakaleden, vilket gör dem mer komplexa.",
+          "För att klassificera en bäckenfraktur som typ C, tänk på att den uppvisar både rotations- och vertikal instabilitet."
+        ],
+        "commonMistakes": [
+          "Många väljer 'stabil, ingen ligamentskada' eftersom det låter som en enklare frakturtyp, men C-typ frakturer är alltid instabila och involverar ligamentskador.",
+          "Alternativet 'rotationally unstable, vertikalt stabil' kan verka rimligt då det fokuserar på rotationsinstabilitet, men C-typ frakturer är instabila i båda riktningar.",
+          "Valet 'acetabulumfraktur' kan vara frestande eftersom acetabulum ofta är involverat i bäckenfrakturer, men C-typ frakturer hänvisar specifikt till instabilitet i bäckenstrukturen snarare än isolerade acetabulumfrakturer."
+        ],
+        "teachingPoints": [
+          "C-typ bäckenfrakturer är både rotations- och vertikalt instabila enligt AO/OTA systemet.",
+          "De kräver ofta en kombination av anterior och posterior fixation för att stabilisera.",
+          "Högenergitrauma är vanligt vid C-typ frakturer, vilket ger högre risk för komplikationer.",
+          "Disruption av sakroiliakaleden är en nyckelfaktor i C-typ frakturer."
+        ],
+        "mnemonicOrTrick": "Tänk 'C = Chaos', eftersom dessa frakturer är helt instabila och kräver komplex behandling."
+      }
+    },
+    {
+      "questionId": "hoeft-006",
+      "tutorMode": {
+        "hints": [
+          "Vid val av bearing surface för THA hos unga aktiva patienter är det viktigt att minimera slitage.",
+          "Ceramic-alternativ ger lägre wear rates jämfört med metal-baserade lösningar, vilket är avgörande för långsiktig hållbarhet.",
+          "Tänk på de senaste rekommendationerna som prioriterar ceramic-on-ceramic eller ceramic-on-polyethylene framför metallalternativ."
+        ],
+        "commonMistakes": [
+          "Många väljer Metal-on-polyethylene (standard) eftersom det är ett välkänt och beprövat alternativ, men det har högre wear rates hos aktiva patienter.",
+          "Metal-on-metal anses av vissa vara bäst för unga patienter, men det är utfasat pga risk för ARMD och pseudotumörer, vilket gör det olämpligt.",
+          "Polyethylene-on-polyethylene verkar som en enkel lösning, men det ger högre slitage och är därför inte optimalt för yngre aktiva patienter."
+        ],
+        "teachingPoints": [
+          "Ceramic-on-ceramic ger extremt låg wear men kan ha risker som squeaking och frakturer.",
+          "Ceramic-on-highly cross-linked polyethylene (CoXLPE) är ett alternativ med bra slitageegenskaper.",
+          "Metal-on-metal är inte längre rekommenderat pga av komplikationer som ARMD.",
+          "Valet av bearing surface bör alltid anpassas efter patientens aktivitet och ålder."
+        ],
+        "mnemonicOrTrick": "C-C för Ceramic-Ceramic; hög hållbarhet och låg wear, idealiskt för unga aktiva"
+      }
+    },
+    {
+      "questionId": "hoeft-007",
+      "tutorMode": {
+        "hints": [
+          "Vid trochantära frakturer är det viktigt att tänka på stabiliteten hos frakturen för att välja rätt behandling.",
+          "DHS är den rekommenderade metoden för stabila tvåfragmentsfrakturer, medan intramedullär spik är mer lämpad för instabila frakturer.",
+          "För äldre patienter som är 80 år rekommenderas ofta DHS för att säkerställa tidig mobilisering och minska risken för komplikationer."
+        ],
+        "commonMistakes": [
+          "Många väljer konservativ behandling eftersom det verkar mindre invasivt, men detta kan leda till ökad risk för immobilisering och komplikationer hos äldre.",
+          "Intramedullär spik lockar eftersom det verkar som en modern och effektiv metod, men det är inte förstahandsvalet för stabila trochantära frakturer.",
+          "Total höftprotes kan förefalla som en lösning för alla frakturer, men det är oftast förbehållet för patienter med samtidig artros och inte för isolerade frakturer som AO 31-A."
+        ],
+        "teachingPoints": [
+          "DHS (dynamisk höftskruv) är standardbehandling för stabila trochantära frakturer hos äldre patienter.",
+          "Tidigt mobilisering efter operation (dag 1) är avgörande för att minska mortalitet och komplikationer.",
+          "Mortaliteten efter trochantära frakturer hos äldre är ca 20% inom ett år, vilket understryker vikten av effektiv behandling.",
+          "Ortogeriatrisk samverkan rekommenderas för att optimera återhämtning och minska komplikationer."
+        ],
+        "mnemonicOrTrick": "DHS = Dynamisk Höftskruv Stabiliserar (tänk på stabilitet vid val av behandling)"
+      }
+    },
+    {
+      "questionId": "hoeft-008",
+      "tutorMode": {
+        "hints": [
+          "Akut reponering av en höftluxation är avgörande för att bevara blodflödet till femurhuvudet.",
+          "Reponering inom 6 timmar minskar risken för avaskulär nekros, vilket är en allvarlig komplikation.",
+          "Tänk på hur tidsfaktorn påverkar blodtillförseln och riskerna med fördröjd behandling."
+        ],
+        "commonMistakes": [
+          "Många väljer smärtlindring eftersom det verkar vara en viktig åtgärd, men det är inte den primära orsaken till att reponering är kritisk.",
+          "Patient comfort kan kännas viktigt i akuta situationer, men det är av sekundär betydelse jämfört med att bevara blodflödet.",
+          "Enklare reponering låter logiskt, men den verkliga risken som ökar med tiden är avaskulär nekros, vilket är mycket mer kritiskt."
+        ],
+        "teachingPoints": [
+          "Posterior höftluxation är vanlig och kan leda till avaskulär nekros om den inte reponeras snabbt.",
+          "Riskerna för avaskulär nekros ökar dramatiskt efter 6 timmar: 5-10% inom 6 timmar, 20-30% mellan 6-24 timmar och 40-50% efter 24 timmar.",
+          "N. ischiadicus ska alltid kontrolleras för att utvärdera eventuell nervskada vid luxation.",
+          "Post-reponering CT är viktigt för att utesluta acetabulumfrakturer och lösa fragment."
+        ],
+        "mnemonicOrTrick": "Tiden är avgörande: 'Inom 6 = Låg risk, 6-24 = Medioker risk, >24 = Hög risk' - kom ihåg tidsfaktorn för AVN!"
+      }
+    },
+    {
+      "questionId": "hoeft-009",
+      "tutorMode": {
+        "hints": [
+          "Young-Burgess klassificeringen fokuserar på olika kompressionsmekanismer för bäckenfrakturer.",
+          "Tänk på att LC-III innebär både ipsilateral och kontralateral skada, vilket kan utesluta enklare frakturer som pubisgren-fraktur.",
+          "I LC-III kommer du att se en windswept pelvis, vilket indikerar en komplex skada med både lateral kompression och disruption av den anteriora ringen."
+        ],
+        "commonMistakes": [
+          "Många väljer unilateral pubisgren-fraktur eftersom det verkar som en enklare skada, men det tar inte hänsyn till den komplexa mekanismen i LC-III.",
+          "Isolerad acetabulumfraktur lockar eftersom acetabulum är en central del av bäckenet, men LC-III involverar en kombination av skador, inte en isolerad.",
+          "Sacral fraktur isolerat verkar rimligt, men i LC-III är det viktigt att förstå att det involverar flera strukturer och kompressionsmekanismer."
+        ],
+        "teachingPoints": [
+          "Young-Burgess klassificering: LC (lateral compression) I-III, APC (anteroposterior compression) I-III, VS (vertical shear), CM (combined).",
+          "LC-III fraktur innebär ipsilateral lateral kompression + kontralateral anterior ring disruption.",
+          "Högrisk för massiv blödning och neurologisk skada vid LC-III, vilket kräver noggrant omhändertagande.",
+          "Fixation är ofta nödvändig för LC-III frakturer för att stabilisera bäckenet och förhindra komplikationer."
+        ],
+        "mnemonicOrTrick": "Kom ihåg 'Windswept' för att visualisera den komplexa skadan i LC-III, som är både lateral kompression och anterior disruption."
+      }
+    },
+    {
+      "questionId": "hoeft-010",
+      "tutorMode": {
+        "hints": [
+          "DAA (Direct Anterior Approach) fokuserar på att bevara muskler och strukturer i höften.",
+          "Tänk på att en av de största fördelarna med DAA är relaterad till risker som kan uppstå efter operationen.",
+          "En viktig aspekt av DAA är att den minskar risken för luxation jämfört med den vanligare posteriora metoden."
+        ],
+        "commonMistakes": [
+          "Många väljer kortare operationstid eftersom det verkar effektivt, men DAA tar ofta längre tid att utföra på grund av sin komplexitet.",
+          "Billigare alternativ kan verka lockande, men DAA har ofta högre initiala kostnader på grund av den specialiserade utrustningen och utbildningen som krävs.",
+          "Lättare för nybörjare kan vara en vanlig uppfattning, men DAA har en brantare inlärningskurva vilket kan göra det svårare för dem utan erfarenhet."
+        ],
+        "teachingPoints": [
+          "DAA bevarar abduktorerna och minskar risken för muskelskador.",
+          "Luxationsrisken med DAA är <1%, jämfört med 2-4% för posterior approach.",
+          "DAA möjliggör snabbare återhämtning för patienten.",
+          "Nackdelar med DAA inkluderar risk för LFCN-skada, som kan vara tillfällig."
+        ],
+        "mnemonicOrTrick": "Tänk 'DAA - Dubbelt Avancerad Användning' för att minnas muskel-bevarande och lägre luxationsrisk."
+      }
+    },
+    {
+      "questionId": "hoeft-011",
+      "tutorMode": {
+        "hints": [
+          "Crowe-klassificeringen används för att bedöma graden av dysplasi i höften hos vuxna.",
+          "Tänk på hur dislokationen förhåller sig till acetabulum och hur stor del av femurhuvudet som är involverad.",
+          "Crowe IV innebär en komplett dislokation, vilket innebär att femurhuvudet är helt ovanför acetabulum."
+        ],
+        "commonMistakes": [
+          "Många väljer <50% femurhuvud ovanför Shenton eftersom det låter som en mildare form av dysplasi, men detta motsvarar Crowe I och inte IV.",
+          "50-75% subluxation verkar logiskt för en allvarlig höftdysplasi, men detta är faktiskt Crowe II, vilket är mindre allvarligt än IV.",
+          "75-100% subluxation kan verka som en komplett dislokation, men det är Crowe III, vilket innebär att femurhuvudet fortfarande har viss kontakt med acetabulum."
+        ],
+        "teachingPoints": [
+          "Crowe klassificering: I (<50% sublux), II (50-75%), III (75-100%), IV (komplett dislokation).",
+          "Crowe IV kräver ofta subtrochantär shortening osteotomy vid THA för att förhindra nervskador.",
+          "Cup-positionering i 'true acetabulum' kan behöva bulk graft för att säkerställa stabilitet.",
+          "Vid Crowe IV är det viktigt att överväga riskerna med dislokation under operation."
+        ],
+        "mnemonicOrTrick": "Crowe 1-2-3-4 = I (sublux), II (sublux), III (sublux), IV (komplett dislokation - ovanför acetabulum)"
+      }
+    },
+    {
+      "questionId": "hoeft-012",
+      "tutorMode": {
+        "hints": [
+          "Vid postoperativ höft luxation efter THA bör alltid en icke-invasiv metod övervägas först.",
+          "En sluten reponering är oftast den första åtgärden, särskilt om det är första gången luxationen inträffar.",
+          "Om reponeringen är framgångsrik, kom ihåg att stabilisera med en abduktionsskena och planera för fysioterapi."
+        ],
+        "commonMistakes": [
+          "Många väljer akut revision-operation eftersom de tror att det är den mest effektiva lösningen, men det bör reserveras för recidiverande luxationer.",
+          "Avvakta spontan reponering verkar lockande då det verkar mindre ingripande, men det finns en risk för komplikationer om luxationen kvarstår.",
+          "Öppen reponering kan kännas som en direkt lösning, men det medför högre risker och är inte alltid nödvändigt, särskilt vid första luxationen."
+        ],
+        "teachingPoints": [
+          "Första luxationen efter THA bör alltid försöka reponeras sluten och i sedering/narkos.",
+          "Vid lyckad reponering rekommenderas en abduktionsskena i 6 veckor för att förhindra återkommande luxationer.",
+          "Recidiverande luxationer (≥2) kan kräva revision och analys av orsaken som malposition eller mjukdelsinsufficiens.",
+          "Det är viktigt att följa upp med fysioterapi för att undvika felpositionering och förbättra rörligheten."
+        ],
+        "mnemonicOrTrick": "Tänk 'Reponera först, operera senare' för att komma ihåg att sluten reponering är prioritet."
+      }
+    },
+    {
+      "questionId": "hoeft-013",
+      "tutorMode": {
+        "hints": [
+          "Vid bedömning av acetabulumfrakturer används specifika vyer för att optimera visualisering av kolumner och väggar.",
+          "AP-vy visar ilioischial linje och iliopectineal linje, vilket ger information om posterior och anterior kolumn, men inte de specifika aspekterna av anterior vägg.",
+          "Obturator oblique-vyn ger en klar bild av anterior kolumn och anterior vägg genom 45° intern rotation."
+        ],
+        "commonMistakes": [
+          "Många väljer AP-vy eftersom den är en vanlig standardvy, men den ger inte tillräcklig information om anterior vägg och kolumn.",
+          "Iliac oblique-vy verkar lockande då den visar flera strukturer, men det är snarare posterior kolumn och anterior vägg som framhävs, vilket inte fokuserar på anterior kolumn.",
+          "Lateral vy kan tyckas vara användbar för att se acetabulum, men den ger inte en optimal vy av anterior kolumn och vägg."
+        ],
+        "teachingPoints": [
+          "Obturator oblique visar anterior kolumn och anterior vägg effektivt.",
+          "Iliac oblique fokuserar på posterior kolumn och ger inte bra information om anterior vägg.",
+          "CT 3D rekonstruktion är standard för att bedöma acetabulumfrakturer men initiala vyer är avgörande för snabb bedömning.",
+          "Judet-vyer är avgörande för att korrekt klassificera acetabulumfrakturer enligt Letournel-klassificeringen."
+        ],
+        "mnemonicOrTrick": "Tänk på 'Obturator för Anterior' för att minnas att obturator oblique ger bästa bilden av anterior kolumn och vägg."
+      }
+    },
+    {
+      "questionId": "hoeft-014",
+      "tutorMode": {
+        "hints": [
+          "Vid slipped capital femoral epiphysis (SCFE) är det viktigt att överväga risker för kontralateral involvering.",
+          "Den kontralaterala risken för SCFE ligger mellan 20-40%, vilket gör det relevant att tänka på profylaktisk behandling.",
+          "Ung ålder och svår initial slip är faktorer som ökar behovet av att fixa kontralateralt för att förebygga framtida problem."
+        ],
+        "commonMistakes": [
+          "Många väljer att alltid göra bilateralt fixering eftersom de tror att det är standard, men det beror på riskbedömning och individuella faktorer.",
+          "Enklare rehabilitering verkar lockande men är inte en korrekt anledning till bilateralt fixering; rehabiliteringsstrategier kan vara liknande oavsett.",
+          "Många tror att man aldrig ska göra bilateralt för att undvika onödiga ingrepp, men riskerna för den andra sidan måste alltid beaktas."
+        ],
+        "teachingPoints": [
+          "SCFE förekommer oftast hos adolescenta pojkar i åldern 11-14 år, ofta relaterat till övervikt.",
+          "Risk för kontralateral SCFE är 20-40%, vilket motiverar att överväga profylaktisk pinning i vissa fall.",
+          "Behandling av SCFE innebär ofta in situ pinning för att stabilisera femurhuvudet.",
+          "Komplikationerna av SCFE inkluderar avaskulär nekros (AVN) och chondrolysis, med högre risk vid instabila slips."
+        ],
+        "mnemonicOrTrick": "Kolla alltid bilateralt - 20-40% risk = Tänk på det!"
+      }
+    },
+    {
+      "questionId": "hoeft-015",
+      "tutorMode": {
+        "hints": [
+          "Vid höftledsoperationer är det viktigt att överväga luxationsrisk, särskilt hos patienter med specifika tillstånd.",
+          "Dual-mobility cup används främst för att hantera patienter med hög risk för luxation, som de med neuromuskulära sjukdomar eller de som har genomgått revidering.",
+          "Fokus på patienter med recidiverande luxationer eller abduktorinsufficiens är centralt när du överväger dual-mobility lösningar."
+        ],
+        "commonMistakes": [
+          "Många väljer primär THA hos unga eftersom de tror att det ger bättre funktion, men dual-mobility är mer relevant för patienter med högre luxationsrisk.",
+          "Kostnadsbesparing verkar attraktivt, men det är inte en medicinsk indikation för dual-mobility cup, utan snarare patientens säkerhet och funktion som prioriteras.",
+          "Många tror att alla patienter >80 år bör få dual-mobility, men det är inte alla äldre som har samma luxationsrisk och det finns andra faktorer att beakta."
+        ],
+        "teachingPoints": [
+          "Dual-mobility cups minskar risken för luxation genom att erbjuda ökad rörlighet och stabilitet.",
+          "Indikationer för dual-mobility inkluderar neuromuskulära sjukdomar, recidiverande luxationer och revisioner.",
+          "Patienter med abduktorinsufficiens är särskilt i behov av dual-mobility för att förhindra luxation.",
+          "Intraprostetisk dislokation kan ske, men är ovanligt (<1%) och måste vägas mot fördelarna."
+        ],
+        "mnemonicOrTrick": "Tänk på 'Högt Luxationsrisk = Dual-mobility fix' för att minnas att hög risk för luxation är huvudindikation."
+      }
+    },
+    {
+      "questionId": "hoeft-016",
+      "tutorMode": {
+        "hints": [
+          "Vid intertrochantära frakturer är stabilitet avgörande för läkning och funktion.",
+          "DHS används vanligtvis för stabila frakturer, men reverse obliquity frakturer ger oftast brist på medialt stöd.",
+          "Tänk på riskerna med medialisering och varus-kollaps vid användning av DHS för frakturer utan medialt stöd."
+        ],
+        "commonMistakes": [
+          "Många väljer att tro att 'DHS fungerar utmärkt' eftersom det är en beprövad metod, men frakturer med reverse obliquity kräver mer stabila lösningar för att förhindra komplikationer.",
+          "Några anser att 'det är för dyrt' att använda mer avancerade metoder, men kostnaden för komplikationer över tid kan bli mycket högre.",
+          "Vissa tror att 'det är tekniskt omöjligt', men det handlar snarare om att förstå frakturens biomekanik och tillämpa rätt teknik för rätt typ av fraktur."
+        ],
+        "teachingPoints": [
+          "Reverse obliquity frakturer (AO 31-A3) uppvisar brist på medialt stöd.",
+          "DHS riskerar medialisering och varus-kollaps, vilket kan leda till misslyckad fixation.",
+          "Intramedullär fixation (PFN eller Gamma) ger bättre stabilitet och lägre risk för cut-out.",
+          "För subtrochantära frakturer gäller samma princip för val av fixationsmetod."
+        ],
+        "mnemonicOrTrick": "Tänk på 'MVP' - Medialt stöd Viktigt för Proximal stabilitet"
+      }
+    },
+    {
+      "questionId": "hoeft-017",
+      "tutorMode": {
+        "hints": [
+          "Pelvic discontinuity är en allvarlig komplikation vid revision-THA och påverkar kirurgiska val.",
+          "Paprosky-klassifikation används för att bedöma benkvalitet och defekter, särskilt i samband med pelvic discontinuity.",
+          "Typ 3B i Paprosky-klassifikationen indikerar en mer avancerad benförlust och är relaterad till pelvic discontinuity."
+        ],
+        "commonMistakes": [
+          "Många väljer Typ 2A eftersom den verkar indikera en mindre allvarlig benförlust, men den beskriver inte den nödvändiga komplexitet som pelvic discontinuity medför.",
+          "Typ 2B kan verka lockande eftersom den också har en del av relationen till anterior och posterior kolumn, men den hanterar inte helt separeringen av ilium och ischium som är karakteristisk för pelvic discontinuity.",
+          "Typ 3A kan verka rimlig för dem som fokuserar på benförlust, men den tar inte hänsyn till den kritiska separationsaspekten som är avgörande vid pelvic discontinuity."
+        ],
+        "teachingPoints": [
+          "Pelvic discontinuity innebär en fraktur mellan anterior och posterior kolumn, vilket skapar en komplex situation vid revision-THA.",
+          "Paprosky klassificeringen 3B innebär allvarlig benförlust och är specifik för patienter med pelvic discontinuity.",
+          "Behandling av pelvic discontinuity kräver avancerade kirurgiska tekniker som cup-cage konstruktion eller custom triflange.",
+          "Hög komplikationsrisk i revision-kirurgi vid pelvic discontinuity kräver noggrann bedömning och planering."
+        ],
+        "mnemonicOrTrick": "Kom ihåg att 3B är 'B' för 'Brittle' vilket relaterar till den allvarliga benförlusten i pelvic discontinuity."
+      }
+    },
+    {
+      "questionId": "hoeft-018",
+      "tutorMode": {
+        "hints": [
+          "Frakturer i femurhalsen kan delas in i kompression och tension baserat på belastningens riktning.",
+          "Tension side frakturer (superior) har högre risk för att utvecklas till kompletta och dislokerade frakturer.",
+          "Kirurgisk behandling rekommenderas för frakturer på tension side för att förhindra komplikationer, medan kompression side (inferior) ofta kan hanteras konservativt."
+        ],
+        "commonMistakes": [
+          "Många väljer att båda frakturerna är lika allvarliga eftersom man kan tro att båda typer av frakturer är lika vanliga, men skillnaden i behandlingsstrategi baseras på deras risk för komplikationer.",
+          "Många tror att kompression side (superior) kräver kirurgi eftersom det låter logiskt att behandla alla frakturer aggressivt, men denna typ av fraktur är oftare stabil och kan hanteras konservativt.",
+          "Många säger att det alltid är konservativ behandling, vilket verkar rimligt för en stressfraktur, men tension side frakturer har specifika risker som motiverar kirurgi."
+        ],
+        "teachingPoints": [
+          "Tension side (superior) frakturer har hög risk för avvikelse och kräver oftast kirurgisk intervention.",
+          "Compression side (inferior) frakturer är vanliga och kan ofta behandlas konservativt med 6-8 veckors icke-viktbärande.",
+          "Kirurgi för tension side kan inkludera skruvar eller DHS för att förhindra progression till en komplett fraktur.",
+          "Stressfrakturer i femurhalsen är en vanlig skada bland unga atleter, särskilt löpare, som kräver noggrann utvärdering."
+        ],
+        "mnemonicOrTrick": "Tension = T = Treatment needed (kirurgi), Compression = C = Conservative (behandling)"
+      }
+    },
+    {
+      "questionId": "hoeft-019",
+      "tutorMode": {
+        "hints": [
+          "Trendelenburgs tecken är en klinisk undersökning för att bedöma abduktorstyrka i höften.",
+          "När patienten står på ett ben, observera om det kontralaterala bäckenet sjunker. Detta tyder på svaghet i abduktorerna på standbenet.",
+          "Tänk på vilka muskler som är ansvariga för höftens abduktion - dessa muskler är avgörande för att hålla bäckenet stabilt."
+        ],
+        "commonMistakes": [
+          "Många väljer ACL-integritet eftersom knäets stabilitet ofta är i fokus, men Trendelenburgs tecken handlar om höftens abduktorer, inte knäligament.",
+          "Höftflexion kan verka relevant eftersom det involverar höftens rörelse, men Trendelenburgs tecken specifikt testar abduktorernas funktion.",
+          "Hamstring-styrka är en vanlig diagnos hos patienter med höftproblem, men det är inte det som bedöms i Trendelenburgs test, som fokuserar på abduktorer."
+        ],
+        "teachingPoints": [
+          "Trendelenburgs tecken testar funktionaliteten hos gluteus medius och minimus.",
+          "Ett positivt test innebär att det kontralaterala bäckenet sjunker när patienten står på ett ben, vilket indikerar abduktorsvaghet.",
+          "Orsaker till ett positivt Trendelenburgs tecken inkluderar abduktorruptur, nervskada (n. gluteus superior) och höftartros.",
+          "Detta test är viktigt pre-operativt för att planera kirurgiska ingrepp vid höftproblem."
+        ],
+        "mnemonicOrTrick": "Abduktorer = Gluteus  (Tänk på 'Gluteus står på ett ben')"
+      }
+    },
+    {
+      "questionId": "rygg-005",
+      "tutorMode": {
+        "hints": [
+          "Säkerhet vid pedicle screw-placering kräver noggrann övervakning av nervfunktion.",
+          "Fluoroskopi kan vara användbart, men det ger inte realtidsinformation om nervskador.",
+          "För att maximera precisionen vid skruvplacering, kombinera neurofysiologisk övervakning med navigeringsteknik."
+        ],
+        "commonMistakes": [
+          "Många väljer endast fluoroskopi eftersom det är en etablerad metod, men det ger ingen information om nervfunktion och kan leda till skador.",
+          "Användning av anatomiska landmärken verkar logisk, men det är mer benäget för mänsklig felbedömning och kan leda till missplacering.",
+          "Postoperativ CT-kontroll kan ge information om skruvens placering, men det gör inget för att förhindra nervskador under operationen."
+        ],
+        "teachingPoints": [
+          "IONM (SSEP + MEP) ger realtidsövervakning av nervfunktion och ökar säkerheten vid kirurgi.",
+          "Navigeringstekniker, såsom CT-baserad navigering eller O-arm, minskar risken för skruvmissplacering.",
+          "Kombinationen av IONM och navigering resulterar i en missplaceringsfrekvens på <5%, jämfört med 10-15% med enbart fluoroskopi.",
+          "Det är särskilt viktigt att använda dessa tekniker vid komplexa fall, såsom deformitetskirurgi eller revision."
+        ],
+        "mnemonicOrTrick": "IONM + Navigera = Säkert placera"
+      }
+    },
+    {
+      "questionId": "hand-005",
+      "tutorMode": {
+        "hints": [
+          "Fasciotomi eller fasciektomi övervägs vid betydande funktionsnedsättning i handen.",
+          "Tänk på specifika grader av kontraktur vid MCP- och PIP-leder för att avgöra behovet av operation.",
+          "Om kontrakturen i MCP-leder är över 30° eller i PIP-leder över 15°, är det en indikation för kirurgi."
+        ],
+        "commonMistakes": [
+          "Många väljer att indikera kirurgi vid alla palmar noduli eftersom de kan uppfattas som ett tecken på svår sjukdom, men noduli är vanligt förekommande utan nödvändigtvis att kräva kirurgi.",
+          "Det känns frestande att vänta till PIP >90° innan kirurgi övervägs, men detta kan leda till onödig funktionsnedsättning som kan undvikas med tidigare intervention.",
+          "Att göra kirurgi profylaktiskt vid familjehistoria kan verka logiskt, men det finns inga bevis för att detta förhindrar sjukdomens progression."
+        ],
+        "teachingPoints": [
+          "Klassiska Tubiana-indikationer: MCP >30° eller PIP >15° kontraktur.",
+          "Positivt 'table-top test' indikerar behov av kirurgi om patienten inte kan lägga handen platt mot bordet.",
+          "Behandlingsalternativ inkluderar needle aponeurotomy, enzyminjektion, limited fasciektomi eller dermofasciektomi.",
+          "Recidiv av kontraktur kan ske hos 20-50% av patienterna inom 5 år efter kirurgi."
+        ],
+        "mnemonicOrTrick": "Kom ihåg '30-15' – MCP >30° eller PIP >15° för kirurgisk indikation."
+      }
+    },
+    {
+      "questionId": "axel-005",
+      "tutorMode": {
+        "hints": [
+          "rTSA används när rotator cuff-skador leder till dålig funktion i axeln.",
+          "Tänk på tillstånd där aktiv rörelse är starkt begränsad, trots att passiv rörelse är möjlig.",
+          "Cuff tear arthropathy inkluderar både rotator cuff-ruptur och artros som påverkar axelfunktionen."
+        ],
+        "commonMistakes": [
+          "Många väljer primär glenohumeral artros eftersom det är ett vanligt tillstånd, men rTSA är inte förstahandsvalet för denna diagnos utan används mer när cuff-skador är involverade.",
+          "Recidiverande luxation verkar rimligt för en operation, men rTSA adresserar specifikt problem med cuff-skador snarare än stabilisering av luxation.",
+          "Fraktur hos unga kan kännas logiskt att operera, men rTSA är inte indicerat för yngre patienter utan fokuserar på äldre med cuff-relaterade problem."
+        ],
+        "teachingPoints": [
+          "Cuff tear arthropathy = massiv rotator cuff-ruptur + artros.",
+          "Pseudoparalysis innebär att patienten inte kan lyfta armen aktivt, trots att passiv rörelse är möjlig.",
+          "rTSA medialiserar rotationscentrum och förlitar sig på deltoideus för att kompensera för skadad cuff."
+        ],
+        "mnemonicOrTrick": "Cuff skada? rTSA är svaret! (Cuff Tear, rTSA)"
+      }
+    },
+    {
+      "questionId": "fot-005",
+      "tutorMode": {
+        "hints": [
+          "Lisfranc-leden är avgörande för fotens stabilitet och rörlighet, särskilt i förhållande till metatarsalbenen.",
+          "Tänk på de olika lederna i foten och hur de relaterar till varandra; Lisfranc-leden involverar specifika ben som direkt ansluter till metatarsalerna.",
+          "Lisfranc-ligamentet är det starkaste ligamentet i foten, och det förbinder medial cuneiform med basen av ett specifikt metatarsalben."
+        ],
+        "commonMistakes": [
+          "Många väljer Talocural joint eftersom den är den mest kända leden i foten, men den är ansvarig för fotens dorsalflexion och plantarflektion, inte för metatarsalernas stabilitet.",
+          "Subtalar joint kan verka relevant eftersom den är involverad i pronation och supination, men den ligger under Lisfranc-leden och påverkar inte direkt dess struktur.",
+          "Midtarsal joint lockar många eftersom den kopplar samman de bakre och främre delarna av foten, men den är inte specifikt relaterad till metatarsalernas funktion som Lisfranc-leden."
+        ],
+        "teachingPoints": [
+          "Lisfranc-leden är det anatomiska komplexet mellan tarsus och metatarsalben, avgörande för fotens stabilitet.",
+          "Lisfranc-ligamentet är det starkaste ligamentet i området och en skada i detta ligament kan leda till instabilitet.",
+          "Diagnos av Lisfranc-skada inkluderar viktbärande röntgen som visar >2mm diastasis mellan MT1 och MT2.",
+          "Instabila Lisfranc-skador kräver ofta kirurgisk intervention, antingen ORIF eller primär arthrodesis för att förhindra kronisk smärta och artros."
+        ],
+        "mnemonicOrTrick": "TMT = Tarso-Metatarsal-Trygg (TMT-leden ger stabilitet till metatarsalbenen)"
+      }
+    },
+    {
+      "questionId": "fot-006",
+      "tutorMode": {
+        "hints": [
+          "Vid misstänkt achillesskada är det viktigt att göra en noggrann fysisk undersökning för att bedöma funktionen i fotleden.",
+          "Det är viktigt att utföra tester som direkt bedömer plantarflexion, då detta kan indikera skador på akillessenan.",
+          "Ett specifikt test involverar kompression av vadmusklerna för att se om det ger en normal respons i form av plantarflexion."
+        ],
+        "commonMistakes": [
+          "Många väljer palpation av defekt eftersom det kan ge en snabb indikation på en skada, men det kan vara otydligt om det inte kombineras med andra tester.",
+          "Oförmåga att tåstå verkar logiskt, men det är ett mer ospecifikt tecken och kan bero på andra orsaker än en akillesskada.",
+          "Fotledsröntgen kan kännas relevant för att utesluta frakturer, men det ger ingen information om akillesskador och kan leda till felaktig diagnos."
+        ],
+        "teachingPoints": [
+          "Simmond/Thompson-testet har en sensitivitet på cirka 95% för att diagnostisera akillesruptur.",
+          "Normal respons på Simmond/Thompson-testet är plantarflexion, vilket saknas vid akillesruptur.",
+          "Behandling av akillesruptur kan vara kirurgisk eller konservativ beroende på patientens ålder och aktivitetsnivå.",
+          "Re-ruptur kan ske hos 5-10% av patienter som behandlas konservativt, jämfört med 2-5% efter kirurgisk behandling."
+        ],
+        "mnemonicOrTrick": "Simmond's test = Press and Flex (tryck och flexa foten för att testa akillessenan)"
+      }
+    },
+    {
+      "questionId": "fot-007",
+      "tutorMode": {
+        "hints": [
+          "Hawkins klassificering handlar om talusfrakturer och deras risk för avaskulär nekros (AVN).",
+          "Typ II fraktur innebär att det finns en luxation i subtalarleden, vilket skiljer sig från typ I där det inte finns någon dislokation.",
+          "Tänk på att typ III involverar både subtalar- och talocrural luxation, vilket är en viktig skillnad mot typ II."
+        ],
+        "commonMistakes": [
+          "Många väljer odislokerad thalamus-fraktur eftersom den låter mindre allvarlig, men det är inte korrekt eftersom typ II involverar en dislokation.",
+          "Alternativet talushals med subtalar + talocrural luxation kan locka eftersom det låter mer komplicerat, men det beskriver typ III, inte typ II.",
+          "Taluskroppsfraktur kan verka rimlig på grund av namnet, men det är en helt annan typ av skada som inte stämmer överens med Hawkins klassificering."
+        ],
+        "teachingPoints": [
+          "Hawkins typ I = odislokerad, låg AVN-risk (0-15%).",
+          "Hawkins typ II = subtalar luxation, måttlig AVN-risk (20-50%).",
+          "Hawkins typ III = subtalar + talocrural luxation, hög AVN-risk (80-100%).",
+          "Akut behandling för typ II inkluderar reponering och ORIF för att minska AVN-risken."
+        ],
+        "mnemonicOrTrick": "Hawkins I-II-III = Ingen, Subtalar, Både (Subtalar + talocrural) - se upp för AVN!"
+      }
+    },
+    {
+      "questionId": "fot-008",
+      "tutorMode": {
+        "hints": [
+          "Fotledens mortise är en gaffelstruktur som stabiliserar talocruralleden.",
+          "Tänk på vilka ben som skapar en stabil led för dorsi- och plantarflexion.",
+          "Rätt svar involverar tibia och fibula som bildar gaffeln, medan talus är benet som artikulerar med dessa."
+        ],
+        "commonMistakes": [
+          "Många väljer alternativ 1 (Tibia + talus + calcaneus) eftersom calcaneus är en stor del av fotens struktur, men det ingår inte i mortise för fotleden.",
+          "Alternativ 2 (Fibula + talus + calcaneus) kan verka lockande eftersom fibula och talus är involverade, men calcaneus är inte en del av mortise.",
+          "Många tror att alternativ 3 (Tibia + fibula + calcaneus) är korrekt eftersom calcaneus stödjer fotens rörelser, men det är talus som är avgörande för fotledens funktion."
+        ],
+        "teachingPoints": [
+          "Mortise består av tibia, fibula och talus, vilket ger stabilitet för fotledens rörelser.",
+          "Talocruralleden är en gångjärnsled som möjliggör dorsi- och plantarflexion.",
+          "Syndesmosligament (AITFL, PITFL, IOL) är avgörande för att hålla tibia och fibula stabila.",
+          "Subtalarleden (talus-calcaneus) ansvarar för inversion och eversion av foten."
+        ],
+        "mnemonicOrTrick": "TFT = Tibia, Fibula, Talus - kom ihåg att talus är benet som passar i gaffeln!"
+      }
+    },
+    {
+      "questionId": "fot-009",
+      "tutorMode": {
+        "hints": [
+          "Syndesmosligamentskador involverar ofta kompression och rotation av fotleden.",
+          "Tänk på tester som involverar tryck och rotation för att identifiera syndesmosligamentskador.",
+          "Squeeze test och External rotation stress test fokuserar på smärta i distala delen av benet."
+        ],
+        "commonMistakes": [
+          "Många väljer Anterior drawer eftersom det är ett välkänt test för fotledsstabilitet, men det bedömer främst främre talofibularligamentet och inte syndesmosan.",
+          "Lachman test lockar många eftersom det är standard för att bedöma knäinstabilitet, men det är irrelevant för en syndesmosligamentskada.",
+          "Varus stress test kan verka logiskt för att bedöma fotledens stabilitet, men det riktar sig mot medial stabilitet och inte syndesmosan."
+        ],
+        "teachingPoints": [
+          "Syndesmosligamentskador (AITFL, PITFL) orsakas ofta av hög ankelstam.",
+          "Squeeze test: kompression av fibula mot tibia vid mid-calf ger smärta vid syndesmosligamentskada.",
+          "External rotation stress test: rotation av foten med knäet 90° ger distala smärtor vid skada.",
+          "Röntgen: medialt clear space >4mm och tibiofibular overlap <6mm indikerar instabilitet."
+        ],
+        "mnemonicOrTrick": "Squeeze & Rotate = Syndesmosis (tryck och rotation för att testa ligament)"
+      }
+    },
+    {
+      "questionId": "fot-010",
+      "tutorMode": {
+        "hints": [
+          "TAA rekommenderas för patienter med god mobilitet och benkvalitet.",
+          "Tänk på att TAA är indicerat vid isolerad fotledsartros, inte vid fler ledengagemang.",
+          "Kom ihåg att patientens compliance är avgörande för att TAA ska lyckas."
+        ],
+        "commonMistakes": [
+          "Många väljer 'alla fotledsartroser' eftersom det verkar som en bred indikation, men TAA är främst för isolerad artros.",
+          "Charcot-fot kan kännas som en potentiell indikation för TAA, men det är faktiskt en kontraindikation på grund av instabilitet.",
+          "Posttraumatisk malunion lockar vissa, men TAA kräver god benkvalitet och rätt alignment, vilket ofta saknas efter malunion."
+        ],
+        "teachingPoints": [
+          "TAA indikeras vid >30° rörelseomfång (ROM) och god benkvalitet.",
+          "Kontraindikationer inkluderar Charcot, aktiv infektion och AVN i talus.",
+          "TAA ger bättre mobilitet än arthrodesis, men överlevnad för TAA är ~80% vid 10 år, jämfört med >95% för arthrodesis.",
+          "Isolerad fotledsartros är en nyckelindikator för TAA."
+        ],
+        "mnemonicOrTrick": "Bästa ROM, Bra Ben, Isolerad Artros, Compliance = TAA"
+      }
+    },
+    {
+      "questionId": "fot-011",
+      "tutorMode": {
+        "hints": [
+          "Tänk på att Essex-Lopresti klassificeringen fokuserar på hur frakturen påverkar den posteriora fasetten av calcaneus.",
+          "Tongue-type innebär att fragmentet av den posteriora fasetten följer med tuberositeten, medan joint-depression typen innebär en central impression som kan leda till mer komplicerad rekonstruktion.",
+          "Fokusera på skillnaden mellan hur fragmenten ligger i relation till tuberositeten och det centrala området av calcaneus för att särskilja de två typerna."
+        ],
+        "commonMistakes": [
+          "Många väljer 'Båda extrartikulära' eftersom de kan tro att frakturer ofta är oberoende av ledytor, men både tongue-type och joint-depression är intrartikulära.",
+          "Många väljer 'Ingen skillnad' eftersom de kanske inte känner till de kliniska konsekvenserna av de olika typerna, men det finns viktiga skillnader i behandlingsstrategi och prognos mellan dem.",
+          "Många tror att 'Tongue alltid konservativ' eftersom de kanske känner att det låter mindre invasivt, men tongue-type frakturer kan kräva kirurgisk intervention beroende på graden av dislokation."
+        ],
+        "teachingPoints": [
+          "Tongue-type calcaneusfraktur innebär att fragmentet av den posteriora fasetten följer med tuberositeten, vilket ofta ger en enklare rekonstruktion.",
+          "Joint-depression type innebär en central impression av den posteriora fasetten och är generellt mer komplicerad att behandla.",
+          "ORIF rekommenderas för dislocerade intrartikulära frakturer hos unga och aktiva patienter för att minska risken för posttraumatisk artros.",
+          "Komplikationer inkluderar kompartmentsyndrom och posttraumatisk artros, vilket kan leda till behov av subtalar arthrodesis hos 15-40% av patienterna."
+        ],
+        "mnemonicOrTrick": "Tänk på 'Tunga' för Tongue-type och 'Central' för Joint-depression för att minnas typens karaktär."
+      }
+    },
+    {
+      "questionId": "fot-012",
+      "tutorMode": {
+        "hints": [
+          "Kirurgi övervägs ofta för hallux valgus när symtom påverkar patientens livskvalitet.",
+          "Tänk på att kirurgi kan bli aktuellt vid större vinklar - börja eliminera de lägre vinklarna.",
+          "När hallux valgus-vinkeln överstiger 30°, eller om symtom är kvarstående trots konservativ behandling, bör kirurgi övervägas."
+        ],
+        "commonMistakes": [
+          "Många väljer >10° eftersom de tror att även små vinklar är problematiska, men kirurgi rekommenderas först vid >30° eller symtom.",
+          "Vissa anser >15° som tillräckligt för operation, men riktlinjerna anger att det är >30° som är aktuellt om symtom finns.",
+          "Att alltid välja kirurgi är lockande för att snabbt lösa problemet, men det är inte evidensbaserat och konservativ behandling kan vara effektiv vid lägre vinklar."
+        ],
+        "teachingPoints": [
+          "Hallux valgus opereras oftast vid >30° eller vid kvarstående symtom trots konservativ behandling.",
+          "Konservativ behandling inkluderar breda skor och ortoser eftersom de kan lindra symtom hos många patienter.",
+          "Olika kirurgiska metoder används beroende på vinkel och ledstatus, inklusive osteotomi och arthrodesis.",
+          "Risker och fördelar med kirurgi måste alltid vägas mot patientens symptom och livskvalitet."
+        ],
+        "mnemonicOrTrick": "Tänk på '30° för kirurgi - om symtom, ta i tur och ordning!'"
+      }
+    },
+    {
+      "questionId": "fot-013",
+      "tutorMode": {
+        "hints": [
+          "Vid behandling av Charcot fot är immobilisering avgörande för att förhindra ytterligare skador.",
+          "Tänk på att kirurgiska ingrepp ofta är en sista utväg och inte den första behandlingen i den akuta fasen.",
+          "I den akuta fasen av Charcot fot är det viktigt att hålla foten helt stilla och avlastad för att möjliggöra läkning."
+        ],
+        "commonMistakes": [
+          "Många väljer omedelbar arthrodesis eftersom de tror att kirurgi ger snabbare stabilisering, men det kan leda till komplikationer och är oftast inte första steget.",
+          "Antibiotika kan verka lockande för att behandla inflammation, men infektion är sällan orsaken till Charcot fot, vilket gör detta alternativ ineffektivt.",
+          "Amputation kan verka som en lösning för att hantera svåra fall, men det är en sista utväg och bör undvikas genom rätt behandling i de tidiga skedena."
+        ],
+        "teachingPoints": [
+          "Charcot fot behandlas bäst med total contact cast och non-weight bearing i den akuta fasen.",
+          "Eichenholtz klassifikation används för att bedöma sjukdomens stadium och dess behandling.",
+          "Behandlingen syftar till att förhindra fotens kollaps och möjliggöra konsolidering under 3-6 månader.",
+          "Kirurgi är indicerat enbart vid instabil deformitet eller risk för ulceration."
+        ],
+        "mnemonicOrTrick": "Tänk på 'Caste för Charcot' = Total Contact Cast är den primära behandlingen"
+      }
+    },
+    {
+      "questionId": "fot-014",
+      "tutorMode": {
+        "hints": [
+          "Konservativ behandling är förstahandsvalet för plantar fasciit, med fokus på smärtlindring och återhämtning.",
+          "Eliminera kirurgisk release och amputation, eftersom dessa är invasiva alternativ och inte förstahandsval.",
+          "Fokusera på sträckning av fascia och gastrocnemius, kombinera med NSAID och ortoser för optimal behandling."
+        ],
+        "commonMistakes": [
+          "Många väljer kirurgisk release eftersom det verkar vara en snabb lösning, men detta är en sista utväg och rekommenderas endast efter misslyckad konservativ behandling.",
+          "Steroidinjektioner kan verka lockande för snabb smärtlindring, men de medför risk för fascia-ruptur och ska användas med försiktighet.",
+          "Amputation kan ses som en drastisk åtgärd för svår smärta, men det är helt olämpligt för plantar fasciit där konservativa metoder är effektiva."
+        ],
+        "teachingPoints": [
+          "Plantar fasciit är den vanligaste orsaken till hälsmärta; 90% svarar på konservativ behandling.",
+          "Stretching av gastrocnemius och plantar fascia är centralt i behandlingen.",
+          "NSAID och ortoser rekommenderas för smärtlindring och stöd.",
+          "Night splints kan bidra till att minska morgonsmärta genom att hålla foten i sträckt läge under natten.",
+          "Shock wave therapy kan övervägas om symtom kvarstår efter 6 månader av konservativ behandling."
+        ],
+        "mnemonicOrTrick": "Kom ihåg 'SNO' för att minnas förstahandsbehandlingen: Stretching, NSAID, Ortoser."
+      }
+    },
+    {
+      "questionId": "fot-015",
+      "tutorMode": {
+        "hints": [
+          "Morton neurom är en vanlig orsak till metatarsalgi och är relaterad till en nerv i foten.",
+          "Fokusera på de webspace som är mest belastade vid metatarsalgi; de flesta neurom finns mellan metatarsalbenen.",
+          "Tänk på att det mest drabbade området ofta är där trycket är som störst mellan två specifika metatarsalben."
+        ],
+        "commonMistakes": [
+          "Många väljer 1:a webspace eftersom det är det mest framträdande området, men Morton neurom är mer vanligt i de webspace där det finns större tryck och friktion.",
+          "2:a webspace kan verka lockande eftersom det är nära stortån, men det är faktiskt mindre vanligt än 3:e webspace för Morton neurom.",
+          "4:e webspace kan verka rimligt eftersom det är ett område med nervförgreningar, men det är sällan den vanligaste platsen för neurom."
+        ],
+        "teachingPoints": [
+          "Morton neurom är vanligast i 3:e webspace, drabbar cirka 75% av fallen.",
+          "Symtomen inkluderar metatarsalgi, brännande smärta och känselbortfall i angränsande tår.",
+          "Behandling kan inkludera breda skor, metatarsalpad och steroidinjektioner.",
+          "Kirurgi (neurektomi eller dekompression) övervägs vid refraktära fall."
+        ],
+        "mnemonicOrTrick": "Tänk på '3-musketerare' för att minnas att 3:e webspace är den mest drabbade platsen för Morton neurom."
+      }
+    },
+    {
+      "questionId": "fot-016",
+      "tutorMode": {
+        "hints": [
+          "Vid avaskulär nekros av talus är kirurgisk intervention oftast nödvändig för att återställa funktionen.",
+          "Konservativ behandling är inte alltid tillräcklig, särskilt vid avancerad kollaps och artros.",
+          "Tänk på att vid avancerad avaskulär nekros och betydande ledskador, är stabilisering av flera ledytor nödvändig."
+        ],
+        "commonMistakes": [
+          "Många väljer 'konservativ alltid' eftersom det verkar mindre invasivt, men det kan leda till försämrad funktion vid avancerad AVN.",
+          "Core decompression lockar med att vara en mindre operation, men det är oftast ineffektivt vid avancerad kollaps av talus.",
+          "TAA (Total Ankle Arthroplasty) kan verka som en modern lösning, men det är kontraindicerat vid avaskulär nekros på grund av hög risk för misslyckande."
+        ],
+        "teachingPoints": [
+          "Talus AVN kräver kirurgisk behandling när kollaps och artros utvecklas.",
+          "TTC arthrodesis är en effektiv metod för att fusionera fotled och subtalarled vid avancerad AVN.",
+          "Blair fusion innebär att man tar bort talus och fuserar tibia med calcaneus, vilket kan vara en bra lösning vid AVN.",
+          "Prognosen för talus AVN är utmanande, och i svåra fall kan amputation bli nödvändig."
+        ],
+        "mnemonicOrTrick": "TTC = Tibiotalocalcaneal, tänk på 'Tre ledytor för stabilitet'"
+      }
+    },
+    {
+      "questionId": "fot-017",
+      "tutorMode": {
+        "hints": [
+          "Fotens skelett består av flera ben, men ett av dessa utgör hälbenet och har en central roll i gång och viktbärande aktiviteter.",
+          "Tänk på de ben i foten som har en storlek som påverkar dess funktion, särskilt de som är involverade i fotledens rörelser.",
+          "Det största benet i foten är också det ben som artikulerar med talus och utgör en viktig del av subtalärleden."
+        ],
+        "commonMistakes": [
+          "Många väljer talus eftersom det är centralt placerat i fotledens struktur, men talus är faktiskt mindre än calcaneus och har andra funktioner.",
+          "Cuboid kan verka lockande eftersom det är en del av fotens laterala struktur, men det är betydligt mindre än calcaneus.",
+          "Naviculare kan verka viktigt för fotens rörelse, men det är också ett mindre ben jämfört med calcaneus."
+        ],
+        "teachingPoints": [
+          "Calcaneus är fotens största ben och utgör hälbenet.",
+          "Calcaneus spelar en avgörande roll i häl-strike och viktbärande funktioner.",
+          "Calcaneus artikulerar med talus och cuboid, vilket är viktigt för fotens biomekanik.",
+          "Achillessenan fäster på calcaneal tuberosity, vilket är centralt för kraftöverföring vid gång."
+        ],
+        "mnemonicOrTrick": "Kom ihåg: 'Calcaneus är King of the Heel' - det är det största benet i foten."
+      }
+    },
+    {
+      "questionId": "fot-018",
+      "tutorMode": {
+        "hints": [
+          "När du misstänker en fotledsskada, kom ihåg att alltid undersöka hela fibula upp till knäet för att utesluta proximal fibulafraktur.",
+          "En proximal fibulafraktur kan ofta vara associerad med skador på den mediala malleolen eller syndesmosen. Tänk på vad som kan hända vid extern rotation.",
+          "Maisonneuve-frakturen involverar alltid en proximal fibulafraktur och antingen en deltoidruptur eller en syndesmoseskada."
+        ],
+        "commonMistakes": [
+          "Många väljer medial malleolfraktur eftersom den är vanlig vid fotledsskador, men Maisonneuve-frakturen kräver även en fibulafraktur för att stämma.",
+          "Calcaneusfraktur lockar många på grund av dess frekvens vid fall, men den påverkar inte fibulan och är därmed irrelevant i detta sammanhang.",
+          "Talusfraktur kan verka liknande, men det involverar inte fibulafrågan som är central för Maisonneuve-frakturen."
+        ],
+        "teachingPoints": [
+          "Maisonneuve-fraktur = proximal fibulafraktur + antingen medial malleolfraktur eller syndesmoseskada.",
+          "Skademekanismen är ofta extern rotation, vilket är viktigt att fråga om vid anamnes.",
+          "Proximal fibulafraktur kan vara asymptomatisk, så alltid palpera fibulan vid medial fotledsskada.",
+          "Behandling inkluderar ofta ORIF av medial malleol och syndesmosfixation, medan fibulafrakturen oftast läker konservativt."
+        ],
+        "mnemonicOrTrick": "Minnesregel: 'Maisonneuve = M = Medial + Proximal' (tänk på både medial malleol och proximal fibula)"
+      }
+    },
+    {
+      "questionId": "fot-019",
+      "tutorMode": {
+        "hints": [
+          "Kronisk lateral fotledsstabilitet handlar om att återskapa stabiliteten i fotledens laterala ligament.",
+          "Vid modifierad Broström-reparation fokuserar vi på ligament som är direkt involverade i lateral stabilitet, vilket utesluter ligament på den mediala sidan.",
+          "Tänk på de två viktigaste ligamenten på laterala sidan av fotleden som ofta skadas vid distorsioner."
+        ],
+        "commonMistakes": [
+          "Många väljer deltoid eftersom det är ett viktigt ligament i fotleden, men deltoid är medialiskt och inte involverat i lateral instabilitet.",
+          "Syndesmosis kan verka relevant för stabilitet, men det handlar om tibia-fibula samband och påverkar inte direkt lateral stabilitet.",
+          "Spring ligament kan ses som viktigt för fotvalvet, men det har ingen direkt roll i lateral stabilitet och är därför felaktigt här."
+        ],
+        "teachingPoints": [
+          "Kronisk lateral instabilitet behandlas ofta med modifierad Broström för att rekonstruera ATFL och CFL.",
+          "Indikationer för operation inkluderar funktionell instabilitet efter minst 3-6 månaders konservativ behandling.",
+          "Success rates för modifierad Broström ligger mellan 85-95%, vilket gör det till en effektiv metod.",
+          "Reparationen inkluderar förstärkning med extensor retinaculum för att öka stabiliteten."
+        ],
+        "mnemonicOrTrick": "ATFL + CFL = Alltid Tillsammans För Lateral stabilitet"
+      }
+    },
+    {
+      "questionId": "hand-007",
+      "tutorMode": null,
+      "error": "[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"null\",\n    \"path\": [\n      \"mnemonicOrTrick\"\n    ],\n    \"message\": \"Expected string, received null\"\n  }\n]"
+    },
+    {
+      "questionId": "hand-008",
+      "tutorMode": {
+        "hints": [
+          "Vid handbesvär är det viktigt att tänka på hur sener och pulleys fungerar, särskilt vid flektion.",
+          "Tänk på att en förtjockning av en pulley kan skapa problem för flexorsenan, vilket leder till symptom.",
+          "Vid en låsning av fingret är det oftast en specifik struktur som orsakar detta, vilket pekar mot en stenosering."
+        ],
+        "commonMistakes": [
+          "Många väljer flexorsenruptur eftersom det kan verka rimligt att det handlar om en skada, men trigger finger involverar oftast inte en ruptur utan snarare en förtjockning av en struktur.",
+          "Nervskompression kan verka lockande eftersom det också kan orsaka smärta och problem i handen, men det är inte den primära orsaken till låsningen i trigger finger.",
+          "Artrit kan leda till fingerproblem och smärta, men trigger finger är specifikt relaterat till en mekanisk obstruktion i senan snarare än en inflammatorisk process."
+        ],
+        "teachingPoints": [
+          "Trigger finger orsakas av stenosering av A1-pulley och nodulbildning på flexorsenan.",
+          "Symptomen inkluderar smärta och låsning av fingret, ofta vid flektion.",
+          "Behandling kan vara konservativ med splint eller steroidinjektion, men kirurgisk behandling (A1-pulley release) är effektiv vid refraktäritet.",
+          "Vanligast drabbade fingrar är ringfingret och tummen."
+        ],
+        "mnemonicOrTrick": "Tänk på \"Trigger-finger = A1-pulley: Stenoserar, låser, lossnar\""
+      }
+    },
+    {
+      "questionId": "hand-009",
+      "tutorMode": {
+        "hints": [
+          "Vid avancerad SLAC (scapholunate advanced collapse) är kirurgisk behandling oftast nödvändig för att återfå funktion.",
+          "Konservativ behandling kan vara lockande i tidiga stadier, men vid avancerad SLAC är det viktigt att tänka på mer destruktiva metoder som bevarar handens funktion.",
+          "Proximal row carpectomy bevarar rörlighet, men four-corner fusion ger bättre stabilitet och styrka i handleden."
+        ],
+        "commonMistakes": [
+          "Många väljer konservativ behandling eftersom det verkar mindre invasivt, men det är oftast otillräckligt vid avancerad SLAC och kan leda till fortsatt smärta och funktionsnedsättning.",
+          "Scapholunate ligament repair kan verka som en logisk åtgärd, men det är mer effektivt i tidigare stadier av SLAC, inte när kollaps redan har inträffat.",
+          "Total handled arthrodesis kan verka som en lösning för svåra fall, men det ger en permanent förlust av rörlighet och används sällan om inte panartros föreligger."
+        ],
+        "teachingPoints": [
+          "SLAC progression involverar flera steg: SL-dissociation, radiolunate artros och slutligen total kollaps.",
+          "Proximal row carpectomy (PRC) innebär att avlägsna scaphoid, lunate och triquetrum, vilket kan vara enklare men har sämre styrka.",
+          "Four-corner fusion bevarar mer styrka och stabilitet i handleden och rekommenderas vid avancerad SLAC.",
+          "Tidiga stadiumsbehandlingar som ligamentrekonstruktion är mer framgångsrika innan den avancerade SLAC-stadiet uppnås."
+        ],
+        "mnemonicOrTrick": "PRC vs Four-Corner: 'PRC är lätt som en plätt, men four-corner ger styrka i varje klätt.'"
+      }
+    },
+    {
+      "questionId": "hand-010",
+      "tutorMode": {
+        "hints": [
+          "Intrinsic handmuskulatur är avgörande för finmotorik och gripfunktion, och innerveras av specifika nerver.",
+          "Tänk på att de flesta intrinsic muskler i handen, inklusive interossei och lumbricals, får sin innervation från en nerv som även påverkar hypothenar-musklerna.",
+          "Den nerv som innerverar majoriteten av dessa muskler är den som också är ansvarig för att förhindra clawhand, ett tillstånd som uppstår vid skada på denna nerv."
+        ],
+        "commonMistakes": [
+          "Många väljer n. medianus eftersom den innerverar de laterala lumbricals och thenar-musklerna, men den täcker inte alla intrinsic muskler, särskilt inte interossei.",
+          "N. radialis verkar lockande då den innerverar extensorer, men den är inte involverad i innervationen av de flesta intrinsic handmuskler.",
+          "N. musculocutaneus kan verka relevant då den är nära relaterad till armbågen och överarmen, men den har ingen funktion i handens intrinsiska muskler."
+        ],
+        "teachingPoints": [
+          "N. ulnaris innerverar alla interossei, medial 2 lumbricals, hypothenar-muskler och adductor pollicis.",
+          "N. medianus innerverar de laterala 2 lumbricals och thenar-musklerna, men inte interossei.",
+          "Ulnarispares resulterar i clawhand, där MCP-lederna hyperextenderas och IP-lederna flekteras.",
+          "Klinisk bedömning av handens funktion inkluderar testning av både n. ulnaris och n. medianus för att identifiera skador."
+        ],
+        "mnemonicOrTrick": "Ulnaris = Under (intrinsic) + Clawhand (skada ger clawhand)"
+      }
+    },
+    {
+      "questionId": "hand-011",
+      "tutorMode": {
+        "hints": [
+          "De Quervains tenosynovit involverar flexor- och extensor-senor i handen, vilket kräver specifika tester för diagnos.",
+          "Tänk på tester som fokuserar på smärta i handleden och tummen vid rörelse, och uteslut tester som är relaterade till karpaltunnelsyndrom.",
+          "Det mest specifika testet för att påvisa inflammation i första dorsala kompartmentet involverar att böja tummen och vrida handleden."
+        ],
+        "commonMistakes": [
+          "Många väljer Phalens test eftersom det är välkänt för karpaltunnelsyndrom, men detta test är inte relevant för De Quervains tenosynovit.",
+          "Tinels tecken verkar logiskt eftersom det också används för neurologiska tillstånd, men det utvärderar en helt annan struktur - medianusnerven.",
+          "Froments sign kan verka rimligt eftersom det involverar tummen, men det testar funktion av ulnarisnerven snarare än seninflammation."
+        ],
+        "teachingPoints": [
+          "De Quervains tenosynovit orsakas av inflammation av APL och EPB senorna i första dorsala kompartmentet.",
+          "Finkelsteins test är specifikt för att provocera fram smärta vid De Quervains, vilket gör det till det mest relevanta testet.",
+          "Behandlingen av De Quervains inkluderar ofta en thumb spica splint och NSAID, med kirurgi som sista utväg.",
+          "Tidigare studier visar att steroidinjektioner kan vara effektiva vid behandlingen av De Quervains tenosynovit."
+        ],
+        "mnemonicOrTrick": "Finkelsteins test = Finkel = Tumme och handled (tänk på en vinklad hand med tummen inåt)"
+      }
+    },
+    {
+      "questionId": "hand-012",
+      "tutorMode": {
+        "hints": [
+          "Zone 2, även kallat 'no man's land', är en kritisk region för flexorsenor och kräver noggrann hantering vid skador.",
+          "Flera strukturer är involverade i Zone 2, inklusive både FDS och FDP; tänk på hur dessa löper genom fibro-osseösa kanaler.",
+          "Reparation av flexorsenor i Zone 2 innebär risken för komplikationer som adhesions, vilket kan leda till stelhet."
+        ],
+        "commonMistakes": [
+          "Många väljer 'Ingen blodförsörjning' eftersom det verkar logiskt att avsaknad av blodflöde skulle leda till svårigheter, men det är inte det primära problemet i denna zon.",
+          "Många tror att 'För distalt' är ett problem, men Zone 2 är specifikt definierad och det handlar mer om den komplexa anatomiska strukturen där.",
+          "Många kan välja 'Nervskador' som ett alternativ, men nervskador är inte det mest centrala problemet i Zone 2, utan snarare senornas relation och reparation."
+        ],
+        "teachingPoints": [
+          "Zone 2 omfattar området mellan A1 pulley och FDS-insertion; här löper FDS och FDP i en trång kanal.",
+          "Reparation av flexorsenor i detta område har en hög risk för adhesions, vilket kan leda till stelhet i fingret.",
+          "Moderna kirurgiska tekniker, som core-suturer och tidig skyddad rörelse, har förbättrat resultaten av flexorsenereparationer.",
+          "FDP (Flexor digitorum profundus) är kritisk för DIP-flexion - en funktion som är avgörande för handens rörelse."
+        ],
+        "mnemonicOrTrick": "FDS + FDP = Flexor Duo för Zone 2 (tänk på att båda är viktiga i denna region)"
+      }
+    },
+    {
+      "questionId": "hand-013",
+      "tutorMode": null,
+      "error": "[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"null\",\n    \"path\": [\n      \"mnemonicOrTrick\"\n    ],\n    \"message\": \"Expected string, received null\"\n  }\n]"
+    },
+    {
+      "questionId": "hand-014",
+      "tutorMode": {
+        "hints": [
+          "Vid behandling av DRUJ instabilitet är det viktigt att först identifiera om skadan är akut eller kronisk.",
+          "Akuta skador med TFCC-skada behandlas oftast med artroskopisk eller öppen repair, medan kroniska instabiliteter kräver rekonstruktion av TFCC.",
+          "För kronisk instabilitet överväg TFCC-rekonstruktion, speciellt om det finns ulnar positiv variance."
+        ],
+        "commonMistakes": [
+          "Många väljer radial osteotomi eftersom det kan verka som en lösning för instabilitet, men det adresserar inte den underliggande TFCC-skadan.",
+          "Ulnar shortening endast kan verka lockande för att minska smärta, men det löser inte instabiliteten som orsakas av TFCC-skadan.",
+          "Att välja ingen behandling kan kännas som en säker väg, men obehandlad DRUJ instabilitet kan leda till allvarliga långsiktiga komplikationer och funktionsnedsättning."
+        ],
+        "teachingPoints": [
+          "TFCC-skada är den vanligaste orsaken till DRUJ instabilitet.",
+          "Akut TFCC-skada behandlas med repair, medan kronisk instabilitet kan kräva rekonstruktion.",
+          "Instabilitet testas med piano key test, som jämförs med den kontralaterala sidan.",
+          "Ulnar shortening övervägs vid ulnar positiv variance, men är inte alltid den primära behandlingen."
+        ],
+        "mnemonicOrTrick": "TFCC Repair, Rekonstruktion - Tänk på Ulnar Variance (TRU)"
+      }
+    },
+    {
+      "questionId": "hand-015",
+      "tutorMode": {
+        "hints": [
+          "Vid behandling av mallet finger är det viktigt att hålla den drabbade leden i rätt position för att möjliggöra läkning.",
+          "Eliminera kirurgi och amputation som alternativ, eftersom konservativ behandling är förstahandsvalet vid mallet finger, om det inte finns stora avvikelser.",
+          "Kom ihåg att DIP-splintning i full extension är avgörande för att förhindra långvariga funktionella problem."
+        ],
+        "commonMistakes": [
+          "Många väljer omedelbar kirurgi eftersom det verkar som en snabb lösning, men detta är endast indicerat vid stora bony avulsioner eller misslyckad konservativ behandling.",
+          "PIP-splint kan verka logiskt eftersom det involverar fingret, men det är DIP-leder som behöver stabilisering för att återfå funktion.",
+          "Amputation kan verka som en drastisk åtgärd om skadan verkar allvarlig, men mallet finger kan oftast behandlas framgångsrikt med splintning."
+        ],
+        "teachingPoints": [
+          "Mallet finger orsakas av avulsion av extensorsen från distal falang, vilket leder till att DIP-leden droppar.",
+          "Behandling med DIP-splint i full extension i 6-8 veckor är evidensbaserad och kritisk för att återfå normal funktion.",
+          "Compliance med splintning är avgörande; även kort tid utan splint kan leda till dålig läkning.",
+          "Kirurgisk intervention övervägs endast vid stora avvikelser eller om konservativ behandling misslyckas."
+        ],
+        "mnemonicOrTrick": "DIP-splint 6-8 veckor = 'DIP it or lose it!'"
+      }
+    },
+    {
+      "questionId": "hand-016",
+      "tutorMode": {
+        "hints": [
+          "Skador på tumme och handled är vanliga vid sport, särskilt vid fall med utsträckta fingrar.",
+          "Tänk på vilket ligament som stabiliserar tumme-MCP-ledens mediala sida, särskilt vid valgusstress.",
+          "UCL-skador uppstår ofta vid fall och kan ge upphov till karaktäristiska symtom som instabilitet vid rörelse."
+        ],
+        "commonMistakes": [
+          "Många väljer radial kollateralligament eftersom det också är involverat i tummeledens stabilitet, men det är det laterala ligamentet som oftast skadas vid denna typ av trauma.",
+          "Volära plattan verkar lockande eftersom den är en viktig struktur i tummeledens funktion, men den är inte direkt involverad i Gamekeepers' thumb-skador.",
+          "TFCC (triangulär fibrocartilage komplex) kan verka relevant för handledsskador, men det påverkar inte direkt stabiliteten i tumme-MCP-leden vid denna typ av skada."
+        ],
+        "teachingPoints": [
+          "Gamekeepers/Skiers thumb innebär en UCL-skada i tumme-MCP-led.",
+          "Skadan sker ofta vid fall på en utsträckt tumme, typiskt med skidstav.",
+          "Valgus stress-test är avgörande för att bedöma graden av ruptur: >30° indikerar komplett ruptur.",
+          "Stener lesion kan hindra läkning av UCL och kräver kirurgisk intervention."
+        ],
+        "mnemonicOrTrick": "Minne: 'UCL = Tumme, Ulnar, Kontroll' för att komma ihåg att UCL är det viktiga ligamentet vid tumskador."
+      }
+    },
+    {
+      "questionId": "hand-017",
+      "tutorMode": {
+        "hints": [
+          "Erbs pares påverkar de muskler som är innervierade av C5 och C6 spinalnerverna, vilket påverkar specifika rörelser i armen.",
+          "Fokusera på rörelser som involverar axelns abduktion och armbågens flexion för att förstå vad som går förlorat vid en skada på dessa nivåer.",
+          "Tänk på den klassiska 'waiter's tip' positionen – vad händer med armen i den positionen?"
+        ],
+        "commonMistakes": [
+          "Många väljer 'Handled extension' eftersom det verkar logiskt att skador påverkar handens rörelser, men det är faktiskt innervierat av nerver längre ner i plexus.",
+          "'Finger extension' är ett frestande val eftersom man tänker på handens rörelser, men dessa muskler är också innervierade av C8-T1, inte C5-C6.",
+          "'Intrinsic handmuskulatur' kan verka rimligt eftersom det involverar handens funktion, men den är kopplad till den nedre delen av plexus (C8-T1), inte Erbs pares."
+        ],
+        "teachingPoints": [
+          "Erbs pares involverar C5-C6 och leder till förlorad axel abduktion och armbågsflexion.",
+          "Typisk presentation av Erbs pares är 'waiter's tip' positionen: axel adducerad och inåtroterad, armbåge sträckt.",
+          "Neonatal brachial plexus skada är den vanligaste formen, ofta relaterad till förlossningskomplikationer.",
+          "Behandling inkluderar fysioterapi och kan kräva kirurgi vid bestående svaghet."
+        ],
+        "mnemonicOrTrick": "'C5-C6, armens två: Abduktion och biceps, det är vad du ska se!'"
+      }
+    },
+    {
+      "questionId": "hand-018",
+      "tutorMode": null,
+      "error": "[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"null\",\n    \"path\": [\n      \"mnemonicOrTrick\"\n    ],\n    \"message\": \"Expected string, received null\"\n  }\n]"
+    },
+    {
+      "questionId": "hand-019",
+      "tutorMode": {
+        "hints": [
+          "Vid avancerad CMC-I artros (Eaton III-IV) är kirurgiska alternativ att överväga för att återställa funktion.",
+          "Konservativa behandlingar som ortoser är effektiva i tidiga stadier (Eaton I-II), men avancerad artros kräver oftast mer invasiva ingrepp.",
+          "I fall av Eaton III-IV är arthroplasty en vanlig och framgångsrik behandlingsmetod som kan omfatta resektion eller total ledprotes."
+        ],
+        "commonMistakes": [
+          "Många väljer 'konservativ alltid' eftersom det verkar mindre invasivt, men vid Eaton III-IV är kirurgi ofta nödvändigt för att återfå funktion.",
+          "Endast ortoser lockar eftersom de är lätta att använda, men de är inte tillräckliga i avancerade stadier av CMC-I artros.",
+          "Amputation kan verka som en sista utväg, men det är sällan ett alternativ vid denna typ av artros och skulle leda till stor funktionsnedsättning."
+        ],
+        "teachingPoints": [
+          "Eaton III-IV CMC-I artros kräver oftast kirurgi för att återfå funktion.",
+          "LRTI (ligament reconstruction tendon interposition) är den vanligaste kirurgiska metoden med goda resultat.",
+          "Trapeziectomy är ett annat alternativ och kan kombineras med LRTI för bästa resultat.",
+          "Arthrodesis bevarar styrka men minskar rörligheten."
+        ],
+        "mnemonicOrTrick": "TUMME = Tumme Utan Mobilitet = Arthroplasty vid Eaton III-IV"
+      }
+    },
+    {
+      "questionId": "axel-006",
+      "tutorMode": {
+        "hints": [
+          "Konservativ behandling rekommenderas oftast för proximal humerusfraktur hos äldre patienter.",
+          "Frakturer med minimal dislokation (<1 cm) och låg vinkling (<45°) kan oftast behandlas utan kirurgi.",
+          "Tidig mobilisering med mitella och pendlumövningar är centralt för återhämtning efter dessa frakturer."
+        ],
+        "commonMistakes": [
+          "Många väljer ORIF eftersom det verkar vara en direkt lösning för alla frakturer, men det är oftast inte nödvändigt för 2-part frakturer hos äldre.",
+          "Hemiartroplastik lockar med tanke på snabb smärtlindring, men det är överdrivet för många odislokerade frakturer.",
+          "rTSA kan verka som en modern lösning, men det bör reserveras för mer komplexa fall som 3-4 part frakturer."
+        ],
+        "teachingPoints": [
+          "80% av proximala humerusfrakturer hos äldre är minimal eller odislokerade.",
+          "Konservativ behandling med mitella och tidig mobilisering ger goda resultat för dessa frakturer.",
+          "ORIF är indicerat för dislokerade frakturer, särskilt hos yngre och mer aktiva patienter.",
+          "Hemiartroplastik och rTSA är alternativ för komplexa frakturer med hög dislokation."
+        ],
+        "mnemonicOrTrick": "Minimera dislokation, Mobilisera tidigt = Mitella och pendlumövelser"
+      }
+    },
+    {
+      "questionId": "axel-007",
+      "tutorMode": {
+        "hints": [
+          "SLAP-lesioner involverar alltid det superiora labrum och kan påverka biceps senfästet.",
+          "Typ II SLAP-lesioner innebär en avulsion av bicepsankaret från labrum, vilket är vanligt hos idrottare.",
+          "Fokusera på att identifiera skador som involverar biceps senfästet och labrum i övergången mellan anterior och superior."
+        ],
+        "commonMistakes": [
+          "Många väljer 'Isolerad labral fray' eftersom det låter som en mindre skada, men SLAP typ II involverar en specifik avulsion av bicepsankaret.",
+          "Många väljer 'Anterior labral tear' eftersom det är en vanlig skada, men det beskriver inte den specifika avulsionsmekanismen i typ II.",
+          "Många väljer 'Posterior labral tear' eftersom det kan verka logiskt, men SLAP typ II handlar om den superiora delen av labrum och dess relation till biceps."
+        ],
+        "teachingPoints": [
+          "SLAP typ II = avulsion av bicepsankaret från superior labrum, vanligast hos aktiva idrottare.",
+          "O'Briens test används för att diagnostisera SLAP-lesioner och kan ge vägledning för kirurgisk behandling.",
+          "Typ II SLAP-lesioner kräver ofta artroskopisk reparation, särskilt hos unga patienter.",
+          "SLAP-lesioner kan orsaka smärta, instabilitet och nedsatt funktion i axelleden."
+        ],
+        "mnemonicOrTrick": "SLAP = Superior Labrum Anterior and Posterior - kom ihåg att typ II handlar om bicepsavulsion."
+      }
+    },
+    {
+      "questionId": "axel-008",
+      "tutorMode": {
+        "hints": [
+          "Terrible triad innebär alltid skada på tre specifika strukturer i armbågen vid högenergetiskt trauma.",
+          "Tänk på vilka ligament och ben som är avgörande för stabiliteten i armbågen vid luxation.",
+          "En av de involverade strukturerna är ett element i armbågens laterala stabilitet, vilket är viktigt att komma ihåg."
+        ],
+        "commonMistakes": [
+          "Många väljer radiushuvud + coronoid + MCL eftersom MCL är en viktig ligamentstruktur, men MCL är mer involverad i medial stabilitet och inte i denna triad.",
+          "Många tycker att olecranon + radiushuvud + MCL låter rimligt eftersom olecranon är en stor del av armbågen, men olecranon är inte en del av den specifika triaden.",
+          "Vissa väljer radiushuvud + humerus + MCL eftersom humerus är den proximala strukturen, men humerus ingår inte i triaden utan det handlar om skador på ben och ligament."
+        ],
+        "teachingPoints": [
+          "Terrible triad = radiushuvudfraktur + coronoidfraktur + LCL-skada.",
+          "Högenergetiskt trauma ger en instabil armbåge med risk för komplikationer som stelhet och artros.",
+          "Behandling: ORIF av radiushuvud (eller artroplasti vid comminuted), coronoid fixation om >50% och LCL repair.",
+          "Dålig prognos vid hög skadekomplexitet och instabilitet."
+        ],
+        "mnemonicOrTrick": "Tänk på 'RCL' för Radiushuvud, Coronoid, LCL - de tre nyckelstrukturerna i Terrible triad."
+      }
+    },
+    {
+      "questionId": "axel-009",
+      "tutorMode": null,
+      "error": "[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"null\",\n    \"path\": [\n      \"mnemonicOrTrick\"\n    ],\n    \"message\": \"Expected string, received null\"\n  }\n]"
+    },
+    {
+      "questionId": "axel-010",
+      "tutorMode": {
+        "hints": [
+          "Lateral epikondylit kännetecknas av smärta på utsidan av armbågen, ofta relaterat till överansträngning av extensorer.",
+          "Tänk på vilka senor som är involverade i dorsalflexion av handleden, vilket är aktiviteten som ofta orsakar smärta vid lateral epikondylit.",
+          "Den sena som oftast är involverad vid lateral epikondylit har sitt ursprung vid den laterala epikondylen och är en av de korta extensorerna."
+        ],
+        "commonMistakes": [
+          "Många väljer biceps eftersom det är en stor muskel och ofta kopplas till armens rörelser, men biceps är främst involverad i flexion av armbågen och inte i extensorfunktioner.",
+          "Triceps kan verka lockande eftersom det också är en muskel i överarmen, men den är ansvarig för extension av armbågen och påverkas inte av lateral epikondylit.",
+          "Flexor carpi radialis är en flexormuskel och används främst vid palmarflexion av handleden, vilket inte är relevant för lateral epikondylit som involverar extensorer."
+        ],
+        "teachingPoints": [
+          "Lateral epikondylit är en degenerativ tendinopati av ECRB med smärta vid handledens extension.",
+          "Konservativ behandling inkluderar aktivitetmodifiering, NSAID, och excentrisk träning med en framgångsrate på 90%.",
+          "Kirurgisk debridement av ECRB övervägs om symtomen kvarstår efter 6-12 månader.",
+          "Medial epikondylit kallas 'golfarens armbåge' och involverar flexor-pronatorgruppen, vilket skiljer sig från tennis elbow."
+        ],
+        "mnemonicOrTrick": "ECRB = Elbow's Common Radial Brevis (påverkas vid tennis elbow)"
+      }
+    },
+    {
+      "questionId": "axel-011",
+      "tutorMode": {
+        "hints": [
+          "Subscapularis är en viktig muskel för axelns stabilitet och funktion, därför är testerna inriktade på dess funktion.",
+          "Bland de tester som används för att utvärdera rotatorkuffens muskler, fokuserar vissa specifikt på subscapularis, medan andra kan involvera supraspinatus eller infraspinatus.",
+          "Tänk på tester där patienten aktivt använder sin hand bakom ryggen eller på magen för att motverka ett motstånd - dessa fokuserar på subscapularis."
+        ],
+        "commonMistakes": [
+          "Många väljer Jobe test eftersom det är ett välkänt test för rotatorkuffens skador, men det bedömer främst supraspinatus och inte subscapularis.",
+          "External rotation lag sign kan verka relevant, men det är specifikt för infraspinatus och teres minor, inte subscapularis.",
+          "Hornblowers sign kan också vara lockande eftersom det involverar axelns rörelse, men det testar främst deltoideus och infraspinatus."
+        ],
+        "teachingPoints": [
+          "Lift-off test och Belly-press test används för att utvärdera subscapularis-funktion.",
+          "Subscapularis är en viktig stabilisator av axeln, och dess skada kan leda till instabilitet.",
+          "Isolerad ruptur av subscapularis är ovanlig men kan uppstå vid anterior luxation eller iatrogen skada.",
+          "Tidigare interventioner och reparation av subscapularis är avgörande för att förhindra framtida instabilitet."
+        ],
+        "mnemonicOrTrick": "Belly on the lift = Belly-press och Lift-off för subscapularis"
+      }
+    },
+    {
+      "questionId": "axel-012",
+      "tutorMode": {
+        "hints": [
+          "I faserna av frozen shoulder är smärta vanligast i den tidiga fasen, där inflammation dominerar.",
+          "Under den andra fasen, Frozen/adhesive, är stelhet mer framträdande och smärtan tenderar att avta.",
+          "Tänk på att den fas där patienten upplever mest smärta är den som kommer först, innan rörelseomfånget minskar."
+        ],
+        "commonMistakes": [
+          "Många väljer Frozen (adhesive phase) eftersom de kopplar fasen med stelhet till smärta, men i denna fas är smärtan ofta mindre framträdande.",
+          "Många tror att Thawing (resolution phase) har hög smärtnivå eftersom det handlar om återhämtning, men i verkligheten är smärtan mycket lägre i denna fas.",
+          "Vissa studenter väljer 'Alla lika smärtsamma' eftersom de ser till de olika faserna och tror att smärtan är konstant, men smärtan varierar kraftigt beroende på fas."
+        ],
+        "teachingPoints": [
+          "Frozen shoulder har tre faser: Freezing, Frozen och Thawing med olika symptom.",
+          "Freezing-fasen varar vanligtvis 0-3 månader och präglas av betydande smärta.",
+          "Frozen-fasen varar 3-9 månader med mer stelhet och mindre smärta.",
+          "Thawing-fasen varar 9-18 månader och kännetecknas av gradvis förbättring."
+        ],
+        "mnemonicOrTrick": "Fas 1 = Smärta först, Fas 2 = Stelhet mest, Fas 3 = Bättre sen"
+      }
+    },
+    {
+      "questionId": "axel-013",
+      "tutorMode": {
+        "hints": [
+          "Monteggia-frakturer involverar alltid en fraktur av ulna och en luxation av radius.",
+          "Eliminera alternativ som inte involverar både ulnafraktur och radiushuvudluxation, eftersom det är karakteristiskt för Monteggia.",
+          "Kom ihåg att Monteggia är en kombination av anterior radiushuvudluxation och ulnafraktur; fokusera på båda komponenterna."
+        ],
+        "commonMistakes": [
+          "Många väljer 'Radiusfraktur + DRUJ-luxation' eftersom de associerar radius med luxation, men detta beskriver en Galeazzi-fraktur, inte Monteggia.",
+          "Alternativet 'Galeazzi motsats' lockar eftersom Galeazzi involverar radiusfraktur, men det är viktigt att minnas att Monteggia specifikt involverar ulnafraktur och radiushuvudluxation.",
+          "Vissa tror att 'Båda underarmsben' är korrekt eftersom det nämner både radius och ulna, men det missar att specificera luxationen som är avgörande för Monteggia."
+        ],
+        "teachingPoints": [
+          "Monteggia-fraktur innebär alltid en ulnafraktur och en radiushuvudluxation.",
+          "Bado klassificering av Monteggia-frakturer är viktig för att förstå olika typer och hantering.",
+          "Typ I i Bado klassificeringen är den vanligaste och involverar anterior luxation.",
+          "Korrekt identifiering av Monteggia-fraktur är avgörande för att undvika missed luxation och relaterade komplikationer."
+        ],
+        "mnemonicOrTrick": "MUGR = Monteggia = Ulna, Galeazzi = Radius"
+      }
+    },
+    {
+      "questionId": "axel-014",
+      "tutorMode": null,
+      "error": "[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"null\",\n    \"path\": [\n      \"mnemonicOrTrick\"\n    ],\n    \"message\": \"Expected string, received null\"\n  }\n]"
+    },
+    {
+      "questionId": "axel-015",
+      "tutorMode": {
+        "hints": [
+          "Akuta rupturer av pectoralis major kräver oftast kirurgisk intervention för bästa funktionella resultat.",
+          "Tänk på att yngre och aktiva patienter har bättre återgång till sport efter kirurgisk repair inom 2-4 veckor.",
+          "Kroniska rupturer (>8 veckor) ger sämre resultat, så tidig intervention är avgörande."
+        ],
+        "commonMistakes": [
+          "Många väljer alltid konservativ behandling eftersom det verkar mindre invasivt, men det ger sämre funktionella resultat hos aktiva individer.",
+          "Väntan i 6 månader kan kännas som en försiktighetsåtgärd, men det leder ofta till sämre resultat vid kirurgi på grund av muskelatrofi.",
+          "Att tro att fysioterapi endast är tillräckligt kan vara lockande för att undvika kirurgi, men det ger inte den funktionella återställning som kirurgisk repair kan ge."
+        ],
+        "teachingPoints": [
+          "Pectoralis major ruptur är vanligast hos bodybuilders, ofta vid bänkpress.",
+          "Akut kirurgisk repair rekommenderas inom 2-4 veckor för bästa resultat hos unga aktiva patienter.",
+          "Kroniska rupturer (>8 veckor) har sämre prognos och bör undvikas.",
+          "Diagnosen ställs genom palpation av defekt, asymmetri och svaghet vid adduktion och inre rotation."
+        ],
+        "mnemonicOrTrick": "Kom ihåg: 'Ruptur kräver reparation' - kirurgi är nyckeln för att återgå till sport."
+      }
+    },
+    {
+      "questionId": "axel-016",
+      "tutorMode": {
+        "hints": [
+          "Vid skador på labrum är det viktigt att bedöma om det handlar om en skada som involverar benstrukturer.",
+          "Bony Bankart skador innebär en fraktur av glenoid och kräver mer omfattande behandling än vanliga Bankart-skador.",
+          "Om det är mer än 20-25% av glenoid som är involverad, behövs oftast en benåterställning för att undvika misslyckande av behandlingen."
+        ],
+        "commonMistakes": [
+          "Många väljer att tro att Bankart och Bony Bankart har samma behandling eftersom de båda involverar labrum, men Bony Bankart kräver ofta kirurgiska metoder för att återställa benstrukturen.",
+          "Det är frestande att tänka att Bankart alltid ska behandlas konservativt, men det beror på grad av skada och kan kräva kirurgi om det involverar benfraktur.",
+          "En del tror att Bony Bankart är enklare att hantera, men det kräver komplicerade ingrepp som Latarjet för att minska risken för återkommande instabilitet."
+        ],
+        "teachingPoints": [
+          "Bankart lesion = anterior labral tear, brukar behandlas med artroskopisk repair.",
+          "Bony Bankart = glenoidfraktur, >20-25% involvering kräver benåterställning som Latarjet.",
+          "Latarjet-proceduren minskar återkommande instabilitet men har högre komplikationsrisk.",
+          "Vid Bony Bankart-skador är risken för misslyckande vid konservativ behandling högre, vilket gör kirurgisk intervention nödvändig."
+        ],
+        "mnemonicOrTrick": "Bony Bankart = Ben + Bankart = Kirurgi"
+      }
+    },
+    {
+      "questionId": "axel-017",
+      "tutorMode": {
+        "hints": [
+          "Vid misstänkt olecranon bursit är det viktigt att alltid börja med aspiration för att få en tydligare bild av tillståndet.",
+          "Om du ser tecken på inflammation som rodnad, svullnad eller värme, bör du alltid överväga att ta en odling från den aspirerade vätskan.",
+          "Kom ihåg att cellantalet i den aspirerade vätskan kan ge vägledning; ett WBC >1000 tyder på en septisk process."
+        ],
+        "commonMistakes": [
+          "Många väljer att basera diagnosen på kliniska tecken som rodnad och feber, eftersom dessa verkar intuitiva, men dessa symptom kan också förekomma vid aseptisk bursit.",
+          "Röntgen verkar lockande för att utesluta frakturer, men den kan inte ge information om bursitens septiska eller aseptiska natur.",
+          "MR kan ge detaljerad information om mjukdelar, men det tar lång tid och kan fördröja behandlingen; aspiration är snabbare och mer informativ."
+        ],
+        "teachingPoints": [
+          "Aspiration och odling är avgörande för att skilja septisk från aseptisk olecranon bursit.",
+          "Feber och rodnad är mer framträdande vid septisk bursit men är inte alltid pålitliga indikatorer.",
+          "Behandling av aseptisk bursit inkluderar kompression och NSAIDs, medan septisk bursit kräver antibiotika och ibland kirurgi.",
+          "Cellantalet i den aspirerade vätskan ger vägledning; >1000 WBC indikerar sepsis."
+        ],
+        "mnemonicOrTrick": "Kom ihåg: 'Aspiration = Klargör situationen' - alltid första steget vid bursit."
+      }
+    },
+    {
+      "questionId": "axel-018",
+      "tutorMode": {
+        "hints": [
+          "Cubital tunnel syndrome involverar alltid en specifik nerv som passerar vid armbågen.",
+          "Den korrekta nerven är känd för att orsaka domningar i ringfingret och lillfingret samt svaghet i handens intrinsics.",
+          "Kom ihåg att denna nerv är den enda som går mellan medial epicondyle och olecranon vid armbågen."
+        ],
+        "commonMistakes": [
+          "Många väljer N. medianus vid handled eftersom den är känd för att orsaka karpaltunnelsyndrom, men den är inte kopplad till armbågen.",
+          "N. radialis vid humerus verkar lockande eftersom den ofta är involverad i överarmsfrakturer, men den orsakar inte cubital tunnel syndrom.",
+          "N. axillaris är viktig för deltoidmuskeln och kan påverkas vid axelskador, men den är inte relaterad till symptomen i armbågen."
+        ],
+        "teachingPoints": [
+          "Cubital tunnel syndrome orsakas av kompression av N. ulnaris vid armbågen.",
+          "Symptom inkluderar domningar i ringfinger och lillfinger samt svaghet i handens intrinsics.",
+          "Froments tecken och elbow flexion test (symptom vid 60s flexion) är viktiga för diagnosen.",
+          "Behandling kan vara konservativ (nattspärr) eller kirurgisk beroende på svårighetsgraden."
+        ],
+        "mnemonicOrTrick": "N. ulnaris = U för U-formad cubital tunnel (mellan medial epicondyle och olecranon)"
+      }
+    },
+    {
+      "questionId": "axel-019",
+      "tutorMode": {
+        "hints": [
+          "Akuta frakturer hos barn kräver ofta snabb intervention för att skydda viktiga strukturer.",
+          "Vid Gartland III-frakturer finns det en hög risk för neurovaskulära skador, vilket gör att behandling är nödvändig.",
+          "Volkmanns ischemic contracture är en allvarlig komplikation vid frakturer med vaskulär påverkan - detta är en av de främsta anledningarna till akut behandling."
+        ],
+        "commonMistakes": [
+          "Många väljer smärtlindring som det primära målet eftersom det är en viktig del av vården, men det adresserar inte de potentiella skadorna på kärl och nerver.",
+          "Kosmetiskt kan verka viktigt, men det handlar mer om att bevara funktion och undvika livshotande komplikationer.",
+          "Att tro att frakturen läker utan behandling kan vara frestande för att spara tid, men Gartland III kräver alltid kirurgisk intervention för att förhindra allvarliga följder."
+        ],
+        "teachingPoints": [
+          "Supracondylar humerusfraktur är vanligast hos barn och kräver noggrann bedömning.",
+          "Gartland III-frakturer är dislokerade och har hög risk för komplikationer som Volkmanns ischemic contracture.",
+          "Akut behandling med ORIF (öppen reposition och intern fixation) rekommenderas för att bevara neurovaskulär status.",
+          "Kontrollera alltid pulser före och efter intervention för att övervaka vaskulära skador."
+        ],
+        "mnemonicOrTrick": "Tänk på 'Frakturer skyddar kärl', där skador på kärl och nerver är prioritet nummer ett."
+      }
+    },
+    {
+      "questionId": "axel-020",
+      "tutorMode": {
+        "hints": [
+          "Total elbow arthroplasty används främst för patienter med svåra ledsjukdomar som begränsar funktionen.",
+          "Posttraumatisk artros hos yngre patienter kan leda till operation, men totalprotes rekommenderas sällan på grund av högre komplikationsrisk.",
+          "Reumatoid artrit med bilateral svår destruktion är den mest typiska indikation för total elbow arthroplasty i låg-demand patientgrupp."
+        ],
+        "commonMistakes": [
+          "Många väljer 'alla armbågsartroser' eftersom det verkar som en bred indikation, men TEA är specifikt rekommenderad för svåra fall med låg fysisk efterfrågan.",
+          "Posttraumatisk artros hos unga kan verka som en logisk indikation, men yngre patienter har ofta för hög aktivitetsnivå för att totalprotes ska vara lämplig.",
+          "Primär artros är lockande eftersom det är en vanlig diagnos, men TEA är mer indicerat för reumatoid artrit med svår destruktion där andra behandlingar inte är tillräckliga."
+        ],
+        "teachingPoints": [
+          "TEA är bäst för låg-demand patienter med reumatoid artrit och svår destruktion.",
+          "Hög komplikationsrisk: loosening, infektion och instabilitet gör att TEA har begränsade indikationer.",
+          "10-års överlevnad för TEA är ca 85-90%, men reoperationsfrekvensen är omkring 25%.",
+          "Kontraindikationer inkluderar aktiv infektion och patienter med hög fysisk efterfrågan."
+        ],
+        "mnemonicOrTrick": "Tänk på 'Reuma först' för att minnas att reumatoid artrit är den främsta indikationen för TEA."
+      }
+    },
+    {
+      "questionId": "rygg-006",
+      "tutorMode": null,
+      "error": "[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"null\",\n    \"path\": [\n      \"mnemonicOrTrick\"\n    ],\n    \"message\": \"Expected string, received null\"\n  }\n]"
+    },
+    {
+      "questionId": "rygg-007",
+      "tutorMode": null,
+      "error": "[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"null\",\n    \"path\": [\n      \"mnemonicOrTrick\"\n    ],\n    \"message\": \"Expected string, received null\"\n  }\n]"
+    },
+    {
+      "questionId": "rygg-008",
+      "tutorMode": {
+        "hints": [
+          "Neurologisk claudicatio är en typ av smärta som ofta uppstår vid fysisk aktivitet, vilket skiljer sig från vaskulär claudicatio.",
+          "Tänk på hur symtomen förändras med kroppens position; neurologisk claudicatio förbättras vid framåtböjning eller sittande.",
+          "Känn igen att neurologisk claudicatio ofta involverar bensvaghet och domningar som är relaterade till spinalkanalens trängsel."
+        ],
+        "commonMistakes": [
+          "Många väljer vaskulär claudicatio eftersom de tror att bensmärta alltid beror på cirkulationsproblem, men neurologisk claudicatio beror på nervkompression och förbättras vid framåtböjning.",
+          "Akut svår smärta kan verka troligt i samband med spinal problem, men i lumbal spinal stenos är smärtan oftast mer intermittent och relaterad till aktivitet.",
+          "Feber kan tyckas relevant, men det är inte ett typiskt symptom på lumbal spinal stenos; istället indikerar feber oftare en infektion."
+        ],
+        "teachingPoints": [
+          "Neurologisk claudicatio orsakas av kompression av nervrötter i lumbalregionen.",
+          "Symtomen inkluderar bensmärta, svaghet och domningar som förvärras vid gång och förbättras vid framåtböjning eller sittande.",
+          "Behandling börjar oftast konservativt med fysioterapi och kan inkludera epidural steroidinjektioner.",
+          "Kirurgisk dekompression övervägs vid kvarstående symtom trots konservativ behandling."
+        ],
+        "mnemonicOrTrick": "Minnesregel för symtom: \"Böj dig fram för att känna dig bra - smärtan försvinner då!\""
+      }
+    },
+    {
+      "questionId": "rygg-009",
+      "tutorMode": {
+        "hints": [
+          "Thorakolumbala frakturer klassificeras utifrån AO-systemet, där typ A avser kompressionsskador.",
+          "A4-frakturer innebär att det finns en komplett burst med fragment som kan påverka ryggmärgen.",
+          "Tänk på att burst-frakturer ofta är instabila och kan leda till neurologiska symtom."
+        ],
+        "commonMistakes": [
+          "Många väljer kompression fraktur eftersom de är vanliga och kända, men A4 indikerar en mer komplex skada med posterior wall involvement.",
+          "Flexion-distraction (Chance) verkar logiskt för trauma, men det är en annan typ av skada som inte involverar burst-mekanismen.",
+          "Translational skada kan verka plausibel, men det rör sig om en annan klassificering (typ C) som inte inkluderar burst-frakturer."
+        ],
+        "teachingPoints": [
+          "AO typ A4 = komplett burstfraktur med posterior wall fragment.",
+          "Burstfrakturer kan orsaka neurologisk påverkan och kräver ofta kirurgi.",
+          "Skillnader mellan AO A1-A4 är avgörande för att förstå frakturens stabilitet och behandlingsstrategi.",
+          "Klinisk bedömning av neurologisk status är kritisk vid thorakolumbala frakturer."
+        ],
+        "mnemonicOrTrick": "A4 = Allt förlorat (full burstfraktur med risk för neurologiska skador)"
+      }
+    },
+    {
+      "questionId": "rygg-010",
+      "tutorMode": null,
+      "error": "[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"null\",\n    \"path\": [\n      \"mnemonicOrTrick\"\n    ],\n    \"message\": \"Expected string, received null\"\n  }\n]"
+    },
+    {
+      "questionId": "rygg-011",
+      "tutorMode": {
+        "hints": [
+          "Kirurgi övervägs för skolios med betydande kurvatur, vanligtvis över 40°.",
+          "Observera att mindre krökningar under 20° ofta inte kräver intervention, medan 20-40° kan hanteras med bracing.",
+          "Cobb-vinkeln är avgörande för att avgöra kirurgiskt ingrepp, särskilt för thoracala och lumbala krökningar."
+        ],
+        "commonMistakes": [
+          "Många väljer >20° eftersom de tror att mindre kurvor alltid kräver behandling, men dessa är oftast stabila och kan observeras.",
+          "Många väljer >60° eftersom de anser att endast mycket stora kurvor kräver kirurgi, men detta kan leda till fördröjd intervention vid mindre men progressiva kurvor.",
+          "Många väljer >80° eftersom de tror att kirurgi alltid är nödvändig vid extrema vinklar, men >45° är den gräns där kirurgi rekommenderas för att förhindra ytterligare progression."
+        ],
+        "teachingPoints": [
+          "Cobb-vinklar <20° kräver ingen behandling, mellan 20-40° kan bracing övervägas hos skelettomogna patienter.",
+          "Kirurgi rekommenderas vid Cobb-vinklar >40-45° för att förhindra progression och korrigera deformitet.",
+          "Thoracala kurvor >50° och lumbala >40° har högre risk för fortsatt progression även efter skelettmognad.",
+          "Risser-stadiet är viktigt; lägre Risser innebär högre risk för kurvprogression."
+        ],
+        "mnemonicOrTrick": "Cobb 20-40 Bracing, 40-45 Surgery (en enkel minnesregel för behandlingsstrategin)"
+      }
+    },
+    {
+      "questionId": "rygg-012",
+      "tutorMode": {
+        "hints": [
+          "Osteotomi indikeras vid svår sagittal eller koronal obalans som inte kan korrigeras med enkel fusion.",
+          "Om patienten har svår sagittal obalans (SVA >95mm, PT >25°) eller stor PI-LL mismatch (>20°), är det en stark indikation för osteotomi.",
+          "Tänk på att osteotomi ofta krävs för att korrigera svåra deformiteter när enklare kirurgiska metoder inte räcker till."
+        ],
+        "commonMistakes": [
+          "Många väljer 'Vid alla deformiteter' eftersom det kan verka som en enkel lösning, men osteotomi är specifik för svåra obalanser.",
+          "Många väljer 'Aldrig' eftersom det kan verka som en säkerhetsåtgärd, men det finns specifika fall där osteotomi är nödvändig för att återställa funktion.",
+          "Många väljer 'Endast vid tumör' eftersom de tror att osteotomi bara är relevant för tumörområden, men det är också viktigt för strukturella deformiteter."
+        ],
+        "teachingPoints": [
+          "Osteotomi är nödvändigt vid svår sagittal obalans som inte kan korrigeras med fusion.",
+          "Typiska värden för indikationer: SVA >95mm, PT >25°, PI-LL mismatch >20°.",
+          "Smith-Petersen, Pedicle subtraction och Vertebral column resection är de tre huvudtyperna av osteotomier.",
+          "Hög komplikationsrisk inkluderar neurologiska skador och blödningar."
+        ],
+        "mnemonicOrTrick": "Tänk på SVA-Pt-PI: SVA >95, PT >25, PI-LL mismatch >20 för osteotomi!"
+      }
+    },
+    {
+      "questionId": "rygg-013",
+      "tutorMode": {
+        "hints": [
+          "MR med kontrast är den mest känsliga metoden för att upptäcka mjukdelsengagemang vid vertebral osteomyelit och diskit.",
+          "Röntgen kan visa vissa förändringar men är inte tillräckligt för att ställa en säker diagnos; CT kan ge mer information men saknar den detaljerade mjukdelsvisualiseringen som MR erbjuder.",
+          "MR med kontrast kan avbilda både benmärgsödem och eventuella epidurala abscesser, vilket är avgörande för diagnosen."
+        ],
+        "commonMistakes": [
+          "Många väljer Röntgen eftersom den är lättillgänglig och snabb, men den har låg sensitivitet för tidiga förändringar vid osteomyelit.",
+          "CT verkar attraktivt då det ger detaljerade bilder av benstrukturen, men det kan inte visa mjukdelsengagemang och diskförändringar på samma sätt som MR.",
+          "Blododling kan ge ledtrådar för infektion, men är ofta negativ och är inte en diagnostisk metod för att bekräfta vertebral osteomyelit eller diskit."
+        ],
+        "teachingPoints": [
+          "MR med kontrast är gold standard för diagnos av vertebral osteomyelit och diskit.",
+          "Blododlingar är positiva endast i cirka 50% av fallen, vilket gör dem otillräckliga som en ensam diagnosmetod.",
+          "Kirurgisk intervention rekommenderas vid neurologisk påverkan, instabilitet eller misslyckad medicinsk behandling.",
+          "Vanligaste patogenen vid vertebral osteomyelit är Staphylococcus aureus."
+        ],
+        "mnemonicOrTrick": "MR Magic: Mjuka vävnader, Röntgen är inte nog!"
+      }
+    },
+    {
+      "questionId": "rygg-014",
+      "tutorMode": null,
+      "error": "[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"null\",\n    \"path\": [\n      \"mnemonicOrTrick\"\n    ],\n    \"message\": \"Expected string, received null\"\n  }\n]"
+    },
+    {
+      "questionId": "rygg-015",
+      "tutorMode": {
+        "hints": [
+          "Atlanto-axial instabilitet är en risk hos patienter med Downs syndrom på grund av ligamentös laxitet.",
+          "Kirurgi övervägs när ADI är över 5 mm och neurologiska symtom är närvarande, vilket kan indikera myelopati.",
+          "Tänk på att ADI värden över 10 mm alltid kräver kirurgisk intervention, oavsett symtom."
+        ],
+        "commonMistakes": [
+          "Många väljer 'Alla med Downs' eftersom det låter som en försiktig strategi, men inte alla patienter har AAI eller behöver kirurgi.",
+          "Många tror 'Vid diagnos' är korrekt, men det är viktigt att först bedöma ADI och neurologiska symtom innan man beslutar om operation.",
+          "Vissa tänker 'Aldrig' kan vara korrekt, men det ignorerar risken för neurologiska skador vid betydande instabilitet."
+        ],
+        "teachingPoints": [
+          "AAI förekommer hos ~15% av patienter med Downs syndrom.",
+          "ADI < 3 mm är normalt, medan ADI > 5 mm indikerar instabilitet.",
+          "Kirurgi är indicerat vid ADI > 10 mm eller ADI > 5 mm med myelopati.",
+          "Risk för spinal cord injury kräver screening med cervical röntgen innan anestesi eller sport."
+        ],
+        "mnemonicOrTrick": "ADI > 5 mm = AAI + Myelopati = Operation"
+      }
+    },
+    {
+      "questionId": "rygg-016",
+      "tutorMode": {
+        "hints": [
+          "Chance-fraktur är ofta associerad med skador på inre organ, särskilt vid trauma med bälte.",
+          "Tänk på att lungor och höfter inte är primära strukturer i samband med flexion-distraction skador.",
+          "Vid en Chance-fraktur är det viktigt att alltid överväga abdominala skador som en potentiell komplikation."
+        ],
+        "commonMistakes": [
+          "Många väljer lungkontusion eftersom de tänker på brösttrauma vid kollision, men lungor påverkas sällan direkt av Chance-frakturer.",
+          "Höftfraktur verkar rimlig eftersom det är en vanlig fraktur vid fall, men den är inte direkt relaterad till mekanismen för Chance-frakturer.",
+          "Många tror att det inte finns någon association eftersom frakturen är specifik, men det är viktigt att förstå att interna skador är vanliga vid denna typ av trauma."
+        ],
+        "teachingPoints": [
+          "Chance-fraktur = flexion-distraction skada, ofta associerad med abdominala viscerala skador.",
+          "50% av patienterna med Chance-fraktur har viscerala skador, inklusive tarmrupturer och mjältsprickor.",
+          "Behandling av Chance-fraktur beror på stabilitet och neurologisk status: stabil = hyperextension bracing, instabil = posterior fusion.",
+          "CT av buken är alltid nödvändigt vid misstanke om Chance-fraktur för att identifiera associerade skador."
+        ],
+        "mnemonicOrTrick": "Tänk på 'Bälte = Bukskador' för att minnas att Chance-frakturer ofta är kopplade till intraabdominala skador."
+      }
+    },
+    {
+      "questionId": "rygg-017",
+      "tutorMode": null,
+      "error": "[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"null\",\n    \"path\": [\n      \"mnemonicOrTrick\"\n    ],\n    \"message\": \"Expected string, received null\"\n  }\n]"
+    },
+    {
+      "questionId": "rygg-018",
+      "tutorMode": {
+        "hints": [
+          "Scheuermanns kyfos är en deformitet som uppstår under tillväxt, foka på kotornas form i diagnosen.",
+          "Tänk på att wedging i kotorna är en viktig del av diagnosen, och det handlar inte bara om den totala kyfosvinkeln.",
+          "Kom ihåg att minst tre konsekutiva kotor måste visa tecken på wedging för att uppfylla kriterierna."
+        ],
+        "commonMistakes": [
+          "Många väljer 'Thorakal kyfos >40°' eftersom det är en vanlig mätning för kyfos, men det är inte tillräckligt specifikt för att diagnostisera Scheuermanns kyfos.",
+          "Vissa kan tro att 'Endast smärta' är ett kriterium, men smärta är en symptomatisk manifestation och inte en diagnostisk parameter.",
+          "Det kan vara frestande att välja 'Scoliosis' eftersom det är en ryggdeformitet, men Scheuermanns kyfos skiljer sig genom specifika förändringar i kotornas form."
+        ],
+        "teachingPoints": [
+          "Scheuermanns kyfos kännetecknas av ≥5° wedging i ≥3 konsekutiva kotor.",
+          "Diagnosen kan också inkludera Schmorls noder och oregelbundenheter i slutplattorna.",
+          "Behandling beror på graden av kyfos: <70° kräver observation eller bracing, medan >70-75° kan behöva kirurgisk fusion.",
+          "Tillståndet är oftast godartat men kan leda till smärta och kosmetiska problem vid svår kyfos."
+        ],
+        "mnemonicOrTrick": "Wedge 5-3 = 5° wedging i minst 3 kotor för Scheuermanns diagnos."
+      }
+    },
+    {
+      "questionId": "rygg-019",
+      "tutorMode": {
+        "hints": [
+          "Vid spinal metastas är det viktigt att bedöma stabilitet och neurologisk status innan beslut om kirurgi.",
+          "SINS-score hjälper till att avgöra om en metastas är stabil eller instabil; tänk på smärta och kollaps av kotan.",
+          "SINS ≥7 indikerar potentiell instabilitet, vilket gör kirurgisk stabilisering nödvändig att överväga."
+        ],
+        "commonMistakes": [
+          "Många väljer 'alla metastaser' eftersom det kan verka som en säker strategi, men kirurgi är inte alltid indicerat för stabila metastaser med SINS <7.",
+          "Vissa tror 'aldrig' är korrekt för kirurgi, men det kan vara indicerat vid neurologisk kompromiss eller instabilitet.",
+          "Att välja 'endast vid komplett paralys' är lockande eftersom det verkar logiskt, men många patienter kan behöva kirurgi innan fullständig neurologisk påverkan inträffar."
+        ],
+        "teachingPoints": [
+          "SINS 0-6 = stabil; 7-12 = potentiellt instabil; 13-18 = instabil.",
+          "Kirurgi rekommenderas vid instabilitet, neurologisk påverkan, eller radioresistenta tumörer.",
+          "Separation av kirurgi och strålbehandling ger bästa resultat vid spinal metastas.",
+          "Prognosen beror på primärtumörens typ och behandling."
+        ],
+        "mnemonicOrTrick": "SINS = Stabilitet, Instabilitet, Neoplastisk Score - Tänk på SINS för kirurgisk beslut!"
+      }
+    },
+    {
+      "questionId": "rygg-020",
+      "tutorMode": {
+        "hints": [
+          "Vid bedömning för lumbal diskprotes, kom ihåg att instabilitet och degenerativa förändringar kan påverka resultatet negativt.",
+          "Överväg kontraindikationer som kan leda till fortsatt smärta eller komplikationer, som artros i facetlederna och tidigare fusioner.",
+          "Tänk på riskerna med osteoporos och hur det kan påverka den kirurgiska tekniken och stabiliteten efter operation."
+        ],
+        "commonMistakes": [
+          "Många väljer alternativet 'inga' eftersom det låter enkelt, men det finns flera viktiga kontraindikationer som kan påverka resultatet.",
+          "Många tror att ålder >50 år är en avgörande faktor, men det är inte åldern i sig som avgör, utan patientens specifika anatomiska och kliniska situation.",
+          "Många väljer 'endast diskbråck' eftersom det verkar vara den mest uppenbara indikation, men diskprotes är inte alltid lämplig för patienter med andra samtidiga problem som kan påverka stabiliteten."
+        ],
+        "teachingPoints": [
+          "Facetartros och instabilitet kan leda till fortsatt smärta efter diskprotesoperation.",
+          "Osteoporos ökar risken för subsidence och komplikationer vid implantation av en diskprotes.",
+          "Tidigare fusioner vid angränsande nivåer kan hindra den biomekaniska funktionen av en ny diskprotes.",
+          "Evidens visar att diskprotes kan bevara rörelse jämfört med fusion, men långsiktig data är begränsad."
+        ],
+        "mnemonicOrTrick": "FIOP = Facet, Instabilitet, Osteoporos, Previous fusion (kontraindikationer för diskprotes)"
+      }
+    },
+    {
+      "questionId": "sport-006",
+      "tutorMode": {
+        "hints": [
+          "Efter en hjärnskakning ska alltid aktiviteten avbrytas omedelbart för att undvika förvärrade symtom.",
+          "Det rekommenderas att idrottaren ska vara symptomfri innan man påbörjar en stegvis återgång till spel.",
+          "Stegvis återgång till spel innebär att progressionen i aktiviteter endast ska ske om idrottaren inte uppvisar några symptom."
+        ],
+        "commonMistakes": [
+          "Många väljer samma dag om inga symtom eftersom de tror att snabb återgång är bra, men det kan leda till allvarliga komplikationer som second impact syndrome.",
+          "24 timmar automatiskt låter rimligt, men det ignorerar behovet av att vara symptomfri innan återgång till aktivitet kan ske.",
+          "1 vecka automatiskt kan verka som en säker tidsram, men varje individ återhämtar sig olika och måste bedömas utifrån sina egna symptom och tillstånd."
+        ],
+        "teachingPoints": [
+          "Concussion management kräver omedelbar avbrott av aktivitet och medicinsk bedömning.",
+          "Symptomfrihet är en förutsättning innan idrottaren kan påbörja en stegvis återgång till spel.",
+          "Steg-programmet består av minst 6 steg över minst 6 dagar, med progression endast om symptomfri.",
+          "SCAT5 används för att bedöma hjärnskakningens svårighetsgrad och återhämtningsstatus."
+        ],
+        "mnemonicOrTrick": "RTP = Return to Play - symptomfri, stegvis, säker"
+      }
+    },
+    {
+      "questionId": "sport-007",
+      "tutorMode": {
+        "hints": [
+          "Medial tibial stress syndrome kräver en kombination av vila och rehabilitering för att undvika långvariga besvär.",
+          "Tänk på att full belastning direkt kan leda till förvärrade symptom och längre återhämtningstid.",
+          "Rätt behandling inkluderar att gradvis öka aktiviteten, vilket innebär att du först måste minska belastningen på skadan."
+        ],
+        "commonMistakes": [
+          "Många väljer akut operation eftersom de tror att det är den snabbaste lösningen, men kirurgi är sällan nödvändigt och kan leda till längre rehabilitering.",
+          "Omedelbar full belastning verkar lockande för att snabbt återgå till aktivitet, men det riskerar att förvärra skadan och förlänga återhämtningstiden.",
+          "Komplett immobilisering kan kännas som en trygg lösning, men det hindrar muskler och vävnader från att återhämta sig effektivt och kan leda till svaghet."
+        ],
+        "teachingPoints": [
+          "Medial tibial stress syndrome är en överansträngningsskada som ofta drabbar löpare.",
+          "Behandlingen fokuserar på relativ vila, kryss-träning är okej för att hålla uppe konditionen.",
+          "Stretching och styrketräning för gastrocnemius/soleus och posterior tibialis är viktiga delar av rehabiliteringen.",
+          "Differentialdiagnoser inkluderar stressfraktur, som ger fokal ömhet, och compartment syndrome."
+        ],
+        "mnemonicOrTrick": "RIV-GS = Relativ vila, Ice, Värme, Gradvis återgång, Stretching (gastrocnemius/soleus)"
+      }
+    },
+    {
+      "questionId": "sport-008",
+      "tutorMode": {
+        "hints": [
+          "Osteitis pubis är en överansträngningsskada som vanligtvis behandlas konservativt.",
+          "Vid behandling av osteitis pubis bör man undvika kirurgiska ingrepp som första åtgärd, särskilt hos aktiva idrottare.",
+          "Konservativ behandling fokuserar på vila, fysioterapi och styrketräning av core-muskulaturen under en längre tid."
+        ],
+        "commonMistakes": [
+          "Många väljer akut symphysis fusion eftersom det verkar vara en snabb lösning, men detta är en mer invasiv åtgärd som är sällan nödvändig vid osteitis pubis.",
+          "Antibiotika kan locka då det är en inflammation, men osteitis pubis orsakas oftast av mekanisk överbelastning, inte infektion.",
+          "Symphysectomy kan vara attraktivt som en kirurgisk lösning, men det är en drastisk åtgärd som endast övervägs efter långvariga symptom utan förbättring."
+        ],
+        "teachingPoints": [
+          "Osteitis pubis är en inflammation som ofta drabbar fotbollsspelare och orsakar smärta över symfysen.",
+          "MR kan visa benmärgsödem i pubis, vilket är en viktig diagnostisk markör.",
+          "Konservativ behandling rekommenderas i 6-12 månader, inklusive relativ vila och core strengthening.",
+          "Steroid- eller PRP-injektioner kan övervägas om symptom kvarstår, men kirurgi är sällan nödvändig."
+        ],
+        "mnemonicOrTrick": "Kolla på 'Vila-Fysioterapi-Styrka' för att minnas de tre hörnstenarna i konservativ behandling av osteitis pubis."
+      }
+    },
+    {
+      "questionId": "sport-009",
+      "tutorMode": {
+        "hints": [
+          "Vid sprint är musklerna som arbetar dynamiskt under hög hastighet mest utsatta för skador.",
+          "Tänk på vilka muskler som arbetar excentriskt när benet svingas fram för nästa steg, särskilt i slutet av steget.",
+          "Den muskelgrupp som utför excentrisk kontraktion under denna fas är den mest skadade."
+        ],
+        "commonMistakes": [
+          "Många väljer quadriceps eftersom den är starkt involverad i rörelser som knäböj och lyft, men skador i denna muskelgrupp är mer associerade med sparkande rörelser, inte sprint.",
+          "Gastrocnemius verkar lockande eftersom den också används vid löpning, men den drabbas oftare vid plötsliga stopp eller hopp, snarare än vid sprint.",
+          "Hip flexors kan tyckas relevanta då de är aktiva vid sprint, men de är inte den vanligaste skadade muskelgruppen, utan hamstrings är mer utsatta."
+        ],
+        "teachingPoints": [
+          "Hamstrings (biceps femoris, semitendinosus, semimembranosus) är de vanligaste musklerna som skadas vid sprint.",
+          "Excentrisk kontraktion vid terminal swing phase är den typiska skademekanismen.",
+          "Riskfaktorer för hamstringskador inkluderar tidigare skador, styrke-imbalanser och dålig flexibilitet.",
+          "Prevention av hamstringskador inkluderar excentrisk träning såsom Nordic hamstring curls."
+        ],
+        "mnemonicOrTrick": "Hamstrings = Sprintens svaghet (tänk på att de 'hamnar' i riskzonen vid sprint)"
+      }
+    },
+    {
+      "questionId": "sport-010",
+      "tutorMode": {
+        "hints": [
+          "ITBS orsakas av friktion av iliotibialbandet, vilket oftast ger symptom på utsidan av knät.",
+          "Tänk på att smärtan vid ITBS ofta förvärras vid aktiviteter som involverar knäflexion, som löpning eller cykling.",
+          "Smärtan lokaliseras specifikt vid den laterala femoral epikondylen när knäet är i cirka 30° flexion."
+        ],
+        "commonMistakes": [
+          "Många väljer mediala knät eftersom det är ett vanligt ställe för knäskador, men ITBS smärta är specifikt lateral på grund av bandets friktion.",
+          "Patellan kan verka rimlig eftersom knäsmärta ofta associeras med knäskålen, men ITBS påverkar inte patella utan det laterala området.",
+          "Höften verkar lockande eftersom den är en stor led och kan orsaka strålande smärta, men ITBS-relaterad smärta är fokuserad på utsidan av knät."
+        ],
+        "teachingPoints": [
+          "ITBS orsakas av friktion vid lateral femoral epikondyl vid 30° knäflektion.",
+          "Symtom på ITBS inkluderar smärta på utsidan av knät, ofta förvärrad av löpning, särskilt nedförsbacke.",
+          "Noble compression test används för att bekräfta ITBS, med palpationssmärta vid lateral epikondyl.",
+          "Behandling inkluderar relativ vila, stretching av IT-bandet och muskelstärkande övningar för höftabduktorer."
+        ],
+        "mnemonicOrTrick": "Lateral smärta = Löpare och cyklister (fokusera på utsidan av knät!)"
+      }
+    },
+    {
+      "questionId": "sport-011",
+      "tutorMode": null,
+      "error": "[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"null\",\n    \"path\": [\n      \"mnemonicOrTrick\"\n    ],\n    \"message\": \"Expected string, received null\"\n  }\n]"
+    },
+    {
+      "questionId": "sport-012",
+      "tutorMode": {
+        "hints": [
+          "Vid överbelastningsskador är vila och återhämtning alltid första steget.",
+          "Operation är oftast inte nödvändig för apophysitis, utan konservativ behandling prioriteras.",
+          "Gradvis återgång till aktivitet och begränsningar i kastande är centrala för rehabilitering."
+        ],
+        "commonMistakes": [
+          "Många väljer att fortsätta kasta eftersom det kan verka som en snabb lösning för att inte tappa form, men detta förvärrar skadan och förlänger rehabiliteringstiden.",
+          "Omedelbar operation kan verka som en logisk åtgärd för att åtgärda skadan, men de flesta fall av medial apophysitis kan hanteras effektivt utan kirurgi.",
+          "Antibiotika kan verka som en enkel lösning för att behandla smärta, men det är inte indicerat för apophysitis, som är en överansträngningsskada och inte en infektion."
+        ],
+        "teachingPoints": [
+          "Little League elbow är en överbelastningsskada som drabbar unga kastare (9-12 år) och involverar medial apophysitis.",
+          "Behandling inkluderar 4-6 veckors vila från kastning följt av gradvis återgång och fysioterapi.",
+          "Pitch count limits (50-75 kastar/vecka beroende på ålder) är viktiga för att förebygga överbelastningsskador.",
+          "Korrekt teknik och undvikande av year-round baseball är viktiga förebyggande åtgärder."
+        ],
+        "mnemonicOrTrick": "Tänk på 'Vila, Återgå, Begränsa' för att komma ihåg behandlingsstrategin för Little League elbow."
+      }
+    },
+    {
+      "questionId": "sport-013",
+      "tutorMode": {
+        "hints": [
+          "Sudden cardiac death hos idrottare <35 år är oftast relaterat till strukturella hjärtproblem.",
+          "Kardiovaskulära sjukdomar är en vanlig orsak till plötslig död, men fokusera på de som är specifika för unga atleter.",
+          "Hypertrofisk kardiomyopati (HCM) är den vanligaste orsaken, särskilt hos unga idrottare med risk för ventrikulär arytmi."
+        ],
+        "commonMistakes": [
+          "Många väljer coronary artery disease eftersom det är en vanlig orsak till hjärtproblem, men detta är mer relevant för personer över 35 år.",
+          "Lungemboli verkar rimligt eftersom det kan orsaka plötslig död, men det är mycket ovanligt hos unga idrottare utan riskfaktorer.",
+          "Hjärninfarkt kan också leda till plötslig död, men det är sällan en direkt orsak hos idrottare under 35 år."
+        ],
+        "teachingPoints": [
+          "HCM står för hypertrofisk kardiomyopati och är den vanligaste orsaken till plötslig död hos idrottare <35 år (30-40% av fallen).",
+          "Möjliga orsaker till plötslig död hos unga idrottare inkluderar också myokardit och kanalarrytmier (t.ex. Long QT-syndrom).",
+          "Screening av unga idrottare bör inkludera historia, fysisk undersökning och EKG, även om EKG-screening är kontroversiellt i USA."
+        ],
+        "mnemonicOrTrick": "HCM = Hypertrofisk Kardiomyopati, tänk på att det är den vanligaste orsaken till plötslig död hos unga idrottare."
+      }
+    },
+    {
+      "questionId": "sport-014",
+      "tutorMode": {
+        "hints": [
+          "Vid en quadriceps contusion kan komplikationer uppstå på grund av hematom och inflammation.",
+          "Tänk på komplikationer som kan uppstå vid muskeltrauma; vissa kan vara mer allvarliga och långvariga än andra.",
+          "Myositis ossificans är en komplikation som kan utvecklas vid svåra kontusioner och kännetecknas av benbildning i muskeln."
+        ],
+        "commonMistakes": [
+          "Många väljer infektion eftersom det är en vanlig komplikation vid skador, men infektion är sällan en direkt följd av en kontusion.",
+          "Amputation kan verka relevant vid allvarliga skador, men det är extremt ovanligt vid en quadriceps contusion.",
+          "DVT (djup ventrombos) kan vara en risk efter immobilisering, men det är inte den allvarligaste komplikationen av en kontusion."
+        ],
+        "teachingPoints": [
+          "Myositis ossificans förekommer hos 10-20% av patienter med svår quadriceps contusion.",
+          "Behandling av myositis ossificans involverar avvaktande åtgärder i 6-12 månader innan kirurgisk intervention övervägs.",
+          "Prevention av komplikationer inkluderar POLICE: skydd, optimal belastning, is, kompression och högläge.",
+          "Tidigt massage och stretching bör undvikas för att förhindra ytterligare skada."
+        ],
+        "mnemonicOrTrick": "POLICE = Protection, Optimal loading, Ice, Compression, Elevation"
+      }
+    },
+    {
+      "questionId": "sport-015",
+      "tutorMode": {
+        "hints": [
+          "Konservativ behandling är alltid förstahandsvalet vid pars stressfrakturer, med en behandlingstid på 3-6 månader.",
+          "Om symtomen kvarstår efter 6 månader av konservativ behandling, bör man överväga kirurgisk intervention.",
+          "Kirurgi är indikerad vid kvarstående symtom och progressiv spondylolistes efter ett halvår med konservativ behandling."
+        ],
+        "commonMistakes": [
+          "Många väljer att operera omedelbart eftersom det verkar som en snabb lösning, men kirurgi bör alltid vara en sista utväg efter misslyckad konservativ behandling.",
+          "Vissa tycker att man aldrig ska operera, vilket är lockande eftersom det minimerar risker, men detta ignorerar fall med persistent smärta och spondylolistes.",
+          "Att operera vid diagnos kan kännas logiskt för att snabbt hantera problemet, men det är viktigt att ge konservativ behandling tid att verka först."
+        ],
+        "teachingPoints": [
+          "Pars stressfraktur är vanlig hos gymnaster och kan kräva kirurgi om konservativ behandling misslyckas.",
+          "Konservativ behandling inkluderar aktivitetmodifiering, bracing och core-strengthening i 3-6 månader.",
+          "Kirurgiska tekniker inkluderar pars repair och fusion vid instabilitet eller spondylolistes.",
+          "Läkningspotentialen är bäst hos unga patienter med tidiga lesioner."
+        ],
+        "mnemonicOrTrick": "6 månader av vila innan kirurgi = 'Sex månader till kirurgi om smärta kvarstår'"
+      }
+    },
+    {
+      "questionId": "sport-016",
+      "tutorMode": {
+        "hints": [
+          "Vid behandling av EAH är det viktigt att tänka på symptomens svårighetsgrad.",
+          "Mild EAH kräver oftast en begränsning av vätskeintag snarare än att ge stora mängder vätska.",
+          "Vid svår EAH med symptom som förvirring eller kramper, överväg hypertonisk saltlösning istället för standardvätskor."
+        ],
+        "commonMistakes": [
+          "Många väljer att ge mycket vatten eftersom det verkar logiskt att återställa vätskeobalansen, men detta kan förvärra hyponatremi snarare än att lösa den.",
+          "Hyperventilering kan verka som en snabb lösning för att lindra symptom, men det riskerar att leda till ytterligare elektrolytstörningar och är inte en behandling för EAH.",
+          "Att fortsätta träna kan kännas som en bra idé för att behålla träningsrutinen, men det kan leda till allvarliga komplikationer som cerebral ödem."
+        ],
+        "teachingPoints": [
+          "EAH definieras som serum Na <135 mEq/L och kan orsakas av överdriven vätskeintag under träning.",
+          "Symtomatisk EAH kan leda till livshotande tillstånd, inklusive lungödem och kramper.",
+          "Behandling av mild EAH innebär att begränsa vätskeintaget, medan svår EAH kräver hypertonisk saltlösning (3%).",
+          "Prevention av EAH inkluderar att dricka efter törst, snarare än att följa en 'drick så mycket som möjligt'-strategi."
+        ],
+        "mnemonicOrTrick": "Kom ihåg: \"Mild = Mindre vätska, Svår = Saltlösning\" för att skilja mellan behandlingar."
+      }
+    },
+    {
+      "questionId": "sport-017",
+      "tutorMode": {
+        "hints": [
+          "High ankle sprain involverar syndesmosen och tar längre tid att läka än low ankle sprain.",
+          "Low ankle sprain är vanligare och läker snabbare, vilket utesluter alternativ som säger att de har samma läkningstid.",
+          "Tänk på att syndesmos-skador kräver längre rehabiliteringstid på grund av högre belastning och instabilitet."
+        ],
+        "commonMistakes": [
+          "Många väljer 'samma' eftersom de tror att alla stukningar är lika allvarliga, men high ankle sprains är mer komplexa och kräver längre läkning.",
+          "Alternativet 'low ankle tar längre' kan verka lockande eftersom det är en vanlig skada, men faktum är att low ankle sprains läker snabbare än high ankle sprains.",
+          "Att tänka att 'båda läker på 1 vecka' kan vara frestande, men det underskattar svårighetsgraden hos high ankle sprains som vanligtvis tar 6-12 veckor."
+        ],
+        "teachingPoints": [
+          "Low ankle sprain (ATFL/CFL) läker på 2-4 veckor.",
+          "High ankle sprain (syndesmosis) läker på 6-12 veckor.",
+          "Syndesmotic injuries har längre rehabilitering på grund av högre belastning och instabilitet.",
+          "Svåra syndesmotic injuries kan kräva kirurgi, såsom suture button eller screw."
+        ],
+        "mnemonicOrTrick": "Tänk på 'Hög tid för syndesmos' för att minnas att high ankle sprains tar längre tid att läka."
+      }
+    },
+    {
+      "questionId": "sport-018",
+      "tutorMode": {
+        "hints": [
+          "Vid återgång till sport efter ACL-rekonstruktion är det viktigt att fokusera på funktionella tester snarare än enbart tidslinjer.",
+          "Tänk på att återgång inte automatiskt är 6 månader; det finns specifika kriterier som måste uppfyllas för att säkerställa säkerheten.",
+          "En viktig del av kriterierna är att patienter ska uppnå en symmetri på över 90% i enbenshopp och en isokinetisk styrka på över 90%."
+        ],
+        "commonMistakes": [
+          "Många väljer 'automatiskt 6 månader' eftersom det verkar vara en standardtid, men det ignorerar vikten av individuell bedömning av funktion och styrka.",
+          "Många tror att man kan återgå 'när smärtfri', men det är inte tillräckligt; det krävs också att man uppfyller specifika funktionella tester.",
+          "Att tro att 3 månader räcker är lockande för att få snabb återgång, men det ökar risken för re-ruptur om inte alla kriterier är uppfyllda."
+        ],
+        "teachingPoints": [
+          "Return to play efter ACL-rekonstruktion bör baseras på funktionella tester, inte enbart tidslinjer.",
+          "Minimum tid för återgång är 9 månader för att säkerställa graft-maturation och minska risken för re-ruptur.",
+          "Kriterier för återgång inkluderar full rörelseomfång, ingen effusion, negativ Lachman-test och psykologisk beredskap (ACL-RSI score).",
+          "Tidigare återgång (<9 månader) ökar risken för re-ruptur med upp till 7 gånger."
+        ],
+        "mnemonicOrTrick": "Funktionella kriterier = 'Hoppa, Styrka, Rörelse, Psyk' (HSPR)"
+      }
+    },
+    {
+      "questionId": "sport-019",
+      "tutorMode": {
+        "hints": [
+          "Female athlete triad handlar om en kombination av energibrist, menstruationsproblem och benhälsa.",
+          "Tänk på att en idrottare med låg energi kan uppleva menstruationsstörningar, vilket påverkar benmineraltätheten.",
+          "Komponenterna i triaden är direkt kopplade till energibalans och dess effekter på reproduktiv och skelettär hälsa."
+        ],
+        "commonMistakes": [
+          "Många väljer diabetes, artros, fraktur eftersom dessa är vanliga hälsoproblem, men de relaterar inte till energibrist eller menstruationsproblem som triaden gör.",
+          "Alternativet fetma, hypertoni, hyperlipidemi kan verka relevant för allmän hälsa, men dessa tillstånd adresserar inte specifikt de hormonella eller benrelaterade aspekterna av female athlete triad.",
+          "Depression, ångest, stress kan påverka idrottare, men de är inte de primära komponenterna i triaden som handlar om energibalans och fysisk hälsa."
+        ],
+        "teachingPoints": [
+          "Female athlete triad består av: låg energi, menstruationsdysfunktion, låg benmineraltäthet.",
+          "Riskfaktorer inkluderar uthållighetsidrott och estetiska sporter som gymnastik.",
+          "Behandling inkluderar ökat energiintag, hormonella interventioner och vitamin D/calcium-tillskott.",
+          "Komplikationer inkluderar stressfrakturer, särskilt i tibia och femoralhals."
+        ],
+        "mnemonicOrTrick": "Energibrist, Mensproblem, Benhälsa = EMBB"
+      }
+    },
+    {
+      "questionId": "sport-020",
+      "tutorMode": {
+        "hints": [
+          "Anabola steroider är kända för att ha allvarliga kardiovaskulära biverkningar, inklusive ökad risk för plötslig hjärtdöd.",
+          "Kreatin och proteinpulver används ofta av atleter för att öka prestation, men de är inte kopplade till samma nivå av kardiovaskulära risker som anabola steroider.",
+          "Bland de vanligaste prestationshöjande drogerna är anabola steroider den som har den starkaste kopplingen till plötslig hjärtdöd."
+        ],
+        "commonMistakes": [
+          "Många väljer kreatin eftersom det är en populär kosttillskott bland atleter, men det har inte samma allvarliga kardiovaskulära biverkningar som anabola steroider.",
+          "Protein pulver kan verka oskyldigt och är vanligt i idrottssammanhang, men det påverkar inte hjärthälsan på samma sätt som anabola steroider gör.",
+          "Koffein är en vanlig stimulant som många använder för att öka fokus och energi, men det har inte en direkt koppling till plötslig hjärtdöd som anabola steroider har."
+        ],
+        "teachingPoints": [
+          "Anabola steroider kan orsaka vänster ventrikulär hypertrofi och arytmier, vilket ökar risken för plötslig hjärtdöd.",
+          "Kardiovaskulära komplikationer från anabola steroider är väl dokumenterade i litteraturen och är en viktig aspekt av deras riskprofil.",
+          "Andra prestationshöjande droger kan ha olika risker, men anabola steroider har den mest uppenbara kopplingen till allvarliga hjärtproblem.",
+          "Det är viktigt att vara medveten om de potentiella riskerna med alla typer av prestationshöjande medel, särskilt i samband med elitidrott."
+        ],
+        "mnemonicOrTrick": "AAS = Anabola, Allvarliga, Sidoeffekter (inklusive kardiovaskulära risker)"
+      }
+    }
+  ]
+}

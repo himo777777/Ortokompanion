@@ -1,0 +1,763 @@
+
+// ========================================
+// TRAUMA - 6 questions
+// ========================================
+
+  {
+    id: 'trauma-051',
+    domain: 'trauma',
+    level: 'st5',
+    band: 'C',
+    question: "En 30-årig man skadar sin vänstra arm i en motorcykelolycka. Vid undersökning noteras en ömhet och svullnad över underarmen, och han har svårt att röra fingrarna. Vilken åtgärd är mest lämplig initialt för att utesluta en kompartmentsyndrom?",
+    options: [
+          "Mät intrakompartmentärt tryck i underarmen.",
+          "Utför en röntgen för att utesluta frakturer.",
+          "Ge analgetika och observera patienten.",
+          "Beställ en ultraljudsundersökning av kärlen."
+    ],
+    correctAnswer: "Mät intrakompartmentärt tryck i underarmen.",
+    explanation: "För att säkerställa diagnosen kompartmentsyndrom är det avgörande att mäta det intrakompartmentära trycket, eftersom symtomen kan vara ospecifika. Enligt ATLS 2022 är en tryckökning >30 mmHg i det muskelfasciala rummet en indikation för kirurgisk intervention. Röntgen kan utesluta frakturer, men är inte till hjälp för att diagnostisera kompartmentsyndrom. Analgetika kan lindra smärtan men åtgärdar inte det underliggande problemet. Ultraljudsundersökning kan utesluta vaskulära skador men är inte standard vid misstanke om kompartmentsyndrom.",
+    relatedGoals: ["st5-01","st5-04"],
+    competency: 'klinisk-färdighet',
+    tags: ["kompartmentsyndrom","undersökning","trauma","behandling","ATLS"],
+    references: ["atls-sverige-2022","boast-open-fractures-2020"],
+    tutorMode: {
+      hints: [
+              "Kompartmentsyndrom kan orsaka bestående skador om det inte behandlas snabbt.",
+              "Tänk på andra metoder för att bedöma cirkulation och neurologisk status, men kompartmentsyndrom kräver specifik tryckmätning.",
+              "Det intrakompartmentära trycket är avgörande för diagnosen, medan röntgen kan vara mer relevant för frakturer."
+      ],
+      commonMistakes: [
+              "Att enbart utföra röntgen kan leda till fördröjd behandling av ett potentiellt kompartmentsyndrom.",
+              "Att ge analgetika utan att mäta trycket kan vara riskabelt.",
+              "Att vänta på symtomens utveckling kan leda till allvarliga komplikationer."
+      ],
+      teachingPoints: [
+              "Kompartmentsyndrom uppstår vid ökat tryck i muskelfascialt rum och kan leda till ischemi.",
+              "Mätning av intrakompartmentärt tryck är den mest tillförlitliga metoden för diagnos.",
+              "ATLS 2022 betonar vikten av snabb intervention vid misstänkt kompartmentsyndrom.",
+              "Symtom kan vara vaga och inkludera smärta, svullnad och nedsatt funktion."
+      ],
+      mnemonicOrTrick: "5 P:n: Smärta (Pain), Parestesier, Blekhet (Pallor), Pulslöshet, Paralys",
+    },
+  },
+  {
+    id: 'trauma-052',
+    domain: 'trauma',
+    level: 'st5',
+    band: 'C',
+    question: "En 45-årig kvinna faller och ådrar sig en öppen fraktur av tibia. Vilken av följande åtgärder är viktigast att genomföra vid initialt omhändertagande?",
+    options: [
+          "Sätt in intravenös antibiotikabehandling.",
+          "Stabilisera frakturen med extern fixation.",
+          "Rengör såret med sterilt vatten.",
+          "Utför en röntgen av tibia."
+    ],
+    correctAnswer: "Sätt in intravenös antibiotikabehandling.",
+    explanation: "Vid en öppen fraktur är det avgörande att snabbt sätta in intravenös antibiotikabehandling för att minska risken för infektion. Enligt de nationella riktlinjerna för behandling av öppna frakturer (boast-open-fractures-2020) rekommenderas antibiotikabehandling inom en timme efter skada. Stabilisering av frakturen och röntgen är också viktiga, men antibiotikabehandling bör prioriteras för att förhindra sårinfektion. Rengöring av såret ska göras, men det är inte första åtgärden.",
+    relatedGoals: ["st5-02","st5-04"],
+    competency: 'medicinsk-kunskap',
+    tags: ["öppen fraktur","antibiotika","omhändertagande","trauma","behandling"],
+    references: ["boast-open-fractures-2020","atls-sverige-2022"],
+    tutorMode: {
+      hints: [
+              "Infektion är en av de största riskerna vid öppna frakturer.",
+              "Tänk på att antibiotikabehandling kan vara livräddande i akuta situationer.",
+              "Prioritera åtgärder som skyddar patientens liv och förhindrar komplikationer."
+      ],
+      commonMistakes: [
+              "Att vänta med antibiotika kan leda till allvarliga infektioner.",
+              "Att fokusera för mycket på röntgen kan fördröja livräddande åtgärder.",
+              "Att underlåta att stabilisera frakturen direkt kan förvärra skador på mjukdelar."
+      ],
+      teachingPoints: [
+              "Öppna frakturer kräver omedelbar antibiotikabehandling för att minska infektionsrisken.",
+              "Stabilisering och röntgen är viktiga, men sekundära efter antibiotika.",
+              "Boast-riktlinjerna ger tydliga rekommendationer för behandling av öppna frakturer.",
+              "En korrekt initial bedömning kan rädda extremiteten och förbättra utfallet."
+      ],
+      mnemonicOrTrick: "A-B-C: Antibiotika först, sedan Bedömning och stabilisering",
+    },
+  },
+  {
+    id: 'trauma-053',
+    domain: 'trauma',
+    level: 'st5',
+    band: 'D',
+    question: "En 25-årig man kommer in efter en motorcykelolycka och uppvisar en öppen fraktur av tibia med omfattande mjukdelsskador. Vilken behandling är mest lämplig som initial åtgärd?",
+    options: [
+          "Intern fixation med märgspik",
+          "Extern fixation för stabilisering av frakturen",
+          "Öppen reduktion och intern fixation",
+          "Konservativ behandling med gips"
+    ],
+    correctAnswer: "Extern fixation för stabilisering av frakturen",
+    explanation: "Extern fixation rekommenderas för stabilisering av öppna frakturer med mjukdelsskador för att minimera risken för infektion och underlätta sårvård. Enligt 'Open fractures' (Boast et al., 2020) är extern fixation den föredragna metoden för initial stabilisering i sådana fall. Intern fixation kan öka risken för infektion och komplikationer. Konservativ behandling med gips är inte indicerat vid öppna frakturer, och öppen reduktion och intern fixation bör inte utföras förrän mjukdelarna är stabiliserade.",
+    relatedGoals: ["st5-01","st5-04"],
+    competency: 'klinisk-färdighet',
+    tags: ["öppen fraktur","extern fixation","mjuka vävnader","trauma","behandling"],
+    references: ["boast-open-fractures-2020","atls-sverige-2022"],
+    tutorMode: {
+      hints: [
+              "Öppna frakturer kräver snabb åtgärd för att minska infektion.",
+              "Tänk på vikten av att stabilisera mjukdelarna innan intern fixation.",
+              "Extern fixation ger temporär stabilitet och skydd för mjukdelarna."
+      ],
+      commonMistakes: [
+              "Välja intern fixation för tidigt, vilket kan leda till infektion.",
+              "Underskatta betydelsen av mjukdelsskador vid behandlingen.",
+              "Tro att konservativ behandling är tillräcklig för öppna frakturer."
+      ],
+      teachingPoints: [
+              "Extern fixation är viktigt för att hantera öppna frakturer med mjukdelsskador.",
+              "Sårvård och infektion förebyggande åtgärder är centrala i behandlingen.",
+              "Tidigare intervention med extern fixation kan förbättra resultatet."
+      ],
+      mnemonicOrTrick: "FAST - Fixering Av Skador vid Trauma",
+    },
+  },
+  {
+    id: 'trauma-054',
+    domain: 'trauma',
+    level: 'st5',
+    band: 'D',
+    question: "En 57-årig kvinna kommer in med svullnad och smärta i vänster underben efter ett fall. Klinisk undersökning visar tecken på kompartmentsyndrom. Vilken åtgärd är mest kritisk att genomföra?",
+    options: [
+          "Ge smärtlindring och observera",
+          "Utföra fasciotomi",
+          "Applicera kompressionsförband",
+          "Beställa röntgen av underbenet"
+    ],
+    correctAnswer: "Utföra fasciotomi",
+    explanation: "Fasciotomi är den mest kritiska åtgärden vid kompartmentsyndrom för att förebygga bestående muskelskador. Enligt ATLS (2022) är snabb intervention avgörande för att förhindra ischemi och neuromuskulära komplikationer. Att ge smärtlindring och observera är otillräckligt och kan leda till allvarliga konsekvenser. Kompressionsförband och röntgen är inte lämpliga initiala åtgärder vid misstänkt kompartmentsyndrom.",
+    relatedGoals: ["st5-02","st5-03"],
+    competency: 'kirurgisk-färdighet',
+    tags: ["kompartmentsyndrom","fasciotomi","trauma","underben","akut vård"],
+    references: ["atls-sverige-2022","campbell-13ed"],
+    tutorMode: {
+      hints: [
+              "Kompartmentsyndrom kräver omedelbar åtgärd för att skydda muskler och nerver.",
+              "Tänk på att symtom som svullnad och smärta kan indikera ett allvarligt tillstånd.",
+              "Fasciotomi är ofta den enda lösningen för att avlasta trycket."
+      ],
+      commonMistakes: [
+              "Fördröjning av kirurgisk intervention kan leda till permanenta skador.",
+              "Att välja röntgen först kan fördröja nödvändig behandling.",
+              "Att ignorera smärtans intensitet som en indikator på kompartmentsyndrom."
+      ],
+      teachingPoints: [
+              "Kompartmentsyndrom är ett kirurgiskt nödläge som kräver snabb intervention.",
+              "Symtom inkluderar svullnad, smärta och nedsatt funktion.",
+              "Fasciotomi bör utföras så snart som möjligt för att förhindra muskelskada."
+      ],
+      mnemonicOrTrick: "SPLAT - Svullnad, Smärta, Funktionsförlust, Akut, Tid för fasciotomi",
+    },
+  },
+  {
+    id: 'trauma-055',
+    domain: 'trauma',
+    level: 'st5',
+    band: 'E',
+    question: "En 32-årig man som är motocrossförare kommer in efter en olycka med en öppen fraktur av underarmen. Han har en kraftig blödning och smärta. Enligt ATLS-riktlinjerna, vad är den mest kritiska åtgärden att vidta i första hand?",
+    options: [
+          "Säkerställ att frakturen är stabil och immobilisera den",
+          "Kontrollera och säkerställ adekvat luftväg",
+          "Stoppa blödningen genom att applicera tryckförband",
+          "Ge intravenös vätska för att hantera chock"
+    ],
+    correctAnswer: "Kontrollera och säkerställ adekvat luftväg",
+    explanation: "Enligt ATLS 2022 är det avgörande att säkerställa luftvägen först, särskilt vid trauma, innan man hanterar andra skador. En öppen fraktur med blödning kan leda till chock, men luftvägen måste prioriteras. Efter det kan man fokusera på att stoppa blödningen och immobilisera frakturen. Felaktiga alternativ kan leda till att livshotande tillstånd förvärras.",
+    relatedGoals: ["st5-01","st5-04"],
+    competency: 'klinisk-färdighet',
+    tags: ["öppen fraktur","ATLS","trauma","blödning","livräddande åtgärder"],
+    references: ["atls-sverige-2022","boast-open-fractures-2020"],
+    tutorMode: {
+      hints: [
+              "Tänk på ATLS-principerna - vad är det första steget i en traumatisk situation?",
+              "Prioritera livshotande tillstånd innan du hanterar specifika skador.",
+              "Blödning är en viktig faktor, men vad kan vara mer kritiskt för patientens överlevnad?"
+      ],
+      commonMistakes: [
+              "Att prioritera blödning över luftvägsskydd är en vanlig fälla.",
+              "Att tro att immobilisering av frakturen är det viktigaste steget kan leda till fördröjd behandling av livshotande tillstånd.",
+              "Att underskatta behovet av att snabbt hantera luftvägen kan få fatala konsekvenser."
+      ],
+      teachingPoints: [
+              "ATLS-riktlinjerna betonar vikten av att alltid säkerställa luftvägen först.",
+              "Öppna frakturer kan leda till allvarliga komplikationer som infektion eller chock.",
+              "Adekvat bedömning av patientens status är avgörande för att välja rätt åtgärd."
+      ],
+      mnemonicOrTrick: "ABCDE - Luftväg (Airway), Andning (Breathing), Cirkulation, Disability, Exponering",
+    },
+  },
+  {
+    id: 'trauma-056',
+    domain: 'trauma',
+    level: 'st5',
+    band: 'E',
+    question: "En 45-årig kvinna med en högersidig femurfraktur efter en fallolycka presenteras för operation. Vilken av följande fixationsmetoder rekommenderas som förstahandsval för en diaphysär femurfraktur hos denna patient?",
+    options: [
+          "Märgspikning",
+          "Extern fixation",
+          "Plattfixation med skruvar",
+          "K-tråd"
+    ],
+    correctAnswer: "Märgspikning",
+    explanation: "Enligt Campbell's Operative Orthopaedics 13:e upplagan är märgspikning förstahandsvalet för diaphysära femurfrakturer hos vuxna, eftersom det erbjuder stabilitet och snabbare återhämtning. Extern fixation är mer indicerat för öppna frakturer med mjukdelsskador. Plattfixation kan vara ett alternativ men är mindre vanligt som första val. K-tråd används oftare för mindre frakturer eller i pediatrisk kirurgi.",
+    relatedGoals: ["st5-01","st5-02"],
+    competency: 'kirurgisk-färdighet',
+    tags: ["femurfraktur","märgspikning","fixationsmetoder","diaphysär fraktur","ortopedi"],
+    references: ["campbell-13ed","boast-open-fractures-2020"],
+    tutorMode: {
+      hints: [
+              "Tänk på den typ av fraktur och vilken fixationsmetod som ger bäst stabilitet.",
+              "Överväg patientens ålder och aktivitetsnivå i beslutet.",
+              "Vilken metod är minst invasiv men ger bra biomekanisk stabilitet?"
+      ],
+      commonMistakes: [
+              "Att välja extern fixation utan att överväga behovet av stabilitet är en vanlig misstag.",
+              "Att tro att plattfixation alltid är den bästa metoden kan vara felaktigt, särskilt för diaphysära frakturer.",
+              "Att använda K-tråd på vuxna diaphysära frakturer kan leda till otillräcklig stabilitet."
+      ],
+      teachingPoints: [
+              "Märgspikning är det rekommenderade förstahandsvalet för diaphysära femurfrakturer enligt aktuella riktlinjer.",
+              "Extern fixation är mer lämpad för öppna frakturer eller när mjukdelsskador är svåra.",
+              "Frakturer i femur är ofta stabila vid korrekt fixering, vilket möjliggör snabbare rehabilitering."
+      ],
+      mnemonicOrTrick: "Märgen ger stabilitet - Märgspikning för diaphysära frakturer!",
+    },
+  },
+
+// ========================================
+// HÖFT - 6 questions
+// ========================================
+
+  {
+    id: 'hoeft-052',
+    domain: 'höft',
+    level: 'st5',
+    band: 'C',
+    question: "En 72-årig kvinna med tidigare friska höfter söker för smärta och svaghet i höger höft efter att ha snubblat och fallit. Röntgen visar en collum femoris-fraktur (Garden III). Vilken är den rekommenderade behandlingen enligt svenska riktlinjer?",
+    options: [
+          "Hemiprotes - cementerad",
+          "Total höftprotes - cementerad",
+          "Intern fixation med glidskruvar",
+          "Konservativ behandling med tåbelastning"
+    ],
+    correctAnswer: "Total höftprotes - cementerad",
+    explanation: "Enligt Rikshöft 2024 rekommenderas total höftprotes (THP) för Garden III-IV-frakturer hos patienter >70 år, då dessa har hög risk för avaskulär nekros och pseudartros vid intern fixation. Cementerade proteser har visat en 5-årsöverlevnad på 96% hos >75-åringar och ger bättre stabilitet. Intern fixation är kontraindicerat vid dislokerade frakturer hos äldre (Rikshöft).",
+    relatedGoals: ["st5-01","st5-02"],
+    competency: 'kirurgisk-färdighet',
+    tags: ["collum femoris","Garden klassifikation","höftprotes","cementering","Rikshöft"],
+    references: ["rikshoft-2024","nice-hip-fracture-2023"],
+    tutorMode: {
+      hints: [
+              "Tänk på att dislokerade frakturer har högre risk för komplikationer.",
+              "Total höftprotes rekommenderas för aktiva äldre patienter.",
+              "Cementering är viktigt för primär stabilitet hos äldre."
+      ],
+      commonMistakes: [
+              "Välja hemiprotes - THP visar bättre resultat hos aktiva patienter.",
+              "Välja intern fixation - detta har hög misslyckandegrad hos äldre.",
+              "Tro att konservativ behandling är lämplig för dislokerade frakturer."
+      ],
+      teachingPoints: [
+              "Garden III-IV = dislokerade frakturer, bör opereras.",
+              "Cementerade proteser ger bättre resultat hos äldre enligt Rikshöft.",
+              "Intern fixation är olämpligt för äldre med dislokerade frakturer."
+      ],
+      mnemonicOrTrick: "Garden 3-4? Ersätt det!",
+    },
+  },
+  {
+    id: 'hoeft-053',
+    domain: 'höft',
+    level: 'st5',
+    band: 'C',
+    question: "En 65-årig man med känd acetabulär dysplasi söker för smärta och begränsad rörlighet i vänster höft. Vid undersökning noteras en positiv Faber-test. Vilken åtgärd är mest lämplig att överväga i detta fall?",
+    options: [
+          "Periacetabulär osteotomi",
+          "Total höftprotes",
+          "Artroskopisk debridement",
+          "Konservativ behandling med fysioterapi"
+    ],
+    correctAnswer: "Periacetabulär osteotomi",
+    explanation: "Periacetabulär osteotomi är en rekommenderad behandling för patienter med acetabulär dysplasi som har kvarstående smärta och rörelseinskränkning. Enligt Campbell's Operative Orthopaedics (13:e upplagan) är detta en effektiv metod för att avlasta och stabilisera höften. Total höftprotes rekommenderas vanligen först när konservativa åtgärder misslyckas eller vid allvarlig artros.",
+    relatedGoals: ["st5-01","st5-04"],
+    competency: 'klinisk-färdighet',
+    tags: ["acetabulär dysplasi","periacetabulär osteotomi","Faber-test","höftsmärta"],
+    references: ["campbell-13ed","nice-hip-fracture-2023"],
+    tutorMode: {
+      hints: [
+              "Tänk på att dysplasi kan leda till tidig artros och smärta.",
+              "Periacetabulär osteotomi syftar till att förbättra ledens läge och avlasta.",
+              "Kolla på röntgen för att bedöma svårighetsgraden av dysplasin."
+      ],
+      commonMistakes: [
+              "Tro att total höftprotes är den första åtgärden - det är oftast en sista utväg.",
+              "Överskatta effekten av konservativ behandling i avancerade fall.",
+              "Missförstå Faber-testets betydelse för diagnosticering."
+      ],
+      teachingPoints: [
+              "Acetabulär dysplasi kan orsaka tidig artros och smärta.",
+              "Periacetabulär osteotomi kan förbättra funktionen och minska smärta.",
+              "Rätt diagnostik är avgörande för behandling av höftproblem."
+      ],
+      mnemonicOrTrick: "Dysplasi? Osteotomi!",
+    },
+  },
+  {
+    id: 'hoeft-054',
+    domain: 'höft',
+    level: 'st5',
+    band: 'C',
+    question: "En 80-årig kvinna som nyligen genomgått en cementerad total höftprotesoperation kommer på uppföljning. Hon rapporterar smärta och svullnad runt höftleden. Vilken komplikation bör du misstänka i första hand?",
+    options: [
+          "Periprotesinfektion",
+          "Avaskulär nekros",
+          "Periprotesisk fraktur",
+          "DVT (djup ventrombos)"
+    ],
+    correctAnswer: "Periprotesinfektion",
+    explanation: "Periprotesinfektion är en vanlig komplikation efter total höftprotesoperation, särskilt inom de första månaderna. Enligt Rikshöft 2024 rapporteras infektioner hos cirka 1-2% av de opererade patienterna. Symtomen på infektion kan inkludera smärta, svullnad och ibland feber. Avaskulär nekros och periprotesisk fraktur är mer sällsynta, och DVT kan presentera sig med olika symtom som svullnad men är inte alltid lokaliserad till höftleden.",
+    relatedGoals: ["st5-02","st5-03"],
+    competency: 'medicinsk-kunskap',
+    tags: ["höftprotes","komplikationer","periprotesinfektion","postoperativ vård"],
+    references: ["rikshoft-2024","nice-hip-fracture-2023"],
+    tutorMode: {
+      hints: [
+              "Tänk på typiska symtom som smärta och svullnad i det opererade området.",
+              "Infektioner är en av de vanligaste komplikationerna efter kirurgi.",
+              "Utvärdera om det finns feber eller allmän sjukdomskänsla."
+      ],
+      commonMistakes: [
+              "Misstänka avaskulär nekros för tidigt - det tar längre tid att utvecklas.",
+              "Tro att periprotesisk fraktur är vanligare än infektion - infektion är vanligare.",
+              "Överskatta DVT-symtom som specifika för höftleden."
+      ],
+      teachingPoints: [
+              "Periprotesinfektion är en vanlig postoperativ komplikation.",
+              "Tidiga tecken på infektion inkluderar smärta och svullnad.",
+              "Rikshöft visar att infektion kan uppkomma i 1-2% av fallen."
+      ],
+      mnemonicOrTrick: "Smärta + svullnad = Tänk infektion!",
+    },
+  },
+  {
+    id: 'hoeft-055',
+    domain: 'höft',
+    level: 'st5',
+    band: 'D',
+    question: "En 75-årig man med en cementerad total höftprotes utvecklar smärta och begränsad rörlighet efter 5 år. Röntgen visar ett acetabulärt defekt av typ 2 enligt Paprosky. Vilken är den mest lämpliga åtgärden?",
+    options: [
+          "Revision med cementerad protes",
+          "Revision med icke-cementerad protes",
+          "Acetabulär rekonstruktion med bensegment",
+          "Konservativ behandling med fysioterapi"
+    ],
+    correctAnswer: "Revision med icke-cementerad protes",
+    explanation: "Vid en Paprosky typ 2-defekt är det oftast lämpligt att använda en icke-cementerad protes för att säkerställa bättre biomekanisk stabilitet och integration i benet, vilket ökar chansen för långsiktig överlevnad av protesen. Enligt Rikshöft 2024 har icke-cementerade proteser vid typ 2-defekter en 5-årsöverlevnad på 92%. Konservativ behandling är inte indicerad vid en aktiv protesrelaterad komplikation.",
+    relatedGoals: ["st5-02"],
+    competency: 'kirurgisk-färdighet',
+    tags: ["total höftprotes","revision","Paprosky klassifikation","acetabulär defekt","Rikshöft"],
+    references: ["paprosky-1994","rikshoft-2024"],
+    tutorMode: {
+      hints: [
+              "Tänk på vilken typ av defekt som påverkar valet av protesdesign.",
+              "Överväg fördelarna med cementerad versus icke-cementerad protes vid revision.",
+              "Kom ihåg att rehabilitering är viktigt men inte tillräckligt för proteskomplikationer."
+      ],
+      commonMistakes: [
+              "Välja cementerad protes - det kan leda till sämre resultat vid typ 2-defekter.",
+              "Underskatta behovet av kirurgisk intervention vid protesrelaterad smärta.",
+              "Tro att konservativ behandling är tillräcklig för att lösa problemet."
+      ],
+      teachingPoints: [
+              "Paprosky typ 1 och 2-defekter kräver olika kirurgiska strategier.",
+              "Icke-cementerade proteser kan ge bättre långsiktiga resultat vid större defekter.",
+              "Revisioner bör alltid baseras på noggrant preoperativt utvärdering av benkvalitet och defekttyp."
+      ],
+      mnemonicOrTrick: "Typ 2 - Ocementerad för bästa fäste!",
+    },
+  },
+  {
+    id: 'hoeft-056',
+    domain: 'höft',
+    level: 'st5',
+    band: 'D',
+    question: "En 68-årig kvinna med en historia av höftartros söker hjälp för svår smärta och nedsatt funktion. Hon har en BMI på 30 och flera komorbiditeter. Vilken är den mest lämpliga initiala behandlingen enligt svenska riktlinjer?",
+    options: [
+          "Total höftartroplastik",
+          "Artroskopisk debridering",
+          "Konservativ behandling med viktminskning och fysioterapi",
+          "Intraartikulär steroidinjektion"
+    ],
+    correctAnswer: "Konservativ behandling med viktminskning och fysioterapi",
+    explanation: "För patienter med höftartros och flera komorbiditeter rekommenderas initialt konservativ behandling, inklusive viktminskning och fysioterapi, för att förbättra funktion och minska smärta. Enligt Rikshöft 2024 bör kirurgisk behandling övervägas efter att konservativ behandling misslyckats. Viktminskning kan särskilt bidra till minskad belastning på leden.",
+    relatedGoals: ["st5-04"],
+    competency: 'medicinsk-kunskap',
+    tags: ["höftartros","konservativ behandling","fysioterapi","viktminskning","Rikshöft"],
+    references: ["rikshoft-2024","nice-hip-fracture-2023"],
+    tutorMode: {
+      hints: [
+              "Tänk på vikten av livsstilsförändringar vid artros.",
+              "Konservativ behandling är ofta det första steget innan kirurgiska ingrepp.",
+              "Viktminskning kan ha en stor effekt på symptomlindring."
+      ],
+      commonMistakes: [
+              "Välja kirurgi för tidigt utan att ha prövat konservativa metoder.",
+              "Överskatta effekten av kortvariga ingrepp som steroidinjektioner.",
+              "Undervärdera betydelsen av komorbiditeter i behandlingsvalet."
+      ],
+      teachingPoints: [
+              "Konservativ behandling ska alltid prioriteras vid artros innan kirurgi.",
+              "Viktminskning är särskilt viktigt för överviktiga patienter med artros.",
+              "Fysioterapi kan ge betydande symptomlindring och förbättrad funktion."
+      ],
+      mnemonicOrTrick: "Konservativ först, kirurgi sen!",
+    },
+  },
+  {
+    id: 'hoeft-057',
+    domain: 'höft',
+    level: 'st5',
+    band: 'D',
+    question: "En 82-årig kvinna med en dislokerad collum femoris-fraktur genomgår en cementerad hemiprotesoperation. Vilken postoperativ komplikation är mest associerad med denna typ av kirurgi hos äldre patienter?",
+    options: [
+          "Djupt venöst trombos (DVT)",
+          "Protesinfektion",
+          "Fraktur i motsatt höft",
+          "Pseudartros"
+    ],
+    correctAnswer: "Djupt venöst trombos (DVT)",
+    explanation: "DVT är en vanlig postoperativ komplikation efter höftkirurgi, särskilt hos äldre patienter som genomgått hemiprotesoperation. Enligt Rikshöft 2024 har DVT en incidens på upp till 30% hos patienter över 80 år. Profylaktiska åtgärder, såsom antikoagulantia, rekommenderas för att minska risken.",
+    relatedGoals: ["st5-01"],
+    competency: 'klinisk-färdighet',
+    tags: ["collum femoris","hemiprotes","postoperativa komplikationer","DVT","Rikshöft"],
+    references: ["rikshoft-2024","nice-hip-fracture-2023"],
+    tutorMode: {
+      hints: [
+              "Kom ihåg att äldre har en ökad risk för tromboser efter operation.",
+              "DVT är en vanlig komplikation vid ortopediska ingrepp.",
+              "Profileringsåtgärder är avgörande för att förhindra denna komplikation."
+      ],
+      commonMistakes: [
+              "Undervärdera behovet av tromboprofilax hos äldre patienter.",
+              "Tro att infektion är den vanligaste komplikationen efter hemiprotes.",
+              "Glömma att DVT kan leda till allvarliga konsekvenser."
+      ],
+      teachingPoints: [
+              "DVT är en allvarlig komplikation efter höftoperationer, särskilt hos äldre.",
+              "Antikoagulantiaprofylax är viktigt för att minska risken för DVT.",
+              "Övervakning av postoperativa symptom är avgörande för tidig upptäckte av komplikationer."
+      ],
+      mnemonicOrTrick: "Tänk DVT - Djup Ventrombos efter operation!",
+    },
+  },
+
+// ========================================
+// KNÄ - 2 questions
+// ========================================
+
+  {
+    id: 'kna-051',
+    domain: 'knä',
+    level: 'st5',
+    band: 'C',
+    question: "En 65-årig man söker vård för smärta och svullnad i vänster knä efter att ha spelat fotboll. Han har en historia av tidigare meniskoperation. Vid klinisk undersökning noteras instabilitet vid vagusstress och smärta vid palpation av ledlinjen. Vad är den mest sannolika diagnosen?",
+    options: [
+          "Främre korsbandsruptur",
+          "Medial meniskruptur",
+          "Patellofemoral smärtsyndrom",
+          "Artros i knäleden"
+    ],
+    correctAnswer: "Medial meniskruptur",
+    explanation: "Den kliniska bilden med smärta vid palpation av ledlinjen och instabilitet vid vagusstress talar starkt för en medial meniskruptur, särskilt med patientens tidigare meniskoperation. Enligt Campbell's Operative Orthopaedics (13:e upplagan) är detta en vanlig skada hos idrottare och kan bekräftas med magnetresonanstomografi (MRI). Patellofemoral smärta och artros ger oftast inte samma typ av symptom vid fysisk ansträngning och klinisk undersökning.",
+    relatedGoals: ["st5-01","st5-04"],
+    competency: 'klinisk-färdighet',
+    tags: ["meniskruptur","knäskador","idrottsmedicin","diagnostik"],
+    references: ["campbell-13ed","ottawa-knee-rules-1997"],
+    tutorMode: {
+      hints: [
+              "Tänk på symptom som instabilitet och smärta vid ledlinjen.",
+              "Överväg tidigare knäskador när du formulerar din diagnos.",
+              "Kom ihåg att medial meniskruptur ofta förekommer vid sportaktiviteter."
+      ],
+      commonMistakes: [
+              "Att tro att artros ger samma symptom som en akut meniskruptur.",
+              "Att missa vikten av tidigare knäoperation i diagnosen.",
+              "Att felaktigt prioritera patellofemoral smärta utan att undersöka ledlinjen."
+      ],
+      teachingPoints: [
+              "Instabilitet och ledlinjesmärta är typiska för meniskrupturer.",
+              "Tidigare knäoperationer kan öka risken för framtida skador.",
+              "MRI är en viktig diagnostisk metod för att bekräfta meniskrupturer."
+      ],
+      mnemonicOrTrick: "Meniskskada: Smärta vid vridning och instabilitet",
+    },
+  },
+  {
+    id: 'kna-052',
+    domain: 'knä',
+    level: 'st5',
+    band: 'C',
+    question: "En 72-årig kvinna med svår knäartros söker vård för uttalade smärtor som påverkar hennes dagliga liv. Hon har prövat icke-kirurgiska behandlingar utan tillfredsställande resultat. Vad är den mest lämpliga kirurgiska åtgärden?",
+    options: [
+          "Total knäprotes",
+          "Artroromi",
+          "Meniskoperation",
+          "Korsbandsrekonstruktion"
+    ],
+    correctAnswer: "Total knäprotes",
+    explanation: "Vid svår knäartros och brist på effektiva icke-kirurgiska behandlingar rekommenderas total knäprotes som den mest lämpliga kirurgiska åtgärden. Enligt Svenska Knäprotesregistret 2024 har total knäprotes en 5-årsöverlevnad på 96%, vilket gör det till en effektiv lösning för patienter med svår artros. Artroromi och meniskoperation är inte indicerade vid svår artros, och korsbandsrekonstruktion är inte relevant här.",
+    relatedGoals: ["st5-02","st5-04"],
+    competency: 'kirurgisk-färdighet',
+    tags: ["knäartros","total knäprotes","kirurgi","Svenska Knäprotesregistret"],
+    references: ["rikskna-2024","campbell-13ed"],
+    tutorMode: {
+      hints: [
+              "Överväg kirurgiska alternativ för svår artros när icke-kirurgiska behandlingar misslyckas.",
+              "Tänk på 5-årsöverlevnad för olika kirurgiska ingrepp.",
+              "Identifiera skillnaderna mellan knäartros och andra knäskador."
+      ],
+      commonMistakes: [
+              "Att välja meniskoperation vid svår artros.",
+              "Att tro att korsbandsrekonstruktion hjälper vid artros.",
+              "Att missa att total knäprotes har en hög överlevnadsgrad."
+      ],
+      teachingPoints: [
+              "Total knäprotes är guldstandarden vid svår knäartros.",
+              "Svenska Knäprotesregistret visar hög 5-årsöverlevnad för knäproteser.",
+              "Icke-kirurgiska behandlingar kan vara otillräckliga vid avancerad artros."
+      ],
+      mnemonicOrTrick: "Knäsmärta? Överväg total lösning - knäprotes!",
+    },
+  },
+
+// ========================================
+// SPORT - 6 questions
+// ========================================
+
+  {
+    id: 'sport-021',
+    domain: 'sport',
+    level: 'st2',
+    band: 'A',
+    question: "En 24-årig manlig fotbollsspelare söker vård efter att ha upplevt en plötslig smärta och svullnad i knäet under en match. Vid undersökning noteras plus på Lachman-test och pivot-shift-test. Vilken diagnos är mest sannolik?",
+    options: [
+          "Framåtriktad korsbandsskada (ACL-skada)",
+          "Meniskskada",
+          "Knäledsartros",
+          "Patellofemoral smärta"
+    ],
+    correctAnswer: "Framåtriktad korsbandsskada (ACL-skada)",
+    explanation: "Lachman-test och pivot-shift-test är specifika för framåtriktad korsbandsskada (ACL-skada). Enligt Campbell's Operative Orthopaedics (13:e upplagan) är ACL-skador vanliga hos idrottare och kännetecknas av plötslig smärta och svullnad. Meniskskada kan ge liknande symptom men har oftast inte samma positiva testresultat. Knäledsartros är ovanligt i denna ålder, och patellofemoral smärta ger inte de specifika fynden som observeras här.",
+    relatedGoals: ["st2-01"],
+    competency: 'medicinsk-kunskap',
+    tags: ["ACL","knäskador","sportmedicin","Lachman-test","pivot-shift"],
+    references: ["campbell-13ed","rikskna-2024"],
+    tutorMode: {
+      hints: [
+              "Tänk på vanliga skador hos unga idrottare med knäsymptom.",
+              "Fokusera på testerna som utfördes och deras specifika betydelse.",
+              "Överväg typiska symptom och fynd för varje diagnos."
+      ],
+      commonMistakes: [
+              "Att förväxla meniskskada med ACL-skada baserat på symptom.",
+              "Att tro att knäledsartros kan förekomma hos så unga patienter.",
+              "Att inte beakta testernas specifika betydelse i diagnosen."
+      ],
+      teachingPoints: [
+              "Lachman-test är det mest känsliga testet för ACL-skada.",
+              "Pivot-shift-test kan hjälpa till att bekräfta instabilitet i knäet.",
+              "Det är viktigt att skilja på olika knäskador genom kliniska tester."
+      ],
+      mnemonicOrTrick: "ACL - Främre korsbandet = Alltid Kolla Lachman",
+    },
+  },
+  {
+    id: 'sport-022',
+    domain: 'sport',
+    level: 'st2',
+    band: 'A',
+    question: "En 30-årig kvinnlig handbollsspelare klagar över smärta i axeln efter att ha kastat en boll. Vid klinisk undersökning finner du en positiv apprehension-test. Vad är den mest sannolika diagnosen?",
+    options: [
+          "Axelinstabilitet",
+          "Rotatorcuffskada",
+          "Fraktur i humerus",
+          "Bursit"
+    ],
+    correctAnswer: "Axelinstabilitet",
+    explanation: "Positivt apprehension-test tyder på axelinstabilitet, vilket är vanligt hos kastande idrottare. Enligt Campbell's Operative Orthopaedics (13:e upplagan) är axelinstabilitet oftast associerad med repetitiva överbelastningar. Rotatorcuffskador kan ge smärta men har typiskt andra fynd. Fraktur i humerus är osannolikt utan trauma och bursit ger inte positiva testresultat.",
+    relatedGoals: ["st2-02"],
+    competency: 'klinisk-färdighet',
+    tags: ["axelinstabilitet","apprehension-test","handboll","sportmedicin","rotatorcuff"],
+    references: ["campbell-13ed","rikskna-2024"],
+    tutorMode: {
+      hints: [
+              "Överväg skador som är vanliga hos kastande idrottare.",
+              "Tänk på specifika kliniska tester och deras betydelse.",
+              "Fokusera på symptomens karaktär och aktivitetsnivå."
+      ],
+      commonMistakes: [
+              "Att förväxla axelinstabilitet med rotatorcuffskada.",
+              "Att inte erkänna betydelsen av apprehension-testet.",
+              "Att tro att axelsmärta alltid är relaterad till bursit."
+      ],
+      teachingPoints: [
+              "Apprehension-test används för att bedöma axelinstabilitet.",
+              "Kastande idrottare har en hög risk för axelinstabilitet.",
+              "Det är viktigt att skilja på olika typer av axelsmärta."
+      ],
+      mnemonicOrTrick: "Axelinstabilitet = Alltid Undersök med Apprehension-test",
+    },
+  },
+  {
+    id: 'sport-023',
+    domain: 'sport',
+    level: 'st2',
+    band: 'A',
+    question: "En 18-årig löpare klagar över smärta och ömhet på framsidan av foten efter att ha ökat sin träningsmängd. Vid undersökning noteras ömhet över metatarsalbenen. Vilken diagnos är mest sannolik?",
+    options: [
+          "Stressfraktur",
+          "Plantarfasciit",
+          "Mortons neurom",
+          "Tendinopati"
+    ],
+    correctAnswer: "Stressfraktur",
+    explanation: "Ömhet över metatarsalbenen och smärta efter ökad belastning tyder starkt på stressfraktur, som är vanlig hos löpare. Enligt Riksknä 2024 är stressfrakturer vanliga hos idrottare som ökar sin aktivitetsnivå snabbt. Plantarfasciit ger smärta i hälen, Mortons neurom påverkar främst tårna, och tendinopati ger sällan lokaliserad ömhet på framsidan av foten.",
+    relatedGoals: ["st2-01"],
+    competency: 'medicinsk-kunskap',
+    tags: ["stressfraktur","metatarsalben","fot","löpare","sportmedicin"],
+    references: ["rikskna-2024","campbell-13ed"],
+    tutorMode: {
+      hints: [
+              "Tänk på skador som är vanliga vid överbelastning.",
+              "Överväg smärtans lokalisering och aktivitetens intensitet.",
+              "Kliniska fynd kan ge vägledning till diagnosen."
+      ],
+      commonMistakes: [
+              "Att förväxla stressfraktur med tendinopati.",
+              "Att underskatta betydelsen av ökad träningsvolym.",
+              "Att tro att smärta endast uppstår vid aktivitet och inte i vila."
+      ],
+      teachingPoints: [
+              "Stressfrakturer är vanliga hos löpare med plötslig ökning av träning.",
+              "Ömhet över metatarsalbenen är typiskt för stressfrakturer.",
+              "Det är viktigt att fånga upp stressfrakturer tidigt för att förhindra komplikationer."
+      ],
+      mnemonicOrTrick: "STRESS = Snabb Träningsökning Resulterar i Stressfraktur",
+    },
+  },
+  {
+    id: 'sport-024',
+    domain: 'sport',
+    level: 'st2',
+    band: 'B',
+    question: "En 30-årig kastare klagar på smärta i axeln efter flera veckors intensiv träning. Vid undersökning noteras begränsad rörlighet och smärta vid abduktion. Vad är den mest sannolika diagnosen?",
+    options: [
+          "Rotatorcuff-skada",
+          "Axelinstabilitet",
+          "Seniorkapsulit",
+          "Frusen axel"
+    ],
+    correctAnswer: "Rotatorcuff-skada",
+    explanation: "Begränsad rörlighet och smärta vid abduktion är typiska symptom på en rotatorcuff-skada, särskilt hos kastare. Enligt Campbell's Operative Orthopaedics är rotatorcuff-skador vanliga hos idrottare som utför repetitiva overhead-rörelser. Axelinstabilitet skulle normalt ge symptom vid rörelser i flera plan, medan seniorkapsulit och frusen axel är mer relaterade till långvarig immobilisering och äldre patienter.",
+    relatedGoals: ["st2-01","st2-02"],
+    competency: 'klinisk-färdighet',
+    tags: ["axel","rotatorcuff","idrottsskador","kastare"],
+    references: ["campbell-13ed","rikskna-2024"],
+    tutorMode: {
+      hints: [
+              "Överväg skador som är relaterade till repetitiva rörelser i axeln.",
+              "Tänk på åldern och träningsintensiteten hos patienten.",
+              "Granska smärta vid specifika rörelser som kan indikera rotatorcuff-skador."
+      ],
+      commonMistakes: [
+              "Anta att smärtan är relaterad till axelinstabilitet utan att se på rörlighet och symptom.",
+              "Förväxla frusen axel med rotatorcuff-skada - de har olika presentationer.",
+              "Överse behovet av bilddiagnostik för att bekräfta diagnosen."
+      ],
+      teachingPoints: [
+              "Rotatorcuff-skador är vanliga hos idrottare, särskilt i kastande sporter.",
+              "Symptom kan variera beroende på skadans allvarlighetsgrad.",
+              "Tidig diagnos och behandling är viktiga för att förhindra långvariga problem."
+      ],
+      mnemonicOrTrick: "KAST - Kastande rörelse, Axelsmärta, Stabilitet, Testa rörlighet",
+    },
+  },
+  {
+    id: 'sport-025',
+    domain: 'sport',
+    level: 'st2',
+    band: 'B',
+    question: "En 28-årig man som spelar rugby ådrog sig en skada under en tackling. Han klagar på smärta och svullnad över axeln. Vilken diagnos är mest sannolik?",
+    options: [
+          "Axelluxation",
+          "Clavikelfraktur",
+          "Rotatorcuff-skada",
+          "Acromioclavicularledskada"
+    ],
+    correctAnswer: "Acromioclavicularledskada",
+    explanation: "Skador på axeln under tacklingar är vanliga, och smärta och svullnad över acromioclavicularleden tyder på en acromioclavicularledskada, ofta klassificerad som en typ I-III skada. Enligt Campbell's Operative Orthopaedics är detta en vanlig skada inom kontaktsporter. Axelluxation kan ge liknande symptom men är oftast mer uttalad med abduktion. Clavikelfrakturer och rotatorcuff-skador skulle ge andra symptom och kliniska fynd.",
+    relatedGoals: ["st2-01","st2-02"],
+    competency: 'klinisk-färdighet',
+    tags: ["axel","acromioclavicularled","rugby","idrottsskador"],
+    references: ["campbell-13ed","rikskna-2024"],
+    tutorMode: {
+      hints: [
+              "Tänk på skador som uppstår vid direkta slag mot axeln.",
+              "Granska lokalisationen av svullnad och smärta.",
+              "Överväg att utföra röntgen för att utesluta frakturer."
+      ],
+      commonMistakes: [
+              "Välja axelluxation utan att beakta typiska symptom och fynd.",
+              "Anta att skadan är en rotatorcuff-skada utan att göra en fullständig bedömning.",
+              "Överse röntgens betydelse för att diagnostisera frakturer."
+      ],
+      teachingPoints: [
+              "Acromioclavicularledskador är vanliga i kontaktsporter och kan variera i svårighetsgrad.",
+              "Tidiga symptom kan inkludera smärta, svullnad och nedsatt rörlighet.",
+              "En korrekt diagnos är avgörande för behandlingsval och återhämtning."
+      ],
+      mnemonicOrTrick: "RUGBY - Rugby, Utsatt axel, Grad av skada, Bedömning och Ytterligare undersökning",
+    },
+  },
+  {
+    id: 'sport-026',
+    domain: 'sport',
+    level: 'st2',
+    band: 'C',
+    question: "En 23-årig manlig fotbollsspelare kommer in med svullnad och smärta i knät efter en tackling. Vid undersökning noteras en positiv Lachman-test och svullnad i ledkapseln. Vilken åtgärd är mest lämplig att rekommendera för att bekräfta diagnosen?",
+    options: [
+          "Röntgen av knäet för att utesluta fraktur",
+          "MR-undersökning av knäet för att bedöma ligament och menisk",
+          "Ultraljud av knäet för att bedöma ledvätska",
+          "Artroskopi för direkt visualisering av knästrukturer"
+    ],
+    correctAnswer: "MR-undersökning av knäet för att bedöma ligament och menisk",
+    explanation: "MR-undersökning är den mest känsliga metoden för att identifiera skador på ligament, inklusive främre korsband (ACL) och menisker. Enligt Campbell's Operative Orthopaedics är MR-undersökning standard för att utvärdera knäskador, med hög specificitet och sensitivitet för ligamentär och meniskal skada. Röntgen kan utesluta fraktur men ger ingen information om mjukdelsskador. Ultraljud kan upptäcka vätska men är inte tillräckligt bra för att bedöma ligament. Artroskopi är invasivt och bör reserveras för terapiformer efter bilddiagnostik.",
+    relatedGoals: ["st2-01","st2-02"],
+    competency: 'klinisk-färdighet',
+    tags: ["knäskador","ACL","MR","diagnostik","sportmedicin"],
+    references: ["campbell-13ed","rikskna-2024"],
+    tutorMode: {
+      hints: [
+              "Tänk på vilken bilddiagnostik som ger bäst information om mjukdelsskador.",
+              "MR är den valda metoden för att bedöma ligament och menisker i knäet.",
+              "Röntgen är bra för frakturer men inte för mjukdelsskador."
+      ],
+      commonMistakes: [
+              "Välja röntgen – det hjälper inte att bedöma ligament eller menisk.",
+              "Tro på att ultraljud är tillräckligt för att diagnostisera ACL-skador.",
+              "Överväga artroskopi som första åtgärd utan bilddiagnostik."
+      ],
+      teachingPoints: [
+              "MR är guldstandard för att utvärdera knäskador, framför allt ligament och menisk.",
+              "Röntgen utesluter endast fraktur men ger ingen information om mjukdelar.",
+              "Ultraljud kan användas för att se vätska men är inte tillförlitligt för ligament.",
+              "Artroskopi är invasivt och bör användas efter bilddiagnostik."
+      ],
+      mnemonicOrTrick: "MR = Mjukdelar och Rätt diagnos!",
+    },
+  },

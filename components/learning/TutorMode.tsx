@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { MCQQuestion, TutorModeData } from '@/data/questions';
-import { HelpCircle, Lightbulb, Target, Eye, CheckCircle, XCircle, BookOpen, AlertTriangle, Sparkles, Loader2 } from 'lucide-react';
+import { HelpCircle, Lightbulb, Target, Eye, CheckCircle, XCircle, BookOpen, AlertTriangle, Sparkles, Loader2, ArrowRight } from 'lucide-react';
 import {
   HintLevel,
   getHint,
@@ -15,6 +15,10 @@ import {
   generatePersonalizedExplanation,
 } from '@/lib/ai-service';
 import { EducationLevel } from '@/types/education';
+import { VERIFIED_SOURCES } from '@/data/verified-sources';
+import { SourceReference } from '@/types/verification';
+import SourcesList, { SourcesSummary } from './SourcesList';
+import EvidenceBadge from './EvidenceBadge';
 
 interface TutorModeProps {
   question: MCQQuestion;
@@ -44,7 +48,7 @@ export default function TutorMode({
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [revealedHints, setRevealedHints] = useState<HintLevel[]>([]);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [startTime] = useState(Date.now());
+  const [startTime, setStartTime] = useState(Date.now());
 
   // AI-powered state
   const [aiHints, setAiHints] = useState<string[] | null>(null);
@@ -57,6 +61,9 @@ export default function TutorMode({
   const [loadingAIHints, setLoadingAIHints] = useState(false);
   const [loadingAIExplanation, setLoadingAIExplanation] = useState(false);
 
+  // Ref to track timeout for cleanup
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   // Get tutor mode data (use default if not provided)
   const tutorData: TutorModeData =
     question.tutorMode || generateDefaultHints(question);
@@ -64,6 +71,46 @@ export default function TutorMode({
   const isCorrect = selectedAnswer === question.correctAnswer;
   const hintsUsed = revealedHints.length;
   const xpEarned = showAnswer && isCorrect ? calculateHintPenalty(hintsUsed, baseXP) : 0;
+
+  // Get relevant sources for this question
+  const getQuestionSources = (): SourceReference[] => {
+    const domainSourceMap: Record<string, string[]> = {
+      'trauma': ['atls-sverige-2022', 'boast-open-fractures-2020', 'gustilo-1976'],
+      'höft': ['nice-hip-fracture-2023', 'paprosky-1994', 'rikshoft-2024'],
+      'knä': ['ottawa-knee-rules-1997', 'rikskna-2024'],
+      'fot-fotled': ['campbell-13ed', 'rockwood-9ed'],
+      'hand-handled': ['green-8ed', 'campbell-13ed'],
+      'axel-armbåge': ['gartland-1959', 'rockwood-9ed', 'lewinnek-1978'],
+      'rygg': ['aaos-acl-2022', 'campbell-13ed'],
+      'sport': ['aaos-acl-2022', 'rikskna-2024'],
+      'tumör': ['campbell-13ed', 'rockwood-9ed'],
+    };
+
+    const sourceIds = domainSourceMap[question.domain] || ['campbell-13ed'];
+    return sourceIds.map(id => VERIFIED_SOURCES[id]).filter(Boolean);
+  };
+
+  const questionSources = getQuestionSources();
+
+  // Reset state when question changes
+  useEffect(() => {
+    setSelectedAnswer(null);
+    setRevealedHints([]);
+    setShowAnswer(false);
+    setAiExplanation(null);
+    setAiHints(null);
+    setLoadingAIExplanation(false);
+    setStartTime(Date.now());
+  }, [question]);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   // Load AI hints on component mount (if AI enabled)
   useEffect(() => {
@@ -132,23 +179,23 @@ export default function TutorMode({
     if (!selectedAnswer) return;
 
     setShowAnswer(true);
-    const timeSpent = Math.floor((Date.now() - startTime) / 1000);
 
     // Load AI explanation if wrong answer
     if (!isCorrect && enableAI) {
       await loadAIExplanation();
     }
+  };
 
-    // Wait a moment to show feedback, then call onAnswer
-    setTimeout(() => {
-      onAnswer({
-        selectedAnswer,
-        correct: isCorrect,
-        hintsUsed,
-        timeSpent,
-        xpEarned,
-      });
-    }, 2000);
+  // Handle moving to next question
+  const handleNext = () => {
+    const timeSpent = Math.floor((Date.now() - startTime) / 1000);
+    onAnswer({
+      selectedAnswer: selectedAnswer!,
+      correct: isCorrect,
+      hintsUsed,
+      timeSpent,
+      xpEarned,
+    });
   };
 
   return (
@@ -433,13 +480,17 @@ export default function TutorMode({
                   {question.explanation}
                 </p>
 
-                {/* References */}
-                {question.references && question.references.length > 0 && (
-                  <div className="mt-3 pt-3 border-t border-gray-200">
-                    <p className="text-xs font-semibold text-gray-700 mb-1">Källor:</p>
-                    <p className="text-xs text-gray-600">
-                      {question.references.join(', ')}
-                    </p>
+                {/* Verified Sources Section */}
+                {questionSources.length > 0 && (
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <BookOpen className="w-4 h-4 text-blue-600" />
+                        <h6 className="text-sm font-semibold text-gray-900">Verifierade källor</h6>
+                      </div>
+                      <SourcesSummary sources={questionSources} />
+                    </div>
+                    <SourcesList sources={questionSources} variant="compact" maxVisible={3} />
                   </div>
                 )}
               </div>
@@ -497,6 +548,17 @@ export default function TutorMode({
               className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition-colors"
             >
               Svara
+            </button>
+          )}
+
+          {/* Next Question Button - only show after answer is submitted */}
+          {showAnswer && (
+            <button
+              onClick={handleNext}
+              className="w-full py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+            >
+              <span>Nästa fråga</span>
+              <ArrowRight className="w-5 h-5" />
             </button>
           )}
         </div>

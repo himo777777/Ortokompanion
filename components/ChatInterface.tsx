@@ -3,23 +3,54 @@
 import { useState, useRef, useEffect } from 'react';
 import { EducationLevel } from '@/types/education';
 import { educationLevels } from '@/data/levels';
-import { Send, Loader2, User, Bot } from 'lucide-react';
+import { Send, Loader2, User, Bot, Lightbulb } from 'lucide-react';
+import { Domain } from '@/types/onboarding';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
 }
 
-interface ChatInterfaceProps {
-  level: EducationLevel;
+interface UserContext {
+  currentAccuracy?: number;
+  weakDomains?: Domain[];
+  recentTopics?: string[];
+  currentGoals?: string[];
+  mistakePatterns?: Array<{ topic: string; count: number }>;
+  currentBand?: string;
+  totalXP?: number;
+  level?: number;
+  streak?: number;
 }
 
-export default function ChatInterface({ level }: ChatInterfaceProps) {
+interface ChatInterfaceProps {
+  level: EducationLevel;
+  userContext?: UserContext;
+}
+
+export default function ChatInterface({ level, userContext }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const levelInfo = educationLevels.find(l => l.id === level);
+
+  // Generate smart suggestions based on user context
+  const smartSuggestions = [
+    ...(userContext?.weakDomains && userContext.weakDomains.length > 0
+      ? [`Hjälp mig förbättra inom ${userContext.weakDomains[0]}`]
+      : []),
+    ...(userContext?.mistakePatterns && userContext.mistakePatterns.length > 0
+      ? [`Varför har jag problem med ${userContext.mistakePatterns[0].topic}?`]
+      : []),
+    ...(userContext?.currentGoals && userContext.currentGoals.length > 0
+      ? [`Tips för att nå mitt mål: ${userContext.currentGoals[0]}`]
+      : []),
+    'Ge mig en minnesregel för en vanlig fraktur',
+    'Förklara en klassifikation steg för steg',
+    'Vad är viktigt att kunna för mitt examen?',
+  ].slice(0, 4);
 
   useEffect(() => {
     // Välkomstmeddelande när nivå väljs
@@ -42,13 +73,17 @@ export default function ChatInterface({ level }: ChatInterfaceProps) {
     setInput('');
     setIsLoading(true);
 
+    // Hide suggestions when user starts chatting
+    setShowSuggestions(false);
+
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           messages: [...messages, userMessage],
-          level: level
+          level: level,
+          userContext: userContext
         })
       });
 
@@ -86,6 +121,30 @@ export default function ChatInterface({ level }: ChatInterfaceProps) {
         </h2>
         <p className="text-sm opacity-90">{levelInfo?.description}</p>
       </div>
+
+      {/* Smart Suggestions */}
+      {showSuggestions && messages.length <= 1 && (
+        <div className="p-4 bg-gradient-to-r from-blue-50 to-purple-50 border-b border-gray-200">
+          <div className="flex items-center gap-2 mb-3">
+            <Lightbulb className="w-5 h-5 text-blue-600" />
+            <p className="text-sm font-medium text-gray-700">Föreslagna frågor:</p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {smartSuggestions.map((suggestion, i) => (
+              <button
+                key={i}
+                onClick={() => {
+                  setInput(suggestion);
+                  handleSend();
+                }}
+                className="px-3 py-2 bg-white border border-blue-200 rounded-lg text-sm text-gray-700 hover:bg-blue-50 hover:border-blue-300 transition-colors"
+              >
+                {suggestion}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">

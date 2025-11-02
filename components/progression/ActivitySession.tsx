@@ -116,11 +116,22 @@ export default function ActivitySession({
   if (questions.length === 0) {
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full text-center">
-          <p className="text-gray-600 mb-4">Laddar aktivitet...</p>
+        <div className="bg-white rounded-xl shadow-2xl p-8 max-w-2xl w-full">
+          <div className="mb-6">
+            <div className="h-6 bg-gray-200 rounded w-1/3 mb-4 animate-shimmer" style={{ backgroundSize: '200% 100%', background: 'linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%)' }}></div>
+            <div className="h-4 bg-gray-200 rounded w-1/4 animate-shimmer" style={{ backgroundSize: '200% 100%', background: 'linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%)' }}></div>
+          </div>
+          <div className="space-y-4">
+            <div className="h-24 bg-gray-200 rounded-lg animate-shimmer" style={{ backgroundSize: '200% 100%', background: 'linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%)' }}></div>
+            <div className="space-y-2">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="h-14 bg-gray-200 rounded-lg animate-shimmer" style={{ backgroundSize: '200% 100%', background: 'linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%)' }}></div>
+              ))}
+            </div>
+          </div>
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+            className="mt-6 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
           >
             Avbryt
           </button>

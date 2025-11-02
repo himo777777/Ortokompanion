@@ -537,3 +537,42 @@ export const DOMAIN_SELECTION_WEIGHTS = {
   NEIGHBOR: 0.2,              // 20% nearest neighbor
   LONG_TERM_RECALL: 0.1,      // 10% from earlier domain
 };
+
+// ==================== Decision Tree Types ====================
+
+/**
+ * Decision Node in a clinical decision tree
+ */
+export interface DecisionNode {
+  id: string;
+  scenario: string;
+  type?: 'assessment' | 'investigation' | 'treatment' | 'monitoring';
+  question?: string;
+  clinicalInfo?: string;
+  choices: Array<{
+    id: string;
+    label: string;
+    text?: string;
+    reasoning?: string;
+    nextNodeId: string | null;
+  }>;
+}
+
+/**
+ * Decision Tree Case Study
+ */
+export interface DecisionTreeCase {
+  id: string;
+  title: string;
+  description: string;
+  domain: Domain;
+  level: EducationLevel;
+  startNodeId: string;
+  nodes: DecisionNode[];
+  outcomes: Array<{
+    id: string;
+    description: string;
+    quality: 'optimal' | 'acceptable' | 'poor';
+    feedback: string;
+  }>;
+}

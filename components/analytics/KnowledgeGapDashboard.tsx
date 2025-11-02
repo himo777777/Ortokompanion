@@ -30,7 +30,7 @@ export default function KnowledgeGapDashboard({
   const [aiAnalysis, setAiAnalysis] = useState<{
     gaps: Array<{
       topic: string;
-      severity: 'critical' | 'major' | 'minor';
+      severity: 'critical' | 'moderate' | 'minor';
       evidence: string[];
       recommendation: string;
     }>;
@@ -52,10 +52,10 @@ export default function KnowledgeGapDashboard({
     try {
       const result = await analyzeKnowledgeGaps({
         performanceHistory: performanceHistory.map(p => ({
-          domain: p.domain,
+          questionId: `${p.domain}-placeholder`,
+          question: {} as any, // TODO: Store full question in performance history
           correct: p.correct,
-          timestamp: p.timestamp,
-          difficulty: p.difficulty,
+          hintsUsed: 0, // TODO: Track hints used
           timeSpent: p.timeSpent,
         })),
         userLevel,
@@ -98,7 +98,7 @@ export default function KnowledgeGapDashboard({
     switch (severity) {
       case 'critical':
         return 'red';
-      case 'major':
+      case 'moderate':
         return 'orange';
       case 'minor':
         return 'yellow';
@@ -274,7 +274,7 @@ export default function KnowledgeGapDashboard({
                                   : 'bg-yellow-200 text-yellow-900'
                               }`}
                             >
-                              {gap.severity === 'critical' ? 'Kritiskt' : gap.severity === 'major' ? 'Stort gap' : 'Mindre gap'}
+                              {gap.severity === 'critical' ? 'Kritiskt' : gap.severity === 'moderate' ? 'Stort gap' : 'Mindre gap'}
                             </span>
                           </div>
 

@@ -72,7 +72,12 @@ export default function SRSReviewSession({
     try {
       const result = await optimizeSRSSchedule({
         cards: dueCards,
-        recentPerformance,
+        recentPerformance: recentPerformance.map(perf => ({
+          cardId: perf.cardId,
+          grade: perf.grade,
+          timeSpent: perf.timeSpent,
+          hintsUsed: 0, // TODO: Track hints used in performance data
+        })),
       });
       setAiPredictions(result.predictions);
     } catch (error) {

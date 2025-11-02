@@ -19,6 +19,15 @@ import DailyPlanDashboard from '@/components/progression/DailyPlanDashboard';
 import ExamModulesHub from '@/components/exam/ExamModulesHub';
 import ActivitySession from '@/components/progression/ActivitySession';
 import QuestionBankBrowser from '@/components/learning/QuestionBankBrowser';
+import StepByStepBrowser from '@/components/learning/StepByStepBrowser';
+import QualityControlDashboard from '@/components/admin/QualityControlDashboard';
+import FocusTimer from '@/components/study/FocusTimer';
+import PerformanceCharts from '@/components/analytics/PerformanceCharts';
+import RecommendationWidget from '@/components/dashboard/RecommendationWidget';
+import { useToast } from '@/components/ui/ToastContainer';
+import KeyboardShortcutsModal from '@/components/ui/KeyboardShortcutsModal';
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
+import RotationDashboard from '@/components/rotation/RotationDashboard';
 import {
   MessageSquare,
   FileText,
@@ -32,20 +41,44 @@ import {
   BarChart,
   Map,
   Brain,
+  Keyboard,
+  Shield,
+  Timer,
+  GraduationCap,
 } from 'lucide-react';
 
-type Tab = 'today' | 'plan' | 'progress' | 'analytics' | 'roadmap' | 'goals' | 'chat' | 'cases' | 'modules' | 'questions';
+type Tab = 'today' | 'plan' | 'progress' | 'analytics' | 'roadmap' | 'goals' | 'chat' | 'cases' | 'modules' | 'questions' | 'stepbystep' | 'quality';
 
 export default function Home() {
   const { profile, setProfile, dailyMix, refreshDailyMix, requestRecovery, isLoading } = useIntegrated();
+  const toast = useToast();
   const [plan, setPlan] = useState<SevenDayPlan | null>(null);
   const [activeTab, setActiveTab] = useState<Tab>('today');
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showKeyboardHelp, setShowKeyboardHelp] = useState(false);
+  const [showFocusTimer, setShowFocusTimer] = useState(false);
   const [activeActivity, setActiveActivity] = useState<{
     id: string;
     type: 'new' | 'interleave' | 'srs';
     domain: string;
   } | null>(null);
+
+  // Keyboard shortcuts - disabled when activity is active to prevent accidental triggers
+  useKeyboardShortcuts([
+    { key: '1', description: 'Gå till Dagens Plan', action: () => setActiveTab('today') },
+    { key: '2', description: 'Gå till Progression', action: () => setActiveTab('progress') },
+    { key: '3', description: 'Gå till Analytics', action: () => setActiveTab('analytics') },
+    // Chat shortcut removed to prevent accidental activation
+    // { key: '4', description: 'Gå till AI-Handledare', action: () => setActiveTab('chat') },
+    { key: '5', description: 'Gå till Fallstudier', action: () => setActiveTab('cases') },
+    { key: '6', description: 'Gå till Frågebank', action: () => setActiveTab('questions') },
+    { key: '7', description: 'Gå till Steg-för-Steg', action: () => setActiveTab('stepbystep') },
+    { key: '8', description: 'Gå till Provexamen', action: () => setActiveTab('modules') },
+    { key: '9', description: 'Gå till Kvalitetskontroll', action: () => setActiveTab('quality') },
+    { key: 'f', description: 'Öppna Fokustimer', action: () => setShowFocusTimer(true) },
+    { key: '?', shift: true, description: 'Visa kortkommandon', action: () => setShowKeyboardHelp(true) },
+    { key: 'Escape', description: 'Stäng modaler', action: () => { setShowKeyboardHelp(false); setShowFocusTimer(false); setActiveActivity(null); } },
+  ], !showOnboarding && !!profile && !activeActivity); // Disable shortcuts during activities
 
   // Check for existing profile or trigger onboarding
   useEffect(() => {
@@ -205,6 +238,69 @@ export default function Home() {
     );
   }
 
+  // Calculate weak domains from performance data
+  const getWeakDomains = () => {
+    if (!profile) return [];
+
+    const domainPerformance = Object.entries(profile.progression.domainStatuses)
+      .map(([domain, status]) => ({
+        domain,
+        completionRate: status.totalItems > 0 ? status.itemsCompleted / status.totalItems : 0,
+        status: status.status,
+      }))
+      .filter(d => d.status === 'active' || d.status === 'gated')
+      .sort((a, b) => a.completionRate - b.completionRate);
+
+    // Return bottom 3 domains with less than 70% completion
+    return domainPerformance
+      .filter(d => d.completionRate < 0.7)
+      .slice(0, 3)
+      .map(d => d.domain as any);
+  };
+
+  // Extract recent topics from activity history
+  const getRecentTopics = () => {
+    if (!profile || !profile.progression.history) return [];
+
+    // TODO: Implement when activity tracking is added to history
+    // Currently history only contains bandAdjustments, osceResults, retentionChecks
+    return [];
+  };
+
+  // Track mistake patterns from history
+  const getMistakePatterns = () => {
+    if (!profile || !profile.progression.history) return [];
+
+    // TODO: Implement when activity tracking is added to history
+    // Currently history only contains bandAdjustments, osceResults, retentionChecks
+    return [];
+  };
+
+  // Derive current goals from band progression
+  const getCurrentGoals = () => {
+    if (!profile) return [];
+
+    const goals = [];
+    const currentBand = profile.progression.bandStatus.currentBand;
+    const nextBand = `Band ${parseInt(currentBand.split(' ')[1]) + 1}`;
+
+    goals.push(`Nå ${nextBand}`);
+
+    // Add domain-specific goals
+    const weakDomains = getWeakDomains();
+    if (weakDomains.length > 0) {
+      goals.push(`Förbättra inom ${weakDomains[0]}`);
+    }
+
+    // Add accuracy goal if below 80%
+    const currentAccuracy = profile.progression.bandStatus.recentPerformance.correctRate * 100;
+    if (currentAccuracy < 80) {
+      goals.push('Öka träffsäkerhet till 80%');
+    }
+
+    return goals.slice(0, 3);
+  };
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       {/* Header */}
@@ -236,11 +332,25 @@ export default function Home() {
                 </div>
               )}
               <button
+                onClick={() => setShowFocusTimer(true)}
+                className="p-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
+                title="Fokustimer (F)"
+              >
+                <Timer className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => setShowKeyboardHelp(true)}
+                className="p-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+                title="Kortkommandon (Shift + ?)"
+              >
+                <Keyboard className="w-5 h-5" />
+              </button>
+              <button
                 onClick={handleResetOnboarding}
                 className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium flex items-center gap-2"
               >
                 <LogOut className="w-4 h-4" />
-                Börja om
+                <span className="hidden sm:inline">Börja om</span>
               </button>
             </div>
           </div>
@@ -248,9 +358,9 @@ export default function Home() {
       </div>
 
       {/* Tab Navigation */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex gap-1 overflow-x-auto">
+      <div className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 md:px-6">
+          <div className="flex gap-0.5 md:gap-1 overflow-x-auto scrollbar-hide">
             <TabButton
               active={activeTab === 'today'}
               onClick={() => setActiveTab('today')}
@@ -288,10 +398,22 @@ export default function Home() {
               label="Frågebank"
             />
             <TabButton
+              active={activeTab === 'stepbystep'}
+              onClick={() => setActiveTab('stepbystep')}
+              icon={<GraduationCap className="w-5 h-5" />}
+              label="Steg-för-Steg"
+            />
+            <TabButton
               active={activeTab === 'modules'}
               onClick={() => setActiveTab('modules')}
               icon={<BookOpen className="w-5 h-5" />}
               label="Provexamen"
+            />
+            <TabButton
+              active={activeTab === 'quality'}
+              onClick={() => setActiveTab('quality')}
+              icon={<Shield className="w-5 h-5" />}
+              label="Kvalitetskontroll"
             />
           </div>
         </div>
@@ -300,7 +422,114 @@ export default function Home() {
       {/* Content */}
       <div className="py-8">
         {activeTab === 'today' && dailyMix && (
-          <DailyPlanDashboard
+          <div>
+            {/* AI Recommendations Widget */}
+            <div className="max-w-7xl mx-auto px-6 mb-6">
+              <RecommendationWidget
+                profile={profile}
+                onSelectRecommendation={(rec) => {
+                  console.log('Selected recommendation:', rec);
+
+                  // Handle break recommendations - just show toast
+                  if (rec.type === 'break') {
+                    toast.success('God idé!', 'Ta en paus och kom tillbaka utvilad 🧘');
+                    return;
+                  }
+
+                  // Handle SRS review recommendations
+                  if (rec.type === 'review' && rec.id === 'srs-review') {
+                    setActiveActivity({
+                      id: 'srs-review-session',
+                      type: 'srs',
+                      domain: 'Allmän',
+                    });
+                    toast.success('SRS-repetition', 'Startar repetitionssession!');
+                    trackEvent('recommendation_followed', {
+                      recommendationId: rec.id,
+                      type: rec.type,
+                      userId: profile.id,
+                    });
+                    return;
+                  }
+
+                  // Handle domain-specific recommendations
+                  if (rec.type === 'domain' && rec.targetDomain) {
+                    // Map actionType to activity type
+                    let activityType: 'new' | 'interleave' | 'srs' = 'interleave';
+                    if (rec.actionType === 'new-content') {
+                      activityType = 'new';
+                    } else if (rec.actionType === 'review') {
+                      activityType = 'srs';
+                    }
+
+                    setActiveActivity({
+                      id: `domain-${rec.targetDomain}-${Date.now()}`,
+                      type: activityType,
+                      domain: rec.targetDomain,
+                    });
+
+                    toast.success(
+                      `Startar ${rec.targetDomain}`,
+                      rec.actionType === 'new-content' ? 'Nytt innehåll!' :
+                      rec.actionType === 'review' ? 'Repetition!' : 'Övning!'
+                    );
+
+                    trackEvent('recommendation_followed', {
+                      recommendationId: rec.id,
+                      type: rec.type,
+                      domain: rec.targetDomain,
+                      actionType: rec.actionType,
+                      userId: profile.id,
+                    });
+                    return;
+                  }
+
+                  // Handle challenge recommendations
+                  if (rec.type === 'challenge') {
+                    setActiveTab('questions');
+                    toast.success('Utmaning accepterad!', rec.description);
+                    trackEvent('recommendation_followed', {
+                      recommendationId: rec.id,
+                      type: rec.type,
+                      userId: profile.id,
+                    });
+                    return;
+                  }
+
+                  // Handle topic recommendations
+                  if (rec.type === 'topic') {
+                    // Navigate to appropriate content based on topic
+                    if (rec.description.toLowerCase().includes('steg-för-steg')) {
+                      setActiveTab('stepbystep');
+                    } else if (rec.description.toLowerCase().includes('fallstudier')) {
+                      setActiveTab('cases');
+                    } else {
+                      setActiveTab('questions');
+                    }
+                    toast.success('Bra val!', rec.description);
+                    trackEvent('recommendation_followed', {
+                      recommendationId: rec.id,
+                      type: rec.type,
+                      userId: profile.id,
+                    });
+                    return;
+                  }
+
+                  // Default fallback
+                  toast.success('Bra val!', rec.description);
+                }}
+              />
+            </div>
+
+            {/* Rotation Dashboard (ST-läkare, Student, AT) */}
+            {(profile.rotationTimeline || profile.orthoPlacement) && (
+              <div className="max-w-7xl mx-auto px-6 mb-6">
+                <RotationDashboard profile={profile} />
+              </div>
+            )}
+
+            {/* Daily Plan Dashboard */}
+            <DailyPlanDashboard
             progressionState={{
               userId: profile.id,
               level: profile.role,
@@ -345,6 +574,7 @@ export default function Home() {
             }}
             onRequestRecovery={requestRecovery}
           />
+          </div>
         )}
         {activeTab === 'today' && !dailyMix && (
           <div className="max-w-6xl mx-auto px-6">
@@ -454,12 +684,39 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+
+              {/* Performance Charts */}
+              <div className="mt-8">
+                <PerformanceCharts
+                  xpProgress={{
+                    current: profile.gamification.xp,
+                    target: (profile.gamification.level + 1) * 100,
+                    milestones: Array.from({ length: 5 }, (_, i) => ({
+                      level: profile.gamification.level + i + 1,
+                      xp: (profile.gamification.level + i + 1) * 100,
+                    })),
+                  }}
+                />
+              </div>
             </div>
           </div>
         )}
         {activeTab === 'chat' && (
           <div className="max-w-7xl mx-auto px-6">
-            <ChatInterface level={profile.role} />
+            <ChatInterface
+              level={profile.role}
+              userContext={{
+                currentAccuracy: profile.progression.bandStatus.recentPerformance.correctRate * 100,
+                weakDomains: getWeakDomains(),
+                recentTopics: getRecentTopics(),
+                currentGoals: getCurrentGoals(),
+                mistakePatterns: getMistakePatterns(),
+                currentBand: profile.progression.bandStatus.currentBand,
+                totalXP: profile.gamification.xp,
+                level: profile.gamification.level,
+                streak: profile.gamification.streak,
+              }}
+            />
           </div>
         )}
         {activeTab === 'cases' && (
@@ -501,9 +758,49 @@ export default function Home() {
             />
           </div>
         )}
+        {activeTab === 'stepbystep' && (
+          <StepByStepBrowser
+            userLevel={profile.role}
+            onCaseCompleted={(results) => {
+              // Track case completion
+              trackEvent('stepbystep_completed', {
+                caseId: results.caseId,
+                stepsCompleted: results.stepsCompleted,
+                hintsUsed: results.hintsUsed,
+                timeSpent: results.timeSpent,
+                score: results.score,
+                userId: profile.id,
+              });
+
+              // Award XP based on score
+              const earnedXP = Math.floor(results.score / 2); // Score is 0-100, so 0-50 XP
+
+              const newXP = profile.gamification.xp + earnedXP;
+              const newLevel = Math.floor(newXP / 100) + 1;
+
+              handleUpdateProfile({
+                gamification: {
+                  ...profile.gamification,
+                  xp: newXP,
+                  level: newLevel,
+                },
+              });
+
+              toast.success(
+                `Fall slutfört! +${earnedXP} XP`,
+                `Poäng: ${results.score}/100 (${results.hintsUsed} ledtrådar använda)`
+              );
+            }}
+          />
+        )}
         {activeTab === 'modules' && (
           <div className="max-w-7xl mx-auto px-6">
             <ExamModulesHub />
+          </div>
+        )}
+        {activeTab === 'quality' && (
+          <div className="max-w-7xl mx-auto">
+            <QualityControlDashboard />
           </div>
         )}
       </div>
@@ -530,6 +827,7 @@ export default function Home() {
             // Award XP
             const newXP = profile.gamification.xp + results.totalXP;
             const newLevel = Math.floor(newXP / 100) + 1;
+            const leveledUp = newLevel > profile.gamification.level;
 
             handleUpdateProfile({
               gamification: {
@@ -538,6 +836,20 @@ export default function Home() {
                 level: newLevel,
               },
             });
+
+            // Show success toast
+            const accuracy = Math.round((results.correctAnswers / results.questionsCompleted) * 100);
+            if (leveledUp) {
+              toast.success(
+                `Nivå ${newLevel} uppnådd! 🎉`,
+                `Du tjänade ${results.totalXP} XP med ${accuracy}% träffsäkerhet`
+              );
+            } else {
+              toast.success(
+                `Aktivitet slutförd! +${results.totalXP} XP`,
+                `${results.correctAnswers}/${results.questionsCompleted} rätt (${accuracy}%)`
+              );
+            }
 
             setActiveActivity(null);
             // Refresh daily mix after completion
@@ -553,6 +865,43 @@ export default function Home() {
           }}
         />
       )}
+
+      {/* Keyboard Shortcuts Help Modal */}
+      <KeyboardShortcutsModal
+        isOpen={showKeyboardHelp}
+        onClose={() => setShowKeyboardHelp(false)}
+      />
+
+      {/* Focus Timer Modal */}
+      {showFocusTimer && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 animate-fadeIn">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full animate-scaleIn">
+            <FocusTimer
+              onSessionComplete={(stats) => {
+                // Award bonus XP for completing pomodoros
+                const newXP = profile.gamification.xp + stats.xpBonus;
+                const newLevel = Math.floor(newXP / 100) + 1;
+
+                handleUpdateProfile({
+                  gamification: {
+                    ...profile.gamification,
+                    xp: newXP,
+                    level: newLevel,
+                  },
+                });
+
+                toast.success(
+                  `Fokussession slutförd! +${stats.xpBonus} XP`,
+                  `${stats.pomodorosCompleted} pomodoros, ${Math.floor(stats.totalFocusTime / 60)} minuters fokustid`
+                );
+
+                setShowFocusTimer(false);
+              }}
+              onClose={() => setShowFocusTimer(false)}
+            />
+          </div>
+        </div>
+      )}
     </main>
   );
 }
@@ -561,14 +910,14 @@ function TabButton({ active, onClick, icon, label }: any) {
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-2 px-6 py-4 font-medium transition-all border-b-2 ${
+      className={`flex items-center gap-2 px-4 md:px-6 py-3 md:py-4 font-medium transition-all border-b-2 whitespace-nowrap ${
         active
-          ? 'border-blue-500 text-blue-600'
-          : 'border-transparent text-gray-600 hover:text-gray-800'
+          ? 'border-blue-500 text-blue-600 bg-blue-50'
+          : 'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50'
       }`}
     >
-      {icon}
-      {label}
+      <span className="flex-shrink-0">{icon}</span>
+      <span className="hidden sm:inline text-sm md:text-base">{label}</span>
     </button>
   );
 }

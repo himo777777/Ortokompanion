@@ -84,7 +84,7 @@ export const CLASSIFICATION_IMAGES: MedicalImage[] = [
     description: 'Paprosky klassificering för acetabulär benförlust vid THA-revision. Typ 1: Intakt, Typ 2A-C: Segmental/cavitary, Typ 3A-B: Massiv förlust.',
     path: '/images/classifications/paprosky.jpg',
     domain: 'höft',
-    level: 'specialist',
+    level: 'specialist-ortopedi',
     tags: ['Paprosky', 'revision', 'benförlust', 'acetabulum', 'THA'],
     source: {
       type: 'journal',

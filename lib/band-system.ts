@@ -99,7 +99,12 @@ export function getStartingBand(level: EducationLevel): DifficultyBand {
       return 'D';
     case 'st5':
       return 'E';
-    case 'specialist':
+    case 'st-allmänmedicin':
+    case 'st-akutsjukvård':
+      return 'D';
+    case 'specialist-ortopedi':
+    case 'specialist-allmänmedicin':
+    case 'specialist-akutsjukvård':
       return 'E';
     default:
       return 'B';

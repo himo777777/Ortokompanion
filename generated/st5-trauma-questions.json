@@ -1,0 +1,362 @@
+{
+  "metadata": {
+    "domain": "trauma",
+    "level": "st5",
+    "band": "A",
+    "count": 7,
+    "timestamp": "2025-11-02T01:21:46.771Z",
+    "model": "gpt-4o-mini",
+    "generatedAt": "2025-11-02T01:21:46.771Z",
+    "generator": "OrtoKompanion AI Question Generator v1.0"
+  },
+  "questions": [
+    {
+      "id": "trauma-001",
+      "domain": "trauma",
+      "level": "st5",
+      "band": "C",
+      "question": "En 30-årig man skadar sin vänstra arm i en motorcykelolycka. Vid undersökning noteras en ömhet och svullnad över underarmen, och han har svårt att röra fingrarna. Vilken åtgärd är mest lämplig initialt för att utesluta en kompartmentsyndrom?",
+      "options": [
+        "Mät intrakompartmentärt tryck i underarmen.",
+        "Utför en röntgen för att utesluta frakturer.",
+        "Ge analgetika och observera patienten.",
+        "Beställ en ultraljudsundersökning av kärlen."
+      ],
+      "correctAnswer": "Mät intrakompartmentärt tryck i underarmen.",
+      "explanation": "För att säkerställa diagnosen kompartmentsyndrom är det avgörande att mäta det intrakompartmentära trycket, eftersom symtomen kan vara ospecifika. Enligt ATLS 2022 är en tryckökning >30 mmHg i det muskelfasciala rummet en indikation för kirurgisk intervention. Röntgen kan utesluta frakturer, men är inte till hjälp för att diagnostisera kompartmentsyndrom. Analgetika kan lindra smärtan men åtgärdar inte det underliggande problemet. Ultraljudsundersökning kan utesluta vaskulära skador men är inte standard vid misstanke om kompartmentsyndrom.",
+      "competency": "klinisk-färdighet",
+      "tags": [
+        "kompartmentsyndrom",
+        "undersökning",
+        "trauma",
+        "behandling",
+        "ATLS"
+      ],
+      "references": [
+        "atls-sverige-2022",
+        "boast-open-fractures-2020"
+      ],
+      "relatedGoals": [
+        "st5-01",
+        "st5-04"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Kompartmentsyndrom kan orsaka bestående skador om det inte behandlas snabbt.",
+          "Tänk på andra metoder för att bedöma cirkulation och neurologisk status, men kompartmentsyndrom kräver specifik tryckmätning.",
+          "Det intrakompartmentära trycket är avgörande för diagnosen, medan röntgen kan vara mer relevant för frakturer."
+        ],
+        "commonMistakes": [
+          "Att enbart utföra röntgen kan leda till fördröjd behandling av ett potentiellt kompartmentsyndrom.",
+          "Att ge analgetika utan att mäta trycket kan vara riskabelt.",
+          "Att vänta på symtomens utveckling kan leda till allvarliga komplikationer."
+        ],
+        "teachingPoints": [
+          "Kompartmentsyndrom uppstår vid ökat tryck i muskelfascialt rum och kan leda till ischemi.",
+          "Mätning av intrakompartmentärt tryck är den mest tillförlitliga metoden för diagnos.",
+          "ATLS 2022 betonar vikten av snabb intervention vid misstänkt kompartmentsyndrom.",
+          "Symtom kan vara vaga och inkludera smärta, svullnad och nedsatt funktion."
+        ],
+        "mnemonicOrTrick": "5 P:s: Pain, Paresthesia, Pallor, Pulselessness, Paralysis (symtom på kompartmentsyndrom)"
+      }
+    },
+    {
+      "id": "trauma-002",
+      "domain": "trauma",
+      "level": "st5",
+      "band": "C",
+      "question": "En 45-årig kvinna faller och ådrar sig en öppen fraktur av tibia. Vilken av följande åtgärder är viktigast att genomföra vid initialt omhändertagande?",
+      "options": [
+        "Sätt in intravenös antibiotikabehandling.",
+        "Stabilisera frakturen med extern fixation.",
+        "Rengör såret med sterilt vatten.",
+        "Utför en röntgen av tibia."
+      ],
+      "correctAnswer": "Sätt in intravenös antibiotikabehandling.",
+      "explanation": "Vid en öppen fraktur är det avgörande att snabbt sätta in intravenös antibiotikabehandling för att minska risken för infektion. Enligt de nationella riktlinjerna för behandling av öppna frakturer (boast-open-fractures-2020) rekommenderas antibiotikabehandling inom en timme efter skada. Stabilisering av frakturen och röntgen är också viktiga, men antibiotikabehandling bör prioriteras för att förhindra sårinfektion. Rengöring av såret ska göras, men det är inte första åtgärden.",
+      "competency": "medicinsk-kunskap",
+      "tags": [
+        "öppen fraktur",
+        "antibiotika",
+        "omhändertagande",
+        "trauma",
+        "behandling"
+      ],
+      "references": [
+        "boast-open-fractures-2020",
+        "atls-sverige-2022"
+      ],
+      "relatedGoals": [
+        "st5-02",
+        "st5-04"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Infektion är en av de största riskerna vid öppna frakturer.",
+          "Tänk på att antibiotikabehandling kan vara livräddande i akuta situationer.",
+          "Prioritera åtgärder som skyddar patientens liv och förhindrar komplikationer."
+        ],
+        "commonMistakes": [
+          "Att vänta med antibiotika kan leda till allvarliga infektioner.",
+          "Att fokusera för mycket på röntgen kan fördröja livräddande åtgärder.",
+          "Att underlåta att stabilisera frakturen direkt kan förvärra skador på mjukdelar."
+        ],
+        "teachingPoints": [
+          "Öppna frakturer kräver omedelbar antibiotikabehandling för att minska infektionsrisken.",
+          "Stabilisering och röntgen är viktiga, men sekundära efter antibiotika.",
+          "Boast-riktlinjerna ger tydliga rekommendationer för behandling av öppna frakturer.",
+          "En korrekt initial bedömning kan rädda extremiteten och förbättra utfallet."
+        ],
+        "mnemonicOrTrick": "A-B-C: Antibiotika först, sedan Bedömning och stabilisering"
+      }
+    },
+    {
+      "id": "trauma-003-001",
+      "domain": "trauma",
+      "level": "st5",
+      "band": "D",
+      "question": "En 25-årig man kommer in efter en motorcykelolycka och uppvisar en öppen fraktur av tibia med omfattande mjukdelsskador. Vilken behandling är mest lämplig som initial åtgärd?",
+      "options": [
+        "Intern fixation med märgspik",
+        "Extern fixation för stabilisering av frakturen",
+        "Öppen reduktion och intern fixation",
+        "Konservativ behandling med gips"
+      ],
+      "correctAnswer": "Extern fixation för stabilisering av frakturen",
+      "explanation": "Extern fixation rekommenderas för stabilisering av öppna frakturer med mjukdelsskador för att minimera risken för infektion och underlätta sårvård. Enligt 'Open fractures' (Boast et al., 2020) är extern fixation den föredragna metoden för initial stabilisering i sådana fall. Intern fixation kan öka risken för infektion och komplikationer. Konservativ behandling med gips är inte indicerat vid öppna frakturer, och öppen reduktion och intern fixation bör inte utföras förrän mjukdelarna är stabiliserade.",
+      "competency": "klinisk-färdighet",
+      "tags": [
+        "öppen fraktur",
+        "extern fixation",
+        "mjuka vävnader",
+        "trauma",
+        "behandling"
+      ],
+      "references": [
+        "boast-open-fractures-2020",
+        "atls-sverige-2022"
+      ],
+      "relatedGoals": [
+        "st5-01",
+        "st5-04"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Öppna frakturer kräver snabb åtgärd för att minska infektion.",
+          "Tänk på vikten av att stabilisera mjukdelarna innan intern fixation.",
+          "Extern fixation ger temporär stabilitet och skydd för mjukdelarna."
+        ],
+        "commonMistakes": [
+          "Välja intern fixation för tidigt, vilket kan leda till infektion.",
+          "Underskatta betydelsen av mjukdelsskador vid behandlingen.",
+          "Tro att konservativ behandling är tillräcklig för öppna frakturer."
+        ],
+        "teachingPoints": [
+          "Extern fixation är viktigt för att hantera öppna frakturer med mjukdelsskador.",
+          "Sårvård och infektion förebyggande åtgärder är centrala i behandlingen.",
+          "Tidigare intervention med extern fixation kan förbättra resultatet."
+        ],
+        "mnemonicOrTrick": "FAST - Fixation And Stabilization for Trauma"
+      }
+    },
+    {
+      "id": "trauma-003-002",
+      "domain": "trauma",
+      "level": "st5",
+      "band": "D",
+      "question": "En 57-årig kvinna kommer in med svullnad och smärta i vänster underben efter ett fall. Klinisk undersökning visar tecken på kompartmentsyndrom. Vilken åtgärd är mest kritisk att genomföra?",
+      "options": [
+        "Ge smärtlindring och observera",
+        "Utföra fasciotomi",
+        "Applicera kompressionsförband",
+        "Beställa röntgen av underbenet"
+      ],
+      "correctAnswer": "Utföra fasciotomi",
+      "explanation": "Fasciotomi är den mest kritiska åtgärden vid kompartmentsyndrom för att förebygga bestående muskelskador. Enligt ATLS (2022) är snabb intervention avgörande för att förhindra ischemi och neuromuskulära komplikationer. Att ge smärtlindring och observera är otillräckligt och kan leda till allvarliga konsekvenser. Kompressionsförband och röntgen är inte lämpliga initiala åtgärder vid misstänkt kompartmentsyndrom.",
+      "competency": "kirurgisk-färdighet",
+      "tags": [
+        "kompartmentsyndrom",
+        "fasciotomi",
+        "trauma",
+        "underben",
+        "akut vård"
+      ],
+      "references": [
+        "atls-sverige-2022",
+        "campbell-13ed"
+      ],
+      "relatedGoals": [
+        "st5-02",
+        "st5-03"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Kompartmentsyndrom kräver omedelbar åtgärd för att skydda muskler och nerver.",
+          "Tänk på att symtom som svullnad och smärta kan indikera ett allvarligt tillstånd.",
+          "Fasciotomi är ofta den enda lösningen för att avlasta trycket."
+        ],
+        "commonMistakes": [
+          "Fördröjning av kirurgisk intervention kan leda till permanenta skador.",
+          "Att välja röntgen först kan fördröja nödvändig behandling.",
+          "Att ignorera smärtans intensitet som en indikator på kompartmentsyndrom."
+        ],
+        "teachingPoints": [
+          "Kompartmentsyndrom är ett kirurgiskt nödläge som kräver snabb intervention.",
+          "Symtom inkluderar svullnad, smärta och nedsatt funktion.",
+          "Fasciotomi bör utföras så snart som möjligt för att förhindra muskelskada."
+        ],
+        "mnemonicOrTrick": "SPLAT - Swelling, Pain, Loss of function, Acuteness, Time for fasciotomi"
+      }
+    },
+    {
+      "id": "trauma-003-003",
+      "domain": "trauma",
+      "level": "st5",
+      "band": "D",
+      "question": "En 34-årig man med en högersidig humerusfraktur efter en fallolycka har nedsatt blodcirkulation i handen vid klinisk undersökning. Vilken åtgärd bör prioriteras för att hantera situationen?",
+      "options": [
+        "Applicera kall behandling för att minska svullnad",
+        "Utföra reponering av frakturen",
+        "Beställa en angiografi för att bedöma kärlstatus",
+        "Genomföra en akut fasciotomi"
+      ],
+      "correctAnswer": "Genomföra en akut fasciotomi",
+      "explanation": "Akut fasciotomi är nödvändig för att avlasta tryck och återställa blodcirkulationen vid tecken på ischemi i handen. Enligt ATLS (2022) är det avgörande att snabbt åtgärda cirkulationsproblem för att förhindra permanent vävnadsskada. Reponering av frakturen kan vara viktigt, men det är inte den första prioriteringen när cirkulationen är hotad. Angiografi kan övervägas senare, men fasciotomi är den mest brådskande åtgärden.",
+      "competency": "kirurgisk-färdighet",
+      "tags": [
+        "humerusfraktur",
+        "ischemi",
+        "fasciotomi",
+        "trauma",
+        "akut vård"
+      ],
+      "references": [
+        "atls-sverige-2022",
+        "campbell-13ed"
+      ],
+      "relatedGoals": [
+        "st5-02",
+        "st5-03"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Tecken på ischemi innebär att blodcirkulationen är hotad.",
+          "Fasciotomi kan rädda vävnad om det görs i tid.",
+          "Prioritera åtgärder för att återställa cirkulationen framför frakturfixation."
+        ],
+        "commonMistakes": [
+          "Välja kall behandling istället för att åtgärda cirkulationsproblematiken.",
+          "Tro att reponering av frakturen är tillräcklig utan att hantera ischemi.",
+          "Fördröja fasciotomi vilket kan leda till allvarliga komplikationer."
+        ],
+        "teachingPoints": [
+          "Ischemi kräver omedelbar åtgärd för att förhindra vävnadsskada.",
+          "Fasciotomi är en kritisk åtgärd vid tecken på kompartmentsyndrom.",
+          "Kliniska tecken på nedsatt cirkulation är indikatorer på akut intervention."
+        ],
+        "mnemonicOrTrick": "CIRCUIT - Circulation Issues Require Critical Urgent Intervention Today"
+      }
+    },
+    {
+      "id": "trauma-006",
+      "domain": "trauma",
+      "level": "st5",
+      "band": "E",
+      "question": "En 32-årig man som är motocrossförare kommer in efter en olycka med en öppen fraktur av underarmen. Han har en kraftig blödning och smärta. Enligt ATLS-riktlinjerna, vad är den mest kritiska åtgärden att vidta i första hand?",
+      "options": [
+        "Säkerställ att frakturen är stabil och immobilisera den",
+        "Kontrollera och säkerställ adekvat luftväg",
+        "Stoppa blödningen genom att applicera tryckförband",
+        "Ge intravenös vätska för att hantera chock"
+      ],
+      "correctAnswer": "Kontrollera och säkerställ adekvat luftväg",
+      "explanation": "Enligt ATLS 2022 är det avgörande att säkerställa luftvägen först, särskilt vid trauma, innan man hanterar andra skador. En öppen fraktur med blödning kan leda till chock, men luftvägen måste prioriteras. Efter det kan man fokusera på att stoppa blödningen och immobilisera frakturen. Felaktiga alternativ kan leda till att livshotande tillstånd förvärras.",
+      "competency": "klinisk-färdighet",
+      "tags": [
+        "öppen fraktur",
+        "ATLS",
+        "trauma",
+        "blödning",
+        "livräddande åtgärder"
+      ],
+      "references": [
+        "atls-sverige-2022",
+        "boast-open-fractures-2020"
+      ],
+      "relatedGoals": [
+        "st5-01",
+        "st5-04"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Tänk på ATLS-principerna - vad är det första steget i en traumatisk situation?",
+          "Prioritera livshotande tillstånd innan du hanterar specifika skador.",
+          "Blödning är en viktig faktor, men vad kan vara mer kritiskt för patientens överlevnad?"
+        ],
+        "commonMistakes": [
+          "Att prioritera blödning över luftvägsskydd är en vanlig fälla.",
+          "Att tro att immobilisering av frakturen är det viktigaste steget kan leda till fördröjd behandling av livshotande tillstånd.",
+          "Att underskatta behovet av att snabbt hantera luftvägen kan få fatala konsekvenser."
+        ],
+        "teachingPoints": [
+          "ATLS-riktlinjerna betonar vikten av att alltid säkerställa luftvägen först.",
+          "Öppna frakturer kan leda till allvarliga komplikationer som infektion eller chock.",
+          "Adekvat bedömning av patientens status är avgörande för att välja rätt åtgärd."
+        ],
+        "mnemonicOrTrick": "ABCDE - Airway, Breathing, Circulation, Disability, Exposure"
+      }
+    },
+    {
+      "id": "trauma-007",
+      "domain": "trauma",
+      "level": "st5",
+      "band": "E",
+      "question": "En 45-årig kvinna med en högersidig femurfraktur efter en fallolycka presenteras för operation. Vilken av följande fixationsmetoder rekommenderas som förstahandsval för en diaphysär femurfraktur hos denna patient?",
+      "options": [
+        "Märgspikning",
+        "Extern fixation",
+        "Plattfixation med skruvar",
+        "K-tråd"
+      ],
+      "correctAnswer": "Märgspikning",
+      "explanation": "Enligt Campbell's Operative Orthopaedics 13:e upplagan är märgspikning förstahandsvalet för diaphysära femurfrakturer hos vuxna, eftersom det erbjuder stabilitet och snabbare återhämtning. Extern fixation är mer indicerat för öppna frakturer med mjukdelsskador. Plattfixation kan vara ett alternativ men är mindre vanligt som första val. K-tråd används oftare för mindre frakturer eller i pediatrisk kirurgi.",
+      "competency": "kirurgisk-färdighet",
+      "tags": [
+        "femurfraktur",
+        "märgspikning",
+        "fixationsmetoder",
+        "diaphysär fraktur",
+        "ortopedi"
+      ],
+      "references": [
+        "campbell-13ed",
+        "boast-open-fractures-2020"
+      ],
+      "relatedGoals": [
+        "st5-01",
+        "st5-02"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Tänk på den typ av fraktur och vilken fixationsmetod som ger bäst stabilitet.",
+          "Överväg patientens ålder och aktivitetsnivå i beslutet.",
+          "Vilken metod är minst invasiv men ger bra biomekanisk stabilitet?"
+        ],
+        "commonMistakes": [
+          "Att välja extern fixation utan att överväga behovet av stabilitet är en vanlig misstag.",
+          "Att tro att plattfixation alltid är den bästa metoden kan vara felaktigt, särskilt för diaphysära frakturer.",
+          "Att använda K-tråd på vuxna diaphysära frakturer kan leda till otillräcklig stabilitet."
+        ],
+        "teachingPoints": [
+          "Märgspikning är det rekommenderade förstahandsvalet för diaphysära femurfrakturer enligt aktuella riktlinjer.",
+          "Extern fixation är mer lämpad för öppna frakturer eller när mjukdelsskador är svåra.",
+          "Frakturer i femur är ofta stabila vid korrekt fixering, vilket möjliggör snabbare rehabilitering."
+        ],
+        "mnemonicOrTrick": "Märgen ger stabilitet - Märgspikning för diaphysära frakturer!"
+      }
+    }
+  ],
+  "status": "pending-review",
+  "reviewedBy": null,
+  "approvedAt": null
+}

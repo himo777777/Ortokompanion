@@ -1,0 +1,18 @@
+{
+  "validCount": 2,
+  "invalidCount": 0,
+  "results": [
+    {
+      "questionId": "knä-001",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "knä-002",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    }
+  ]
+}

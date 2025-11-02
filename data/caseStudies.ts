@@ -123,7 +123,7 @@ Hybrid-lösning (cementerad stam, ocementerad cup) ofta bra hos äldre aktiva pa
   {
     id: 'specialist-1',
     title: 'Komplex revisionshöftplastik',
-    level: 'specialist',
+    level: 'specialist-ortopedi',
     patient: {
       age: 74,
       gender: 'Man',
@@ -371,7 +371,7 @@ Vid recidiv bör mjukdelsfaktorer, neurologisk status och compliance utvärderas
   {
     id: 'specialist-2',
     title: 'Periprotesisk femurfraktur efter THA',
-    level: 'specialist',
+    level: 'specialist-ortopedi',
     patient: {
       age: 78,
       gender: 'Kvinna',

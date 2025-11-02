@@ -626,7 +626,7 @@ export class KnowledgeGapAnalyzer {
   }
 
   private static getNextLevel(current: EducationLevel): EducationLevel {
-    const levels: EducationLevel[] = ['student', 'at', 'st1', 'st2', 'st3', 'st4', 'st5', 'specialist'];
+    const levels: EducationLevel[] = ['student', 'at', 'st1', 'st2', 'st3', 'st4', 'st5', 'specialist-ortopedi'];
     const currentIndex = levels.indexOf(current);
     return currentIndex < levels.length - 1 ? levels[currentIndex + 1] : current;
   }

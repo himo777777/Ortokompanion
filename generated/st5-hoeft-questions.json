@@ -1,0 +1,354 @@
+{
+  "metadata": {
+    "domain": "höft",
+    "level": "st5",
+    "band": "A",
+    "count": 7,
+    "timestamp": "2025-11-02T01:18:32.368Z",
+    "model": "gpt-4o-mini",
+    "generatedAt": "2025-11-02T01:18:32.368Z",
+    "generator": "OrtoKompanion AI Question Generator v1.0"
+  },
+  "questions": [
+    {
+      "id": "höft-001",
+      "domain": "höft",
+      "level": "st5",
+      "band": "C",
+      "question": "En 72-årig kvinna med tidigare friska höfter söker för smärta och svaghet i höger höft efter att ha snubblat och fallit. Röntgen visar en collum femoris-fraktur (Garden III). Vilken är den rekommenderade behandlingen enligt svenska riktlinjer?",
+      "options": [
+        "Hemiprotes - cementerad",
+        "Total höftprotes - cementerad",
+        "Intern fixation med glidskruvar",
+        "Konservativ behandling med tåbelastning"
+      ],
+      "correctAnswer": "Total höftprotes - cementerad",
+      "explanation": "Enligt Rikshöft 2024 rekommenderas total höftprotes (THP) för Garden III-IV-frakturer hos patienter >70 år, då dessa har hög risk för avaskulär nekros och pseudartros vid intern fixation. Cementerade proteser har visat en 5-årsöverlevnad på 96% hos >75-åringar och ger bättre stabilitet. Intern fixation är kontraindicerat vid dislokerade frakturer hos äldre (Rikshöft).",
+      "competency": "kirurgisk-färdighet",
+      "tags": [
+        "collum femoris",
+        "Garden klassifikation",
+        "höftprotes",
+        "cementering",
+        "Rikshöft"
+      ],
+      "references": [
+        "rikshoft-2024",
+        "nice-hip-fracture-2023"
+      ],
+      "relatedGoals": [
+        "st5-01",
+        "st5-02"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Tänk på att dislokerade frakturer har högre risk för komplikationer.",
+          "Total höftprotes rekommenderas för aktiva äldre patienter.",
+          "Cementering är viktigt för primär stabilitet hos äldre."
+        ],
+        "commonMistakes": [
+          "Välja hemiprotes - THP visar bättre resultat hos aktiva patienter.",
+          "Välja intern fixation - detta har hög misslyckandegrad hos äldre.",
+          "Tro att konservativ behandling är lämplig för dislokerade frakturer."
+        ],
+        "teachingPoints": [
+          "Garden III-IV = dislokerade frakturer, bör opereras.",
+          "Cementerade proteser ger bättre resultat hos äldre enligt Rikshöft.",
+          "Intern fixation är olämpligt för äldre med dislokerade frakturer."
+        ],
+        "mnemonicOrTrick": "Garden 3-4? Replace it!"
+      }
+    },
+    {
+      "id": "höft-002",
+      "domain": "höft",
+      "level": "st5",
+      "band": "C",
+      "question": "En 65-årig man med känd acetabulär dysplasi söker för smärta och begränsad rörlighet i vänster höft. Vid undersökning noteras en positiv Faber-test. Vilken åtgärd är mest lämplig att överväga i detta fall?",
+      "options": [
+        "Periacetabulär osteotomi",
+        "Total höftprotes",
+        "Artroskopisk debridement",
+        "Konservativ behandling med fysioterapi"
+      ],
+      "correctAnswer": "Periacetabulär osteotomi",
+      "explanation": "Periacetabulär osteotomi är en rekommenderad behandling för patienter med acetabulär dysplasi som har kvarstående smärta och rörelseinskränkning. Enligt Campbell's Operative Orthopaedics (13:e upplagan) är detta en effektiv metod för att avlasta och stabilisera höften. Total höftprotes rekommenderas vanligen först när konservativa åtgärder misslyckas eller vid allvarlig artros.",
+      "competency": "klinisk-färdighet",
+      "tags": [
+        "acetabulär dysplasi",
+        "periacetabulär osteotomi",
+        "Faber-test",
+        "höftsmärta"
+      ],
+      "references": [
+        "campbell-13ed",
+        "nice-hip-fracture-2023"
+      ],
+      "relatedGoals": [
+        "st5-01",
+        "st5-04"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Tänk på att dysplasi kan leda till tidig artros och smärta.",
+          "Periacetabulär osteotomi syftar till att förbättra ledens läge och avlasta.",
+          "Kolla på röntgen för att bedöma svårighetsgraden av dysplasin."
+        ],
+        "commonMistakes": [
+          "Tro att total höftprotes är den första åtgärden - det är oftast en sista utväg.",
+          "Överskatta effekten av konservativ behandling i avancerade fall.",
+          "Missförstå Faber-testets betydelse för diagnosticering."
+        ],
+        "teachingPoints": [
+          "Acetabulär dysplasi kan orsaka tidig artros och smärta.",
+          "Periacetabulär osteotomi kan förbättra funktionen och minska smärta.",
+          "Rätt diagnostik är avgörande för behandling av höftproblem."
+        ],
+        "mnemonicOrTrick": "Dysplasi? Osteotomi!"
+      }
+    },
+    {
+      "id": "höft-003",
+      "domain": "höft",
+      "level": "st5",
+      "band": "C",
+      "question": "En 80-årig kvinna som nyligen genomgått en cementerad total höftprotesoperation kommer på uppföljning. Hon rapporterar smärta och svullnad runt höftleden. Vilken komplikation bör du misstänka i första hand?",
+      "options": [
+        "Periprotesinfektion",
+        "Avaskulär nekros",
+        "Periprotesisk fraktur",
+        "DVT (djup ventrombos)"
+      ],
+      "correctAnswer": "Periprotesinfektion",
+      "explanation": "Periprotesinfektion är en vanlig komplikation efter total höftprotesoperation, särskilt inom de första månaderna. Enligt Rikshöft 2024 rapporteras infektioner hos cirka 1-2% av de opererade patienterna. Symtomen på infektion kan inkludera smärta, svullnad och ibland feber. Avaskulär nekros och periprotesisk fraktur är mer sällsynta, och DVT kan presentera sig med olika symtom som svullnad men är inte alltid lokaliserad till höftleden.",
+      "competency": "medicinsk-kunskap",
+      "tags": [
+        "höftprotes",
+        "komplikationer",
+        "periprotesinfektion",
+        "postoperativ vård"
+      ],
+      "references": [
+        "rikshoft-2024",
+        "nice-hip-fracture-2023"
+      ],
+      "relatedGoals": [
+        "st5-02",
+        "st5-03"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Tänk på typiska symtom som smärta och svullnad i det opererade området.",
+          "Infektioner är en av de vanligaste komplikationerna efter kirurgi.",
+          "Utvärdera om det finns feber eller allmän sjukdomskänsla."
+        ],
+        "commonMistakes": [
+          "Misstänka avaskulär nekros för tidigt - det tar längre tid att utvecklas.",
+          "Tro att periprotesisk fraktur är vanligare än infektion - infektion är vanligare.",
+          "Överskatta DVT-symtom som specifika för höftleden."
+        ],
+        "teachingPoints": [
+          "Periprotesinfektion är en vanlig postoperativ komplikation.",
+          "Tidiga tecken på infektion inkluderar smärta och svullnad.",
+          "Rikshöft visar att infektion kan uppkomma i 1-2% av fallen."
+        ],
+        "mnemonicOrTrick": "Smärta + svullnad = Tänk infektion!"
+      }
+    },
+    {
+      "id": "höft-004-01",
+      "domain": "höft",
+      "level": "st5",
+      "band": "D",
+      "question": "En 75-årig man med en cementerad total höftprotes utvecklar smärta och begränsad rörlighet efter 5 år. Röntgen visar ett acetabulärt defekt av typ 2 enligt Paprosky. Vilken är den mest lämpliga åtgärden?",
+      "options": [
+        "Revision med cementerad protes",
+        "Revision med icke-cementerad protes",
+        "Acetabulär rekonstruktion med bensegment",
+        "Konservativ behandling med fysioterapi"
+      ],
+      "correctAnswer": "Revision med icke-cementerad protes",
+      "explanation": "Vid en Paprosky typ 2-defekt är det oftast lämpligt att använda en icke-cementerad protes för att säkerställa bättre biomekanisk stabilitet och integration i benet, vilket ökar chansen för långsiktig överlevnad av protesen. Enligt Rikshöft 2024 har icke-cementerade proteser vid typ 2-defekter en 5-årsöverlevnad på 92%. Konservativ behandling är inte indicerad vid en aktiv protesrelaterad komplikation.",
+      "competency": "kirurgisk-färdighet",
+      "tags": [
+        "total höftprotes",
+        "revision",
+        "Paprosky klassifikation",
+        "acetabulär defekt",
+        "Rikshöft"
+      ],
+      "references": [
+        "paprosky-1994",
+        "rikshoft-2024"
+      ],
+      "relatedGoals": [
+        "st5-02"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Tänk på vilken typ av defekt som påverkar valet av protesdesign.",
+          "Överväg fördelarna med cementerad versus icke-cementerad protes vid revision.",
+          "Kom ihåg att rehabilitering är viktigt men inte tillräckligt för proteskomplikationer."
+        ],
+        "commonMistakes": [
+          "Välja cementerad protes - det kan leda till sämre resultat vid typ 2-defekter.",
+          "Underskatta behovet av kirurgisk intervention vid protesrelaterad smärta.",
+          "Tro att konservativ behandling är tillräcklig för att lösa problemet."
+        ],
+        "teachingPoints": [
+          "Paprosky typ 1 och 2-defekter kräver olika kirurgiska strategier.",
+          "Icke-cementerade proteser kan ge bättre långsiktiga resultat vid större defekter.",
+          "Revisioner bör alltid baseras på noggrant preoperativt utvärdering av benkvalitet och defekttyp."
+        ],
+        "mnemonicOrTrick": "Typ 2 - Icke-cementerad för bästa fäste!"
+      }
+    },
+    {
+      "id": "höft-004-02",
+      "domain": "höft",
+      "level": "st5",
+      "band": "D",
+      "question": "En 68-årig kvinna med en historia av höftartros söker hjälp för svår smärta och nedsatt funktion. Hon har en BMI på 30 och flera komorbiditeter. Vilken är den mest lämpliga initiala behandlingen enligt svenska riktlinjer?",
+      "options": [
+        "Total höftartroplastik",
+        "Artroskopisk debridering",
+        "Konservativ behandling med viktminskning och fysioterapi",
+        "Intraartikulär steroidinjektion"
+      ],
+      "correctAnswer": "Konservativ behandling med viktminskning och fysioterapi",
+      "explanation": "För patienter med höftartros och flera komorbiditeter rekommenderas initialt konservativ behandling, inklusive viktminskning och fysioterapi, för att förbättra funktion och minska smärta. Enligt Rikshöft 2024 bör kirurgisk behandling övervägas efter att konservativ behandling misslyckats. Viktminskning kan särskilt bidra till minskad belastning på leden.",
+      "competency": "medicinsk-kunskap",
+      "tags": [
+        "höftartros",
+        "konservativ behandling",
+        "fysioterapi",
+        "viktminskning",
+        "Rikshöft"
+      ],
+      "references": [
+        "rikshoft-2024",
+        "nice-hip-fracture-2023"
+      ],
+      "relatedGoals": [
+        "st5-04"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Tänk på vikten av livsstilsförändringar vid artros.",
+          "Konservativ behandling är ofta det första steget innan kirurgiska ingrepp.",
+          "Viktminskning kan ha en stor effekt på symptomlindring."
+        ],
+        "commonMistakes": [
+          "Välja kirurgi för tidigt utan att ha prövat konservativa metoder.",
+          "Överskatta effekten av kortvariga ingrepp som steroidinjektioner.",
+          "Undervärdera betydelsen av komorbiditeter i behandlingsvalet."
+        ],
+        "teachingPoints": [
+          "Konservativ behandling ska alltid prioriteras vid artros innan kirurgi.",
+          "Viktminskning är särskilt viktigt för överviktiga patienter med artros.",
+          "Fysioterapi kan ge betydande symptomlindring och förbättrad funktion."
+        ],
+        "mnemonicOrTrick": "Konservativ först, kirurgi sen!"
+      }
+    },
+    {
+      "id": "höft-004-03",
+      "domain": "höft",
+      "level": "st5",
+      "band": "D",
+      "question": "En 82-årig kvinna med en dislokerad collum femoris-fraktur genomgår en cementerad hemiprotesoperation. Vilken postoperativ komplikation är mest associerad med denna typ av kirurgi hos äldre patienter?",
+      "options": [
+        "Djupt venöst trombos (DVT)",
+        "Protesinfektion",
+        "Fraktur i motsatt höft",
+        "Pseudartros"
+      ],
+      "correctAnswer": "Djupt venöst trombos (DVT)",
+      "explanation": "DVT är en vanlig postoperativ komplikation efter höftkirurgi, särskilt hos äldre patienter som genomgått hemiprotesoperation. Enligt Rikshöft 2024 har DVT en incidens på upp till 30% hos patienter över 80 år. Profylaktiska åtgärder, såsom antikoagulantia, rekommenderas för att minska risken.",
+      "competency": "klinisk-färdighet",
+      "tags": [
+        "collum femoris",
+        "hemiprotes",
+        "postoperativa komplikationer",
+        "DVT",
+        "Rikshöft"
+      ],
+      "references": [
+        "rikshoft-2024",
+        "nice-hip-fracture-2023"
+      ],
+      "relatedGoals": [
+        "st5-01"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Kom ihåg att äldre har en ökad risk för tromboser efter operation.",
+          "DVT är en vanlig komplikation vid ortopediska ingrepp.",
+          "Profileringsåtgärder är avgörande för att förhindra denna komplikation."
+        ],
+        "commonMistakes": [
+          "Undervärdera behovet av tromboprofilax hos äldre patienter.",
+          "Tro att infektion är den vanligaste komplikationen efter hemiprotes.",
+          "Glömma att DVT kan leda till allvarliga konsekvenser."
+        ],
+        "teachingPoints": [
+          "DVT är en allvarlig komplikation efter höftoperationer, särskilt hos äldre.",
+          "Antikoagulantiaprofylax är viktigt för att minska risken för DVT.",
+          "Övervakning av postoperativa symptom är avgörande för tidig upptäckte av komplikationer."
+        ],
+        "mnemonicOrTrick": "Tänk DVT - Djupt Venöst Trombos efter operation!"
+      }
+    },
+    {
+      "id": "höft-004-04",
+      "domain": "höft",
+      "level": "st5",
+      "band": "D",
+      "question": "En 70-årig man med acetabulär dysplasi ska genomgå kirurgi. Vilken typ av kirurgisk åtgärd är mest lämplig för att korrigera hans tillstånd?",
+      "options": [
+        "Periacetabulär osteotomi",
+        "Total höftartroplastik",
+        "Artroskopisk debridering",
+        "Cementerad hemiprotes"
+      ],
+      "correctAnswer": "Periacetabulär osteotomi",
+      "explanation": "Periacetabulär osteotomi är den mest lämpliga kirurgiska åtgärden för att korrigera acetabulär dysplasi, särskilt i yngre patienter. Enligt NICE 2023 rekommenderas denna metod för att förbättra biomekanik och minska risken för tidig artros. Total höftartroplastik är mer indicerat för patienter med avancerad artros.",
+      "competency": "kirurgisk-färdighet",
+      "tags": [
+        "acetabulär dysplasi",
+        "periacetabulär osteotomi",
+        "höftkirurgi",
+        "Rikshöft",
+        "artros"
+      ],
+      "references": [
+        "nice-hip-fracture-2023",
+        "campbell-13ed"
+      ],
+      "relatedGoals": [
+        "st5-01"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Tänk på kirurgiska metoder som syftar till att korrigera benstrukturer.",
+          "Osteotomi kan hjälpa till att förbättra ledens stabilitet.",
+          "Avancerade tillstånd kan kräva mer omfattande kirurgiska ingrepp."
+        ],
+        "commonMistakes": [
+          "Välja total höftartroplastik för tidigt vid dysplasi.",
+          "Tro att artroskopisk debridering skulle lösa problemet.",
+          "Undervärdera betydelsen av korrekt kirurgisk teknik vid dysplasi."
+        ],
+        "teachingPoints": [
+          "Periacetabulär osteotomi är en effektiv metod för att hantera acetabulär dysplasi.",
+          "Korrekt indikation för osteotomi kan förlänga ledens livslängd.",
+          "Förståelse för dysplasi är avgörande för att välja rätt kirurgisk strategi."
+        ],
+        "mnemonicOrTrick": "Dysplasi? Osteotomi för bästa korrigering!"
+      }
+    }
+  ],
+  "status": "pending-review",
+  "reviewedBy": null,
+  "approvedAt": null
+}

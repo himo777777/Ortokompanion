@@ -1,4 +1,5 @@
-import { EducationLevel } from './education';
+import { EducationLevel, MedicalSpecialty } from './education';
+import { RotationTimeline, OrthoPlacement } from './rotation';
 
 export type Domain = 'trauma' | 'axel-armbåge' | 'hand-handled' | 'rygg' | 'höft' | 'knä' | 'fot-fotled' | 'sport' | 'tumör';
 
@@ -26,6 +27,55 @@ export interface OnboardingData {
     dailyPush: boolean;
   };
   completed: boolean;
+
+  // ===== NEW ONBOARDING FIELDS =====
+
+  /**
+   * Primary medical specialty (ortopedi, allmänmedicin, akutsjukvård)
+   */
+  primarySpecialty?: MedicalSpecialty;
+
+  /**
+   * For ST-ortopedi: Rotation timeline data (will be converted to RotationTimeline)
+   */
+  rotations?: Array<{
+    domain: Domain;
+    startDate: Date;
+    endDate: Date;
+    hospital?: string;
+  }>;
+
+  /**
+   * For ST-allmänmedicin / ST-akutsjukvård: Single ortho placement
+   */
+  orthoPlacement?: {
+    startDate: Date;
+    endDate: Date;
+    focusDomain?: Domain;
+    hospital?: string;
+  };
+
+  /**
+   * For students/AT: Placement timing
+   */
+  placementTiming?: 'current' | 'soon' | 'later' | 'none';
+
+  /**
+   * For students/AT: Optional placement dates
+   */
+  placementStartDate?: Date;
+  placementEndDate?: Date;
+
+  /**
+   * AI adaptation preferences
+   */
+  aiAdaptationEnabled?: boolean;
+  learningStyle?: 'visual' | 'analytical' | 'clinical' | 'mixed';
+
+  /**
+   * For specialists: Fortbildning mode
+   */
+  fortbildningMode?: boolean;
 }
 
 export interface UserProfile {
@@ -50,9 +100,71 @@ export interface UserProfile {
     badges: string[];
     streak: number;
     lastActivity?: Date;
+    freezeTokens?: number; // Existing field
   };
   createdAt: Date;
   onboardingCompletedAt?: Date;
+
+  // ===== NEW ROTATION/PLACEMENT FIELDS =====
+
+  /**
+   * Primary medical specialty
+   * - ortopedi: For ST1-ST5 ortho residents
+   * - allmänmedicin: For ST-allmänmedicin with ortho placement
+   * - akutsjukvård: For ST-akutsjukvård with ortho placement
+   */
+  primarySpecialty?: MedicalSpecialty;
+
+  /**
+   * For ST-ortopedi (ST1-ST5): Complete rotation timeline with dates
+   */
+  rotationTimeline?: RotationTimeline;
+
+  /**
+   * For ST-allmänmedicin / ST-akutsjukvård: Single ortho placement period
+   */
+  orthoPlacement?: OrthoPlacement;
+
+  /**
+   * For students/AT: When is their ortho placement/rotation?
+   */
+  placementTiming?: 'current' | 'soon' | 'later' | 'none';
+
+  /**
+   * For students/AT: Optional placement dates
+   */
+  placementStartDate?: Date;
+  placementEndDate?: Date;
+
+  /**
+   * Whether this user has an ortho placement (for non-ortho specialties)
+   */
+  hasOrthoPlacement?: boolean;
+
+  // ===== AI ADAPTATION FIELDS =====
+
+  /**
+   * Enable AI-powered content adaptation
+   * - Personalized hints
+   * - Adaptive explanations
+   * - Smart recommendations
+   */
+  aiAdaptationEnabled: boolean;
+
+  /**
+   * User's preferred learning style for AI adaptation
+   */
+  learningStyle?: 'visual' | 'analytical' | 'clinical' | 'mixed';
+
+  /**
+   * Track topics/domains user struggles with for AI personalization
+   */
+  weaknessAreas?: string[];
+
+  /**
+   * For specialists: Fortbildning/CME mode enabled
+   */
+  fortbildningMode?: boolean;
 }
 
 export interface DayPlan {

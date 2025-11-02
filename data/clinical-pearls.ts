@@ -328,7 +328,7 @@ export const ADDITIONAL_PEARLS: ClinicalPearl[] = [
   {
     id: 'hoeft-pearl-005',
     domain: 'höft',
-    level: 'specialist',
+    level: 'specialist-ortopedi',
     title: 'Squeaking ceramic-on-ceramic',
     pearl: 'Squeaking (gnisslande) vid ceramic-on-ceramic THA förekommer hos 1-5%. Orsakas ofta av edge loading (malpositionering), impingement, eller komponent-separation. Oftast asymtomatisk men irriterande. Revision sällan nödvändig.',
     clinical_relevance: 'Informera patient om squeaking-risk vid CoC. Korrekt komponent-positionering och impingement-fri ROM minskar risk.',

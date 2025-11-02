@@ -1,0 +1,501 @@
+{
+  "metadata": {
+    "domain": "sport",
+    "level": "st2",
+    "band": "A",
+    "count": 10,
+    "timestamp": "2025-11-02T01:27:05.407Z",
+    "model": "gpt-4o-mini",
+    "generatedAt": "2025-11-02T01:27:05.407Z",
+    "generator": "OrtoKompanion AI Question Generator v1.0"
+  },
+  "questions": [
+    {
+      "id": "sport-021",
+      "domain": "sport",
+      "level": "st2",
+      "band": "A",
+      "question": "En 24-årig manlig fotbollsspelare söker vård efter att ha upplevt en plötslig smärta och svullnad i knäet under en match. Vid undersökning noteras plus på Lachman-test och pivot-shift-test. Vilken diagnos är mest sannolik?",
+      "options": [
+        "Framåtriktad korsbandsskada (ACL-skada)",
+        "Meniskskada",
+        "Knäledsartros",
+        "Patellofemoral smärta"
+      ],
+      "correctAnswer": "Framåtriktad korsbandsskada (ACL-skada)",
+      "explanation": "Lachman-test och pivot-shift-test är specifika för framåtriktad korsbandsskada (ACL-skada). Enligt Campbell's Operative Orthopaedics (13:e upplagan) är ACL-skador vanliga hos idrottare och kännetecknas av plötslig smärta och svullnad. Meniskskada kan ge liknande symptom men har oftast inte samma positiva testresultat. Knäledsartros är ovanligt i denna ålder, och patellofemoral smärta ger inte de specifika fynden som observeras här.",
+      "competency": "medicinsk-kunskap",
+      "tags": [
+        "ACL",
+        "knäskador",
+        "sportmedicin",
+        "Lachman-test",
+        "pivot-shift"
+      ],
+      "references": [
+        "campbell-13ed",
+        "rikskna-2024"
+      ],
+      "relatedGoals": [
+        "st2-01"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Tänk på vanliga skador hos unga idrottare med knäsymptom.",
+          "Fokusera på testerna som utfördes och deras specifika betydelse.",
+          "Överväg typiska symptom och fynd för varje diagnos."
+        ],
+        "commonMistakes": [
+          "Att förväxla meniskskada med ACL-skada baserat på symptom.",
+          "Att tro att knäledsartros kan förekomma hos så unga patienter.",
+          "Att inte beakta testernas specifika betydelse i diagnosen."
+        ],
+        "teachingPoints": [
+          "Lachman-test är det mest känsliga testet för ACL-skada.",
+          "Pivot-shift-test kan hjälpa till att bekräfta instabilitet i knäet.",
+          "Det är viktigt att skilja på olika knäskador genom kliniska tester."
+        ],
+        "mnemonicOrTrick": "ACL - Anterior Cruciate Ligament = Always Check Lachman"
+      }
+    },
+    {
+      "id": "sport-022",
+      "domain": "sport",
+      "level": "st2",
+      "band": "A",
+      "question": "En 30-årig kvinnlig handbollsspelare klagar över smärta i axeln efter att ha kastat en boll. Vid klinisk undersökning finner du en positiv apprehension-test. Vad är den mest sannolika diagnosen?",
+      "options": [
+        "Axelinstabilitet",
+        "Rotatorcuffskada",
+        "Fraktur i humerus",
+        "Bursit"
+      ],
+      "correctAnswer": "Axelinstabilitet",
+      "explanation": "Positivt apprehension-test tyder på axelinstabilitet, vilket är vanligt hos kastande idrottare. Enligt Campbell's Operative Orthopaedics (13:e upplagan) är axelinstabilitet oftast associerad med repetitiva överbelastningar. Rotatorcuffskador kan ge smärta men har typiskt andra fynd. Fraktur i humerus är osannolikt utan trauma och bursit ger inte positiva testresultat.",
+      "competency": "klinisk-färdighet",
+      "tags": [
+        "axelinstabilitet",
+        "apprehension-test",
+        "handboll",
+        "sportmedicin",
+        "rotatorcuff"
+      ],
+      "references": [
+        "campbell-13ed",
+        "rikskna-2024"
+      ],
+      "relatedGoals": [
+        "st2-02"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Överväg skador som är vanliga hos kastande idrottare.",
+          "Tänk på specifika kliniska tester och deras betydelse.",
+          "Fokusera på symptomens karaktär och aktivitetsnivå."
+        ],
+        "commonMistakes": [
+          "Att förväxla axelinstabilitet med rotatorcuffskada.",
+          "Att inte erkänna betydelsen av apprehension-testet.",
+          "Att tro att axelsmärta alltid är relaterad till bursit."
+        ],
+        "teachingPoints": [
+          "Apprehension-test används för att bedöma axelinstabilitet.",
+          "Kastande idrottare har en hög risk för axelinstabilitet.",
+          "Det är viktigt att skilja på olika typer av axelsmärta."
+        ],
+        "mnemonicOrTrick": "Axelinstabilitet = Always Examine Apprehension"
+      }
+    },
+    {
+      "id": "sport-023",
+      "domain": "sport",
+      "level": "st2",
+      "band": "A",
+      "question": "En 18-årig löpare klagar över smärta och ömhet på framsidan av foten efter att ha ökat sin träningsmängd. Vid undersökning noteras ömhet över metatarsalbenen. Vilken diagnos är mest sannolik?",
+      "options": [
+        "Stressfraktur",
+        "Plantarfasciit",
+        "Mortons neurom",
+        "Tendinopati"
+      ],
+      "correctAnswer": "Stressfraktur",
+      "explanation": "Ömhet över metatarsalbenen och smärta efter ökad belastning tyder starkt på stressfraktur, som är vanlig hos löpare. Enligt Riksknä 2024 är stressfrakturer vanliga hos idrottare som ökar sin aktivitetsnivå snabbt. Plantarfasciit ger smärta i hälen, Mortons neurom påverkar främst tårna, och tendinopati ger sällan lokaliserad ömhet på framsidan av foten.",
+      "competency": "medicinsk-kunskap",
+      "tags": [
+        "stressfraktur",
+        "metatarsalben",
+        "fot",
+        "löpare",
+        "sportmedicin"
+      ],
+      "references": [
+        "rikskna-2024",
+        "campbell-13ed"
+      ],
+      "relatedGoals": [
+        "st2-01"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Tänk på skador som är vanliga vid överbelastning.",
+          "Överväg smärtans lokalisering och aktivitetens intensitet.",
+          "Kliniska fynd kan ge vägledning till diagnosen."
+        ],
+        "commonMistakes": [
+          "Att förväxla stressfraktur med tendinopati.",
+          "Att underskatta betydelsen av ökad träningsvolym.",
+          "Att tro att smärta endast uppstår vid aktivitet och inte i vila."
+        ],
+        "teachingPoints": [
+          "Stressfrakturer är vanliga hos löpare med plötslig ökning av träning.",
+          "Ömhet över metatarsalbenen är typiskt för stressfrakturer.",
+          "Det är viktigt att fånga upp stressfrakturer tidigt för att förhindra komplikationer."
+        ],
+        "mnemonicOrTrick": "Stress = Sudden Training Rise Equals Stress Fracture"
+      }
+    },
+    {
+      "id": "sport-024",
+      "domain": "sport",
+      "level": "st2",
+      "band": "B",
+      "question": "En 22-årig man som spelar fotboll upplever plötslig smärta i knäet efter en vridning. Klinisk undersökning visar svullnad och instabilitet. Vilken diagnos är mest sannolik?",
+      "options": [
+        "Främre korsbandsruptur",
+        "Meniskskada",
+        "Patellaluxation",
+        "Knäartros"
+      ],
+      "correctAnswer": "Främre korsbandsruptur",
+      "explanation": "Symptom på plötslig smärta och instabilitet efter en vridning är typiska tecken på en främre korsbandsruptur, som är vanlig hos idrottare. Enligt Campbell's Operative Orthopaedics (13:e upplagan) är ACL-skador särskilt vanliga i sporter med snabba riktningsändringar. Meniskskador kan också ge liknande symptom, men instabiliteten är mer uttalad vid ACL-ruptur. Knäartros skulle inte ge plötsliga symptom hos en så ung individ.",
+      "competency": "medicinsk-kunskap",
+      "tags": [
+        "knä",
+        "främre korsband",
+        "idrottsskador",
+        "menisk"
+      ],
+      "references": [
+        "campbell-13ed",
+        "rikskna-2024"
+      ],
+      "relatedGoals": [
+        "st2-01",
+        "st2-02"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Tänk på skademechanismen vid vridning, som är typisk för ACL-skador.",
+          "Kolla efter tecken på instabilitet vid knäundersökning.",
+          "Svullnad kan också tyda på blödning i leden efter en ruptur."
+        ],
+        "commonMistakes": [
+          "Välja meniskskada - även om vridning kan orsaka detta, är instabilitet mer karakteristisk för ACL-ruptur.",
+          "Anta att knäartros är troligt hos en ung person utan tidigare symptom.",
+          "Överse symptom som svullnad och ge en diagnos utan att utföra en grundlig undersökning."
+        ],
+        "teachingPoints": [
+          "Främre korsbandsruptur är vanlig vid sporter med vridningar och snabba rörelser.",
+          "Instabilitet i knäet efter en vridning är ett viktigt tecken.",
+          "Klinisk undersökning och bilddiagnostik är avgörande för diagnos."
+        ],
+        "mnemonicOrTrick": "VRID (Vridning, Ruptur, Instabilitet, Diagnos)"
+      }
+    },
+    {
+      "id": "sport-025",
+      "domain": "sport",
+      "level": "st2",
+      "band": "B",
+      "question": "En 30-årig kastare klagar på smärta i axeln efter flera veckors intensiv träning. Vid undersökning noteras begränsad rörlighet och smärta vid abduktion. Vad är den mest sannolika diagnosen?",
+      "options": [
+        "Rotatorcuff-skada",
+        "Axelinstabilitet",
+        "Seniorkapsulit",
+        "Frusen axel"
+      ],
+      "correctAnswer": "Rotatorcuff-skada",
+      "explanation": "Begränsad rörlighet och smärta vid abduktion är typiska symptom på en rotatorcuff-skada, särskilt hos kastare. Enligt Campbell's Operative Orthopaedics är rotatorcuff-skador vanliga hos idrottare som utför repetitiva overhead-rörelser. Axelinstabilitet skulle normalt ge symptom vid rörelser i flera plan, medan seniorkapsulit och frusen axel är mer relaterade till långvarig immobilisering och äldre patienter.",
+      "competency": "klinisk-färdighet",
+      "tags": [
+        "axel",
+        "rotatorcuff",
+        "idrottsskador",
+        "kastare"
+      ],
+      "references": [
+        "campbell-13ed",
+        "rikskna-2024"
+      ],
+      "relatedGoals": [
+        "st2-01",
+        "st2-02"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Överväg skador som är relaterade till repetitiva rörelser i axeln.",
+          "Tänk på åldern och träningsintensiteten hos patienten.",
+          "Granska smärta vid specifika rörelser som kan indikera rotatorcuff-skador."
+        ],
+        "commonMistakes": [
+          "Anta att smärtan är relaterad till axelinstabilitet utan att se på rörlighet och symptom.",
+          "Förväxla frusen axel med rotatorcuff-skada - de har olika presentationer.",
+          "Överse behovet av bilddiagnostik för att bekräfta diagnosen."
+        ],
+        "teachingPoints": [
+          "Rotatorcuff-skador är vanliga hos idrottare, särskilt i kastande sporter.",
+          "Symptom kan variera beroende på skadans allvarlighetsgrad.",
+          "Tidig diagnos och behandling är viktiga för att förhindra långvariga problem."
+        ],
+        "mnemonicOrTrick": "KAST (Kasta, Axelsmärta, Stabilitet, Testa rörlighet)"
+      }
+    },
+    {
+      "id": "sport-026",
+      "domain": "sport",
+      "level": "st2",
+      "band": "B",
+      "question": "En 25-årig kvinnlig löpare upplever smärta i foten efter flera veckors ökad träningsbelastning. Hon har svullnad över medialsidan av foten. Vilken diagnos är mest trolig?",
+      "options": [
+        "Stressfraktur i metatarsalben",
+        "Plantar fasciit",
+        "Tendinit i akillessenan",
+        "Mortons neurom"
+      ],
+      "correctAnswer": "Stressfraktur i metatarsalben",
+      "explanation": "Svullnad och smärta på medialsidan av foten efter ökad belastning är typiska tecken på en stressfraktur i metatarsalbenen. Enligt Riksknä 2024 är stressfrakturer vanliga bland löpare, särskilt vid snabb ökning av träningsintensitet. Plantar fasciit och tendinit skulle ge andra symptom och smärtlokaliseringar, medan Mortons neurom ofta ger smärta i framfoten och mellan tårna.",
+      "competency": "medicinsk-kunskap",
+      "tags": [
+        "fot",
+        "stressfraktur",
+        "löpare",
+        "belastningsskador"
+      ],
+      "references": [
+        "rikskna-2024",
+        "campbell-13ed"
+      ],
+      "relatedGoals": [
+        "st2-01",
+        "st2-04"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Tänk på hur ökad belastning kan påverka fotens ben.",
+          "Överväg att svullnad och smärta kan indikera en stressreaktion.",
+          "Granska smärtans placering och karaktär noggrant."
+        ],
+        "commonMistakes": [
+          "Välja plantar fasciit - detta ger typiskt smärta vid hälen, inte medialsidan.",
+          "Överse vikten av röntgen för att utesluta stressfraktur.",
+          "Anta att smärtan är relaterad till allmän trötthet istället för en specifik skada."
+        ],
+        "teachingPoints": [
+          "Stressfrakturer kan utvecklas vid snabb ökning av träningsintensitet.",
+          "Tidiga symptom kan vara subtila, men svullnad är en viktig indikator.",
+          "Röntgen kan behövas för att bekräfta diagnosen och utesluta andra tillstånd."
+        ],
+        "mnemonicOrTrick": "FOT (Fraktur, Ökad belastning, Tidig diagnos)"
+      }
+    },
+    {
+      "id": "sport-027",
+      "domain": "sport",
+      "level": "st2",
+      "band": "B",
+      "question": "En 35-årig man som spelar tennis känner en plötslig smärta i hälen under ett serve-slagh. Vid klinisk undersökning noteras en palpabel ",
+      "options": [
+        "Hälseneruptur",
+        "Achillestendinos",
+        "Plantar fasciit",
+        "Tarsaltunnelsyndrom"
+      ],
+      "correctAnswer": "Hälseneruptur",
+      "explanation": "Den plötsliga smärtan i hälen under en explosiv rörelse, såsom en serve, indikerar en hälseneruptur. Enligt Campbell's Operative Orthopaedics är detta en vanlig skada hos aktiva idrottare. Achillestendinos ger vanligtvis mer långvariga symptom och smärta vid belastning. Plantar fasciit skulle ge smärta vid hälen och inte under en plötslig rörelse, medan tarsaltunnelsyndrom oftast ger domningar och smärta i fotens medialsida.",
+      "competency": "klinisk-färdighet",
+      "tags": [
+        "hälsena",
+        "ruptur",
+        "tennis",
+        "idrottsskador"
+      ],
+      "references": [
+        "campbell-13ed",
+        "rikskna-2024"
+      ],
+      "relatedGoals": [
+        "st2-01",
+        "st2-02"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Tänk på plötsliga skador som kan uppstå under explosiva rörelser.",
+          "Granska symptomens karaktär noggrant och lokalisation.",
+          "Överväg behovet av bilddiagnostik för att bekräfta diagnosen."
+        ],
+        "commonMistakes": [
+          "Anta att symptom är relaterade till tendinos utan att överväga ruptur.",
+          "Överse vikten av att utföra en grundlig klinisk undersökning.",
+          "Förväxla symptom med andra tillstånd som plantar fasciit."
+        ],
+        "teachingPoints": [
+          "Hälseneruptur är en akutsituation som kräver snabb diagnos och behandling.",
+          "Smärta under aktivitet är en viktig indikator.",
+          "Tidiga tecken på ruptur kan inkludera svullnad och palpabel defekt."
+        ],
+        "mnemonicOrTrick": "TENIS (Tennis, Explosiv rörelse, Nära häl, Inga andra skador)"
+      }
+    },
+    {
+      "id": "sport-028",
+      "domain": "sport",
+      "level": "st2",
+      "band": "B",
+      "question": "En 28-årig man som spelar rugby ådrog sig en skada under en tackling. Han klagar på smärta och svullnad över axeln. Vilken diagnos är mest sannolik?",
+      "options": [
+        "Axelluxation",
+        "Clavikelfraktur",
+        "Rotatorcuff-skada",
+        "Acromioclavicularledskada"
+      ],
+      "correctAnswer": "Acromioclavicularledskada",
+      "explanation": "Skador på axeln under tacklingar är vanliga, och smärta och svullnad över acromioclavicularleden tyder på en acromioclavicularledskada, ofta klassificerad som en typ I-III skada. Enligt Campbell's Operative Orthopaedics är detta en vanlig skada inom kontaktsporter. Axelluxation kan ge liknande symptom men är oftast mer uttalad med abduktion. Clavikelfrakturer och rotatorcuff-skador skulle ge andra symptom och kliniska fynd.",
+      "competency": "klinisk-färdighet",
+      "tags": [
+        "axel",
+        "acromioclavicularled",
+        "rugby",
+        "idrottsskador"
+      ],
+      "references": [
+        "campbell-13ed",
+        "rikskna-2024"
+      ],
+      "relatedGoals": [
+        "st2-01",
+        "st2-02"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Tänk på skador som uppstår vid direkta slag mot axeln.",
+          "Granska lokalisationen av svullnad och smärta.",
+          "Överväg att utföra röntgen för att utesluta frakturer."
+        ],
+        "commonMistakes": [
+          "Välja axelluxation utan att beakta typiska symptom och fynd.",
+          "Anta att skadan är en rotatorcuff-skada utan att göra en fullständig bedömning.",
+          "Överse röntgens betydelse för att diagnostisera frakturer."
+        ],
+        "teachingPoints": [
+          "Acromioclavicularledskador är vanliga i kontaktsporter och kan variera i svårighetsgrad.",
+          "Tidiga symptom kan inkludera smärta, svullnad och nedsatt rörlighet.",
+          "En korrekt diagnos är avgörande för behandlingsval och återhämtning."
+        ],
+        "mnemonicOrTrick": "RUGBY (Rugby, Utsatt axel, Grad av skada, Bedömning och Ytterligare undersökning)"
+      }
+    },
+    {
+      "id": "sport-029",
+      "domain": "sport",
+      "level": "st2",
+      "band": "C",
+      "question": "En 23-årig manlig fotbollsspelare kommer in med svullnad och smärta i knät efter en tackling. Vid undersökning noteras en positiv Lachman-test och svullnad i ledkapseln. Vilken åtgärd är mest lämplig att rekommendera för att bekräfta diagnosen?",
+      "options": [
+        "Röntgen av knäet för att utesluta fraktur",
+        "MR-undersökning av knäet för att bedöma ligament och menisk",
+        "Ultraljud av knäet för att bedöma ledvätska",
+        "Artroskopi för direkt visualisering av knästrukturer"
+      ],
+      "correctAnswer": "MR-undersökning av knäet för att bedöma ligament och menisk",
+      "explanation": "MR-undersökning är den mest känsliga metoden för att identifiera skador på ligament, inklusive främre korsband (ACL) och menisker. Enligt Campbell's Operative Orthopaedics är MR-undersökning standard för att utvärdera knäskador, med hög specificitet och sensitivitet för ligamentär och meniskal skada. Röntgen kan utesluta fraktur men ger ingen information om mjukdelsskador. Ultraljud kan upptäcka vätska men är inte tillräckligt bra för att bedöma ligament. Artroskopi är invasivt och bör reserveras för terapiformer efter bilddiagnostik.",
+      "competency": "klinisk-färdighet",
+      "tags": [
+        "knäskador",
+        "ACL",
+        "MR",
+        "diagnostik",
+        "sportmedicin"
+      ],
+      "references": [
+        "campbell-13ed",
+        "rikskna-2024"
+      ],
+      "relatedGoals": [
+        "st2-01",
+        "st2-02"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Tänk på vilken bilddiagnostik som ger bäst information om mjukdelsskador.",
+          "MR är den valda metoden för att bedöma ligament och menisker i knäet.",
+          "Röntgen är bra för frakturer men inte för mjukdelsskador."
+        ],
+        "commonMistakes": [
+          "Välja röntgen – det hjälper inte att bedöma ligament eller menisk.",
+          "Tro på att ultraljud är tillräckligt för att diagnostisera ACL-skador.",
+          "Överväga artroskopi som första åtgärd utan bilddiagnostik."
+        ],
+        "teachingPoints": [
+          "MR är guldstandard för att utvärdera knäskador, framför allt ligament och menisk.",
+          "Röntgen utesluter endast fraktur men ger ingen information om mjukdelar.",
+          "Ultraljud kan användas för att se vätska men är inte tillförlitligt för ligament.",
+          "Artroskopi är invasivt och bör användas efter bilddiagnostik."
+        ],
+        "mnemonicOrTrick": "MR = Mjukdelar och Rätt diagnos!"
+      }
+    },
+    {
+      "id": "sport-030",
+      "domain": "sport",
+      "level": "st2",
+      "band": "C",
+      "question": "En 29-årig kvinnlig handbollsspelare rapporterar om smärta och svaghet i axeln efter en intensiv träningsperiod. Vid klinisk undersökning noteras en positiv apprehensionstest. Vilken diagnos är mest sannolik?",
+      "options": [
+        "Rotatorcuffskada",
+        "Axelinstabilitet",
+        "Fryst axel",
+        "Bursit"
+      ],
+      "correctAnswer": "Axelinstabilitet",
+      "explanation": "Den positiva apprehensionstest tyder starkt på axelinstabilitet, vilket är vanligt bland idrottare som utför kastande rörelser, såsom handbollsspelare. Enligt Campbell’s Operative Orthopaedics är axelinstabilitet en vanlig orsak till axelsmärta i denna population. Rotatorcuffskador kan ge smärta men ger sällan en positiv apprehensionstest. Fryst axel och bursit har andra typiska symtom och fynd vid undersökning.",
+      "competency": "klinisk-färdighet",
+      "tags": [
+        "axelinstabilitet",
+        "apprehensionstest",
+        "handboll",
+        "idrottsskador",
+        "diagnostik"
+      ],
+      "references": [
+        "campbell-13ed",
+        "rikskna-2024"
+      ],
+      "relatedGoals": [
+        "st2-01",
+        "st2-02"
+      ],
+      "tutorMode": {
+        "hints": [
+          "Apprehensionstestet är specifikt för att bedöma instabilitet i axeln.",
+          "Tänk på skador som är vanliga hos kastande idrottare.",
+          "Rotatorcuffskador ger inte en positiv apprehension."
+        ],
+        "commonMistakes": [
+          "Välja rotatorcuffskada – apprehensionstestet pekar på instabilitet snarare än skada.",
+          "Misstolka fryst axel som instabilitet, de har olika symptom.",
+          "Överskatta bursit som en primär diagnos utan att överväga instabilitet."
+        ],
+        "teachingPoints": [
+          "Positivt apprehensionstest indikerar axelinstabilitet.",
+          "Axelinstabilitet är vanligt i idrotter med kastande rörelser.",
+          "Rotatorcuffskador ger ofta smärta men inte apprehensionstest.",
+          "Frysta axlar har andra typiska symtom och kräver annan behandling."
+        ],
+        "mnemonicOrTrick": "Apprehension = Axelinstabilitet!"
+      }
+    }
+  ],
+  "status": "pending-review",
+  "reviewedBy": null,
+  "approvedAt": null
+}

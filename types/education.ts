@@ -1,3 +1,21 @@
+/**
+ * Primary medical specialty
+ */
+export type MedicalSpecialty = 'ortopedi' | 'allmänmedicin' | 'akutsjukvård';
+
+/**
+ * Education/Training level
+ *
+ * Structure:
+ * - student: Medical student
+ * - at: AT-läkare (junior doctor)
+ * - st1-st5: ST-läkare Ortopedi (specialist training years 1-5)
+ * - st-allmänmedicin: ST-läkare Allmänmedicin (with ortho placement)
+ * - st-akutsjukvård: ST-läkare Akutsjukvård (with ortho placement)
+ * - specialist-ortopedi: Specialist Orthopaedic Surgeon
+ * - specialist-allmänmedicin: GP Specialist (fortbildning mode)
+ * - specialist-akutsjukvård: Emergency Medicine Specialist (fortbildning mode)
+ */
 export type EducationLevel =
   | 'student'
   | 'at'
@@ -6,7 +24,11 @@ export type EducationLevel =
   | 'st3'
   | 'st4'
   | 'st5'
-  | 'specialist';
+  | 'st-allmänmedicin'
+  | 'st-akutsjukvård'
+  | 'specialist-ortopedi'
+  | 'specialist-allmänmedicin'
+  | 'specialist-akutsjukvård';
 
 export interface LevelInfo {
   id: EducationLevel;

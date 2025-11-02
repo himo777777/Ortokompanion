@@ -1,5 +1,7 @@
 import { OnboardingData, UserProfile, SevenDayPlan, DayPlan, PlanItem, Domain, BADGES } from '@/types/onboarding';
 import { EducationLevel } from '@/types/education';
+import { Rotation, OrthoPlacement, getRotationStatus } from '@/types/rotation';
+import { autoAssignGoals } from './goal-assignment';
 
 export function initializeOnboarding(): OnboardingData {
   return {
@@ -21,7 +23,7 @@ export function initializeOnboarding(): OnboardingData {
 }
 
 export function createUserProfile(onboarding: OnboardingData): UserProfile {
-  return {
+  const profile: UserProfile = {
     id: generateId(),
     role: onboarding.level!,
     stYear: onboarding.stYear,
@@ -38,7 +40,89 @@ export function createUserProfile(onboarding: OnboardingData): UserProfile {
     },
     createdAt: new Date(),
     onboardingCompletedAt: new Date(),
+
+    // NEW: Specialty and rotation data
+    primarySpecialty: onboarding.primarySpecialty,
+    orthoPlacement: onboarding.orthoPlacement ? {
+      ...onboarding.orthoPlacement,
+      status: getRotationStatus(onboarding.orthoPlacement.startDate, onboarding.orthoPlacement.endDate),
+      goals: [],
+      progress: 0,
+    } : undefined,
+
+    // NEW: AI Adaptation
+    aiAdaptationEnabled: onboarding.aiAdaptationEnabled !== false, // Default true
+    learningStyle: onboarding.learningStyle || 'mixed',
+
+    // NEW: Fortbildning mode
+    fortbildningMode: onboarding.fortbildningMode,
   };
+
+  // Convert rotations array to RotationTimeline (for ST-ortopedi)
+  if (onboarding.rotations && onboarding.rotations.length > 0) {
+    const rotations: Rotation[] = onboarding.rotations.map((rot, index) => {
+      const startDate = rot.startDate ? new Date(rot.startDate) : new Date();
+      const endDate = rot.endDate ? new Date(rot.endDate) : new Date();
+
+      return {
+        id: `rot-${index}-${Date.now()}`,
+        domain: rot.domain,
+        startDate,
+        endDate,
+        status: getRotationStatus(startDate, endDate),
+        goals: [], // Will be auto-assigned below
+        progress: 0,
+        hospital: rot.hospital,
+      };
+    });
+
+    profile.rotationTimeline = {
+      rotations,
+      currentRotationId: rotations.find(r => r.status === 'current')?.id,
+    };
+  }
+
+  // Convert ortho placement (for ST-other specialties)
+  if (onboarding.orthoPlacement && onboarding.placementStartDate && onboarding.placementEndDate) {
+    const startDate = new Date(onboarding.placementStartDate);
+    const endDate = new Date(onboarding.placementEndDate);
+
+    profile.orthoPlacement = {
+      startDate,
+      endDate,
+      focusDomain: onboarding.orthoPlacement.focusDomain,
+      status: getRotationStatus(startDate, endDate),
+      goals: [], // Will be auto-assigned below
+      progress: 0,
+      hospital: onboarding.orthoPlacement.hospital,
+    };
+  }
+
+  // Set placement timing for student/AT
+  if (onboarding.placementTiming) {
+    profile.placementTiming = onboarding.placementTiming;
+    profile.placementStartDate = onboarding.placementStartDate ? new Date(onboarding.placementStartDate) : undefined;
+    profile.placementEndDate = onboarding.placementEndDate ? new Date(onboarding.placementEndDate) : undefined;
+  }
+
+  // AUTO-ASSIGN SOCIALSTYRELSEN GOALS based on profile
+  const assignedGoals = autoAssignGoals(profile);
+
+  // Assign goals to rotations if applicable
+  if (profile.rotationTimeline) {
+    profile.rotationTimeline.rotations = profile.rotationTimeline.rotations.map(rotation => ({
+      ...rotation,
+      goals: assignedGoals, // For now, assign all goals to each rotation
+      // In future, could use assignGoalsForRotation() to be more specific
+    }));
+  }
+
+  // Assign goals to ortho placement if applicable
+  if (profile.orthoPlacement) {
+    profile.orthoPlacement.goals = assignedGoals;
+  }
+
+  return profile;
 }
 
 export function generate7DayPlan(profile: UserProfile): SevenDayPlan {

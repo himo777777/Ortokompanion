@@ -1,0 +1,48 @@
+{
+  "validCount": 7,
+  "invalidCount": 0,
+  "results": [
+    {
+      "questionId": "höft-001",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "höft-002",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "höft-003",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "höft-004-01",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "höft-004-02",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "höft-004-03",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "questionId": "höft-004-04",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    }
+  ]
+}

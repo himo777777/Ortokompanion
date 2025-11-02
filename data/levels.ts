@@ -92,10 +92,38 @@ export const educationLevels: LevelInfo[] = [
     ],
     difficulty: 7
   },
+  // ST-läkare från andra specialiteter
   {
-    id: 'specialist',
-    name: 'Specialist - Fortbildning',
-    description: 'Kontinuerlig professionell utveckling',
+    id: 'st-allmänmedicin',
+    name: 'ST-Allmänmedicin',
+    description: 'Med ortopedi-placering',
+    color: 'bg-teal-500',
+    focusAreas: [
+      'Primärvårdsortopedi',
+      'Muskuloskeletala besvär',
+      'Remisshantering',
+      'Rehabilitering'
+    ],
+    difficulty: 3
+  },
+  {
+    id: 'st-akutsjukvård',
+    name: 'ST-Akutsjukvård',
+    description: 'Med ortopedi-placering',
+    color: 'bg-rose-500',
+    focusAreas: [
+      'Akut traumahandläggning',
+      'Frakturdiagnostik',
+      'Luxationer och reposition',
+      'Smärtlindring'
+    ],
+    difficulty: 3
+  },
+  // Specialister
+  {
+    id: 'specialist-ortopedi',
+    name: 'Specialist Ortopedi',
+    description: 'Fortbildning och uppdatering',
     color: 'bg-indigo-500',
     focusAreas: [
       'Nya tekniker och material',
@@ -104,5 +132,31 @@ export const educationLevels: LevelInfo[] = [
       'Forskning och innovation'
     ],
     difficulty: 8
+  },
+  {
+    id: 'specialist-allmänmedicin',
+    name: 'Specialist Allmänmedicin',
+    description: 'Ortopedi-fortbildning',
+    color: 'bg-cyan-500',
+    focusAreas: [
+      'Uppdatera ortopedikunskaper',
+      'Primärvårdsortopedi',
+      'Evidensbaserade riktlinjer',
+      'Remissrutiner'
+    ],
+    difficulty: 6
+  },
+  {
+    id: 'specialist-akutsjukvård',
+    name: 'Specialist Akutsjukvård',
+    description: 'Ortopedi-fortbildning',
+    color: 'bg-amber-500',
+    focusAreas: [
+      'Uppdatera akutortopedi',
+      'Traumahantering',
+      'Nya riktlinjer',
+      'Komplikationshantering'
+    ],
+    difficulty: 6
   }
 ];

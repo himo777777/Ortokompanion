@@ -52,7 +52,7 @@ export default function AIStudyPlanGenerator({
         availableTimePerDay,
         deadline: deadline || undefined,
       });
-      setStudyPlan(result);
+      setStudyPlan(result as any); // TODO: Align AI response type with state type
     } catch (error) {
       console.error('Failed to generate study plan:', error);
       setStudyPlan(null);

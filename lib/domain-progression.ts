@@ -23,6 +23,7 @@ import {
   DOMAIN_SELECTION_WEIGHTS,
 } from '@/types/progression';
 import { getLastReviewedCards, getAverageStability, getDueCards } from './srs-algorithm';
+import { getQuestionsByDomain } from '@/data/questions';
 
 /**
  * Check if domain gate requirements are met
@@ -261,11 +262,14 @@ export function createInitialDomainStatuses(
   const statuses: Record<string, DomainStatus> = {};
 
   allDomains.forEach((domain) => {
+    // Count actual questions available for this domain
+    const domainQuestions = getQuestionsByDomain(domain);
+
     statuses[domain] = {
       domain,
       status: domain === primaryDomain ? 'active' : 'locked',
       itemsCompleted: 0,
-      totalItems: 0, // Will be set when content is loaded
+      totalItems: domainQuestions.length, // Count of available questions
       gateProgress: {
         miniOSCEPassed: false,
         retentionCheckPassed: false,
