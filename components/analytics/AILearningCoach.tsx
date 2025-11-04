@@ -49,10 +49,10 @@ export default function AILearningCoach({
       const result = await generatePerformanceInsights({
         recentSessions: recentSessions.map(s => ({
           date: s.date,
-          questionsCompleted: s.questionsCompleted,
           accuracy: s.accuracy,
-          timeSpent: s.timeSpent,
           xpEarned: s.xpEarned,
+          timeSpent: s.timeSpent,
+          hintsUsed: 0, // TODO: Track hints used in StudySession
         })),
         currentStreak,
         goalsAchieved,

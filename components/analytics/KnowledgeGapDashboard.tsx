@@ -30,7 +30,7 @@ export default function KnowledgeGapDashboard({
   const [aiAnalysis, setAiAnalysis] = useState<{
     gaps: Array<{
       topic: string;
-      severity: 'critical' | 'major' | 'minor';
+      severity: 'critical' | 'moderate' | 'minor';
       evidence: string[];
       recommendation: string;
     }>;
@@ -51,11 +51,22 @@ export default function KnowledgeGapDashboard({
     setLoadingAnalysis(true);
     try {
       const result = await analyzeKnowledgeGaps({
-        performanceHistory: performanceHistory.map(p => ({
-          domain: p.domain,
+        performanceHistory: performanceHistory.map((p, index) => ({
+          questionId: `${p.domain}-${index}-${p.timestamp.getTime()}`,
+          question: {
+            id: `${p.domain}-${index}`,
+            domain: p.domain,
+            level: userLevel,
+            band: (p.difficulty === 'basic' ? 'A' : p.difficulty === 'intermediate' ? 'C' : 'E') as 'A' | 'B' | 'C' | 'D' | 'E',
+            question: `Question about ${p.domain}`,
+            options: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
+            correctAnswer: 'Option 1',
+            explanation: '',
+            competency: 'medicinsk-kunskap' as const,
+            tags: [p.domain],
+          },
           correct: p.correct,
-          timestamp: p.timestamp,
-          difficulty: p.difficulty,
+          hintsUsed: 0, // TODO: Track hints used in PerformanceRecord
           timeSpent: p.timeSpent,
         })),
         userLevel,
@@ -274,7 +285,7 @@ export default function KnowledgeGapDashboard({
                                   : 'bg-yellow-200 text-yellow-900'
                               }`}
                             >
-                              {gap.severity === 'critical' ? 'Kritiskt' : gap.severity === 'major' ? 'Stort gap' : 'Mindre gap'}
+                              {gap.severity === 'critical' ? 'Kritiskt' : gap.severity === 'moderate' ? 'Stort gap' : 'Mindre gap'}
                             </span>
                           </div>
 
