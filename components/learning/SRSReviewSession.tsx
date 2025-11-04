@@ -25,6 +25,7 @@ interface SRSReviewSessionProps {
     grade: number;
     timestamp: Date;
     timeSpent: number;
+    hintsUsed?: number;
   }>;
 }
 
@@ -72,7 +73,12 @@ export default function SRSReviewSession({
     try {
       const result = await optimizeSRSSchedule({
         cards: dueCards,
-        recentPerformance,
+        recentPerformance: recentPerformance.map(perf => ({
+          cardId: perf.cardId,
+          grade: perf.grade,
+          timeSpent: perf.timeSpent,
+          hintsUsed: perf.hintsUsed || 0,
+        })),
       });
       setAiPredictions(result.predictions);
     } catch (error) {

@@ -42,7 +42,7 @@ export default function QuestionBankBrowser({
 
   // Get unique domains
   const domains: Domain[] = ['trauma', 'höft', 'knä', 'fot-fotled', 'hand-handled', 'axel-armbåge', 'rygg', 'sport', 'tumör'];
-  const levels: EducationLevel[] = ['student', 'at-läkare', 'st-läkare', 'specialist'];
+  const levels: EducationLevel[] = ['student', 'at', 'st1', 'st2', 'st3', 'st4', 'st5', 'specialist'];
   const bands = ['A', 'B', 'C', 'D', 'E'];
 
   // Statistics
@@ -74,8 +74,12 @@ export default function QuestionBankBrowser({
   const getLevelLabel = (level: EducationLevel) => {
     const labels: Record<EducationLevel, string> = {
       'student': 'Student',
-      'at-läkare': 'AT-läkare',
-      'st-läkare': 'ST-läkare',
+      'at': 'AT-läkare',
+      'st1': 'ST1',
+      'st2': 'ST2',
+      'st3': 'ST3',
+      'st4': 'ST4',
+      'st5': 'ST5',
       'specialist': 'Specialist'
     };
     return labels[level];
