@@ -68,19 +68,19 @@ export default function EnhancedDailySession({
       id: 'read',
       label: 'READ',
       icon: BookOpen,
-      duration: `${Math.round(dailyMix.newContent.estimatedTime)} min`,
+      duration: `${Math.round(dailyMix?.newContent?.estimatedTime || 0)} min`,
     },
     {
       id: 'quiz',
       label: 'QUIZ',
       icon: HelpCircle,
-      duration: `${Math.round(dailyMix.interleavingContent.estimatedTime)} min`,
+      duration: `${Math.round(dailyMix?.interleavingContent?.estimatedTime || 0)} min`,
     },
     {
       id: 'review',
       label: 'REVIEW',
       icon: Repeat,
-      duration: `${Math.round(dailyMix.srsReviews.estimatedTime)} min`,
+      duration: `${Math.round(dailyMix?.srsReviews?.estimatedTime || 0)} min`,
     },
     { id: 'summary', label: 'SUMMARY', icon: Trophy, duration: '1 min' },
   ];
@@ -126,7 +126,7 @@ export default function EnhancedDailySession({
     // Check if perfect day
     const perfectDay =
       quizResults.score === 100 &&
-      flashcardsMastered >= Math.min(4, dailyMix.srsReviews.cards.length) &&
+      flashcardsMastered >= Math.min(4, dailyMix?.srsReviews?.cards?.length || 0) &&
       quizResults.hintsUsed === 0;
 
     const summary: SessionSummary = {
@@ -192,7 +192,7 @@ export default function EnhancedDailySession({
           </div>
           <div className="text-right">
             <div className="text-sm opacity-90">Domän</div>
-            <div className="font-semibold">{DOMAIN_LABELS[dailyMix.newContent.domain]}</div>
+            <div className="font-semibold">{DOMAIN_LABELS[dailyMix?.newContent?.domain || 'trauma']}</div>
           </div>
         </div>
         {dailyMix.isRecoveryDay && (
@@ -252,13 +252,13 @@ export default function EnhancedDailySession({
         {currentPhase === 'quiz' && (
           <QuizPhaseEnhanced
             band={currentBand}
-            interleavingDomain={dailyMix.interleavingContent.domain}
+            interleavingDomain={dailyMix?.interleavingContent?.domain || 'trauma'}
             onComplete={(results) => handlePhaseComplete('quiz', results)}
           />
         )}
         {currentPhase === 'review' && (
           <ReviewPhaseEnhanced
-            srsCards={dailyMix.srsReviews.cards}
+            srsCards={dailyMix?.srsReviews?.cards || []}
             onComplete={(results) => handlePhaseComplete('review', results)}
           />
         )}
@@ -463,11 +463,11 @@ function QuizPhaseEnhanced({
               className={`w-full p-4 text-left rounded-lg border-2 transition-all ${
                 showFeedback
                   ? index === question.correctAnswer
-                    ? 'border-green-500 bg-green-50'
+                    ? 'border-green-500 bg-green-50 text-green-900'
                     : index === userAnswer
-                    ? 'border-red-500 bg-red-50'
-                    : 'border-gray-200 bg-gray-50'
-                  : 'border-gray-200 hover:border-purple-300 hover:bg-purple-50'
+                    ? 'border-red-500 bg-red-50 text-red-900'
+                    : 'border-gray-200 bg-gray-50 text-gray-900'
+                  : 'border-gray-200 text-gray-900 hover:border-purple-300 hover:bg-purple-50 hover:text-purple-900'
               }`}
             >
               <div className="flex items-center justify-between">
@@ -627,19 +627,19 @@ function ReviewPhaseEnhanced({
           <div className="grid grid-cols-3 gap-2">
             <button
               onClick={() => handleGrade(1)}
-              className="py-3 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 font-medium transition-colors text-sm"
+              className="py-3 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 hover:text-red-800 font-medium transition-colors text-sm"
             >
               😕 Nej
             </button>
             <button
               onClick={() => handleGrade(3)}
-              className="py-3 bg-yellow-100 text-yellow-700 rounded-lg hover:bg-yellow-200 font-medium transition-colors text-sm"
+              className="py-3 bg-yellow-100 text-yellow-700 rounded-lg hover:bg-yellow-200 hover:text-yellow-800 font-medium transition-colors text-sm"
             >
               🤔 Okej
             </button>
             <button
               onClick={() => handleGrade(5)}
-              className="py-3 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 font-medium transition-colors text-sm"
+              className="py-3 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 hover:text-green-800 font-medium transition-colors text-sm"
             >
               😄 Perfekt!
             </button>

@@ -1,0 +1,118 @@
+// OrtoKompanion Database Schema
+// This schema defines the database structure for user data, profiles, and progress tracking
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// User model - linked to Clerk authentication
+model User {
+  id        String   @id @default(cuid())
+  clerkId   String   @unique // Clerk user ID
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  profile  Profile?
+  sessions Session[]
+
+  @@index([clerkId])
+  @@index([email])
+}
+
+// User Profile - main user data and progress
+model Profile {
+  id     String @id @default(cuid())
+  userId String @unique
+
+  // Basic info
+  role              String // 'läkarexamen', 'at', 'bt', 'st'
+  stYear            Int?
+  primarySpecialty  String? // 'ortopedi', 'allmänmedicin', 'akutsjukvård'
+
+  // Gamification
+  xp            Int @default(0)
+  level         Int @default(1)
+  streak        Int @default(0)
+  longestStreak Int @default(0)
+  totalSessions Int @default(0)
+  lastActivity  DateTime?
+  freezeTokens  Int @default(0)
+  prestigeLevel Int @default(0)
+  lifetimeXP    Int @default(0)
+
+  // Progress data (JSON fields for complex nested structures)
+  progression              Json // Domain statuses, band status, SRS cards
+  socialstyrelseMålProgress Json // Array of goal progress
+  wrongQuestions           Json // Array of wrong answer tracking
+  preferences              Json? // User preferences
+
+  // Rotation/Placement data (JSON for flexibility)
+  rotationTimeline Json?
+  orthoPlacement   Json?
+  placementTiming  String?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relation
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([role])
+}
+
+// Session - tracks each learning activity
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  timestamp DateTime @default(now())
+
+  // Session data
+  questionsAnswered Int
+  correctAnswers    Int
+  xpGained          Int
+  domain            String
+  band              String
+  activityType      String // 'new', 'interleave', 'srs', 'clinical-case', 'exam'
+
+  // Additional tracking
+  topics   String[] // Topics covered in this session
+  mistakes Json[] // Detailed mistake tracking
+
+  // Related goals
+  relatedGoals String[] // Socialstyrelsen goal IDs
+
+  // Relation
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([timestamp])
+  @@index([domain])
+  @@index([activityType])
+}
+
+// Daily Mix Cache - stores generated daily mixes
+model DailyMix {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  date      DateTime @default(now())
+
+  // Daily mix data (JSON for flexibility)
+  mixData   Json
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([date])
+}

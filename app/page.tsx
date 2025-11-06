@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { EducationLevel } from '@/types/education';
-import { SevenDayPlan, UserProfile } from '@/types/onboarding';
+import { SevenDayPlan, UserProfile, Domain } from '@/types/onboarding';
+import { DifficultyBand } from '@/types/progression';
 import QuickStart from '@/components/onboarding/QuickStart';
+import { toDomain } from '@/lib/ai-utils';
 import DayPlanView from '@/components/dashboard/DayPlanView';
 import ChatInterface from '@/components/ChatInterface';
-import CaseStudyViewer from '@/components/CaseStudyViewer';
 import { trackEvent, updateStreak, checkBadgeEarned } from '@/lib/onboarding-utils';
 import { useIntegrated } from '@/context/IntegratedContext';
 import {
@@ -19,15 +20,20 @@ import DailyPlanDashboard from '@/components/progression/DailyPlanDashboard';
 import ExamModulesHub from '@/components/exam/ExamModulesHub';
 import ActivitySession from '@/components/progression/ActivitySession';
 import QuestionBankBrowser from '@/components/learning/QuestionBankBrowser';
-import StepByStepBrowser from '@/components/learning/StepByStepBrowser';
-import QualityControlDashboard from '@/components/admin/QualityControlDashboard';
+import ClinicalCaseBrowser from '@/components/learning/ClinicalCaseBrowser';
+import MedicalQualityDashboard from '@/components/quality/MedicalQualityDashboard';
 import FocusTimer from '@/components/study/FocusTimer';
 import PerformanceCharts from '@/components/analytics/PerformanceCharts';
 import RecommendationWidget from '@/components/dashboard/RecommendationWidget';
+import QuickStartView from '@/components/daily-plan/QuickStartView';
 import { useToast } from '@/components/ui/ToastContainer';
 import KeyboardShortcutsModal from '@/components/ui/KeyboardShortcutsModal';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import RotationDashboard from '@/components/rotation/RotationDashboard';
+import { SocialstyrelsensGoalsDashboard } from '@/components/progression/SocialstyrelsensGoalsDashboard';
+import DailyGoalsCalendar from '@/components/progression/DailyGoalsCalendar';
+import { GoalAchievementCelebration } from '@/components/ui/GoalAchievementCelebration';
+import { ALL_FOCUSED_GOALS, type SocialstyrelsensGoal } from '@/data/focused-socialstyrelsen-goals';
 import {
   MessageSquare,
   FileText,
@@ -45,12 +51,22 @@ import {
   Shield,
   Timer,
   GraduationCap,
+  Stethoscope,
 } from 'lucide-react';
 
-type Tab = 'today' | 'plan' | 'progress' | 'analytics' | 'roadmap' | 'goals' | 'chat' | 'cases' | 'modules' | 'questions' | 'stepbystep' | 'quality';
+type Tab = 'today' | 'plan' | 'progress' | 'analytics' | 'roadmap' | 'goals' | 'chat' | 'clinicalcases' | 'modules' | 'questions' | 'medical-quality';
 
+// Helper function to map EducationLevel to goal program type
+function getUserProgram(level: EducationLevel): 'läkarexamen' | 'bt' | 'at' | 'st' {
+  if (level === 'student') return 'läkarexamen';
+  if (level === 'at') return 'at';
+  if (level.startsWith('st')) return 'st';
+  return 'st'; // Default for specialists
+}
+
+// v2.0.1 - Fixed domain validation and cache issues - 2025-11-02T18:14
 export default function Home() {
-  const { profile, setProfile, dailyMix, refreshDailyMix, requestRecovery, isLoading } = useIntegrated();
+  const { profile, setProfile, dailyMix, refreshDailyMix, completeSession, requestRecovery, isLoading } = useIntegrated();
   const toast = useToast();
   const [plan, setPlan] = useState<SevenDayPlan | null>(null);
   const [activeTab, setActiveTab] = useState<Tab>('today');
@@ -61,7 +77,54 @@ export default function Home() {
     id: string;
     type: 'new' | 'interleave' | 'srs';
     domain: string;
+    targetBand?: DifficultyBand;
+    questionIds?: string[];
   } | null>(null);
+  const [achievedGoal, setAchievedGoal] = useState<SocialstyrelsensGoal | null>(null);
+
+  // Memoize expensive domain performance calculation
+  const weakDomains = useMemo(() => {
+    if (!profile) return [];
+
+    const domainPerformance = Object.entries(profile.progression.domainStatuses)
+      .map(([domain, status]) => ({
+        domain,
+        completionRate: status.totalItems > 0 ? status.itemsCompleted / status.totalItems : 0,
+        status: status.status,
+      }))
+      .filter(d => d.status === 'active' || d.status === 'gated')
+      .sort((a, b) => a.completionRate - b.completionRate);
+
+    // Return bottom 3 domains with less than 70% completion
+    return domainPerformance
+      .filter(d => d.completionRate < 0.7)
+      .slice(0, 3)
+      .map(d => d.domain as Domain);
+  }, [profile]); // Only recalculate when profile changes
+
+  // Memoize current goals calculation
+  const currentGoals = useMemo(() => {
+    if (!profile) return [];
+
+    const goals = [];
+    const currentBand = profile.progression.bandStatus.currentBand;
+    const nextBand = `Band ${parseInt(currentBand.split(' ')[1]) + 1}`;
+
+    goals.push(`Nå ${nextBand}`);
+
+    // Add domain-specific goals using memoized weakDomains
+    if (weakDomains.length > 0) {
+      goals.push(`Förbättra inom ${weakDomains[0]}`);
+    }
+
+    // Add accuracy goal if below 80%
+    const currentAccuracy = profile.progression.bandStatus.recentPerformance.correctRate * 100;
+    if (currentAccuracy < 80) {
+      goals.push('Öka träffsäkerhet till 80%');
+    }
+
+    return goals.slice(0, 3);
+  }, [profile, weakDomains]); // Depends on profile and weakDomains
 
   // Keyboard shortcuts - disabled when activity is active to prevent accidental triggers
   useKeyboardShortcuts([
@@ -70,11 +133,10 @@ export default function Home() {
     { key: '3', description: 'Gå till Analytics', action: () => setActiveTab('analytics') },
     // Chat shortcut removed to prevent accidental activation
     // { key: '4', description: 'Gå till AI-Handledare', action: () => setActiveTab('chat') },
-    { key: '5', description: 'Gå till Fallstudier', action: () => setActiveTab('cases') },
+    { key: '5', description: 'Gå till Kliniska Fall', action: () => setActiveTab('clinicalcases') },
     { key: '6', description: 'Gå till Frågebank', action: () => setActiveTab('questions') },
-    { key: '7', description: 'Gå till Steg-för-Steg', action: () => setActiveTab('stepbystep') },
     { key: '8', description: 'Gå till Provexamen', action: () => setActiveTab('modules') },
-    { key: '9', description: 'Gå till Kvalitetskontroll', action: () => setActiveTab('quality') },
+    { key: '9', description: 'Gå till Medicinsk Kvalitet', action: () => setActiveTab('medical-quality') },
     { key: 'f', description: 'Öppna Fokustimer', action: () => setShowFocusTimer(true) },
     { key: '?', shift: true, description: 'Visa kortkommandon', action: () => setShowKeyboardHelp(true) },
     { key: 'Escape', description: 'Stäng modaler', action: () => { setShowKeyboardHelp(false); setShowFocusTimer(false); setActiveActivity(null); } },
@@ -98,6 +160,15 @@ export default function Home() {
               parsedProfile,
               parsedPlan
             );
+
+            // Check if onboarding was completed
+            if (!integratedProfile.onboardingCompletedAt) {
+              console.log('⚠️ Profile found but onboarding not completed - showing onboarding');
+              setShowOnboarding(true);
+              trackEvent('onboard_incomplete');
+              return;
+            }
+
             setProfile(integratedProfile);
             setPlan(parsedPlan);
 
@@ -238,26 +309,6 @@ export default function Home() {
     );
   }
 
-  // Calculate weak domains from performance data
-  const getWeakDomains = () => {
-    if (!profile) return [];
-
-    const domainPerformance = Object.entries(profile.progression.domainStatuses)
-      .map(([domain, status]) => ({
-        domain,
-        completionRate: status.totalItems > 0 ? status.itemsCompleted / status.totalItems : 0,
-        status: status.status,
-      }))
-      .filter(d => d.status === 'active' || d.status === 'gated')
-      .sort((a, b) => a.completionRate - b.completionRate);
-
-    // Return bottom 3 domains with less than 70% completion
-    return domainPerformance
-      .filter(d => d.completionRate < 0.7)
-      .slice(0, 3)
-      .map(d => d.domain as any);
-  };
-
   // Extract recent topics from activity history
   const getRecentTopics = () => {
     if (!profile || !profile.progression.history) return [];
@@ -274,31 +325,6 @@ export default function Home() {
     // TODO: Implement when activity tracking is added to history
     // Currently history only contains bandAdjustments, osceResults, retentionChecks
     return [];
-  };
-
-  // Derive current goals from band progression
-  const getCurrentGoals = () => {
-    if (!profile) return [];
-
-    const goals = [];
-    const currentBand = profile.progression.bandStatus.currentBand;
-    const nextBand = `Band ${parseInt(currentBand.split(' ')[1]) + 1}`;
-
-    goals.push(`Nå ${nextBand}`);
-
-    // Add domain-specific goals
-    const weakDomains = getWeakDomains();
-    if (weakDomains.length > 0) {
-      goals.push(`Förbättra inom ${weakDomains[0]}`);
-    }
-
-    // Add accuracy goal if below 80%
-    const currentAccuracy = profile.progression.bandStatus.recentPerformance.correctRate * 100;
-    if (currentAccuracy < 80) {
-      goals.push('Öka träffsäkerhet till 80%');
-    }
-
-    return goals.slice(0, 3);
   };
 
   return (
@@ -386,10 +412,10 @@ export default function Home() {
               label="AI-Handledare"
             />
             <TabButton
-              active={activeTab === 'cases'}
-              onClick={() => setActiveTab('cases')}
-              icon={<FileText className="w-5 h-5" />}
-              label="Fallstudier"
+              active={activeTab === 'clinicalcases'}
+              onClick={() => setActiveTab('clinicalcases')}
+              icon={<Stethoscope className="w-5 h-5" />}
+              label="Kliniska Fall"
             />
             <TabButton
               active={activeTab === 'questions'}
@@ -398,22 +424,16 @@ export default function Home() {
               label="Frågebank"
             />
             <TabButton
-              active={activeTab === 'stepbystep'}
-              onClick={() => setActiveTab('stepbystep')}
-              icon={<GraduationCap className="w-5 h-5" />}
-              label="Steg-för-Steg"
-            />
-            <TabButton
               active={activeTab === 'modules'}
               onClick={() => setActiveTab('modules')}
               icon={<BookOpen className="w-5 h-5" />}
               label="Provexamen"
             />
             <TabButton
-              active={activeTab === 'quality'}
-              onClick={() => setActiveTab('quality')}
+              active={activeTab === 'medical-quality'}
+              onClick={() => setActiveTab('medical-quality')}
               icon={<Shield className="w-5 h-5" />}
-              label="Kvalitetskontroll"
+              label="Medicinsk Kvalitet"
             />
           </div>
         </div>
@@ -422,158 +442,73 @@ export default function Home() {
       {/* Content */}
       <div className="py-8">
         {activeTab === 'today' && dailyMix && (
-          <div>
-            {/* AI Recommendations Widget */}
-            <div className="max-w-7xl mx-auto px-6 mb-6">
-              <RecommendationWidget
-                profile={profile}
-                onSelectRecommendation={(rec) => {
-                  console.log('Selected recommendation:', rec);
+          <div className="max-w-7xl mx-auto px-6">
+            {/* QuickStart View - Simplified Daily Plan */}
+            <QuickStartView
+              dailyMix={dailyMix}
+              profile={profile}
+              recoveryMode={profile.preferences?.recoveryMode}
+              onStartActivity={(activityId, type) => {
+                console.log('🎯 Starting activity:', { activityId, type });
+                console.log('📦 DailyMix state:', {
+                  hasDailyMix: !!dailyMix,
+                  hasNewContent: !!dailyMix?.newContent,
+                  newContentItems: dailyMix?.newContent?.items?.length,
+                  hasInterleaving: !!dailyMix?.interleavingContent,
+                  interleavingItems: dailyMix?.interleavingContent?.items?.length,
+                  hasSRS: !!dailyMix?.srsReviews,
+                  srsCards: dailyMix?.srsReviews?.cards?.length,
+                });
 
-                  // Handle break recommendations - just show toast
-                  if (rec.type === 'break') {
-                    toast.success('God idé!', 'Ta en paus och kom tillbaka utvilad 🧘');
-                    return;
-                  }
+                // Get domain, questionIds, and targetBand based on activity type
+                let domain: Domain = 'trauma';
+                let questionIds: string[] = [];
+                const targetBand = dailyMix?.targetBand; // Get user's target difficulty band
 
-                  // Handle SRS review recommendations
-                  if (rec.type === 'review' && rec.id === 'srs-review') {
-                    setActiveActivity({
-                      id: 'srs-review-session',
-                      type: 'srs',
-                      domain: 'Allmän',
-                    });
-                    toast.success('SRS-repetition', 'Startar repetitionssession!');
-                    trackEvent('recommendation_followed', {
-                      recommendationId: rec.id,
-                      type: rec.type,
-                      userId: profile.id,
-                    });
-                    return;
-                  }
+                if (type === 'new' && dailyMix?.newContent) {
+                  domain = dailyMix.newContent.domain;
+                  questionIds = (dailyMix.newContent.items || []).filter((id): id is string => id != null && id !== '');
+                  console.log('✅ NEW content:', { domain, questionCount: questionIds.length });
+                } else if (type === 'interleave' && dailyMix?.interleavingContent) {
+                  domain = dailyMix.interleavingContent.domain;
+                  questionIds = (dailyMix.interleavingContent.items || []).filter((id): id is string => id != null && id !== '');
+                  console.log('✅ INTERLEAVE content:', { domain, questionCount: questionIds.length });
+                } else if (type === 'srs' && dailyMix?.srsReviews?.cards) {
+                  // For SRS, extract domain from first card
+                  domain = dailyMix.srsReviews.cards[0]?.domain || 'trauma';
+                  questionIds = dailyMix.srsReviews.cards
+                    .map(card => card.contentId)
+                    .filter((id): id is string => id != null && id !== '');
+                  console.log('✅ SRS content:', { domain, questionCount: questionIds.length });
+                }
 
-                  // Handle domain-specific recommendations
-                  if (rec.type === 'domain' && rec.targetDomain) {
-                    // Map actionType to activity type
-                    let activityType: 'new' | 'interleave' | 'srs' = 'interleave';
-                    if (rec.actionType === 'new-content') {
-                      activityType = 'new';
-                    } else if (rec.actionType === 'review') {
-                      activityType = 'srs';
-                    }
+                console.log('🚀 Setting activeActivity:', {
+                  id: activityId,
+                  type,
+                  domain,
+                  targetBand,
+                  questionIdsCount: questionIds.length,
+                  questionIds: questionIds.slice(0, 3), // Log first 3 IDs
+                });
 
-                    setActiveActivity({
-                      id: `domain-${rec.targetDomain}-${Date.now()}`,
-                      type: activityType,
-                      domain: rec.targetDomain,
-                    });
+                setActiveActivity({
+                  id: activityId,
+                  type: type,
+                  domain: domain,
+                  targetBand: targetBand,
+                  questionIds: questionIds,
+                });
 
-                    toast.success(
-                      `Startar ${rec.targetDomain}`,
-                      rec.actionType === 'new-content' ? 'Nytt innehåll!' :
-                      rec.actionType === 'review' ? 'Repetition!' : 'Övning!'
-                    );
-
-                    trackEvent('recommendation_followed', {
-                      recommendationId: rec.id,
-                      type: rec.type,
-                      domain: rec.targetDomain,
-                      actionType: rec.actionType,
-                      userId: profile.id,
-                    });
-                    return;
-                  }
-
-                  // Handle challenge recommendations
-                  if (rec.type === 'challenge') {
-                    setActiveTab('questions');
-                    toast.success('Utmaning accepterad!', rec.description);
-                    trackEvent('recommendation_followed', {
-                      recommendationId: rec.id,
-                      type: rec.type,
-                      userId: profile.id,
-                    });
-                    return;
-                  }
-
-                  // Handle topic recommendations
-                  if (rec.type === 'topic') {
-                    // Navigate to appropriate content based on topic
-                    if (rec.description.toLowerCase().includes('steg-för-steg')) {
-                      setActiveTab('stepbystep');
-                    } else if (rec.description.toLowerCase().includes('fallstudier')) {
-                      setActiveTab('cases');
-                    } else {
-                      setActiveTab('questions');
-                    }
-                    toast.success('Bra val!', rec.description);
-                    trackEvent('recommendation_followed', {
-                      recommendationId: rec.id,
-                      type: rec.type,
-                      userId: profile.id,
-                    });
-                    return;
-                  }
-
-                  // Default fallback
-                  toast.success('Bra val!', rec.description);
-                }}
-              />
-            </div>
-
-            {/* Rotation Dashboard (ST-läkare, Student, AT) */}
-            {(profile.rotationTimeline || profile.orthoPlacement) && (
-              <div className="max-w-7xl mx-auto px-6 mb-6">
-                <RotationDashboard profile={profile} />
-              </div>
-            )}
-
-            {/* Daily Plan Dashboard */}
-            <DailyPlanDashboard
-            progressionState={{
-              userId: profile.id,
-              level: profile.role,
-              primaryDomain: profile.progression.primaryDomain,
-              bandStatus: profile.progression.bandStatus,
-              domains: profile.progression.domainStatuses,
-              srs: profile.progression.srs,
-              dailyMix: dailyMix,
-              history: profile.progression.history,
-              preferences: {
-                recoveryMode: profile.preferences?.recoveryMode || false,
-                targetMinutesPerDay: profile.preferences?.targetMinutesPerDay || 10,
-                notificationTime: undefined,
-              },
-              createdAt: new Date(profile.createdAt),
-              lastActivity: profile.gamification.lastActivity || new Date(),
-              lastBandCheck: profile.progression.bandStatus.bandHistory[profile.progression.bandStatus.bandHistory.length - 1]?.date || new Date(),
-            }}
-            onStartActivity={(activityId, type) => {
-              console.log('Starting activity:', activityId, type);
-
-              // Get domain based on activity type
-              let domain = 'Allmän';
-              if (type === 'new' && dailyMix?.newContent.domain) {
-                domain = dailyMix.newContent.domain;
-              } else if (type === 'interleave' && dailyMix?.interleavingContent.domain) {
-                domain = dailyMix.interleavingContent.domain;
-              }
-
-              setActiveActivity({
-                id: activityId,
-                type: type,
-                domain: domain,
-              });
-
-              trackEvent('activity_started', {
-                activityId,
-                type,
-                domain,
-                userId: profile.id
-              });
-            }}
-            onRequestRecovery={requestRecovery}
-          />
+                trackEvent('activity_started', {
+                  activityId,
+                  type,
+                  domain,
+                  targetBand,
+                  questionCount: questionIds.length,
+                  userId: profile.id
+                });
+              }}
+            />
           </div>
         )}
         {activeTab === 'today' && !dailyMix && (
@@ -591,6 +526,18 @@ export default function Home() {
         )}
         {activeTab === 'progress' && (
           <div className="max-w-7xl mx-auto px-6">
+            {/* Rotation Dashboard (ST-läkare, Student, AT) - Moved from Today tab */}
+            {(profile.rotationTimeline || profile.orthoPlacement) && (
+              <div className="mb-6">
+                <RotationDashboard profile={profile} />
+              </div>
+            )}
+
+            {/* Daily Goals Calendar */}
+            <div className="mb-6">
+              <DailyGoalsCalendar profile={profile} />
+            </div>
+
             <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-8">
               <h2 className="text-2xl font-bold text-gray-800 mb-6">Progression & Domänstatus</h2>
               <div className="space-y-6">
@@ -633,6 +580,7 @@ export default function Home() {
                 ))}
               </div>
             </div>
+
           </div>
         )}
         {activeTab === 'analytics' && (
@@ -707,9 +655,9 @@ export default function Home() {
               level={profile.role}
               userContext={{
                 currentAccuracy: profile.progression.bandStatus.recentPerformance.correctRate * 100,
-                weakDomains: getWeakDomains(),
+                weakDomains: weakDomains,
                 recentTopics: getRecentTopics(),
-                currentGoals: getCurrentGoals(),
+                currentGoals: currentGoals,
                 mistakePatterns: getMistakePatterns(),
                 currentBand: profile.progression.bandStatus.currentBand,
                 totalXP: profile.gamification.xp,
@@ -719,10 +667,45 @@ export default function Home() {
             />
           </div>
         )}
-        {activeTab === 'cases' && (
-          <div className="max-w-7xl mx-auto px-6">
-            <CaseStudyViewer level={profile.role} />
-          </div>
+        {activeTab === 'clinicalcases' && (
+          <ClinicalCaseBrowser
+            userLevel={profile.role}
+            onCaseComplete={(results) => {
+              // Track case completion
+              trackEvent('clinical_case_completed', {
+                caseId: results.caseId,
+                mode: results.mode,
+                stepsCompleted: results.stepsCompleted,
+                hintsUsed: results.hintsUsed,
+                questionsAnswered: results.questionsAnswered,
+                correctAnswers: results.correctAnswers,
+                timeSpent: results.timeSpent,
+                score: results.score,
+                userId: profile.id,
+              });
+
+              // Award XP
+              const newXP = profile.gamification.xp + results.xpEarned;
+              const newLevel = Math.floor(newXP / 100) + 1;
+
+              handleUpdateProfile({
+                gamification: {
+                  ...profile.gamification,
+                  xp: newXP,
+                  level: newLevel,
+                },
+              });
+
+              toast.success(
+                `Kliniskt fall slutfört! +${results.xpEarned} XP`,
+                `Poäng: ${results.score}/100${
+                  results.mode === 'guided'
+                    ? ` (${results.hintsUsed} ledtrådar använda)`
+                    : ` (${results.correctAnswers}/${results.questionsAnswered} rätt)`
+                }`
+              );
+            }}
+          />
         )}
         {activeTab === 'questions' && (
           <div className="max-w-7xl mx-auto px-6">
@@ -758,104 +741,103 @@ export default function Home() {
             />
           </div>
         )}
-        {activeTab === 'stepbystep' && (
-          <StepByStepBrowser
-            userLevel={profile.role}
-            onCaseCompleted={(results) => {
-              // Track case completion
-              trackEvent('stepbystep_completed', {
-                caseId: results.caseId,
-                stepsCompleted: results.stepsCompleted,
-                hintsUsed: results.hintsUsed,
-                timeSpent: results.timeSpent,
-                score: results.score,
-                userId: profile.id,
-              });
-
-              // Award XP based on score
-              const earnedXP = Math.floor(results.score / 2); // Score is 0-100, so 0-50 XP
-
-              const newXP = profile.gamification.xp + earnedXP;
-              const newLevel = Math.floor(newXP / 100) + 1;
-
-              handleUpdateProfile({
-                gamification: {
-                  ...profile.gamification,
-                  xp: newXP,
-                  level: newLevel,
-                },
-              });
-
-              toast.success(
-                `Fall slutfört! +${earnedXP} XP`,
-                `Poäng: ${results.score}/100 (${results.hintsUsed} ledtrådar använda)`
-              );
-            }}
-          />
-        )}
         {activeTab === 'modules' && (
           <div className="max-w-7xl mx-auto px-6">
             <ExamModulesHub />
           </div>
         )}
-        {activeTab === 'quality' && (
+        {activeTab === 'medical-quality' && (
           <div className="max-w-7xl mx-auto">
-            <QualityControlDashboard />
+            <MedicalQualityDashboard
+              userId={profile?.id || 'current-user'}
+              onReviewStart={(contentId) => {
+                console.log('Starting review for:', contentId);
+              }}
+              onAlertAction={(alertId, action) => {
+                console.log(`Alert ${alertId}: ${action}`);
+              }}
+            />
           </div>
         )}
       </div>
 
       {/* Activity Session Modal */}
-      {activeActivity && (
+      {activeActivity && activeActivity.id && activeActivity.type && activeActivity.domain && (
         <ActivitySession
           activityId={activeActivity.id}
           activityType={activeActivity.type}
-          domain={activeActivity.domain as any}
+          domain={activeActivity.domain as Domain}
           userLevel={profile.role}
-          onComplete={(results) => {
+          targetBand={activeActivity.targetBand}
+          questionIds={activeActivity.questionIds}
+          profile={profile}
+          weakDomains={dailyMix?.weakDomains}
+          onComplete={(sessionResults) => {
+            if (!activeActivity) return; // Extra safety check
             trackEvent('activity_completed', {
               activityId: activeActivity.id,
               type: activeActivity.type,
               domain: activeActivity.domain,
               userId: profile.id,
-              questionsCompleted: results.questionsCompleted,
-              correctAnswers: results.correctAnswers,
-              totalXP: results.totalXP,
-              timeSpent: results.timeSpent,
+              questionsCompleted: sessionResults.summary.questionsAnswered,
+              correctAnswers: sessionResults.summary.correctAnswers,
+              totalXP: sessionResults.summary.xpEarned,
+              timeSpent: sessionResults.summary.timeSpent,
+              accuracy: sessionResults.summary.accuracy,
+              srsCardsCreated: sessionResults.srsUpdates.length,
             });
 
-            // Award XP
-            const newXP = profile.gamification.xp + results.totalXP;
-            const newLevel = Math.floor(newXP / 100) + 1;
-            const leveledUp = newLevel > profile.gamification.level;
+            // Use completeSession to handle ALL profile updates
+            // This will:
+            // - Update XP, level, streak, badges
+            // - Add/update SRS cards
+            // - Update band adjustments
+            // - Update domain progress
+            // - Update Socialstyrelsen mål
+            const oldXP = profile.gamification.xp;
+            const oldLevel = profile.gamification.level;
+            const oldProgress = [...profile.socialstyrelseMålProgress];
 
-            handleUpdateProfile({
-              gamification: {
-                ...profile.gamification,
-                xp: newXP,
-                level: newLevel,
-              },
-            });
+            completeSession(sessionResults);
 
             // Show success toast
-            const accuracy = Math.round((results.correctAnswers / results.questionsCompleted) * 100);
+            const newXP = oldXP + sessionResults.summary.xpEarned;
+            const newLevel = Math.floor(newXP / 100) + 1;
+            const leveledUp = newLevel > oldLevel;
+
+            const accuracy = Math.round(sessionResults.summary.accuracy);
             if (leveledUp) {
               toast.success(
                 `Nivå ${newLevel} uppnådd! 🎉`,
-                `Du tjänade ${results.totalXP} XP med ${accuracy}% träffsäkerhet`
+                `Du tjänade ${sessionResults.summary.xpEarned} XP med ${accuracy}% träffsäkerhet`
               );
             } else {
               toast.success(
-                `Aktivitet slutförd! +${results.totalXP} XP`,
-                `${results.correctAnswers}/${results.questionsCompleted} rätt (${accuracy}%)`
+                `Aktivitet slutförd! +${sessionResults.summary.xpEarned} XP`,
+                `${sessionResults.summary.correctAnswers}/${sessionResults.summary.questionsAnswered} rätt (${accuracy}%)`
               );
             }
 
+            // Check for goal achievements after profile updates
+            setTimeout(() => {
+              const newlyAchievedProgress = profile.socialstyrelseMålProgress.find(
+                (mp) => mp.achieved && !oldProgress.find((op) => op.goalId === mp.goalId && op.achieved)
+              );
+
+              if (newlyAchievedProgress) {
+                const goal = ALL_FOCUSED_GOALS.find((g) => g.id === newlyAchievedProgress.goalId);
+                if (goal) {
+                  setAchievedGoal(goal);
+                }
+              }
+            }, 100);
+
             setActiveActivity(null);
-            // Refresh daily mix after completion
-            refreshDailyMix();
+            // Refresh daily mix after profile updates settle
+            setTimeout(() => refreshDailyMix(), 200);
           }}
           onClose={() => {
+            if (!activeActivity) return; // Extra safety check
             trackEvent('activity_cancelled', {
               activityId: activeActivity.id,
               type: activeActivity.type,
@@ -863,6 +845,15 @@ export default function Home() {
             });
             setActiveActivity(null);
           }}
+        />
+      )}
+
+      {/* Goal Achievement Celebration */}
+      {achievedGoal && (
+        <GoalAchievementCelebration
+          goal={achievedGoal}
+          isOpen={!!achievedGoal}
+          onClose={() => setAchievedGoal(null)}
         />
       )}
 
@@ -906,7 +897,14 @@ export default function Home() {
   );
 }
 
-function TabButton({ active, onClick, icon, label }: any) {
+interface TabButtonProps {
+  active: boolean;
+  onClick: () => void;
+  icon: React.ReactNode;
+  label: string;
+}
+
+function TabButton({ active, onClick, icon, label }: TabButtonProps) {
   return (
     <button
       onClick={onClick}

@@ -1,0 +1,68 @@
+name: Source Monitoring
+
+# Runs daily at 03:00 UTC (before content generation at 09:00 UTC)
+# Discovers new sources and checks existing sources for updates
+on:
+  schedule:
+    # Daily at 03:00 UTC
+    - cron: '0 3 * * *'
+
+  # Allow manual trigger for testing
+  workflow_dispatch:
+    inputs:
+      discoverySources:
+        description: 'Run source discovery'
+        required: false
+        default: 'true'
+        type: boolean
+      checkUpdates:
+        description: 'Check for source updates'
+        required: false
+        default: 'true'
+        type: boolean
+      regenerateContent:
+        description: 'Regenerate affected content'
+        required: false
+        default: 'true'
+        type: boolean
+
+jobs:
+  monitor-sources:
+    name: Monitor Medical Sources
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Trigger source monitoring
+        run: |
+          echo "Triggering source monitoring cron job..."
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            # Manual trigger with custom options
+            curl -X POST \
+              -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "discoverySources": ${{ inputs.discoverySources }},
+                "checkUpdates": ${{ inputs.checkUpdates }},
+                "regenerateContent": ${{ inputs.regenerateContent }}
+              }' \
+              "${{ secrets.VERCEL_URL }}/api/cron/monitor-sources"
+          else
+            # Scheduled trigger (default behavior)
+            curl -X GET \
+              -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+              "${{ secrets.VERCEL_URL }}/api/cron/monitor-sources"
+          fi
+
+      - name: Check response
+        id: check
+        run: |
+          echo "Source monitoring completed"
+          echo "Check Vercel logs for detailed report"
+
+      - name: Report status
+        if: always()
+        run: |
+          echo "Source monitoring job completed at $(date)"
+          echo "Next content generation: 09:00 UTC"

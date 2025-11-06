@@ -1,0 +1,287 @@
+====================================================================================================
+ORTOKOMPANION QUALITY CONTROL SYSTEM - DETAILED COVERAGE AUDIT
+Date: 2025-11-02
+====================================================================================================
+
+📊 1. EXECUTIVE SUMMARY
+====================================================================================================
+
+OVERALL COVERAGE:
+  Total Content Items: 480
+  ├─ Questions: 457
+  └─ Clinical Cases: 23
+
+  Content with Source References: 457 (95.2%)
+  ├─ Questions with refs: 457/457 (100.0%)
+  └─ Cases with refs: 0/23 (0.0%)
+
+  Content WITHOUT References (INVISIBLE TO QC SYSTEM): 23
+  ├─ Questions: 0
+  └─ Clinical Cases: 23
+
+QUALITY CONTROL COVERAGE RATING: 🟢 EXCELLENT (95.2%)
+
+
+📚 2. SOURCE USAGE STATISTICS
+====================================================================================================
+
+VERIFIED SOURCES: 32 total
+  ├─ Used in content: 25 (78.1%)
+  └─ Unused: 7 (21.9%)
+
+TOP 10 MOST USED SOURCES:
+   1. campbell-13ed                       [ 424 uses]
+      Unknown
+      Type: unknown
+   2. miller-8ed                          [ 170 uses]
+      Unknown
+      Type: unknown
+   3. rockwood-9ed                        [ 118 uses]
+      Unknown
+      Type: unknown
+   4. green-8ed                           [  51 uses]
+      Unknown
+      Type: unknown
+   5. atls-sverige-2022                   [  32 uses]
+      Unknown
+      Type: unknown
+   6. rikshoft-2023                       [  32 uses]
+      Unknown
+      Type: unknown
+   7. tachdjian-5ed                       [  21 uses]
+      Unknown
+      Type: unknown
+   8. rikskna-2023                        [  17 uses]
+      Unknown
+      Type: unknown
+   9. nice-hip-fracture-2023              [  13 uses]
+      Unknown
+      Type: unknown
+  10. boast-open-fractures-2020           [   7 uses]
+      Unknown
+      Type: unknown
+
+UNUSED SOURCES (7 total):
+  ⚠  socialstyrelsen-2021
+     Unknown
+  ⚠  lof-vardskadeforsikring-2023
+     Unknown
+  ⚠  sbu-ortopedi-2023
+     Unknown
+  ⚠  lakemedelsveket-ortopedi-2023
+     Unknown
+  ⚠  karolinska-ortopedi-2023
+     Unknown
+  ⚠  who-bone-tumours-2020
+     Unknown
+  ⚠  esmo-sarcoma-2021
+     Unknown
+
+
+🔍 3. INVALID SOURCE REFERENCES
+====================================================================================================
+
+❌ FOUND 28 INVALID REFERENCES TO 11 NON-EXISTENT SOURCES:
+
+  Invalid Source ID: "socialstyrelsen-2024" (12 occurrences)
+  Used in:
+    - question: hoeft-021
+    - question: rygg-002
+    - question: rygg-003
+    - question: tumor-003
+    - question: rygg-008
+    ... and 7 more
+
+  Invalid Source ID: "moore-anatomy-7ed" (2 occurrences)
+  Used in:
+    - question: rygg-005
+    - question: rygg-009
+
+  Invalid Source ID: "nice-back-pain-2016" (3 occurrences)
+  Used in:
+    - question: rygg-006
+    - question: rygg-007
+    - question: rygg-019
+
+  Invalid Source ID: "waxman-neurobase" (3 occurrences)
+  Used in:
+    - question: rygg-008
+    - question: rygg-022
+    - question: rygg-027
+
+  Invalid Source ID: "gupta-whiplash-2009" (1 occurrences)
+  Used in:
+    - question: rygg-011
+
+  Invalid Source ID: "jensen-mri-lumbal-2005" (1 occurrences)
+  Used in:
+    - question: rygg-012
+
+  Invalid Source ID: "myelopathy-consensus-2013" (1 occurrences)
+  Used in:
+    - question: rygg-014
+
+  Invalid Source ID: "asia-classification-2019" (2 occurrences)
+  Used in:
+    - question: rygg-021
+    - question: rygg-030
+
+  Invalid Source ID: "pediatric-neuro-handbook" (1 occurrences)
+  Used in:
+    - question: rygg-031
+
+  Invalid Source ID: "crash-2-2010" (1 occurrences)
+  Used in:
+    - question: trauma-006
+
+  Invalid Source ID: "kannus-achilles-2002" (1 occurrences)
+  Used in:
+    - question: fot-006
+
+  RECOMMENDATION: These sources should either be:
+    1. Added to data/verified-sources.ts if they are legitimate sources
+    2. Corrected if they are typos (e.g., socialstyrelsen-2024 → socialstyrelsen-2021)
+    3. Removed from content if they are invalid
+
+
+🎯 4. DOMAIN-BY-DOMAIN COVERAGE
+====================================================================================================
+
+Domain             Total Qs    With Refs   Without    Coverage    Rating
+--------------------------------------------------------------------------------
+trauma                 56        49         7      87.5%    🟢 GOOD
+höft                   71        54        17      76.1%    🟢 GOOD
+knä                    52        52         0     100.0%    🟢 PERFECT
+axel-armbåge           66        66         0     100.0%    🟢 PERFECT
+fot-fotled             50        47         3      94.0%    🟢 EXCELLENT
+hand-handled           50        50         0     100.0%    🟢 PERFECT
+rygg                   66        66         0     100.0%    🟢 PERFECT
+sport                  26        26         0     100.0%    🟢 PERFECT
+tumör                  20        20         0     100.0%    🟢 PERFECT
+
+✓ All domains have good coverage (≥ 75%)
+
+
+📖 5. CLINICAL CASES COVERAGE
+====================================================================================================
+
+Total Clinical Cases: 23
+  ├─ With references: 0 (0.0%)
+  └─ WITHOUT references: 23 (100.0%)
+
+⚠  CLINICAL CASES WITHOUT REFERENCES (6 total):
+
+   1. ID: sbs-001-femur-fracture
+      Title: Högenergiskada - Femurfraktur
+      Domain: trauma
+
+   2. ID: sbs-002-achilles-rupture
+      Title: Akut Fotsmärta - Achillesruptur
+      Domain: fot-fotled
+
+   3. ID: sbs-003-pediatric-supracondylar
+      Title: Barnskada - Suprakondylär Humerusfraktur
+      Domain: hand-handled
+
+   4. ID: student-1
+      Title: Handledsfraktur efter fall
+      Domain: hand-handled
+
+   5. ID: at-1
+      Title: Akut fotledsdistorsion
+      Domain: fot-fotled
+
+   6. ID: st1-1
+      Title: Komplex lårbensbrott
+      Domain: trauma
+
+  RECOMMENDATION: Add medical source references to all clinical cases
+  Priority: HIGH - Clinical cases are primary learning content
+
+
+📅 6. VERSION TRACKING STATUS
+====================================================================================================
+
+VERSION TRACKING IMPLEMENTATION STATUS:
+
+Questions:
+  contentVersion fields:     0/457 (0.0%)
+  sourceVersions fields:     0/457 (0.0%)
+  lastContentUpdate fields:  0/457 (0.0%)
+
+Clinical Cases:
+  contentVersion fields:     0/23 (0.0%)
+  sourceVersions fields:     0/23 (0.0%)
+  lastContentUpdate fields:  0/23 (0.0%)
+
+🔴 VERSION TRACKING: NOT IMPLEMENTED
+
+  Impact:
+    - 457 content items with references have no version tracking
+    - System cannot detect when content becomes outdated
+    - No automated alerts when source materials are updated
+    - Manual review required to find stale content
+
+  Recommendation:
+    - Phase 1: Add version tracking to high-priority content (e.g., ATLS, clinical guidelines)
+    - Phase 2: Gradually extend to all referenced content
+    - Phase 3: Implement automated monitoring system
+
+
+⚡ 7. MONITORING EFFECTIVENESS
+====================================================================================================
+
+WHAT HAPPENS IF A SOURCE IS UPDATED TODAY?
+
+Example: If Campbell's Operative Orthopaedics publishes 14th edition tomorrow:
+
+  ✓ Content flagged for review: 424 items reference Campbell's
+  ✗ Content that stays outdated: Unknown (no version tracking)
+  ⚠  Unmonitored content: 23 items would remain unaware
+
+SYSTEM COVERAGE:
+  Can monitor: 457/480 items (95.2%)
+  Blind spots: 23 items (4.8%)
+
+⚠  INVISIBLE CONTENT (cannot be monitored):
+  - 0 questions without source references
+  - 23 clinical cases without source references
+  - These will NOT receive alerts when medical knowledge is updated
+  - Risk: Students may learn from outdated information
+
+
+💡 8. RECOMMENDATIONS & ACTION ITEMS
+====================================================================================================
+
+PRIORITY 1 - CRITICAL (Do Immediately):
+  [ ] Fix 28 invalid source references
+      → 11 non-existent sources being referenced
+  [ ] Add references to 23 clinical cases (100% missing!)
+      → Clinical cases are primary learning content - must be source-verified
+
+PRIORITY 2 - HIGH (Do This Week):
+  [ ] Review 7 unused verified sources
+      → Either create content or remove from verified sources list
+
+PRIORITY 3 - MEDIUM (Do This Month):
+  [ ] Implement version tracking for high-value content
+      → Start with campbell-13ed, miller-8ed, rockwood-9ed, green-8ed, atls-sverige-2022
+      → Add contentVersion, sourceVersions, lastContentUpdate fields
+
+PRIORITY 4 - LOW (Future Enhancement):
+  [ ] Develop automated source monitoring system
+      → Periodic checks for source updates
+      → Automatic alerts to content creators
+  [ ] Create content review workflow
+      → When source updated → flag content → expert review → update/keep
+  [ ] Add secondary sources to single-reference questions
+      → Cross-verification improves reliability
+
+
+====================================================================================================
+END OF DETAILED COVERAGE REPORT
+====================================================================================================
+
+Generated: 2025-11-02T23:04:36.646Z
+Report saved to: detailed-coverage-report.txt (recommended)
+

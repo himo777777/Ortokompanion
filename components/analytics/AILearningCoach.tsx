@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { TrendingUp, Award, Target, Flame, Heart, MessageCircle, Sparkles, Loader2, Trophy, Calendar, CheckCircle, Clock } from 'lucide-react';
 import { generatePerformanceInsights } from '@/lib/ai-service';
 
@@ -36,14 +36,7 @@ export default function AILearningCoach({
   } | null>(null);
   const [loadingInsights, setLoadingInsights] = useState(false);
 
-  // Load AI insights on mount
-  useEffect(() => {
-    if (enableAI && recentSessions.length > 0 && !aiInsights) {
-      loadAIInsights();
-    }
-  }, [enableAI, recentSessions]);
-
-  const loadAIInsights = async () => {
+  const loadAIInsights = useCallback(async () => {
     setLoadingInsights(true);
     try {
       const result = await generatePerformanceInsights({
@@ -65,7 +58,14 @@ export default function AILearningCoach({
     } finally {
       setLoadingInsights(false);
     }
-  };
+  }, [recentSessions, currentStreak, goalsAchieved, totalGoals]);
+
+  // Load AI insights on mount
+  useEffect(() => {
+    if (enableAI && recentSessions.length > 0 && !aiInsights) {
+      loadAIInsights();
+    }
+  }, [enableAI, recentSessions, aiInsights, loadAIInsights]);
 
   // Calculate stats
   const totalXP = recentSessions.reduce((sum, s) => sum + s.xpEarned, 0);

@@ -357,3 +357,171 @@ export function logAIError(
   // In production, this could send to monitoring service
   // Example: Sentry, LogRocket, etc.
 }
+
+// ==================== Type Conversion Helpers ====================
+
+/**
+ * Valid EducationLevel values
+ */
+const VALID_EDUCATION_LEVELS = new Set([
+  'student',
+  'at',
+  'st1',
+  'st2',
+  'st3',
+  'st4',
+  'st5',
+  'st-allmänmedicin',
+  'st-akutsjukvård',
+  'specialist-ortopedi',
+  'specialist-allmänmedicin',
+  'specialist-akutsjukvård',
+]);
+
+/**
+ * Valid Domain values
+ */
+const VALID_DOMAINS = new Set([
+  'trauma',
+  'axel-armbåge',
+  'hand-handled',
+  'rygg',
+  'höft',
+  'knä',
+  'fot-fotled',
+  'sport',
+  'tumör',
+]);
+
+/**
+ * Valid Competency values
+ */
+const VALID_COMPETENCIES = new Set([
+  'medicinsk-kunskap',
+  'klinisk-färdighet',
+  'kommunikation',
+  'professionalism',
+  'samverkan',
+  'utveckling',
+]);
+
+/**
+ * Valid SRSCardType values
+ */
+const VALID_SRS_CARD_TYPES = new Set([
+  'microcase',
+  'quiz',
+  'pearl',
+  'rx',
+  'evidence',
+  'beslutstraad',
+]);
+
+/**
+ * Valid SubCompetency values
+ */
+const VALID_SUB_COMPETENCIES = new Set([
+  'diagnostik',
+  'akuta-flöden',
+  'operativa-principer',
+  'komplikationer',
+  'evidens',
+  'bildtolkning',
+  'dokumentation',
+  'kommunikation',
+]);
+
+/**
+ * Safely converts string to EducationLevel
+ * @param value - String value to convert
+ * @returns Valid EducationLevel or null if invalid
+ */
+export function toLevelType(value: string | undefined): string | null {
+  if (!value) return null;
+  return VALID_EDUCATION_LEVELS.has(value) ? value : null;
+}
+
+/**
+ * Safely converts string to Domain
+ * @param value - String value to convert
+ * @returns Valid Domain or null if invalid
+ */
+export function toDomain(value: string | undefined): string | null {
+  if (!value) return null;
+  return VALID_DOMAINS.has(value) ? value : null;
+}
+
+/**
+ * Safely converts string to Competency
+ * @param value - String value to convert
+ * @returns Valid Competency or null if invalid
+ */
+export function toCompetency(value: string | undefined): string | null {
+  if (!value) return null;
+  return VALID_COMPETENCIES.has(value) ? value : null;
+}
+
+/**
+ * Safely converts string to SRSCardType
+ * @param value - String value to convert
+ * @returns Valid SRSCardType or null if invalid
+ */
+export function toSRSCardType(value: string | undefined): string | null {
+  if (!value) return null;
+  return VALID_SRS_CARD_TYPES.has(value) ? value : null;
+}
+
+/**
+ * Safely converts string to SubCompetency
+ * @param value - String value to convert
+ * @returns Valid SubCompetency or null if invalid
+ */
+export function toSubCompetency(value: string | undefined): string | null {
+  if (!value) return null;
+  return VALID_SUB_COMPETENCIES.has(value) ? value : null;
+}
+
+/**
+ * Safely converts string array to SubCompetency array
+ * @param values - String array to convert
+ * @returns Array of valid SubCompetencies (filters out invalid ones)
+ */
+export function toSubCompetencies(values: string[] | undefined): string[] {
+  if (!values || !Array.isArray(values)) return [];
+  return values.filter(v => VALID_SUB_COMPETENCIES.has(v));
+}
+
+/**
+ * Type guard for profile progression property
+ */
+export function hasProgression(profile: any): profile is { progression: any } {
+  return profile && typeof profile === 'object' && 'progression' in profile && profile.progression != null;
+}
+
+/**
+ * Type guard for profile progression SRS
+ */
+export function hasSRS(profile: any): profile is { progression: { srs: any } } {
+  return hasProgression(profile) && 'srs' in profile.progression && profile.progression.srs != null;
+}
+
+/**
+ * Type guard for profile progression domain statuses
+ */
+export function hasDomainStatuses(profile: any): profile is { progression: { domainStatuses: Record<string, any> } } {
+  return hasProgression(profile) && 'domainStatuses' in profile.progression && profile.progression.domainStatuses != null;
+}
+
+/**
+ * Type guard for profile progression history
+ */
+export function hasHistory(profile: any): profile is { progression: { history: any } } {
+  return hasProgression(profile) && 'history' in profile.progression && profile.progression.history != null;
+}
+
+/**
+ * Type guard for profile progression band status
+ */
+export function hasBandStatus(profile: any): profile is { progression: { bandStatus: any } } {
+  return hasProgression(profile) && 'bandStatus' in profile.progression && profile.progression.bandStatus != null;
+}

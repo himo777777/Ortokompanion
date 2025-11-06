@@ -342,7 +342,14 @@ export default function AnalyticsDashboard({ analytics }: AnalyticsDashboardProp
   );
 }
 
-function StatCard({ icon, label, value, color }: any) {
+interface StatCardProps {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+  color: 'blue' | 'yellow' | 'green' | 'purple';
+}
+
+function StatCard({ icon, label, value, color }: StatCardProps) {
   const colors = {
     blue: 'bg-blue-100 text-blue-600 border-blue-300',
     yellow: 'bg-yellow-100 text-yellow-600 border-yellow-300',
@@ -351,7 +358,7 @@ function StatCard({ icon, label, value, color }: any) {
   };
 
   return (
-    <div className={`p-4 rounded-lg border-2 ${colors[color as keyof typeof colors]}`}>
+    <div className={`p-4 rounded-lg border-2 ${colors[color]}`}>
       <div className="flex items-center gap-3 mb-2">
         {icon}
         <span className="text-sm text-gray-600">{label}</span>
@@ -361,7 +368,13 @@ function StatCard({ icon, label, value, color }: any) {
   );
 }
 
-function DifficultyBar({ label, accuracy, color }: any) {
+interface DifficultyBarProps {
+  label: string;
+  accuracy: number;
+  color: 'green' | 'yellow' | 'red';
+}
+
+function DifficultyBar({ label, accuracy, color }: DifficultyBarProps) {
   const colors = {
     green: 'bg-green-500',
     yellow: 'bg-yellow-500',

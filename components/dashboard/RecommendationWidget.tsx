@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { colors } from '@/lib/design-tokens';
 import {
   generateRecommendations,
@@ -9,6 +9,11 @@ import {
   RecommendationContext,
 } from '@/lib/recommendation-engine';
 import { UserProfile } from '@/types/onboarding';
+import { useIntegrated } from '@/context/IntegratedContext';
+import {
+  ALL_FOCUSED_GOALS,
+  type SocialstyrelsensGoal,
+} from '@/data/focused-socialstyrelsen-goals';
 import {
   Sparkles,
   Clock,
@@ -20,6 +25,8 @@ import {
   Zap,
   RefreshCw,
   Target,
+  BookOpen,
+  CheckCircle2,
 } from 'lucide-react';
 
 interface RecommendationWidgetProps {
@@ -33,13 +40,9 @@ export default function RecommendationWidget({
 }: RecommendationWidgetProps) {
   const [recommendations, setRecommendations] = useState<StudyRecommendation[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { profile: integratedProfile } = useIntegrated();
 
-  // Generate recommendations on mount and when profile changes
-  useEffect(() => {
-    generateRecs();
-  }, [profile]);
-
-  const generateRecs = () => {
+  const generateRecs = useCallback(() => {
     setIsLoading(true);
 
     const context: RecommendationContext = {
@@ -52,7 +55,81 @@ export default function RecommendationWidget({
     setRecommendations(recs);
 
     setIsLoading(false);
-  };
+  }, [profile]);
+
+  // Generate recommendations on mount and when profile changes
+  useEffect(() => {
+    generateRecs();
+  }, [generateRecs]);
+
+  // Calculate goal-based recommendations
+  const goalRecommendations = useMemo(() => {
+    if (!integratedProfile) return null;
+
+    // Get completed goal IDs
+    const completedGoalIds = integratedProfile.socialstyrelseMålProgress
+      .filter((mp) => mp.achieved)
+      .map((mp) => mp.goalId);
+
+    // Get weak competency areas (<50% completion)
+    const areaPerformance: Record<string, { total: number; completed: number }> = {};
+    integratedProfile.socialstyrelseMålProgress.forEach((mp) => {
+      const goal = ALL_FOCUSED_GOALS.find((g) => g.id === mp.goalId);
+      if (goal) {
+        if (!areaPerformance[goal.competencyArea]) {
+          areaPerformance[goal.competencyArea] = { total: 0, completed: 0 };
+        }
+        areaPerformance[goal.competencyArea].total++;
+        if (mp.achieved) {
+          areaPerformance[goal.competencyArea].completed++;
+        }
+      }
+    });
+
+    const weakAreas = Object.entries(areaPerformance)
+      .filter(([_, stats]) => stats.completed / stats.total < 0.5)
+      .map(([area]) => area);
+
+    // Get user's program and specialty
+    const userProgram = 'bt'; // TODO: Get from profile when educationLevel is added
+    const userSpecialty = 'ortopedi';
+
+    // Get relevant goals
+    const relevantGoals = ALL_FOCUSED_GOALS.filter(
+      (g) =>
+        g.program === userProgram &&
+        (g.specialty === userSpecialty || g.specialty === 'allmänmedicin') &&
+        !completedGoalIds.includes(g.id)
+    );
+
+    // Prioritize required goals
+    const requiredGoals = relevantGoals.filter((g) => g.required);
+
+    // Score and sort goals
+    const scoredGoals = requiredGoals
+      .map((goal) => {
+        let priority = 10; // Base priority
+
+        // Boost if in weak area
+        if (weakAreas.includes(goal.competencyArea)) {
+          priority += 5;
+        }
+
+        // Boost if started
+        const progress = integratedProfile.socialstyrelseMålProgress.find(
+          (mp) => mp.goalId === goal.id
+        );
+        if (progress && progress.completedCriteria.length > 0) {
+          priority += 3;
+        }
+
+        return { goal, priority };
+      })
+      .sort((a, b) => b.priority - a.priority)
+      .slice(0, 3);
+
+    return scoredGoals;
+  }, [integratedProfile]);
 
   const getTypeIcon = (type: StudyRecommendation['type']) => {
     switch (type) {
@@ -166,6 +243,85 @@ export default function RecommendationWidget({
           </span>
         </div>
       </div>
+
+      {/* AI-Driven Focus Areas */}
+      {goalRecommendations && goalRecommendations.length > 0 && (
+        <div className="mb-6">
+          <div className="flex items-center gap-2 mb-3">
+            <Brain className="w-5 h-5" style={{ color: colors.primary[600] }} />
+            <h4 className="font-semibold text-gray-800">AI rekommenderar att du fokuserar på</h4>
+          </div>
+          <div className="space-y-3">
+            {goalRecommendations.map(({ goal, priority }, index) => {
+              const progress = integratedProfile?.socialstyrelseMålProgress.find(
+                (mp) => mp.goalId === goal.id
+              );
+              const completedCriteria = progress?.completedCriteria.length || 0;
+              const totalCriteria = goal.assessmentCriteria.length;
+              const progressPercent = (completedCriteria / totalCriteria) * 100;
+
+              return (
+                <div
+                  key={goal.id}
+                  className="bg-white rounded-lg border-2 p-4 hover:shadow-md transition-all cursor-pointer"
+                  style={{
+                    borderColor: index === 0 ? colors.primary[500] : colors.gray[200],
+                  }}
+                >
+                  {/* Top priority badge */}
+                  {index === 0 && (
+                    <div className="flex items-center gap-2 mb-2">
+                      <span
+                        className="px-2 py-1 rounded-full text-xs font-bold"
+                        style={{
+                          backgroundColor: `${colors.primary[500]}20`,
+                          color: colors.primary[500],
+                        }}
+                      >
+                        ⭐ HÖGSTA PRIORITET
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Focus area */}
+                  <div className="mb-2">
+                    <h5 className="font-semibold text-gray-900 mb-1 capitalize">
+                      {goal.competencyArea.replace('-', ' ')}
+                    </h5>
+                    <p className="text-sm text-gray-600">{goal.title}</p>
+                  </div>
+
+                  {/* Progress bar */}
+                  <div className="mb-3">
+                    <div className="flex items-center justify-between text-xs text-gray-600 mb-1">
+                      <span>Din kunskapsnivå</span>
+                      <span>{progressPercent.toFixed(0)}% klar</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div
+                        className="bg-gradient-to-r from-blue-500 to-indigo-500 h-2 rounded-full transition-all"
+                        style={{ width: `${progressPercent}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* AI insight */}
+                  <div className="p-2 bg-gradient-to-r from-blue-50 to-indigo-50 rounded border border-blue-100">
+                    <p className="text-xs text-blue-900">
+                      <span className="font-semibold">💡 AI-insikt: </span>
+                      {priority >= 15
+                        ? 'Detta område behöver mer uppmärksamhet för att nå dina utbildningsmål'
+                        : priority >= 13
+                        ? 'Du har gjort bra framsteg här - fortsätt för att befästa kunskapen'
+                        : 'Viktigt kompetensområde för din utbildningsnivå'}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Recommendations List */}
       {recommendations.length === 0 ? (

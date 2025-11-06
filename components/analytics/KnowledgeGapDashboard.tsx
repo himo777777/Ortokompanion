@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Target, TrendingDown, TrendingUp, AlertTriangle, CheckCircle, Brain, Sparkles, Loader2, BookOpen, Flame } from 'lucide-react';
 import { analyzeKnowledgeGaps } from '@/lib/ai-service';
 import { Domain } from '@/types/onboarding';
@@ -40,14 +40,7 @@ export default function KnowledgeGapDashboard({
   } | null>(null);
   const [loadingAnalysis, setLoadingAnalysis] = useState(false);
 
-  // Load AI analysis on mount
-  useEffect(() => {
-    if (enableAI && performanceHistory.length > 0 && !aiAnalysis) {
-      loadAIAnalysis();
-    }
-  }, [enableAI, performanceHistory]);
-
-  const loadAIAnalysis = async () => {
+  const loadAIAnalysis = useCallback(async () => {
     setLoadingAnalysis(true);
     try {
       const result = await analyzeKnowledgeGaps({
@@ -79,7 +72,14 @@ export default function KnowledgeGapDashboard({
     } finally {
       setLoadingAnalysis(false);
     }
-  };
+  }, [performanceHistory, userLevel, targetGoals]);
+
+  // Load AI analysis on mount
+  useEffect(() => {
+    if (enableAI && performanceHistory.length > 0 && !aiAnalysis) {
+      loadAIAnalysis();
+    }
+  }, [enableAI, performanceHistory, aiAnalysis, loadAIAnalysis]);
 
   // Calculate basic stats
   const totalQuestions = performanceHistory.length;

@@ -1,0 +1,32 @@
+Goal-Aware Question Generation Summary
+=======================================
+
+Program: BT
+Generated: 2025-11-04T19:55:27.564Z
+Total Questions: 10
+
+Goals Processed:
+1. bt-001: Initial bedömning enligt ABCDE
+
+Quality Metrics:
+- Average Quality Score: 26.2%
+- Auto-validated: 3/10
+- Validation Rate: 30.0%
+
+Questions by Goal:
+
+bt-001 - Initial bedömning enligt ABCDE
+--------------------------------------------------
+  Questions: 10
+  Avg Quality: 26.2%
+  Difficulties: B, C, D
+
+
+Sample Question:
+
+ID: bt-001-q1
+Domain: ALLMÄNMEDICIN
+Difficulty: B
+Question: Du är på akutmottagningen och tar emot en patient som är andningspåverkad. Vilket är det första steget i en systematisk ABCDE-bedömning?...
+Quality: 85.0%
+Validated: Yes

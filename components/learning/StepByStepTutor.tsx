@@ -1,7 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
+import DOMPurify from 'isomorphic-dompurify';
 import { colors } from '@/lib/design-tokens';
+import { StepAnswerInputSchema, safeValidate } from '@/lib/validation-schemas';
 import {
   ChevronRight,
   CheckCircle,
@@ -58,7 +60,7 @@ const STEP_ICONS: Record<ClinicalStep['type'], React.ReactNode> = {
   treatment: <ArrowRight className="w-5 h-5" />,
 };
 
-export default function StepByStepTutor({
+function StepByStepTutor({
   caseData,
   userMasteryLevel = 50,
   onComplete,
@@ -76,11 +78,18 @@ export default function StepByStepTutor({
   const currentAnswer = userAnswers[currentStep.id] || '';
   const currentHintsShown = hintsRevealed[currentStep.id] || 0;
 
+  // Combine examples and hints into a single hints array
+  // Examples come first (as "Tänk på" tips), then regular hints
+  const allHints = [
+    ...(currentStep.examples || []),
+    ...currentStep.hints
+  ];
+
   // Adaptive scaffolding: more hints available for lower mastery
   const maxHintsAvailable = userMasteryLevel < 30 ? 3 : userMasteryLevel < 60 ? 2 : 1;
 
   const handleRevealHint = () => {
-    if (currentHintsShown < Math.min(maxHintsAvailable, currentStep.hints.length)) {
+    if (currentHintsShown < Math.min(maxHintsAvailable, allHints.length)) {
       setHintsRevealed({
         ...hintsRevealed,
         [currentStep.id]: currentHintsShown + 1,
@@ -89,9 +98,24 @@ export default function StepByStepTutor({
   };
 
   const handleAnswerChange = (value: string) => {
+    // Validate input
+    const validation = safeValidate(StepAnswerInputSchema, value);
+
+    if (!validation.success) {
+      console.warn('Invalid answer input:', validation.error.errors[0]?.message);
+      // Don't update if validation fails (e.g., too long)
+      return;
+    }
+
+    // Sanitize to prevent XSS
+    const sanitized = DOMPurify.sanitize(validation.data, {
+      ALLOWED_TAGS: [], // No HTML tags allowed in medical text answers
+      ALLOWED_ATTR: [],
+    });
+
     setUserAnswers({
       ...userAnswers,
-      [currentStep.id]: value,
+      [currentStep.id]: sanitized,
     });
   };
 
@@ -115,7 +139,7 @@ export default function StepByStepTutor({
       const totalHints = Object.values(hintsRevealed).reduce((sum, count) => sum + count, 0);
       const timeSpent = Math.floor((Date.now() - startTime) / 1000);
       const baseScore = 100;
-      const hintPenalty = totalHints * 5;
+      const hintPenalty = totalHints * 10; // Each hint costs 10 XP
       const score = Math.max(baseScore - hintPenalty, 0);
 
       onComplete?.({
@@ -317,21 +341,6 @@ export default function StepByStepTutor({
           <div className="mb-6">
             <p className="text-lg text-gray-800 mb-4 leading-relaxed">{currentStep.question}</p>
 
-            {/* Examples (Socratic prompts) */}
-            {currentStep.examples && currentStep.examples.length > 0 && (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-                <p className="text-sm font-semibold text-blue-800 mb-2">Tänk på:</p>
-                <ul className="text-sm text-blue-700 space-y-1">
-                  {currentStep.examples.map((example, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <span>•</span>
-                      {example}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
             {/* Answer Input */}
             <textarea
               value={currentAnswer}
@@ -343,32 +352,39 @@ export default function StepByStepTutor({
           </div>
 
           {/* Hints Section */}
-          {currentStep.hints.length > 0 && !completedSteps.has(currentStep.id) && (
+          {allHints.length > 0 && !completedSteps.has(currentStep.id) && (
             <div className="mb-6">
               <div className="flex items-center justify-between mb-3">
                 <p className="text-sm font-semibold text-gray-700">Ledtrådar:</p>
                 <button
                   onClick={handleRevealHint}
-                  disabled={currentHintsShown >= Math.min(maxHintsAvailable, currentStep.hints.length)}
+                  disabled={currentHintsShown >= Math.min(maxHintsAvailable, allHints.length)}
                   className="flex items-center gap-2 px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg hover:bg-yellow-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
                 >
                   <Lightbulb className="w-4 h-4" />
-                  Visa ledtråd ({currentHintsShown}/{Math.min(maxHintsAvailable, currentStep.hints.length)})
+                  Visa ledtråd ({currentHintsShown}/{Math.min(maxHintsAvailable, allHints.length)}) <span className="text-xs">-10 XP</span>
                 </button>
               </div>
 
               {currentHintsShown > 0 && (
                 <div className="space-y-2">
-                  {currentStep.hints.slice(0, currentHintsShown).map((hint, i) => (
-                    <div
-                      key={i}
-                      className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 animate-fadeIn"
-                    >
-                      <p className="text-sm text-yellow-800">
-                        <span className="font-semibold">Ledtråd {i + 1}:</span> {hint}
-                      </p>
-                    </div>
-                  ))}
+                  {allHints.slice(0, currentHintsShown).map((hint, i) => {
+                    // Determine if this is an example (Tänk på) or regular hint
+                    const isExample = currentStep.examples && i < currentStep.examples.length;
+
+                    return (
+                      <div
+                        key={i}
+                        className={`${isExample ? 'bg-blue-50 border-blue-200' : 'bg-yellow-50 border-yellow-200'} border rounded-lg p-3 animate-fadeIn`}
+                      >
+                        <p className={`text-sm ${isExample ? 'text-blue-800' : 'text-yellow-800'}`}>
+                          <span className="font-semibold">
+                            {isExample ? 'Tänk på:' : `Ledtråd ${i - (currentStep.examples?.length || 0) + 1}:`}
+                          </span> {hint}
+                        </p>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -419,3 +435,15 @@ export default function StepByStepTutor({
     </div>
   );
 }
+
+// Custom comparison function for memo
+function arePropsEqual(prev: StepByStepTutorProps, next: StepByStepTutorProps): boolean {
+  return (
+    prev.caseData.id === next.caseData.id &&
+    prev.userMasteryLevel === next.userMasteryLevel
+    // Note: onComplete and onClose functions are not compared
+  );
+}
+
+// Export memoized component to prevent unnecessary re-renders
+export default memo(StepByStepTutor, arePropsEqual);

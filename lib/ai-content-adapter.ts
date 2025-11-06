@@ -177,8 +177,13 @@ function filterQuestionsByContext(
   focusGoals: string[]
 ): MCQQuestion[] {
   return questions.filter(q => {
+    // Skip invalid questions
+    if (!q || !q.level || !q.domain) {
+      return false;
+    }
+
     // Must match level
-    if (q.level && q.level !== profile.role) {
+    if (q.level !== profile.role) {
       // Allow some flexibility: ST can see lower levels, specialists can see all
       const userLevelNum = profile.role.match(/\d+/) ? parseInt(profile.role.match(/\d+/)![0]) : 99;
       const qLevelNum = q.level.match(/\d+/) ? parseInt(q.level.match(/\d+/)![0]) : 0;
@@ -298,6 +303,12 @@ function selectQuestions(
   targetCount: number,
   context: ContentAdaptationContext
 ): string[] {
+  // FALLBACK: If no questions available, return empty array (caller must handle)
+  if (questions.length === 0) {
+    console.warn('selectQuestions: No questions available to select from');
+    return [];
+  }
+
   // Score each question
   const scored = questions.map(q => {
     let score = 0;
@@ -333,8 +344,15 @@ function selectQuestions(
   // Sort by score descending
   scored.sort((a, b) => b.score - a.score);
 
-  // Return top N question IDs
-  return scored.slice(0, targetCount).map(s => s.question.id);
+  // GUARANTEE at least some questions if available
+  const selected = scored.slice(0, Math.max(1, targetCount)).map(s => s.question.id);
+
+  if (selected.length === 0 && questions.length > 0) {
+    console.warn('selectQuestions: Fallback - returning first available question');
+    return [questions[0].id];
+  }
+
+  return selected;
 }
 
 /**

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { SRSCard, SRSGrade } from '@/types/progression';
 import { CaseStudy } from '@/types/education';
 import { MCQQuestion } from '@/data/questions';
@@ -60,15 +60,8 @@ export default function SRSReviewSession({
   const totalCards = dueCards.length;
   const progress = totalCards > 0 ? ((currentCardIndex + 1) / totalCards) * 100 : 0;
 
-  // Load AI predictions on mount
-  useEffect(() => {
-    if (enableAI && dueCards.length > 0 && !loadingAIPredictions && !aiPredictions) {
-      loadAIPredictions();
-    }
-  }, [enableAI, dueCards]);
-
   // Load AI predictions for all cards
-  const loadAIPredictions = async () => {
+  const loadAIPredictions = useCallback(async () => {
     setLoadingAIPredictions(true);
     try {
       const result = await optimizeSRSSchedule({
@@ -87,7 +80,14 @@ export default function SRSReviewSession({
     } finally {
       setLoadingAIPredictions(false);
     }
-  };
+  }, [dueCards, recentPerformance]);
+
+  // Load AI predictions on mount
+  useEffect(() => {
+    if (enableAI && dueCards.length > 0 && !loadingAIPredictions && !aiPredictions) {
+      loadAIPredictions();
+    }
+  }, [enableAI, dueCards, loadingAIPredictions, aiPredictions, loadAIPredictions]);
 
   // Get AI prediction for current card
   const getCurrentCardPrediction = () => {

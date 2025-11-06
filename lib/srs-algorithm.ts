@@ -14,7 +14,11 @@ import {
   SRSGrade,
   SRSReviewResult,
   SRS_CONSTANTS,
+  SRSCardType,
+  SubCompetency,
 } from '@/types/progression';
+import { Domain } from '@/types/onboarding';
+import { toDomain, toSRSCardType, toSubCompetencies } from '@/lib/ai-utils';
 
 /**
  * Calculate next interval and ease factor based on user grade
@@ -358,10 +362,16 @@ export function createSRSCard(params: {
   relatedGoals?: string[];
   competencies: string[];
 }): SRSCard {
+  // Safely convert types
+  const validDomain = toDomain(params.domain);
+  const validType = toSRSCardType(params.type);
+  const validCompetencies = toSubCompetencies(params.competencies);
+
+  // Use fallback values if conversion fails
   return {
     id: params.id,
-    domain: params.domain as any,
-    type: params.type as any,
+    domain: (validDomain as Domain) || 'trauma', // Default fallback
+    type: (validType as SRSCardType) || 'quiz', // Default fallback
     contentId: params.contentId,
     easeFactor: SRS_CONSTANTS.INITIAL_EASE_FACTOR,
     stability: SRS_CONSTANTS.INITIAL_STABILITY,
@@ -373,7 +383,7 @@ export function createSRSCard(params: {
     reviewCount: 0,
     createdAt: new Date(),
     relatedGoals: params.relatedGoals,
-    competencies: params.competencies as any,
+    competencies: validCompetencies as SubCompetency[],
     isLeech: false,
     failCount: 0,
   };

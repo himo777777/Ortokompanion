@@ -318,11 +318,15 @@ export function generateDailyMix(params: {
   const primaryContent = availableNewContent.get(primaryDomain) || [];
   const newContentCount = Math.ceil(newTime / 2); // Assume ~2 min per item
   const selectedNewContent = primaryContent.slice(0, newContentCount);
+  const newReasoning = isRecoveryDay
+    ? `Lättare innehåll från ${primaryDomain} för att konsolidera kunskap i återhämtningsläge`
+    : `Nytt innehåll från din primära domän ${primaryDomain} för att bygga djup förståelse`;
 
   // 2. Interleaving (20% from neighbor domain)
   const neighbors = getNeighborDomains(primaryDomain);
   let interleaveDomain: Domain | null = null;
   let interleaveContent: string[] = [];
+  let interleaveReasoning = '';
 
   if (neighbors.length > 0) {
     // Select random neighbor
@@ -330,12 +334,14 @@ export function generateDailyMix(params: {
     const neighborContent = availableNewContent.get(interleaveDomain) || [];
     const interleaveCount = Math.ceil(interleaveTime / 2);
     interleaveContent = neighborContent.slice(0, interleaveCount);
+    interleaveReasoning = `Blandat innehåll från ${interleaveDomain} för att stärka långtidsminnet och hitta samband`;
   } else if (completedDomains.length > 0) {
     // Use long-term recall if no neighbors
     interleaveDomain = completedDomains[Math.floor(Math.random() * completedDomains.length)];
     const recallContent = availableNewContent.get(interleaveDomain) || [];
     const interleaveCount = Math.ceil(interleaveTime / 2);
     interleaveContent = recallContent.slice(0, interleaveCount);
+    interleaveReasoning = `Repetition från tidigare domän ${interleaveDomain} för att bibehålla långtidskunskap`;
   }
 
   // 3. SRS reviews (20% due cards)
@@ -350,11 +356,13 @@ export function generateDailyMix(params: {
       domain: primaryDomain,
       items: selectedNewContent,
       estimatedTime: newTime,
+      reasoning: newReasoning,
     },
     interleavingContent: {
       domain: interleaveDomain || primaryDomain,
       items: interleaveContent,
       estimatedTime: interleaveTime,
+      reasoning: interleaveReasoning || 'Blandat innehåll för att stärka långtidsminnet',
     },
     srsReviews: {
       cards: selectedSRS,
@@ -429,4 +437,84 @@ export function getDomainProgressMessage(domainStatus: DomainStatus): string {
   const progress = totalItems > 0 ? Math.round((itemsCompleted / totalItems) * 100) : 0;
 
   return `Progress: ${progress}% • Kvar: ${missing.join(', ')}`;
+}
+
+/**
+ * Unlock a domain (change from locked to active)
+ *
+ * @param domainStatuses - All domain statuses
+ * @param domainToUnlock - Domain to unlock
+ * @returns Updated domain statuses
+ */
+export function unlockDomain(
+  domainStatuses: Record<Domain, DomainStatus>,
+  domainToUnlock: Domain
+): Record<Domain, DomainStatus> {
+  const updatedStatuses = { ...domainStatuses };
+
+  if (updatedStatuses[domainToUnlock].status === 'locked') {
+    updatedStatuses[domainToUnlock] = {
+      ...updatedStatuses[domainToUnlock],
+      status: 'active',
+      unlockedAt: new Date(),
+    };
+  }
+
+  return updatedStatuses;
+}
+
+/**
+ * Complete domain and unlock next one
+ *
+ * @param currentDomain - Domain that was just completed
+ * @param domainStatuses - All domain statuses
+ * @param allDomains - All available domains
+ * @returns Updated domain statuses with next domain unlocked
+ */
+export function completeDomainAndUnlockNext(
+  currentDomain: Domain,
+  domainStatuses: Record<Domain, DomainStatus>,
+  allDomains: Domain[]
+): {
+  updatedStatuses: Record<Domain, DomainStatus>;
+  nextDomain: Domain | null;
+  allCompleted: boolean;
+} {
+  const completedDomains = getCompletedDomains(domainStatuses);
+
+  // Mark current domain as completed
+  const updatedStatuses = { ...domainStatuses };
+  updatedStatuses[currentDomain] = {
+    ...updatedStatuses[currentDomain],
+    status: 'completed',
+    completedAt: new Date(),
+  };
+
+  // Select next domain
+  const nextDomain = selectNextDomain(
+    currentDomain,
+    [...completedDomains, currentDomain], // Include newly completed
+    allDomains
+  );
+
+  // Check if all domains completed
+  const allCompleted = nextDomain === null;
+
+  // Unlock next domain if exists
+  if (nextDomain && updatedStatuses[nextDomain].status === 'locked') {
+    updatedStatuses[nextDomain] = {
+      ...updatedStatuses[nextDomain],
+      status: 'active',
+      unlockedAt: new Date(),
+    };
+
+    // Add suggestion to completed domain
+    updatedStatuses[currentDomain].nextSuggestedDomain = nextDomain;
+  }
+
+  return {
+    updatedStatuses,
+    nextDomain,
+    allCompleted,
+  };
 }

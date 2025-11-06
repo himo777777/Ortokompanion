@@ -217,7 +217,7 @@ export const RYGG_PEARLS: ClinicalPearl[] = [
     clinical_relevance: 'Vänta INTE på komplett triad - bilateral symtom + något av övriga är tillräckligt för akut MR. Varje timme räknas.',
     pitfall: 'Patienten kan förneka blåsstörning - fråga specifikt om retention, svagare stråle, och mät residualvolym.',
     tags: ['cauda equina', 'akut', 'triad'],
-    references: ['campbell-13ed', 'socialstyrelsen-2024'],
+    references: ['campbell-13ed', 'socialstyrelsen-2021'],
   },
   {
     id: 'rygg-pearl-002',

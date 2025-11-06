@@ -317,6 +317,7 @@ export interface DailyMix {
     domain: Domain;
     items: string[];          // Content IDs
     estimatedTime: number;    // minutes
+    reasoning?: string;       // Why this content was chosen
   };
 
   // Interleaving from neighbor domain (20%)
@@ -324,6 +325,7 @@ export interface DailyMix {
     domain: Domain;
     items: string[];
     estimatedTime: number;
+    reasoning?: string;       // Why this content was chosen
   };
 
   // SRS reviews due today (20%)
@@ -339,6 +341,9 @@ export interface DailyMix {
   // Special flags
   isRecoveryDay: boolean;     // User requested easier day
   isDifficultFollowUp: boolean; // Was yesterday difficult?
+
+  // Weak area training
+  weakDomains?: Array<{ domain: Domain; accuracy: number }>; // Domains with <70% accuracy
 }
 
 /**

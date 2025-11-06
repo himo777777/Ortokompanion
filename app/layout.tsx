@@ -1,7 +1,11 @@
 import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
 import './globals.css'
 import { IntegratedProvider } from '@/context/IntegratedContext'
 import { ToastProvider } from '@/components/ui/ToastContainer'
+import ErrorBoundary from '@/components/ui/ErrorBoundary'
+
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Ortokompanion - AI Utbildningssystem för Ortopedi',
@@ -15,12 +19,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="sv">
-      <body className="font-sans antialiased">
-        <IntegratedProvider>
+      <body className={inter.className}>
+        <ErrorBoundary>
           <ToastProvider>
-            {children}
+            <IntegratedProvider>
+              {children}
+            </IntegratedProvider>
           </ToastProvider>
-        </IntegratedProvider>
+        </ErrorBoundary>
       </body>
     </html>
   )

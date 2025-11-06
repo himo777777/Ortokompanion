@@ -7,7 +7,6 @@ import { colors } from '@/lib/design-tokens';
 import { SourceReference, VerificationStatus } from '@/types/verification';
 import SourcesList, { SourcesSummary } from '@/components/learning/SourcesList';
 import SourceDetailModal from '@/components/learning/SourceDetailModal';
-import { calculateQualityScore } from '@/lib/verification-utils';
 
 interface VerificationBadgeProps {
   sources: SourceReference[];
@@ -56,15 +55,31 @@ export default function VerificationBadge({
   const qualityScore = showQualityScore
     ? Math.round(
         sources.reduce((sum, s) => {
-          // Simplified quality calculation
-          const verification = {
-            contentId: '',
-            contentType: 'question' as const,
-            verificationStatus: s.verificationStatus,
-            sources: [s],
-            qualityScore: 0,
-          };
-          return sum + calculateQualityScore(verification as any);
+          // Simplified quality calculation based on source
+          let score = 0;
+
+          // Reliability (40 points)
+          score += (s.reliability / 100) * 40;
+
+          // Verification status (30 points)
+          if (s.verificationStatus === 'verified') score += 30;
+          else if (s.verificationStatus === 'pending') score += 15;
+
+          // Evidence level (20 points)
+          if (s.evidenceLevel) {
+            if (['1A', '1B'].includes(s.evidenceLevel)) score += 20;
+            else if (['2A', '2B'].includes(s.evidenceLevel)) score += 15;
+            else if (['3A', '3B'].includes(s.evidenceLevel)) score += 10;
+            else score += 5;
+          }
+
+          // Recency (10 points)
+          const age = new Date().getFullYear() - s.year;
+          if (age < 3) score += 10;
+          else if (age < 5) score += 7;
+          else if (age < 10) score += 4;
+
+          return sum + score;
         }, 0) / sources.length
       )
     : 0;

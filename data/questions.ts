@@ -13,7 +13,7 @@ import { EducationLevel } from '@/types/education';
 import { DifficultyBand } from '@/types/progression';
 
 export interface TutorModeData {
-  hints: [string, string, string]; // 3 progressive hints
+  hints: string[]; // Progressive hints (typically 2-5 hints)
   commonMistakes?: string[];      // Why students pick wrong answers
   teachingPoints?: string[];      // Key concepts to remember
   videoUrl?: string;              // Related video (optional)
@@ -35,6 +35,17 @@ export interface MCQQuestion {
   tags: string[];
   references?: string[]; // Reference IDs from data/references.ts
   tutorMode?: TutorModeData; // Tutor mode hints and guidance
+
+  // Content versioning fields for medical quality control
+  contentVersion?: string; // Semantic version: "1.0.0"
+  sourceVersions?: Array<{
+    sourceId: string;
+    version: string;
+    publicationDate: Date;
+  }>;
+  lastContentUpdate?: Date; // When question was last reviewed/updated
+  needsReview?: boolean; // Flag set when source is updated
+  reviewNotes?: string; // Notes from last review
 }
 
 // TRAUMA DOMAIN QUESTIONS
@@ -419,6 +430,50 @@ export const TRAUMA_QUESTIONS: MCQQuestion[] = [
       mnemonicOrTrick: "Märgen ger stabilitet - Märgspikning för diaphysära frakturer!",
     },
   },
+  {
+      id: 'trauma-ai-1762190705650',
+      domain: 'trauma',
+      level: 'st3',
+      band: 'C',
+      question: 'En 45-årig man söker akut på akutmottagningen efter att ha fallit från en stege. Han klagar över smärta och svullnad i höger knä. Vid undersökning noteras smärta vid palpation av ledspalten och positivt Lachman-test. Vilken skada är mest sannolik?',
+      options: [
+        'A) Lateral kollateralligamentskada',
+        'B) Meniskskada',
+        'C) Främre korsbandsskada',
+        'D) Patellaluxation'
+      ],
+      correctAnswer: 'C) Främre korsbandsskada',
+      explanation: 'Från den kliniska presentationen med smärta, svullnad och positivt Lachman-test hos en aktiv 45-årig man efter ett fall från höjd, är främre korsbandsskada den mest sannolika diagnosen. Främre korsbandsskador är vanliga vid knätrauma och kan ge instabilitet samt positivt Lachman-test. Differentialdiagnostiskt kan en lateralkollateralligamentskada ge smärta vid palpation av ledspalten, men den typiska instabiliteten och Lachman-testet talar för främre korsbandsskada. Meniskskador kan ge smärta och svullnad men ger vanligtvis inte positivt Lachman-test. Patellaluxation skulle ge en annan typ av smärta och typiskt sett en palpabel patella i sidled. Behandlingsmässigt kräver en främre korsbandsskada ofta kirurgisk rekonstruktion för att återställa stabilitet och minska risken för framtida ledskador. Enligt \'Management of Anterior Cruciate Ligament Injuries (2022)\' är kirurgisk rekonstruktion av främre korsbandet evidensbaserad och rekommenderas för att återställa funktion och minska risken för artrosutveckling.',
+      competency: 'medicinsk-kunskap',
+      tags: ['trauma', 'band-C', 'st3'],
+      references: ['aaos-acl-2022', 'campbell-13ed', 'atls-sverige-2022'],
+      relatedGoals: ['delmål-1.1', 'delmål-1.2'],
+      contentVersion: '1.0.0',
+      lastContentUpdate: new Date('2025-11-03T17:25:05.650Z'),
+      needsReview: false,
+    },
+  {
+      id: 'trauma-ai-1762190714110',
+      domain: 'trauma',
+      level: 'st2',
+      band: 'B',
+      question: 'En 45-årig man söker akut på akutmottagningen efter att ha fallit från en stege. Han har smärta och svullnad i höger ankel. Vilken struktur är mest sannolikt skadad?',
+      options: [
+        'A) Fraktur av laterala malleolen',
+        'B) Ruptur av Achillessenan',
+        'C) Distal fibulafraktur',
+        'D) Ligamentskada i fotleden'
+      ],
+      correctAnswer: 'A) Fraktur av laterala malleolen',
+      explanation: 'Patientens mekanism för skada, med smärta och svullnad i höger ankel efter att ha fallit, är högst förenligt med en fraktur av laterala malleolen. Laterala malleolen är en vanlig skadad struktur vid vridvåldstrauma på fotleden. Vid undersökning kan det finnas ömhet, svullnad och eventuellt palpationsömhet över laterala malleolen. En lateral malleolfraktur kan verifieras med röntgenundersökning av fotleden. Behandlingen kan vara konservativ med gips eller kirurgisk beroende på frakturtyp och stabilitet. Enligt NICE guidelines 2023 för hantering av höftfrakturer är röntgenundersökning av fotleden avgörande för diagnos. Vid misstanke om fraktur är det viktigt att utesluta detta med adekvat bildgivande undersökning.',
+      competency: 'medicinsk-kunskap',
+      tags: ['trauma', 'band-B', 'st2'],
+      references: ['nice-hip-fracture-2023', 'atls-sverige-2022', 'campbell-13ed'],
+      relatedGoals: ['delmål-1.1', 'delmål-1.2'],
+      contentVersion: '1.0.0',
+      lastContentUpdate: new Date('2025-11-03T17:25:14.110Z'),
+      needsReview: false,
+    }
 ];
 
 // HÖFT DOMAIN QUESTIONS
@@ -479,7 +534,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st1-01'],
     competency: 'medicinsk-kunskap',
     tags: ['höftfraktur', 'Garden', 'behandlingsval', 'hemiartroplastik'],
-    references: ['garden-1961', 'nice-hip-fracture-2023', 'rikshoft-2024'],
+    references: ['garden-1961', 'nice-hip-fracture-2023', 'rikshoft-2023'],
     tutorMode: {
       hints: [
         'En helt dislokerad collumfraktur hos äldre patient har höga risker för både AVN och nonunion vid intern fixation',
@@ -559,7 +614,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st3-01'],
     competency: 'klinisk-färdighet',
     tags: ['THA', 'Lewinnek', 'cup-positionering', 'luxation'],
-    references: ['lewinnek-1978', 'campbell-13ed', 'rikshoft-2024'],
+    references: ['lewinnek-1978', 'campbell-13ed', 'rikshoft-2023'],
     tutorMode: {
       hints: [
         'Kom ihåg att Lewinnek safe zone har TWO parametrar: inklination OCH anteversion',
@@ -599,7 +654,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st5-02'],
     competency: 'klinisk-färdighet',
     tags: ['revision', 'Paprosky', 'benförlust', 'cup-cage', 'triflange'],
-    references: ['paprosky-1994', 'campbell-13ed', 'rikshoft-2024'],
+    references: ['paprosky-1994', 'campbell-13ed', 'rikshoft-2023'],
     tutorMode: {
       hints: [
         'Paprosky 3B = massiv benförlust - tänk på vad som är kvar att fixera till',
@@ -876,7 +931,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['lp-01'],
     competency: 'medicinsk-kunskap',
     tags: ['epidemiologi', 'höftfraktur', 'Rikshöft', 'ålder', 'incidens'],
-    references: ['rikshoft-2024', 'nice-hip-fracture-2023'],
+    references: ['rikshoft-2023', 'nice-hip-fracture-2023'],
     tutorMode: {
       hints: [
         'Höftfrakturer är en åldersjukdom - incidensen ökar kraftigt med ålder',
@@ -998,7 +1053,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st1-01'],
     competency: 'medicinsk-kunskap',
     tags: ['VTE-profylax', 'höftfraktur', 'NICE guideline', 'LMWH', 'timing'],
-    references: ['nice-hip-fracture-2023', 'rikshoft-2024'],
+    references: ['nice-hip-fracture-2023', 'rikshoft-2023'],
     tutorMode: {
       hints: [
         'Balansen mellan blödningsrisk och trombosrisk är viktig vid höftfraktur',
@@ -1039,7 +1094,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st1-01'],
     competency: 'medicinsk-kunskap',
     tags: ['osteoporos', 'höftfraktur', 'sekundärprevention', 'bisfosfonat', 'NICE'],
-    references: ['nice-hip-fracture-2023', 'rikshoft-2024'],
+    references: ['nice-hip-fracture-2023', 'rikshoft-2023'],
     tutorMode: {
       hints: [
         'Höftfraktur hos äldre = fragility fracture = osteoporos-diagnos',
@@ -1121,7 +1176,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st1-01'],
     competency: 'klinisk-färdighet',
     tags: ['THA', 'surgical approach', 'posterior', 'anterolateral', 'Hardinge', 'abduktorer'],
-    references: ['campbell-13ed', 'rikshoft-2024'],
+    references: ['campbell-13ed', 'rikshoft-2023'],
     tutorMode: {
       hints: [
         'Posterior approach går MELLAN gluteus maximus och BAKOM abduktorer',
@@ -1204,7 +1259,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st1-01'],
     competency: 'medicinsk-kunskap',
     tags: ['ocementerad stam', 'metaphyseal fixation', 'diaphyseal fixation', 'THA', 'press-fit'],
-    references: ['campbell-13ed', 'rikshoft-2024'],
+    references: ['campbell-13ed', 'rikshoft-2023'],
     tutorMode: {
       hints: [
         'Metafys = proximalt i långrörsben, diafys = skaftet (mitt-distalt)',
@@ -1246,7 +1301,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st1-01'],
     competency: 'medicinsk-kunskap',
     tags: ['DDH', 'Crowe-klassificering', 'höftledsdysplasi', 'THA', 'subluxation'],
-    references: ['campbell-13ed', 'miller-8ed', 'socialstyrelsen-2024'],
+    references: ['campbell-13ed', 'miller-8ed', 'socialstyrelsen-2021'],
     tutorMode: {
       hints: [
         'Crowe baseras på hur mycket caput har migrerat proximalt - i procent',
@@ -1539,7 +1594,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st2-01'],
     competency: 'klinisk-färdighet',
     tags: ['THA luxation', 'recidiverande luxation', 'Lewinnek safe zone', 'cup malposition', 'revision THA', 'dual mobility'],
-    references: ['campbell-13ed', 'lewinnek-1978', 'rikshoft-2024'],
+    references: ['campbell-13ed', 'lewinnek-1978', 'rikshoft-2023'],
     tutorMode: {
       hints: [
         'Lewinnek safe zone: vad är normala värden för acetabulär anteversion och inclination?',
@@ -1665,7 +1720,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st1-01'],
     competency: 'medicinsk-kunskap',
     tags: ['ceramic-on-ceramic', 'squeaking', 'keramik THA', 'ceramic fracture', 'bearing komplikationer'],
-    references: ['campbell-13ed', 'miller-8ed', 'rikshoft-2024'],
+    references: ['campbell-13ed', 'miller-8ed', 'rikshoft-2023'],
     tutorMode: {
       hints: [
         'Ceramic-on-ceramic squeaking: hur vanligt är det? Är det farligt?',
@@ -1749,7 +1804,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['at-01'],
     competency: 'medicinsk-kunskap',
     tags: ['polyethylene', 'HXLPE', 'bearing surfaces', 'slitage', 'THA', 'osteolys'],
-    references: ['campbell-13ed', 'miller-8ed', 'rikshoft-2024'],
+    references: ['campbell-13ed', 'miller-8ed', 'rikshoft-2023'],
     tutorMode: {
       hints: [
         'Cross-linking minskar slitage men påverkar materialets mekaniska egenskaper - hur?',
@@ -1791,7 +1846,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st1-01'],
     competency: 'medicinsk-kunskap',
     tags: ['huvud-storlek', 'luxationsrisk', 'slitage', 'THA', 'femoral head', 'jump distance'],
-    references: ['campbell-13ed', 'miller-8ed', 'rikshoft-2024'],
+    references: ['campbell-13ed', 'miller-8ed', 'rikshoft-2023'],
     tutorMode: {
       hints: [
         'Större huvud = större "jump distance" → vad betyder det för luxationsrisk?',
@@ -1834,7 +1889,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st1-01'],
     competency: 'klinisk-färdighet',
     tags: ['LLD', 'benlängdsdiskrepans', 'THA komplikation', 'leg length discrepancy', 'skoklack'],
-    references: ['campbell-13ed', 'miller-8ed', 'rikshoft-2024'],
+    references: ['campbell-13ed', 'miller-8ed', 'rikshoft-2023'],
     tutorMode: {
       hints: [
         'Är 15mm LLD alltid symtomatisk eller kan patienter tolerera detta?',
@@ -2051,7 +2106,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['specialist-01'],
     competency: 'klinisk-färdighet',
     tags: ['constrained liner', 'dual mobility', 'recidiverande luxation', 'abduktor-insufficiens', 'aseptisk lossning'],
-    references: ['campbell-13ed', 'miller-8ed', 'rikshoft-2024'],
+    references: ['campbell-13ed', 'miller-8ed', 'rikshoft-2023'],
     tutorMode: {
       hints: [
         'Vad händer med luxationskraften när head inte kan luxa ur liner?',
@@ -2095,7 +2150,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['specialist-01'],
     competency: 'klinisk-färdighet',
     tags: ['trabecular metal', 'tantalum', 'structural allograft', 'Paprosky 3A', 'acetabular rekonstruktion', 'augments'],
-    references: ['campbell-13ed', 'miller-8ed', 'rikshoft-2024'],
+    references: ['campbell-13ed', 'miller-8ed', 'rikshoft-2023'],
     tutorMode: {
       hints: [
         'Jämför initial stabilitet: trabecular metal vs structural allograft',
@@ -2317,7 +2372,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['at-01'],
     competency: 'medicinsk-kunskap',
     tags: ['DVT-profylax', 'LMWH', 'VTE', 'trombosprofylax', 'Rikshöft', 'THA'],
-    references: ['campbell-13ed', 'rikshoft-2024'],
+    references: ['campbell-13ed', 'rikshoft-2023'],
     tutorMode: {
       hints: [
         'Sverige använder främst LMWH (inte ASA som i USA)',
@@ -2407,7 +2462,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st1-01'],
     competency: 'medicinsk-kunskap',
     tags: ['antibiotikaprofylax', 'cefuroxim', 'timing', 'protesinfektion', 'THA', 'Rikshöft'],
-    references: ['campbell-13ed', 'rikshoft-2024'],
+    references: ['campbell-13ed', 'rikshoft-2023'],
     tutorMode: {
       hints: [
         'Timing är KRITISKT - antibiotika måste vara i vävnad vid hudincision',
@@ -2452,7 +2507,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st1-01'],
     competency: 'medicinsk-kunskap',
     tags: ['tranexamsyra', 'TXA', 'blodförlust', 'THA', 'antifibrinolytika', 'kontraindikationer'],
-    references: ['campbell-13ed', 'miller-8ed', 'rikshoft-2024'],
+    references: ['campbell-13ed', 'miller-8ed', 'rikshoft-2023'],
     tutorMode: {
       hints: [
         'TXA kan ges både systemiskt (iv) och lokalt (topikalt i såret)',
@@ -2590,7 +2645,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ["st5-01","st5-02"],
     competency: 'klinisk-färdighet',
     tags: ["collum femoris","Garden klassifikation","höftprotes","cementering","Rikshöft"],
-    references: ["rikshoft-2024","nice-hip-fracture-2023"],
+    references: ["rikshoft-2023","nice-hip-fracture-2023"],
     tutorMode: {
       hints: [
               "Tänk på att dislokerade frakturer har högre risk för komplikationer.",
@@ -2664,7 +2719,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ["st5-02","st5-03"],
     competency: 'medicinsk-kunskap',
     tags: ["höftprotes","komplikationer","periprotesinfektion","postoperativ vård"],
-    references: ["rikshoft-2024","nice-hip-fracture-2023"],
+    references: ["rikshoft-2023","nice-hip-fracture-2023"],
     tutorMode: {
       hints: [
               "Tänk på typiska symtom som smärta och svullnad i det opererade området.",
@@ -2701,7 +2756,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ["st5-02"],
     competency: 'klinisk-färdighet',
     tags: ["total höftprotes","revision","Paprosky klassifikation","acetabulär defekt","Rikshöft"],
-    references: ["paprosky-1994","rikshoft-2024"],
+    references: ["paprosky-1994","rikshoft-2023"],
     tutorMode: {
       hints: [
               "Tänk på vilken typ av defekt som påverkar valet av protesdesign.",
@@ -2738,7 +2793,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ["st5-04"],
     competency: 'medicinsk-kunskap',
     tags: ["höftartros","konservativ behandling","fysioterapi","viktminskning","Rikshöft"],
-    references: ["rikshoft-2024","nice-hip-fracture-2023"],
+    references: ["rikshoft-2023","nice-hip-fracture-2023"],
     tutorMode: {
       hints: [
               "Tänk på vikten av livsstilsförändringar vid artros.",
@@ -2775,7 +2830,7 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ["st5-01"],
     competency: 'klinisk-färdighet',
     tags: ["collum femoris","hemiprotes","postoperativa komplikationer","DVT","Rikshöft"],
-    references: ["rikshoft-2024","nice-hip-fracture-2023"],
+    references: ["rikshoft-2023","nice-hip-fracture-2023"],
     tutorMode: {
       hints: [
               "Kom ihåg att äldre har en ökad risk för tromboser efter operation.",
@@ -2795,9 +2850,29 @@ export const HOEFT_QUESTIONS: MCQQuestion[] = [
       mnemonicOrTrick: "Tänk DVT - Djup Ventrombos efter operation!",
     },
   },
-
-// ========================================
-];
+  {
+      id: 'höft-ai-1762190778806',
+      domain: 'höft',
+      level: 'st3',
+      band: 'C',
+      question: 'En 75-årig kvinna inkommer till akutmottagningen efter att ha fallit i hemmet. Hon klagar över svår smärta i höger höft, och kan inte belasta benet. Röntgen visar en dislokerad femurhalsfraktur. Vilken är den mest lämpliga initiala behandlingsstrategin för denna patient?',
+      options: [
+        'Konservativ behandling med smärtlindring och fysioterapi',
+        'Omedelbar total höftledsprotes',
+        'Omedelbar hemiprotes',
+        'Sluten reposition och intern fixation'
+      ],
+      correctAnswer: 'Omedelbar hemiprotes',
+      explanation: 'Hos äldre patienter med dislokerade femurhalsfrakturer är omedelbar kirurgisk intervention ofta nödvändig för att minska smärta, förbättra mobilisering och minska mortalitetsrisken. Enligt NICE guidelines 2023 för hantering av höftfrakturer, är hemiprotes (halvprotes) ofta att föredra framför total höftledsprotes för denna patientkategori, särskilt när det gäller dislokerade frakturer. Hemiprotes innebär ersättning av den skadade femurhuvudet med en protes, vilket kan leda till snabbare återhämtning och mindre risk för komplikationer jämfört med total höftledsprotes. Konservativ behandling med smärtlindring och fysioterapi är generellt inte lämpligt för denna typ av fraktur på grund av hög risk för ytterligare komplikationer och försämrad livskvalitet. Sluten reposition och intern fixation kan övervägas i vissa fall, men är mindre lämpligt för äldre patienter med osteoporotiska ben och hög risk för frakturdislokation. Enligt Rikshöft rekommendationerna, bör val av kirurgisk teknik baseras på patientens ålder, aktivitetsnivå, och benkvalitet. Denna rekommendation stöds även av evidens från både Campbell\'s Operative Orthopaedics (2021) och Rockwood and Green\'s Fractures in Adults (2019), vilka båda betonar vikten av att anpassa behandlingen till patientens specifika behov och förutsättningar.',
+      competency: 'medicinsk-kunskap',
+      tags: ['höft', 'band-C', 'st3'],
+      references: ['nice-hip-fracture-2023', 'campbell-13ed', 'rockwood-9ed'],
+      relatedGoals: ['delmål-1.1', 'delmål-1.2'],
+      contentVersion: '1.0.0',
+      lastContentUpdate: new Date('2025-11-03T17:26:18.806Z'),
+      needsReview: false,
+    }
+] as MCQQuestion[];
 
 // FOT/FOTLED DOMAIN QUESTIONS
 export const FOT_FOTLED_QUESTIONS: MCQQuestion[] = [
@@ -3264,7 +3339,7 @@ export const KNA_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st4-01'],
     competency: 'medicinsk-kunskap',
     tags: ['TKA', 'alignment', 'kinematic', 'mekanisk'],
-    references: ['kinematic-alignment-2019', 'rikskna-2024', 'campbell-13ed'],
+    references: ['kinematic-alignment-2019', 'rikskna-2023', 'campbell-13ed'],
     tutorMode: {
       hints: [
         'Mekanisk alignment = 0° neutralt, samma för alla patienter',
@@ -3937,7 +4012,7 @@ export const KNA_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['lp-01', 'at-01', 'st1-01', 'st2-01', 'st3-01', 'specialist-01'],
     competency: 'medicinsk-kunskap',
     tags: ['ACL', 'graft', 'hamstring', 'rikskna'],
-    references: ['rikskna-2024', 'campbell-13ed', 'miller-8ed'],
+    references: ['rikskna-2023', 'campbell-13ed', 'miller-8ed'],
     tutorMode: {
       hints: [
         'Hamstring = semitendinosus + gracilis från mediala sidan',
@@ -4177,7 +4252,7 @@ export const KNA_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['lp-01', 'at-01', 'st1-01', 'st2-01', 'st3-01', 'specialist-01'],
     competency: 'medicinsk-kunskap',
     tags: ['TKA', 'revision', 'infektion', 'komplikation'],
-    references: ['rikskna-2024', 'campbell-13ed'],
+    references: ['rikskna-2023', 'campbell-13ed'],
     tutorMode: {
       hints: [
         'Tidig revision (<2 år) = ofta infektion',
@@ -4297,7 +4372,7 @@ export const KNA_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['lp-01', 'at-01', 'st1-01', 'st2-01', 'st3-01', 'specialist-01'],
     competency: 'medicinsk-kunskap',
     tags: ['TKA', 'cementerad', 'viktbäring', 'postoperativ'],
-    references: ['campbell-13ed', 'rikskna-2024'],
+    references: ['campbell-13ed', 'rikskna-2023'],
     tutorMode: {
       hints: [
         'Cement ger omedelbar stabilitet = fullbelastning direkt',
@@ -4618,7 +4693,7 @@ export const KNA_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['lp-01', 'at-01', 'st1-01', 'st2-01', 'st3-01', 'specialist-01'],
     competency: 'medicinsk-kunskap',
     tags: ['TKA', 'revision', 'AORI', 'benförlust'],
-    references: ['campbell-13ed', 'rikskna-2024'],
+    references: ['campbell-13ed', 'rikskna-2023'],
     tutorMode: {
       hints: [
         'AORI = klassificering av benförlust vid revision',
@@ -4658,7 +4733,7 @@ export const KNA_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['lp-01', 'at-01', 'st1-01', 'st2-01', 'st3-01', 'specialist-01'],
     competency: 'medicinsk-kunskap',
     tags: ['UKA', 'unicompartmental', 'arthroplasty', 'indikationer'],
-    references: ['campbell-13ed', 'rikskna-2024'],
+    references: ['campbell-13ed', 'rikskna-2023'],
     tutorMode: {
       hints: [
         'Inflammatorisk artrit påverkar ALLA leder = inte lämpligt för UKA',
@@ -4699,7 +4774,7 @@ export const KNA_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['lp-01', 'at-01', 'st1-01', 'st2-01', 'st3-01', 'specialist-01'],
     competency: 'medicinsk-kunskap',
     tags: ['TKA', 'periprostetisk', 'fraktur', 'komplikation'],
-    references: ['campbell-13ed', 'rockwood-9ed', 'rikskna-2024'],
+    references: ['campbell-13ed', 'rockwood-9ed', 'rikskna-2023'],
     tutorMode: {
       hints: [
         'Suprakondylär = ovanför knäleden, distala femur',
@@ -4779,7 +4854,7 @@ export const KNA_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['lp-01', 'at-01', 'st1-01', 'st2-01', 'st3-01', 'specialist-01'],
     competency: 'medicinsk-kunskap',
     tags: ['TKA', 'alignment', 'kinematic', 'mekanisk', 'kontrovers'],
-    references: ['campbell-13ed', 'rikskna-2024'],
+    references: ['campbell-13ed', 'rikskna-2023'],
     tutorMode: {
       hints: [
         'Mekanisk = alla får samma alignment (0° neutral)',
@@ -4939,7 +5014,7 @@ export const KNA_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['lp-01', 'at-01', 'st1-01', 'st2-01', 'st3-01', 'specialist-01'],
     competency: 'medicinsk-kunskap',
     tags: ['TKA', 'revision', 'AORI', 'structural allograft', 'tumor-protes'],
-    references: ['campbell-13ed', 'rikskna-2024'],
+    references: ['campbell-13ed', 'rikskna-2023'],
     tutorMode: {
       hints: [
         'AORI typ 3 = massiv benförlust, både metafys och perifera rim',
@@ -4979,7 +5054,7 @@ export const KNA_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['lp-01', 'at-01', 'st1-01', 'st2-01', 'st3-01', 'specialist-01'],
     competency: 'medicinsk-kunskap',
     tags: ['TKA', 'infektion', '2-stage', 'revision', 'spacer'],
-    references: ['campbell-13ed', 'rikskna-2024'],
+    references: ['campbell-13ed', 'rikskna-2023'],
     tutorMode: {
       hints: [
         '2-stage = ta bort protes, behandla infektion, sätt in ny protes',
@@ -5179,7 +5254,7 @@ export const KNA_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ["st5-02","st5-04"],
     competency: 'klinisk-färdighet',
     tags: ["knäartros","total knäprotes","kirurgi","Svenska Knäprotesregistret"],
-    references: ["rikskna-2024","campbell-13ed"],
+    references: ["rikskna-2023","campbell-13ed"],
     tutorMode: {
       hints: [
               "Överväg kirurgiska alternativ för svår artros när icke-kirurgiska behandlingar misslyckas.",
@@ -5199,9 +5274,7 @@ export const KNA_QUESTIONS: MCQQuestion[] = [
       mnemonicOrTrick: "Knäsmärta? Överväg total lösning - knäprotes!",
     },
   },
-
-// ========================================
-];
+] as MCQQuestion[];
 
 // AXEL/ARMBÅGE DOMAIN QUESTIONS
 export const AXEL_ARMBAGE_QUESTIONS: MCQQuestion[] = [
@@ -7256,7 +7329,7 @@ export const RYGG_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['at-02'],
     competency: 'klinisk-färdighet',
     tags: ['röda flaggor', 'ryggsmärta', 'bedömning'],
-    references: ['socialstyrelsen-2024', 'miller-8ed'],
+    references: ['socialstyrelsen-2021', 'miller-8ed'],
     tutorMode: {
       hints: [
         'Röda flaggor indikerar allvarlig ryggpatologi beyond mekanisk origin - systemisk eller strukturell sjukdom',
@@ -7296,7 +7369,7 @@ export const RYGG_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st3-03'],
     competency: 'medicinsk-kunskap',
     tags: ['cauda equina', 'akut', 'dekompression', 'kirurgi'],
-    references: ['campbell-13ed', 'socialstyrelsen-2024'],
+    references: ['campbell-13ed', 'socialstyrelsen-2021'],
     tutorMode: {
       hints: [
         'Cauda equina = kirurgiskt NÖDFALL',
@@ -9291,7 +9364,7 @@ export const SPORT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ["st2-01"],
     competency: 'medicinsk-kunskap',
     tags: ["ACL","knäskador","sportmedicin","Lachman-test","pivot-shift"],
-    references: ["campbell-13ed","rikskna-2024"],
+    references: ["campbell-13ed","rikskna-2023"],
     tutorMode: {
       hints: [
               "Tänk på vanliga skador hos unga idrottare med knäsymptom.",
@@ -9328,7 +9401,7 @@ export const SPORT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ["st2-02"],
     competency: 'klinisk-färdighet',
     tags: ["axelinstabilitet","apprehension-test","handboll","sportmedicin","rotatorcuff"],
-    references: ["campbell-13ed","rikskna-2024"],
+    references: ["campbell-13ed","rikskna-2023"],
     tutorMode: {
       hints: [
               "Överväg skador som är vanliga hos kastande idrottare.",
@@ -9365,7 +9438,7 @@ export const SPORT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ["st2-01"],
     competency: 'medicinsk-kunskap',
     tags: ["stressfraktur","metatarsalben","fot","löpare","sportmedicin"],
-    references: ["rikskna-2024","campbell-13ed"],
+    references: ["rikskna-2023","campbell-13ed"],
     tutorMode: {
       hints: [
               "Tänk på skador som är vanliga vid överbelastning.",
@@ -9402,7 +9475,7 @@ export const SPORT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ["st2-01","st2-02"],
     competency: 'klinisk-färdighet',
     tags: ["axel","rotatorcuff","idrottsskador","kastare"],
-    references: ["campbell-13ed","rikskna-2024"],
+    references: ["campbell-13ed","rikskna-2023"],
     tutorMode: {
       hints: [
               "Överväg skador som är relaterade till repetitiva rörelser i axeln.",
@@ -9439,7 +9512,7 @@ export const SPORT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ["st2-01","st2-02"],
     competency: 'klinisk-färdighet',
     tags: ["axel","acromioclavicularled","rugby","idrottsskador"],
-    references: ["campbell-13ed","rikskna-2024"],
+    references: ["campbell-13ed","rikskna-2023"],
     tutorMode: {
       hints: [
               "Tänk på skador som uppstår vid direkta slag mot axeln.",
@@ -9476,7 +9549,7 @@ export const SPORT_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ["st2-01","st2-02"],
     competency: 'klinisk-färdighet',
     tags: ["knäskador","ACL","MR","diagnostik","sportmedicin"],
-    references: ["campbell-13ed","rikskna-2024"],
+    references: ["campbell-13ed","rikskna-2023"],
     tutorMode: {
       hints: [
               "Tänk på vilken bilddiagnostik som ger bäst information om mjukdelsskador.",
@@ -9497,7 +9570,7 @@ export const SPORT_QUESTIONS: MCQQuestion[] = [
       mnemonicOrTrick: "MR = Mjukdelar och Rätt diagnos!",
     },
   },
-];
+] as MCQQuestion[];
 
 // TUMÖR DOMAIN QUESTIONS
 export const TUMOR_QUESTIONS: MCQQuestion[] = [
@@ -9596,7 +9669,7 @@ export const TUMOR_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st4-03'],
     competency: 'klinisk-färdighet',
     tags: ['bentumör', 'biopsi', 'sarkom', 'diagnostik'],
-    references: ['campbell-13ed', 'socialstyrelsen-2024'],
+    references: ['campbell-13ed', 'socialstyrelsen-2021'],
     tutorMode: {
       hints: [
         'Core needle biopsi = trucut = ger vävnadsprov (inte bara celler)',
@@ -10195,7 +10268,7 @@ export const ADDITIONAL_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st1-01'],
     competency: 'medicinsk-kunskap',
     tags: ['collumfraktur', 'AVN', 'timing', 'blodförsörjning'],
-    references: ['garden-1961', 'campbell-13ed', 'rikshoft-2024'],
+    references: ['garden-1961', 'campbell-13ed', 'rikshoft-2023'],
     tutorMode: {
       hints: [
               "Akut reponering är avgörande för att skydda den cirkulatoriska funktionen i femurhuvudet.",
@@ -10272,7 +10345,7 @@ export const ADDITIONAL_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st3-01'],
     competency: 'medicinsk-kunskap',
     tags: ['Vancouver', 'periprostetisk', 'femur', 'klassificering'],
-    references: ['campbell-13ed', 'rikshoft-2024'],
+    references: ['campbell-13ed', 'rikshoft-2023'],
     tutorMode: {
       hints: [
               "Vid periprostetiska frakturer är det viktigt att bedöma stamens stabilitet och benkvalitet för att välja rätt behandlingsmetod.",
@@ -11594,7 +11667,7 @@ export const ADDITIONAL_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st4-01'],
     competency: 'medicinsk-kunskap',
     tags: ['THA', 'bearing surface', 'ceramic', 'wear'],
-    references: ['campbell-13ed', 'rikshoft-2024'],
+    references: ['campbell-13ed', 'rikshoft-2023'],
   },
   {
     id: 'hoeft-007',
@@ -11613,7 +11686,7 @@ export const ADDITIONAL_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['at-01'],
     competency: 'medicinsk-kunskap',
     tags: ['trochantär fraktur', 'DHS', 'höft', 'geriatrik'],
-    references: ['nice-hip-fracture-2023', 'rikshoft-2024'],
+    references: ['nice-hip-fracture-2023', 'rikshoft-2023'],
   },
   {
     id: 'hoeft-008',
@@ -11670,7 +11743,7 @@ export const ADDITIONAL_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st3-01'],
     competency: 'klinisk-färdighet',
     tags: ['THA', 'DAA', 'approach', 'luxation'],
-    references: ['campbell-13ed', 'rikshoft-2024'],
+    references: ['campbell-13ed', 'rikshoft-2023'],
   },
   {
     id: 'hoeft-011',
@@ -11689,7 +11762,7 @@ export const ADDITIONAL_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st5-01'],
     competency: 'medicinsk-kunskap',
     tags: ['DDH', 'Crowe', 'dysplasi', 'komplex THA'],
-    references: ['campbell-13ed', 'rikshoft-2024'],
+    references: ['campbell-13ed', 'rikshoft-2023'],
   },
   {
     id: 'hoeft-012',
@@ -11708,7 +11781,7 @@ export const ADDITIONAL_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['at-01'],
     competency: 'klinisk-färdighet',
     tags: ['THA', 'luxation', 'komplikation', 'reponering'],
-    references: ['campbell-13ed', 'rikshoft-2024'],
+    references: ['campbell-13ed', 'rikshoft-2023'],
   },
   {
     id: 'hoeft-013',
@@ -11765,7 +11838,7 @@ export const ADDITIONAL_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st4-01'],
     competency: 'medicinsk-kunskap',
     tags: ['dual-mobility', 'THA', 'luxation', 'stabilitet'],
-    references: ['campbell-13ed', 'rikshoft-2024'],
+    references: ['campbell-13ed', 'rikshoft-2023'],
   },
   {
     id: 'hoeft-016',
@@ -11803,7 +11876,7 @@ export const ADDITIONAL_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st5-02'],
     competency: 'klinisk-färdighet',
     tags: ['pelvic discontinuity', 'revision', 'komplex', 'cup-cage'],
-    references: ['campbell-13ed', 'rikshoft-2024'],
+    references: ['campbell-13ed', 'rikshoft-2023'],
   },
   {
     id: 'hoeft-018',
@@ -15880,7 +15953,7 @@ export const ADDITIONAL_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st1-02'],
     competency: 'medicinsk-kunskap',
     tags: ['spinal stenos', 'claudicatio', 'neurologi'],
-    references: ['campbell-13ed', 'socialstyrelsen-2024'],
+    references: ['campbell-13ed', 'socialstyrelsen-2021'],
   },
   {
     id: 'rygg-009',
@@ -15975,7 +16048,7 @@ export const ADDITIONAL_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st5-03'],
     competency: 'medicinsk-kunskap',
     tags: ['osteomyelit', 'diskit', 'infektion', 'MR'],
-    references: ['campbell-13ed', 'socialstyrelsen-2024'],
+    references: ['campbell-13ed', 'socialstyrelsen-2021'],
   },
   {
     id: 'rygg-014',
@@ -16089,7 +16162,7 @@ export const ADDITIONAL_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st3-04'],
     competency: 'klinisk-färdighet',
     tags: ['metastaser', 'SINS', 'instabilitet', 'onkologi'],
-    references: ['campbell-13ed', 'socialstyrelsen-2024'],
+    references: ['campbell-13ed', 'socialstyrelsen-2021'],
   },
   {
     id: 'rygg-020',
@@ -16897,7 +16970,7 @@ export const ADDITIONAL_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['at-03'],
     competency: 'klinisk-färdighet',
     tags: ['metastas', 'Mirels', 'profylaktisk fixation', 'patologisk fraktur'],
-    references: ['campbell-13ed', 'socialstyrelsen-2024'],
+    references: ['campbell-13ed', 'socialstyrelsen-2021'],
     tutorMode: {
       hints: [
         'Mirels score används för att bedöma risk för patologisk fraktur',
@@ -16938,7 +17011,7 @@ export const ADDITIONAL_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st3-04'],
     competency: 'klinisk-färdighet',
     tags: ['osteosarkom', 'neoadjuvant', 'kemoterapi', 'limb salvage'],
-    references: ['campbell-13ed', 'socialstyrelsen-2024'],
+    references: ['campbell-13ed', 'socialstyrelsen-2021'],
     tutorMode: {
       hints: [
         'Neoadjuvant betyder före kirurgi - varför skulle man ge kemo först?',
@@ -16979,7 +17052,7 @@ export const ADDITIONAL_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st5-02'],
     competency: 'klinisk-färdighet',
     tags: ['limb salvage', 'amputation', 'osteosarkom', 'jämförelse'],
-    references: ['campbell-13ed', 'socialstyrelsen-2024'],
+    references: ['campbell-13ed', 'socialstyrelsen-2021'],
     tutorMode: {
       hints: [
         'Modern evidens visar liknande survival mellan limb salvage och amputation',
@@ -17061,7 +17134,7 @@ export const ADDITIONAL_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st4-03'],
     competency: 'medicinsk-kunskap',
     tags: ['kondrosarkom', 'excision', 'grading', 'kirurgi'],
-    references: ['campbell-13ed', 'socialstyrelsen-2024'],
+    references: ['campbell-13ed', 'socialstyrelsen-2021'],
     tutorMode: {
       hints: [
         'Kondrosarkom är resistent mot kemoterapi och strålning - kirurgi är primär behandling',
@@ -17143,7 +17216,7 @@ export const ADDITIONAL_QUESTIONS: MCQQuestion[] = [
     relatedGoals: ['st3-04'],
     competency: 'medicinsk-kunskap',
     tags: ['denosumab', 'GCT', 'RANKL', 'targeted therapy'],
-    references: ['campbell-13ed', 'socialstyrelsen-2024'],
+    references: ['campbell-13ed', 'socialstyrelsen-2021'],
     tutorMode: {
       hints: [
         'Denosumab är RANKL-inhibitor - hämmar osteoklaster',

@@ -314,7 +314,7 @@ export function calculateQualityMetrics(
     averageQualityScore: Math.round(avgQuality),
     averageSourceReliability: Math.round(avgReliability),
     byDomain: {},  // TODO: Implement domain grouping
-    bySourceType: bySourceType as any,
+    bySourceType,
     contentWithinDate,
     contentNearingExpiration,
     expiredContent,

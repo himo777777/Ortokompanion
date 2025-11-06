@@ -18,6 +18,7 @@ import {
   OSCEResult,
   RetentionCheck,
   DailyMix,
+  DifficultyBand,
 } from './progression';
 
 /**
@@ -29,6 +30,32 @@ export interface MålProgress {
   totalCriteria: number;
   lastUpdated: Date;
   achieved: boolean;
+}
+
+/**
+ * Session history entry for tracking user activity
+ */
+export interface SessionHistoryEntry {
+  id: string;
+  date: Date;
+  domain: Domain;
+  band: string;
+  xpEarned: number;
+  accuracy: number;
+  timeSpent: number;
+  questionsAnswered: number;
+  hintsUsed: number;
+}
+
+/**
+ * Wrong answer tracking for identifying weak areas
+ */
+export interface WrongQuestionEntry {
+  questionId: string;
+  timestamp: Date;
+  domain: Domain;
+  band: DifficultyBand;
+  topic?: string;
 }
 
 /**
@@ -51,6 +78,7 @@ export interface IntegratedUserProfile extends UserProfile {
       bandAdjustments: BandAdjustment[];
       osceResults: OSCEResult[];
       retentionChecks: RetentionCheck[];
+      sessionHistory: SessionHistoryEntry[];
     };
   };
 
@@ -60,12 +88,19 @@ export interface IntegratedUserProfile extends UserProfile {
     level: number;
     badges: string[];
     streak: number;
+    longestStreak: number;
+    totalSessions: number;
     lastActivity?: Date;
-    freezeTokens: number; // New: streak protection
+    freezeTokens: number; // Streak protection
+    prestigeLevel: number; // Number of times user has prestiged
+    lifetimeXP: number; // Total XP earned across all prestiges
   };
 
   // Socialstyrelsen Progress
   socialstyrelseMålProgress: MålProgress[];
+
+  // Wrong answers tracking for weak area identification
+  wrongQuestions?: WrongQuestionEntry[];
 
   // User Preferences
   preferences?: {
@@ -74,6 +109,46 @@ export interface IntegratedUserProfile extends UserProfile {
     notificationsEnabled?: boolean;
     soundEnabled?: boolean;
   };
+}
+
+/**
+ * Goal progression data for a single goal
+ */
+export interface GoalProgression {
+  goalId: string;
+  goalTitle: string;
+  beforeCriteria: number;
+  afterCriteria: number;
+  totalCriteria: number;
+  completed: boolean;
+}
+
+/**
+ * Weak domain performance comparison
+ */
+export interface WeakDomainPerformance {
+  domain: Domain;
+  todayAccuracy: number;
+  recentAccuracy: number;
+  improvement: number;
+  questionsToday: number;
+}
+
+/**
+ * Session assessment data for enhanced feedback
+ */
+export interface SessionAssessment {
+  goalProgressions: GoalProgression[];
+  weakDomainPerformance?: WeakDomainPerformance;
+  bandProgression?: {
+    message: string;
+    type: 'promotion' | 'stable' | 'demotion';
+  };
+  recoveryModeChange?: {
+    before: boolean;
+    after: boolean;
+  };
+  nextSteps: string[];
 }
 
 /**
@@ -97,6 +172,8 @@ export interface SessionResults {
   };
   completedContent: string[];
   relatedGoals: string[];
+  wrongAnswers: WrongQuestionEntry[];
+  assessment?: SessionAssessment;
 }
 
 /**

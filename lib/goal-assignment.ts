@@ -22,16 +22,33 @@ import {
   ST_AKUTSJUKVÅRD_ORTOPEDI_MÅL,
   SPECIALIST_FORTBILDNING_MÅL,
 } from '@/data/socialstyrelsen-goals';
+import { toLevelType } from '@/lib/ai-utils';
 
 /**
- * Assign goals for a specific rotation based on domain
+ * Assigns relevant goals for a specific rotation based on domain
+ *
+ * Filters goals using domain-specific keywords and includes general competency goals
+ * (professionalism, communication, collaboration).
+ *
+ * @param rotation - Current rotation with domain information
+ * @param userLevel - User's education level (student, AT, ST1-5, specialist)
+ * @returns Array of goal IDs relevant to the rotation (max 8 goals)
+ *
+ * @example
+ * ```typescript
+ * const rotation = { domain: 'trauma', name: 'Traumakirurgi', ... };
+ * const goals = assignGoalsForRotation(rotation, 'st1');
+ * // Returns: ['st-ortopedi-trauma-1', 'st-ortopedi-trauma-2', ...]
+ * ```
  */
 export function assignGoalsForRotation(
   rotation: Rotation,
   userLevel: EducationLevel
 ): string[] {
   // Get all goals for user's level
-  const allGoals = getAllMålForLevel(userLevel as any);
+  const validLevel = toLevelType(userLevel);
+  if (!validLevel) return [];
+  const allGoals = getAllMålForLevel(validLevel as EducationLevel);
 
   // Domain-specific keywords to match goals
   const domainKeywords: Record<Domain, string[]> = {
@@ -116,7 +133,26 @@ export function assignGoalsForSpecialist(
 }
 
 /**
- * Main function: Auto-assign goals based on user profile
+ * Automatically assigns Socialstyrelsen goals based on user profile
+ *
+ * Determines which goals are relevant for the user based on:
+ * - Education level (student, AT, ST1-5, specialist)
+ * - Current rotation (for ST-ortopedi)
+ * - Ortho placement (for ST-allmänmedicin, ST-akutsjukvård)
+ * - Placement timing (for students/AT)
+ *
+ * @param profile - Complete user profile with role, rotations, and placement information
+ * @returns Array of goal IDs that should be assigned to this user
+ *
+ * @example
+ * ```typescript
+ * const profile = {
+ *   role: 'st1',
+ *   rotationTimeline: { rotations: [{ domain: 'trauma', ... }] }
+ * };
+ * const goalIds = autoAssignGoals(profile);
+ * // Returns: ['st-ortopedi-1', 'st-ortopedi-2', ...]
+ * ```
  */
 export function autoAssignGoals(profile: UserProfile): string[] {
   const level = profile.role;
@@ -128,7 +164,9 @@ export function autoAssignGoals(profile: UserProfile): string[] {
       return assignGoalsForRotation(currentRotation, level);
     }
     // If no current rotation, assign general goals for their year
-    const allGoals = getAllMålForLevel(level as any);
+    const validLevel = toLevelType(level);
+    if (!validLevel) return [];
+    const allGoals = getAllMålForLevel(validLevel as EducationLevel);
     return allGoals.map(g => g.id);
   }
 
@@ -153,7 +191,9 @@ export function autoAssignGoals(profile: UserProfile): string[] {
   }
 
   // Fallback: return all required goals for level
-  const allGoals = getMålForLevel(level as any);
+  const validLevel = toLevelType(level);
+  if (!validLevel) return [];
+  const allGoals = getMålForLevel(validLevel as EducationLevel);
   return allGoals.filter(g => g.required).map(g => g.id);
 }
 
@@ -199,7 +239,9 @@ export function getGoalRecommendations(
   priority: 'critical' | 'high' | 'medium' | 'low';
 }> {
   const priorityGoals = getPriorityGoalsForUser(profile, completedGoalIds);
-  const allGoals = getMålForLevel(profile.role as any);
+  const validLevel = toLevelType(profile.role);
+  if (!validLevel) return [];
+  const allGoals = getMålForLevel(validLevel as EducationLevel);
 
   return priorityGoals.map((goalId, index) => {
     const goal = allGoals.find(g => g.id === goalId);

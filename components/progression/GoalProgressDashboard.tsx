@@ -90,10 +90,10 @@ export default function GoalProgressDashboard({
         <div className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-6">
           <div className="flex items-center gap-3 mb-2">
             <Target className="w-6 h-6 text-blue-600" />
-            <span className="text-sm font-medium text-blue-900">Totalt mål</span>
+            <span className="text-sm font-medium text-gray-900">Totalt mål</span>
           </div>
-          <p className="text-3xl font-bold text-blue-900">{summary.totalGoals}</p>
-          <p className="text-sm text-blue-700 mt-1">
+          <p className="text-3xl font-bold text-gray-900">{summary.totalGoals}</p>
+          <p className="text-sm text-gray-700 mt-1">
             {summary.achievedGoals} uppnådda ({Math.round(summary.percentage)}%)
           </p>
         </div>
@@ -101,19 +101,19 @@ export default function GoalProgressDashboard({
         <div className="bg-gradient-to-br from-green-50 to-green-100 border border-green-200 rounded-lg p-6">
           <div className="flex items-center gap-3 mb-2">
             <CheckCircle className="w-6 h-6 text-green-600" />
-            <span className="text-sm font-medium text-green-900">Uppnådda</span>
+            <span className="text-sm font-medium text-gray-900">Uppnådda</span>
           </div>
-          <p className="text-3xl font-bold text-green-900">{summary.achievedGoals}</p>
-          <p className="text-sm text-green-700 mt-1">100% genomförda</p>
+          <p className="text-3xl font-bold text-gray-900">{summary.achievedGoals}</p>
+          <p className="text-sm text-gray-700 mt-1">100% genomförda</p>
         </div>
 
         <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 border border-yellow-200 rounded-lg p-6">
           <div className="flex items-center gap-3 mb-2">
             <Clock className="w-6 h-6 text-yellow-600" />
-            <span className="text-sm font-medium text-yellow-900">Pågående</span>
+            <span className="text-sm font-medium text-gray-900">Pågående</span>
           </div>
-          <p className="text-3xl font-bold text-yellow-900">{summary.inProgress}</p>
-          <p className="text-sm text-yellow-700 mt-1">
+          <p className="text-3xl font-bold text-gray-900">{summary.inProgress}</p>
+          <p className="text-sm text-gray-700 mt-1">
             {summary.readyForAssessment} redo för bedömning
           </p>
         </div>
@@ -121,10 +121,10 @@ export default function GoalProgressDashboard({
         <div className="bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200 rounded-lg p-6">
           <div className="flex items-center gap-3 mb-2">
             <AlertCircle className="w-6 h-6 text-purple-600" />
-            <span className="text-sm font-medium text-purple-900">Ej påbörjade</span>
+            <span className="text-sm font-medium text-gray-900">Ej påbörjade</span>
           </div>
-          <p className="text-3xl font-bold text-purple-900">{summary.notStarted}</p>
-          <p className="text-sm text-purple-700 mt-1">Väntande</p>
+          <p className="text-3xl font-bold text-gray-900">{summary.notStarted}</p>
+          <p className="text-sm text-gray-700 mt-1">Väntande</p>
         </div>
       </div>
 
@@ -193,7 +193,7 @@ export default function GoalProgressDashboard({
             </label>
             <select
               value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value as any)}
+              onChange={(e) => setFilterStatus(e.target.value as 'all' | 'in-progress' | 'achieved' | 'not-started')}
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="all">Alla</option>
@@ -230,13 +230,13 @@ export default function GoalProgressDashboard({
                       {goal.id}
                     </span>
                     {goal.progress.achieved && (
-                      <span className="flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-semibold">
+                      <span className="flex items-center gap-1 px-2 py-1 bg-green-100 text-green-800 rounded text-xs font-semibold">
                         <CheckCircle className="w-3 h-3" />
                         Uppnådd
                       </span>
                     )}
                     {!goal.progress.achieved && percentage >= 80 && (
-                      <span className="flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-700 rounded text-xs font-semibold">
+                      <span className="flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-900 rounded text-xs font-semibold">
                         <TrendingUp className="w-3 h-3" />
                         Nästan klar
                       </span>

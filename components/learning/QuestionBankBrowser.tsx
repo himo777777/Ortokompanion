@@ -1,11 +1,15 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import { BookOpen, Filter, Search, Target, Award, Clock, CheckCircle, Brain } from 'lucide-react';
+import { useState, useMemo, useRef } from 'react';
+import { BookOpen, Filter, Search, Target, Award, Clock, CheckCircle, Brain, Play } from 'lucide-react';
 import { ALL_QUESTIONS, MCQQuestion } from '@/data/questions';
 import { Domain, DOMAIN_LABELS } from '@/types/onboarding';
 import { EducationLevel } from '@/types/education';
 import TutorMode from './TutorMode';
+import VerificationBadge from '@/components/ui/VerificationBadge';
+import { VERIFIED_SOURCES } from '@/data/verified-sources';
+import QuestionSession, { SessionResults } from './QuestionSession';
+import { useDebounce } from '@/hooks/useDebounce';
 
 interface QuestionBankBrowserProps {
   userLevel?: EducationLevel;
@@ -21,15 +25,44 @@ export default function QuestionBankBrowser({
   const [selectedBand, setSelectedBand] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeQuestion, setActiveQuestion] = useState<MCQQuestion | null>(null);
+  const [sessionMode, setSessionMode] = useState(false);
+  const [sessionQuestions, setSessionQuestions] = useState<MCQQuestion[]>([]);
 
-  // Filter questions
+  // Debounce search query to avoid excessive filtering
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
+
+  // Cache for filter results to avoid re-filtering on repeated filter combinations
+  const filterCache = useRef<Map<string, MCQQuestion[]>>(new Map());
+
+  // Reset all filters and clear cache
+  const resetFilters = () => {
+    setSelectedDomain('all');
+    setSelectedLevel('all');
+    setSelectedBand('all');
+    setSearchQuery('');
+    filterCache.current.clear();
+  };
+
+  // Filter questions (optimized with useMemo, debounced search, and caching)
   const filteredQuestions = useMemo(() => {
-    return ALL_QUESTIONS.filter(q => {
+    // Create cache key from current filter state
+    const cacheKey = `${selectedDomain}-${selectedLevel}-${selectedBand}-${debouncedSearchQuery}`;
+
+    // Check cache first
+    if (filterCache.current.has(cacheKey)) {
+      return filterCache.current.get(cacheKey)!;
+    }
+
+    // Filter if not cached
+    const filtered = ALL_QUESTIONS.filter(q => {
+      // Skip invalid questions
+      if (!q || !q.domain || !q.level || !q.band || !q.id) return false;
+
       if (selectedDomain !== 'all' && q.domain !== selectedDomain) return false;
       if (selectedLevel !== 'all' && q.level !== selectedLevel) return false;
       if (selectedBand !== 'all' && q.band !== selectedBand) return false;
-      if (searchQuery) {
-        const query = searchQuery.toLowerCase();
+      if (debouncedSearchQuery) {
+        const query = debouncedSearchQuery.toLowerCase();
         return (
           q.question.toLowerCase().includes(query) ||
           q.tags.some(tag => tag.toLowerCase().includes(query)) ||
@@ -38,11 +71,22 @@ export default function QuestionBankBrowser({
       }
       return true;
     });
-  }, [selectedDomain, selectedLevel, selectedBand, searchQuery]);
+
+    // Store in cache
+    filterCache.current.set(cacheKey, filtered);
+
+    // Limit cache size to prevent memory issues (keep last 50 entries)
+    if (filterCache.current.size > 50) {
+      const keys = Array.from(filterCache.current.keys());
+      filterCache.current.delete(keys[0]);
+    }
+
+    return filtered;
+  }, [selectedDomain, selectedLevel, selectedBand, debouncedSearchQuery]);
 
   // Get unique domains
   const domains: Domain[] = ['trauma', 'höft', 'knä', 'fot-fotled', 'hand-handled', 'axel-armbåge', 'rygg', 'sport', 'tumör'];
-  const levels: EducationLevel[] = ['student', 'at', 'st1', 'st2', 'st3', 'st4', 'st5', 'specialist'];
+  const levels: EducationLevel[] = ['student', 'at', 'st1', 'st2', 'st3', 'st4', 'st5', 'specialist-ortopedi'];
   const bands = ['A', 'B', 'C', 'D', 'E'];
 
   // Statistics
@@ -52,6 +96,9 @@ export default function QuestionBankBrowser({
     const byBand: Record<string, number> = {};
 
     ALL_QUESTIONS.forEach(q => {
+      // Skip invalid questions
+      if (!q || !q.domain || !q.level || !q.band) return;
+
       byDomain[q.domain] = (byDomain[q.domain] || 0) + 1;
       byLevel[q.level] = (byLevel[q.level] || 0) + 1;
       byBand[q.band] = (byBand[q.band] || 0) + 1;
@@ -80,10 +127,69 @@ export default function QuestionBankBrowser({
       'st3': 'ST3',
       'st4': 'ST4',
       'st5': 'ST5',
-      'specialist': 'Specialist'
+      'st-allmänmedicin': 'ST Allmänmedicin',
+      'st-akutsjukvård': 'ST Akutsjukvård',
+      'specialist-ortopedi': 'Specialist Ortopedi',
+      'specialist-allmänmedicin': 'Specialist Allmänmedicin',
+      'specialist-akutsjukvård': 'Specialist Akutsjukvård'
     };
     return labels[level];
   };
+
+  // Get relevant sources for a question based on domain
+  const getQuestionSources = (question: MCQQuestion) => {
+    // Map domains to relevant sources
+    const domainSourceMap: Record<string, string[]> = {
+      'trauma': ['atls-sverige-2022', 'boast-open-fractures-2020', 'gustilo-1976'],
+      'höft': ['nice-hip-fracture-2023', 'paprosky-1994', 'rikshoft-2024'],
+      'knä': ['ottawa-knee-rules-1997', 'rikskna-2024'],
+      'fot-fotled': ['campbell-13ed', 'rockwood-9ed'],
+      'hand-handled': ['green-8ed', 'campbell-13ed'],
+      'axel-armbåge': ['gartland-1959', 'rockwood-9ed', 'lewinnek-1978'],
+      'rygg': ['aaos-acl-2022', 'campbell-13ed'],
+      'sport': ['aaos-acl-2022', 'rikskna-2024'],
+      'tumör': ['campbell-13ed', 'rockwood-9ed'],
+    };
+
+    const sourceIds = domainSourceMap[question.domain] || ['campbell-13ed'];
+    return sourceIds.slice(0, 2).map(id => VERIFIED_SOURCES[id]).filter(Boolean);
+  };
+
+  // Start a practice session with filtered questions
+  const startSession = (count: number = 10) => {
+    // Shuffle and take the specified number of questions
+    const shuffled = [...filteredQuestions].sort(() => Math.random() - 0.5);
+    const selected = shuffled.slice(0, Math.min(count, filteredQuestions.length));
+    setSessionQuestions(selected);
+    setSessionMode(true);
+  };
+
+  const handleSessionComplete = (results: SessionResults) => {
+    // Report all completed questions
+    if (onQuestionCompleted) {
+      results.questionResults.forEach(result => {
+        onQuestionCompleted(result.questionId, result.correct, result.hintsUsed);
+      });
+    }
+  };
+
+  const exitSession = () => {
+    setSessionMode(false);
+    setSessionQuestions([]);
+  };
+
+  // If in session mode, show session
+  if (sessionMode && sessionQuestions.length > 0) {
+    return (
+      <QuestionSession
+        questions={sessionQuestions}
+        userLevel={userLevel}
+        onComplete={handleSessionComplete}
+        onExit={exitSession}
+        sessionType="practice"
+      />
+    );
+  }
 
   if (activeQuestion) {
     return (
@@ -170,7 +276,7 @@ export default function QuestionBankBrowser({
             <select
               value={selectedDomain}
               onChange={(e) => setSelectedDomain(e.target.value as Domain | 'all')}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="all">Alla domäner</option>
               {domains.map(domain => (
@@ -187,7 +293,7 @@ export default function QuestionBankBrowser({
             <select
               value={selectedLevel}
               onChange={(e) => setSelectedLevel(e.target.value as EducationLevel | 'all')}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="all">Alla nivåer</option>
               {levels.map(level => (
@@ -204,7 +310,7 @@ export default function QuestionBankBrowser({
             <select
               value={selectedBand}
               onChange={(e) => setSelectedBand(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="all">Alla band</option>
               {bands.map(band => (
@@ -236,18 +342,64 @@ export default function QuestionBankBrowser({
             Visar <strong>{filteredQuestions.length}</strong> av <strong>{ALL_QUESTIONS.length}</strong> frågor
           </p>
           <button
-            onClick={() => {
-              setSelectedDomain('all');
-              setSelectedLevel('all');
-              setSelectedBand('all');
-              setSearchQuery('');
-            }}
+            onClick={resetFilters}
             className="text-sm text-blue-600 hover:text-blue-700 font-medium"
           >
             Återställ filter
           </button>
         </div>
       </div>
+
+      {/* Session Start Options */}
+      {filteredQuestions.length > 0 && (
+        <div className="bg-gradient-to-r from-purple-50 to-blue-50 border-2 border-purple-200 rounded-xl p-6 mb-6">
+          <div className="flex items-start justify-between gap-6">
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-2">
+                <Play className="w-5 h-5 text-purple-600" />
+                <h3 className="text-lg font-semibold text-gray-900">Starta övningssession</h3>
+              </div>
+              <p className="text-sm text-gray-600 mb-4">
+                Öva på flera frågor i rad och få en sammanfattning av dina resultat när du är klar.
+              </p>
+              <div className="flex gap-3 flex-wrap">
+                <button
+                  onClick={() => startSession(5)}
+                  disabled={filteredQuestions.length < 5}
+                  className="px-4 py-2 bg-white border-2 border-purple-300 text-purple-700 rounded-lg hover:bg-purple-50 hover:border-purple-400 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  5 frågor
+                </button>
+                <button
+                  onClick={() => startSession(10)}
+                  disabled={filteredQuestions.length < 10}
+                  className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  10 frågor (Rekommenderat)
+                </button>
+                <button
+                  onClick={() => startSession(20)}
+                  disabled={filteredQuestions.length < 20}
+                  className="px-4 py-2 bg-white border-2 border-purple-300 text-purple-700 rounded-lg hover:bg-purple-50 hover:border-purple-400 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  20 frågor
+                </button>
+                <button
+                  onClick={() => startSession(filteredQuestions.length)}
+                  className="px-4 py-2 bg-white border-2 border-blue-300 text-blue-700 rounded-lg hover:bg-blue-50 hover:border-blue-400 transition-all font-medium"
+                >
+                  Alla ({filteredQuestions.length})
+                </button>
+              </div>
+            </div>
+            <div className="flex-shrink-0 text-center bg-white rounded-xl p-4 border-2 border-purple-200">
+              <Award className="w-8 h-8 text-purple-600 mx-auto mb-2" />
+              <p className="text-sm font-semibold text-gray-900">Session Mode</p>
+              <p className="text-xs text-gray-600">Optimalt för lärande</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Questions List */}
       <div className="space-y-4">
@@ -264,7 +416,7 @@ export default function QuestionBankBrowser({
                   {index + 1}
                 </span>
                 <div>
-                  <div className="flex items-center gap-2 mb-1">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
                     <span className={`px-2 py-1 rounded text-xs font-semibold border ${getBandColor(question.band)}`}>
                       Band {question.band}
                     </span>
@@ -274,6 +426,11 @@ export default function QuestionBankBrowser({
                     <span className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs font-medium">
                       {getLevelLabel(question.level)}
                     </span>
+                    <VerificationBadge
+                      sources={getQuestionSources(question)}
+                      compact={false}
+                      showQualityScore={false}
+                    />
                   </div>
                   <p className="text-xs text-gray-500">ID: {question.id}</p>
                 </div>
@@ -329,12 +486,7 @@ export default function QuestionBankBrowser({
             <h3 className="text-xl font-semibold text-gray-700 mb-2">Inga frågor hittades</h3>
             <p className="text-gray-600 mb-4">Prova att justera dina filter eller sökord</p>
             <button
-              onClick={() => {
-                setSelectedDomain('all');
-                setSelectedLevel('all');
-                setSelectedBand('all');
-                setSearchQuery('');
-              }}
+              onClick={resetFilters}
               className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
             >
               Återställ filter

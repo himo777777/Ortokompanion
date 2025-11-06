@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { MCQQuestion, TutorModeData } from '@/data/questions';
 import { HelpCircle, Lightbulb, Target, Eye, CheckCircle, XCircle, BookOpen, AlertTriangle, Sparkles, Loader2, ArrowRight } from 'lucide-react';
 import {
@@ -105,22 +105,16 @@ export default function TutorMode({
 
   // Cleanup timeout on unmount
   useEffect(() => {
+    const currentTimeout = timeoutRef.current;
     return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
+      if (currentTimeout) {
+        clearTimeout(currentTimeout);
       }
     };
   }, []);
 
-  // Load AI hints on component mount (if AI enabled)
-  useEffect(() => {
-    if (enableAI && !aiHints && !loadingAIHints) {
-      loadAIHints();
-    }
-  }, [enableAI]);
-
   // Load AI hints
-  const loadAIHints = async () => {
+  const loadAIHints = useCallback(async () => {
     setLoadingAIHints(true);
     try {
       const result = await generateAdaptiveHints({
@@ -136,7 +130,14 @@ export default function TutorMode({
     } finally {
       setLoadingAIHints(false);
     }
-  };
+  }, [question, userLevel, learningStyle, previousMistakes]);
+
+  // Load AI hints on component mount (if AI enabled)
+  useEffect(() => {
+    if (enableAI && !aiHints && !loadingAIHints) {
+      loadAIHints();
+    }
+  }, [enableAI, aiHints, loadingAIHints, loadAIHints]);
 
   // Load AI explanation when wrong answer submitted
   const loadAIExplanation = async () => {
@@ -269,12 +270,12 @@ export default function TutorMode({
                   disabled={showAnswer}
                   className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
                     showFeedback && isThisCorrect
-                      ? 'border-green-500 bg-green-50'
+                      ? 'border-green-500 bg-green-50 text-green-900'
                       : showFeedback && isSelected && !isThisCorrect
-                      ? 'border-red-500 bg-red-50'
+                      ? 'border-red-500 bg-red-50 text-red-900'
                       : isSelected
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                      ? 'border-blue-500 bg-blue-50 text-blue-900'
+                      : 'border-gray-200 text-gray-900 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-900'
                   } ${showAnswer ? 'cursor-default' : 'cursor-pointer'}`}
                 >
                   <div className="flex items-center gap-3">

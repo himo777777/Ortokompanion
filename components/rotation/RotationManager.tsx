@@ -325,7 +325,7 @@ function RotationForm({
           <select
             value={formData.domain}
             onChange={(e) => setFormData({ ...formData, domain: e.target.value as Domain })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full px-3 py-2 text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             required
           >
             {domains.map(domain => (

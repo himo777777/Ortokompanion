@@ -6,6 +6,9 @@
  * - ST i Ortopedi (Specialistutbildning år 1-5)
  */
 
+import { EducationLevel } from '@/types/education';
+import { toLevelType } from '@/lib/ai-utils';
+
 export interface SocialstyrelseMål {
   id: string;
   category: string;
@@ -1173,12 +1176,16 @@ export function getAllMålForLevel(level: 'student' | 'at' | 'st1' | 'st2' | 'st
 }
 
 export function getMålByCategory(level: string, category: string): SocialstyrelseMål[] {
-  const allMål = getMålForLevel(level as any);
+  const validLevel = toLevelType(level);
+  if (!validLevel) return [];
+  const allMål = getMålForLevel(validLevel as EducationLevel);
   return allMål.filter(mål => mål.category === category);
 }
 
 export function getRequiredMål(level: string): SocialstyrelseMål[] {
-  const allMål = getMålForLevel(level as any);
+  const validLevel = toLevelType(level);
+  if (!validLevel) return [];
+  const allMål = getMålForLevel(validLevel as EducationLevel);
   return allMål.filter(mål => mål.required);
 }
 

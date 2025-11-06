@@ -6,9 +6,11 @@
 
 import { UserProfile } from '@/types/onboarding';
 import { Domain } from '@/types/onboarding';
+import { OSCEResult, RetentionCheck } from '@/types/progression';
 import { getCurrentRotation, getDaysRemaining } from '@/types/rotation';
 import { RotationActivityLog, getCurrentRotationProgress, calculateRotationProgress, predictRotationCompletion } from './rotation-tracker';
 import { getPriorityGoalsForUser, getGoalRecommendations } from './goal-assignment';
+import { hasSRS, hasDomainStatuses, hasHistory, hasBandStatus } from '@/lib/ai-utils';
 
 export interface StudyRecommendation {
   id: string;
@@ -159,7 +161,7 @@ function generateRotationUrgentRecommendations(context: RecommendationContext): 
         estimatedTime: 30,
         xpReward: 80,
         actionType: 'new-content',
-        targetDomain: placement.focusDomain,
+        targetDomain: placement.focusDomain || 'trauma',
         difficultyLevel: 'medium',
         relatedGoals: placement.goals,
       });
@@ -214,7 +216,7 @@ function generateGoalBasedRecommendations(context: RecommendationContext): Study
  */
 function generateSRSRecommendation(context: RecommendationContext): StudyRecommendation | null {
   const { profile } = context;
-  const dueCards = (profile as any).progression?.srs?.dueToday?.length || 0;
+  const dueCards = hasSRS(profile) ? (profile.progression.srs?.dueToday?.length || 0) : 0;
 
   if (dueCards === 0) return null;
 
@@ -258,7 +260,9 @@ function generateWeakDomainRecommendations(
   }
 
   // Calculate domain performance
-  const domainPerformance = Object.entries((profile as any).progression.domainStatuses)
+  if (!hasDomainStatuses(profile)) return recommendations;
+
+  const domainPerformance = Object.entries(profile.progression.domainStatuses)
     .map(([domain, status]: [string, any]) => ({
       domain: domain as Domain,
       completionRate: status.totalItems > 0 ? status.itemsCompleted / status.totalItems : 0,
@@ -306,7 +310,9 @@ function generateWeakDomainRecommendations(
       priority: 'low',
       title: `Träna ${secondWeakest.domain}`,
       description: `${Math.round(secondWeakest.completionRate * 100)}% completion - nästan halvvägs!`,
-      reasoning: `Efter att ha förbättrat ${weakestDomain.domain}, är ${secondWeakest.domain} nästa fokusområde.`,
+      reasoning: weakestDomain
+        ? `Efter att ha förbättrat ${weakestDomain.domain}, är ${secondWeakest.domain} nästa fokusområde.`
+        : `${secondWeakest.domain} är ett viktigt område att förbättra.`,
       estimatedTime: 15,
       xpReward: 25,
       actionType: 'new-content',
@@ -329,14 +335,18 @@ function checkForFatigue(context: RecommendationContext): StudyRecommendation | 
   const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
 
   // Count recent OSCE completions
-  const recentOSCEs = (profile as any).progression.history.osceResults.filter(
-    (osce: any) => new Date(osce.completedAt) > oneDayAgo
-  );
+  const recentOSCEs = hasHistory(profile) && profile.progression.history.osceResults
+    ? profile.progression.history.osceResults.filter(
+        (osce: OSCEResult) => new Date(osce.completedAt) > oneDayAgo
+      )
+    : [];
 
   // Count recent retention checks
-  const recentRetentionChecks = (profile as any).progression.history.retentionChecks.filter(
-    (check: any) => check.completedAt && new Date(check.completedAt) > oneDayAgo
-  );
+  const recentRetentionChecks = hasHistory(profile) && profile.progression.history.retentionChecks
+    ? profile.progression.history.retentionChecks.filter(
+        (check: RetentionCheck) => check.completedAt && new Date(check.completedAt) > oneDayAgo
+      )
+    : [];
 
   const totalRecentActivities = recentOSCEs.length + recentRetentionChecks.length;
 
@@ -446,8 +456,10 @@ function generateChallengeRecommendation(
 ): StudyRecommendation | null {
   const { profile } = context;
 
-  const accuracy = (profile as any).progression.bandStatus.recentPerformance.correctRate;
-  const currentBand = parseInt((profile as any).progression.bandStatus.currentBand.split(' ')[1]);
+  if (!hasBandStatus(profile)) return null;
+
+  const accuracy = profile.progression.bandStatus.recentPerformance?.correctRate || 0;
+  const currentBand = parseInt(profile.progression.bandStatus.currentBand?.split(' ')[1] || '0');
 
   // If accuracy > 85% and band 3+, suggest challenge
   if (accuracy > 0.85 && currentBand >= 3) {
@@ -474,13 +486,15 @@ function generateChallengeRecommendation(
 function generateReviewRecommendation(context: RecommendationContext): StudyRecommendation | null {
   const { profile } = context;
 
+  if (!hasHistory(profile) || !profile.progression.history.retentionChecks) return null;
+
   // Check if user has recent retention checks that failed
-  const recentRetentionChecks = (profile as any).progression.history.retentionChecks
-    .filter((check: any) => check.completedAt)
-    .sort((a: any, b: any) => new Date(b.completedAt!).getTime() - new Date(a.completedAt!).getTime())
+  const recentRetentionChecks = profile.progression.history.retentionChecks
+    .filter((check: RetentionCheck) => check.completedAt)
+    .sort((a: RetentionCheck, b: RetentionCheck) => new Date(b.completedAt!).getTime() - new Date(a.completedAt!).getTime())
     .slice(0, 3);
 
-  const hasFailedChecks = recentRetentionChecks.some((check: any) => check.passed === false);
+  const hasFailedChecks = recentRetentionChecks.some((check: RetentionCheck) => check.passed === false);
 
   if (hasFailedChecks) {
     return {

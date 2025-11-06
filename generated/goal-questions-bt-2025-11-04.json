@@ -1,0 +1,521 @@
+{
+  "metadata": {
+    "program": "bt",
+    "generatedAt": "2025-11-04T19:55:27.563Z",
+    "totalQuestions": 10,
+    "goals": [
+      {
+        "id": "bt-001",
+        "title": "Initial bedömning enligt ABCDE",
+        "category": "Akut omhändertagande"
+      }
+    ],
+    "qualityMetrics": {
+      "averageQuality": 0.26199999999999996,
+      "validatedCount": 3,
+      "validatedPercentage": 30
+    }
+  },
+  "questions": [
+    {
+      "id": "bt-001-q1",
+      "domain": "ALLMÄNMEDICIN",
+      "subdomain": "Akut omhändertagande",
+      "question": "Du är på akutmottagningen och tar emot en patient som är andningspåverkad. Vilket är det första steget i en systematisk ABCDE-bedömning?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Utvärdera och säkerställa fria luftvägar"
+        },
+        {
+          "id": "B",
+          "text": "Kontrollera cirkulation och blodtryck"
+        },
+        {
+          "id": "C",
+          "text": "Bedöma medvetandegrad"
+        },
+        {
+          "id": "D",
+          "text": "Genomföra en fullständig anamnes"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "Det första steget i ABCDE-bedömningen är att säkerställa att luftvägarna är fria, vilket är kritiskt för att hantera en andningspåverkad patient. Detta steg är avgörande för att uppfylla bedömningskriteriet att utföra en systematisk ABCDE-bedömning, identifiera livshotande tillstånd och prioritera åtgärder baserat på fynd.",
+      "difficulty": "B",
+      "targetedGoals": [
+        "bt-001"
+      ],
+      "goalAlignment": [
+        {
+          "goalId": "bt-001",
+          "goalTitle": "Initial bedömning enligt ABCDE",
+          "criteriaAddressed": [
+            "Utföra systematisk ABCDE-bedömning",
+            "Identifiera livshotande tillstånd"
+          ],
+          "alignmentScore": 0.85
+        }
+      ],
+      "sources": [
+        "Campbell's Operative Orthopaedics"
+      ],
+      "metadata": {
+        "generatedAt": "2025-11-04T19:54:25.045Z",
+        "model": "gpt-4o",
+        "validated": true,
+        "qualityScore": 0.85
+      }
+    },
+    {
+      "id": "bt-001-q2",
+      "domain": "ALLMÄNMEDICIN",
+      "subdomain": "Akut omhändertagande",
+      "question": "Du är på akutmottagningen och tar emot en patient som är andningspåverkad. Vilket steg i en systematisk ABCDE-bedömning bör du fokusera på först för att korrekt identifiera och prioritera åtgärder för patientens tillstånd?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Kontrollera luftvägarna för att säkerställa att de är fria och öppna."
+        },
+        {
+          "id": "B",
+          "text": "Mäta blodtrycket för att bedöma cirkulationen."
+        },
+        {
+          "id": "C",
+          "text": "Bedöma medvetandegrad för att avgöra neurologisk status."
+        },
+        {
+          "id": "D",
+          "text": "Kommunicera patientens status till teamet."
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "En systematisk ABCDE-bedömning börjar alltid med att säkerställa att patientens luftvägar är fria och öppna, vilket är avgörande för att kunna identifiera och hantera livshotande tillstånd. Detta refererar till bedömningskriterierna för att utföra en systematisk ABCDE-bedömning och prioritera åtgärder baserat på fynd (Mål: BT - Initial bedömning enligt ABCDE).",
+      "difficulty": "C",
+      "targetedGoals": [
+        "bt-001"
+      ],
+      "goalAlignment": [
+        {
+          "goalId": "bt-001",
+          "goalTitle": "Initial bedömning enligt ABCDE",
+          "criteriaAddressed": [
+            "Utföra systematisk ABCDE-bedömning",
+            "Identifiera livshotande tillstånd"
+          ],
+          "alignmentScore": 0.01
+        }
+      ],
+      "sources": [
+        "Campbell's Operative Orthopaedics"
+      ],
+      "metadata": {
+        "generatedAt": "2025-11-04T19:54:32.996Z",
+        "model": "gpt-4o",
+        "validated": false,
+        "qualityScore": 0.01
+      }
+    },
+    {
+      "id": "bt-001-q3",
+      "domain": "ALLMÄNMEDICIN",
+      "subdomain": "Akut omhändertagande",
+      "question": "Du är jourläkare på akutmottagningen och tar emot en patient som är medvetandepåverkad och reagerar inte på tilltal. Vilket av följande steg är mest korrekt som första åtgärd i din systematiska bedömning enligt ABCDE?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Kontrollera luftvägarna och säkerställ att de är fria."
+        },
+        {
+          "id": "B",
+          "text": "Starta intravenös vätsketillförsel för att stabilisera blodtrycket."
+        },
+        {
+          "id": "C",
+          "text": "Mät patientens glukosnivå för att utesluta hypoglykemi."
+        },
+        {
+          "id": "D",
+          "text": "Genomför en snabb neurologisk undersökning."
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "Enligt bedömningskriterierna för initial bedömning enligt ABCDE är det första steget att säkerställa fria luftvägar (A). Detta är avgörande för att identifiera och hantera livshotande tillstånd (kriterium 1 och 2). Att kontrollera luftvägarna prioriteras innan andra åtgärder eftersom det är grundläggande för patientens överlevnad.",
+      "difficulty": "D",
+      "targetedGoals": [
+        "bt-001"
+      ],
+      "goalAlignment": [
+        {
+          "goalId": "bt-001",
+          "goalTitle": "Initial bedömning enligt ABCDE",
+          "criteriaAddressed": [
+            "Utföra systematisk ABCDE-bedömning",
+            "Identifiera livshotande tillstånd"
+          ],
+          "alignmentScore": 0.01
+        }
+      ],
+      "sources": [
+        "Campbell's Operative Orthopaedics"
+      ],
+      "metadata": {
+        "generatedAt": "2025-11-04T19:54:39.405Z",
+        "model": "gpt-4o",
+        "validated": false,
+        "qualityScore": 0.01
+      }
+    },
+    {
+      "id": "bt-001-q4",
+      "domain": "ALLMÄNMEDICIN",
+      "subdomain": "Akut omhändertagande",
+      "question": "Du är på akutmottagningen och möter en patient som är medvetandesänkt och har svårt att andas. Vilket steg är det första du bör ta enligt ABCDE-principen?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Säkra luftvägen och bedöm andningen"
+        },
+        {
+          "id": "B",
+          "text": "Kontrollera blodtryck och puls"
+        },
+        {
+          "id": "C",
+          "text": "Gör en neurologisk bedömning"
+        },
+        {
+          "id": "D",
+          "text": "Informera teamet om patientens status"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "Enligt ABCDE-principen är det första steget att säkra patientens luftväg och bedöma andningen. Detta är avgörande för att identifiera livshotande tillstånd och prioritera åtgärder, vilket direkt relaterar till bedömningskriterierna för målet: utföra systematisk ABCDE-bedömning och identifiera livshotande tillstånd.",
+      "difficulty": "B",
+      "targetedGoals": [
+        "bt-001"
+      ],
+      "goalAlignment": [
+        {
+          "goalId": "bt-001",
+          "goalTitle": "Initial bedömning enligt ABCDE",
+          "criteriaAddressed": [
+            "Utföra systematisk ABCDE-bedömning",
+            "Identifiera livshotande tillstånd"
+          ],
+          "alignmentScore": 0.01
+        }
+      ],
+      "sources": [
+        "Campbell's Operative Orthopaedics"
+      ],
+      "metadata": {
+        "generatedAt": "2025-11-04T19:54:45.504Z",
+        "model": "gpt-4o",
+        "validated": false,
+        "qualityScore": 0.01
+      }
+    },
+    {
+      "id": "bt-001-q5",
+      "domain": "ALLMÄNMEDICIN",
+      "subdomain": "Akut omhändertagande",
+      "question": "Du är jourhavande läkare och får ett larm om en patient som är medvetandepåverkad. Vid din bedömning enligt ABCDE noterar du att patientens blodtryck är 80/50 mmHg, pulsen är svag och snabb, och huden är kall och klibbig. Vilken åtgärd bör prioriteras först baserat på dessa fynd?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Ge intravenös vätska för att stabilisera cirkulationen."
+        },
+        {
+          "id": "B",
+          "text": "Ge syrgas för att förbättra syremättnaden."
+        },
+        {
+          "id": "C",
+          "text": "Ge insulin för att korrigera eventuell hyperglykemi."
+        },
+        {
+          "id": "D",
+          "text": "Administrera smärtstillande medel för att lindra obehag."
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "I en systematisk ABCDE-bedömning är det viktigt att prioritera åtgärder baserat på fynd som indikerar livshotande tillstånd. I detta scenario visar patienten tecken på hypovolemisk chock, vilket kräver snabb vätsketillförsel. Detta adresserar bedömningskriterier 2 och 3, som fokuserar på att identifiera livshotande tillstånd och prioritera åtgärder.",
+      "difficulty": "C",
+      "targetedGoals": [
+        "bt-001"
+      ],
+      "goalAlignment": [
+        {
+          "goalId": "bt-001",
+          "goalTitle": "Initial bedömning enligt ABCDE",
+          "criteriaAddressed": [
+            "Utföra systematisk ABCDE-bedömning",
+            "Identifiera livshotande tillstånd"
+          ],
+          "alignmentScore": 0.85
+        }
+      ],
+      "sources": [
+        "Campbell's Operative Orthopaedics"
+      ],
+      "metadata": {
+        "generatedAt": "2025-11-04T19:54:51.379Z",
+        "model": "gpt-4o",
+        "validated": true,
+        "qualityScore": 0.85
+      }
+    },
+    {
+      "id": "bt-001-q6",
+      "domain": "ALLMÄNMEDICIN",
+      "subdomain": "Akut omhändertagande",
+      "question": "En 55-årig man kommer in till akutmottagningen med akut andnöd och cyanos. Vid en systematisk ABCDE-bedömning noterar du att patienten har en snarkande andning, är svårkontaktbar och har en snabb, svag puls. Vilken åtgärd är mest prioriterad att genomföra först?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Säkra luftvägen och påbörja ventilation."
+        },
+        {
+          "id": "B",
+          "text": "Ge intravenös vätska för att stabilisera cirkulationen."
+        },
+        {
+          "id": "C",
+          "text": "Administrera syrgas med högflödesgrimma."
+        },
+        {
+          "id": "D",
+          "text": "Kontrollera blodglukosnivån."
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "Enligt ABCDE-principen är det viktigaste att säkra luftvägen hos en patient med andningspåverkan och medvetandepåverkan. Alternativ A återspeglar detta genom att prioritera åtgärder för att säkra luftvägen och påbörja ventilation, vilket är det första steget i en systematisk bedömning. Detta uppfyller målens bedömningskriterium att utföra en systematisk ABCDE-bedömning och prioritera åtgärder baserat på fynd.",
+      "difficulty": "D",
+      "targetedGoals": [
+        "bt-001"
+      ],
+      "goalAlignment": [
+        {
+          "goalId": "bt-001",
+          "goalTitle": "Initial bedömning enligt ABCDE",
+          "criteriaAddressed": [
+            "Utföra systematisk ABCDE-bedömning",
+            "Identifiera livshotande tillstånd"
+          ],
+          "alignmentScore": 0.01
+        }
+      ],
+      "sources": [
+        "Campbell's Operative Orthopaedics"
+      ],
+      "metadata": {
+        "generatedAt": "2025-11-04T19:54:58.913Z",
+        "model": "gpt-4o",
+        "validated": false,
+        "qualityScore": 0.01
+      }
+    },
+    {
+      "id": "bt-001-q7",
+      "domain": "ALLMÄNMEDICIN",
+      "subdomain": "Akut omhändertagande",
+      "question": "Du står inför en patient som är andningspåverkad och du inleder en ABCDE-bedömning. Efter att ha bedömt luftvägarna (A) som fria, noterar du en snabb andningsfrekvens och låg syremättnad. Vilken är din nästa prioriterade åtgärd?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Administrera syrgas och utvärdera effekten."
+        },
+        {
+          "id": "B",
+          "text": "Genast informera teamet om patientens tillstånd."
+        },
+        {
+          "id": "C",
+          "text": "Dokumentera fynden innan du fortsätter till cirkulation (C)."
+        },
+        {
+          "id": "D",
+          "text": "Starta kompressioner omedelbart."
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "När du identifierar tecken på andningspåverkan, såsom snabb andningsfrekvens och låg syremättnad, är det viktigt att prioritera åtgärder för att förbättra syresättningen. Enligt bedömningskriterierna för målet 'Initial bedömning enligt ABCDE' är det viktigt att prioritera åtgärder baserat på fynd. I detta fall är administrering av syrgas en omedelbar och adekvat åtgärd. Att informera teamet och dokumentera är viktiga steg, men de föregås av att säkra patientens syresättning. Att starta kompressioner är inte indicerat eftersom patienten fortfarande andas, vilket indikerar cirkulation.",
+      "difficulty": "B",
+      "targetedGoals": [
+        "bt-001"
+      ],
+      "goalAlignment": [
+        {
+          "goalId": "bt-001",
+          "goalTitle": "Initial bedömning enligt ABCDE",
+          "criteriaAddressed": [
+            "Utföra systematisk ABCDE-bedömning",
+            "Identifiera livshotande tillstånd"
+          ],
+          "alignmentScore": 0.01
+        }
+      ],
+      "sources": [
+        "Campbell's Operative Orthopaedics"
+      ],
+      "metadata": {
+        "generatedAt": "2025-11-04T19:55:06.586Z",
+        "model": "gpt-4o",
+        "validated": false,
+        "qualityScore": 0.01
+      }
+    },
+    {
+      "id": "bt-001-q8",
+      "domain": "ALLMÄNMEDICIN",
+      "subdomain": "Akut omhändertagande",
+      "question": "Du är först på plats vid en trafikolycka där en patient är medvetslös och andas ytligt. Vilket steg i ABCDE-bedömningen bör du prioritera först för att identifiera och hantera livshotande tillstånd?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Säkerställ fri luftväg och bedöm andningen"
+        },
+        {
+          "id": "B",
+          "text": "Ta pulsen och bedöm cirkulationen"
+        },
+        {
+          "id": "C",
+          "text": "Kontrollera medvetandegrad"
+        },
+        {
+          "id": "D",
+          "text": "Inspektera kroppen för synliga skador"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "Enligt ABCDE-principerna bör luftvägen alltid bedömas och säkerställas först (Airway), särskilt i en situation där patienten är medvetslös och andas ytligt. Detta uppfyller bedömningskriterierna för att utföra en systematisk ABCDE-bedömning, identifiera livshotande tillstånd och prioritera åtgärder baserat på fynd. Det är avgörande att säkra luftvägen för att förhindra hypoxi, vilket är ett direkt livshotande tillstånd.",
+      "difficulty": "C",
+      "targetedGoals": [
+        "bt-001"
+      ],
+      "goalAlignment": [
+        {
+          "goalId": "bt-001",
+          "goalTitle": "Initial bedömning enligt ABCDE",
+          "criteriaAddressed": [
+            "Utföra systematisk ABCDE-bedömning",
+            "Identifiera livshotande tillstånd"
+          ],
+          "alignmentScore": 0.01
+        }
+      ],
+      "sources": [
+        "Campbell's Operative Orthopaedics"
+      ],
+      "metadata": {
+        "generatedAt": "2025-11-04T19:55:13.077Z",
+        "model": "gpt-4o",
+        "validated": false,
+        "qualityScore": 0.01
+      }
+    },
+    {
+      "id": "bt-001-q9",
+      "domain": "ALLMÄNMEDICIN",
+      "subdomain": "Akut omhändertagande",
+      "question": "Du är jourhavande läkare på akutmottagningen och kallas till en patient som är andningspåverkad. Vilket steg i ABCDE-bedömningen fokuserar du först på för att identifiera och prioritera livshotande tillstånd?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Bedömning av luftvägar (A) för att säkerställa att de är fria och inte blockerade."
+        },
+        {
+          "id": "B",
+          "text": "Bedömning av cirkulation (C) för att kontrollera blodtryck och puls."
+        },
+        {
+          "id": "C",
+          "text": "Bedömning av medvetandegrad (D) för att utvärdera patientens neurologiska status."
+        },
+        {
+          "id": "D",
+          "text": "Bedömning av exponering (E) för att upptäcka eventuella yttre skador."
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "Enligt ABCDE-principen är det första steget att bedöma och säkra luftvägarna (A) för att förhindra eller åtgärda livshotande andningsproblem. Detta är särskilt viktigt i scenariot med en andningspåverkad patient. Genom att följa denna systematiska metod kan läkaren snabbt identifiera och prioritera åtgärder för livshotande tillstånd, vilket direkt refererar till målets bedömningskriterier.",
+      "difficulty": "D",
+      "targetedGoals": [
+        "bt-001"
+      ],
+      "goalAlignment": [
+        {
+          "goalId": "bt-001",
+          "goalTitle": "Initial bedömning enligt ABCDE",
+          "criteriaAddressed": [
+            "Utföra systematisk ABCDE-bedömning",
+            "Identifiera livshotande tillstånd"
+          ],
+          "alignmentScore": 0.85
+        }
+      ],
+      "sources": [
+        "Campbell's Operative Orthopaedics"
+      ],
+      "metadata": {
+        "generatedAt": "2025-11-04T19:55:19.892Z",
+        "model": "gpt-4o",
+        "validated": true,
+        "qualityScore": 0.85
+      }
+    },
+    {
+      "id": "bt-001-q10",
+      "domain": "ALLMÄNMEDICIN",
+      "subdomain": "Akut omhändertagande",
+      "question": "Du är på akutmottagningen och tar emot en patient som är andningspåverkad. Vilken är den mest korrekta första åtgärden enligt ABCDE-principen?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Bedöma luftvägarnas öppenhet och säkerställa fri luftväg"
+        },
+        {
+          "id": "B",
+          "text": "Administrera intravenösa vätskor för att stabilisera cirkulationen"
+        },
+        {
+          "id": "C",
+          "text": "Ge syrgas för att förbättra syresättning"
+        },
+        {
+          "id": "D",
+          "text": "Utföra en detaljerad neurologisk undersökning"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "Enligt målet för systematisk initial bedömning av akut sjuk patient, är det första steget i ABCDE-bedömningen att kontrollera och säkerställa fri luftväg (A - Airway). Detta är särskilt viktigt vid en andningspåverkad patient, där fria luftvägar måste säkerställas innan några andra åtgärder vidtas. Detta uppfyller bedömningskriterierna att utföra en systematisk ABCDE-bedömning och identifiera livshotande tillstånd.",
+      "difficulty": "B",
+      "targetedGoals": [
+        "bt-001"
+      ],
+      "goalAlignment": [
+        {
+          "goalId": "bt-001",
+          "goalTitle": "Initial bedömning enligt ABCDE",
+          "criteriaAddressed": [
+            "Utföra systematisk ABCDE-bedömning",
+            "Identifiera livshotande tillstånd"
+          ],
+          "alignmentScore": 0.01
+        }
+      ],
+      "sources": [
+        "Campbell's Operative Orthopaedics"
+      ],
+      "metadata": {
+        "generatedAt": "2025-11-04T19:55:26.561Z",
+        "model": "gpt-4o",
+        "validated": false,
+        "qualityScore": 0.01
+      }
+    }
+  ]
+}

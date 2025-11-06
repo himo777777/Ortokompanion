@@ -78,10 +78,10 @@ function RotationProgressCard({
   };
 
   const urgencyTextColors = {
-    critical: 'text-red-700',
-    high: 'text-orange-700',
-    medium: 'text-yellow-700',
-    low: 'text-green-700',
+    critical: 'text-red-900',
+    high: 'text-orange-900',
+    medium: 'text-yellow-900',
+    low: 'text-green-900',
   };
 
   const allGoals = getAllMål();
@@ -111,7 +111,7 @@ function RotationProgressCard({
       <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
         <Calendar className="w-4 h-4" />
         <span>
-          {rotation.startDate.toLocaleDateString('sv-SE', { month: 'short', year: 'numeric' })} - {rotation.endDate.toLocaleDateString('sv-SE', { month: 'short', year: 'numeric' })}
+          {new Date(rotation.startDate).toLocaleDateString('sv-SE', { month: 'short', year: 'numeric' })} - {new Date(rotation.endDate).toLocaleDateString('sv-SE', { month: 'short', year: 'numeric' })}
         </span>
       </div>
 
@@ -255,7 +255,7 @@ function PlacementProgressCard({
             <p className="text-sm text-gray-500">{placement.hospital}</p>
           )}
         </div>
-        <div className={`px-3 py-1 rounded-full ${urgency === 'critical' ? 'bg-red-100 text-red-700' : urgency === 'high' ? 'bg-orange-100 text-orange-700' : 'bg-green-100 text-green-700'}`}>
+        <div className={`px-3 py-1 rounded-full ${urgency === 'critical' ? 'bg-red-100 text-red-900' : urgency === 'high' ? 'bg-orange-100 text-orange-900' : 'bg-green-100 text-green-900'}`}>
           <span className="font-semibold text-sm">{daysRemaining} dagar kvar</span>
         </div>
       </div>
@@ -347,11 +347,11 @@ function StatCard({
   color: 'blue' | 'green' | 'orange' | 'purple' | 'red';
 }) {
   const colorClasses = {
-    blue: 'bg-blue-50 text-blue-700',
-    green: 'bg-green-50 text-green-700',
-    orange: 'bg-orange-50 text-orange-700',
-    purple: 'bg-purple-50 text-purple-700',
-    red: 'bg-red-50 text-red-700',
+    blue: 'bg-blue-50 text-blue-900',
+    green: 'bg-green-50 text-green-900',
+    orange: 'bg-orange-50 text-orange-900',
+    purple: 'bg-purple-50 text-purple-900',
+    red: 'bg-red-50 text-red-900',
   };
 
   return (

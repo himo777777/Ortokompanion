@@ -224,8 +224,8 @@ export default function ExamSession({
               onClick={() => handleSelectAnswer(option)}
               className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
                 selectedAnswer === option
-                  ? 'border-blue-500 bg-blue-50'
-                  : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                  ? 'border-blue-500 bg-blue-50 text-blue-900'
+                  : 'border-gray-200 text-gray-900 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-900'
               }`}
             >
               <div className="flex items-center gap-3">

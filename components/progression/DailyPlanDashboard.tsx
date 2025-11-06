@@ -196,28 +196,28 @@ export default function DailyPlanDashboard({
         {/* New Content (60%) */}
         <ActivityCard
           title="Nytt innehåll"
-          subtitle={DOMAIN_LABELS[dailyMix.newContent.domain]}
+          subtitle={DOMAIN_LABELS[dailyMix?.newContent?.domain || 'trauma']}
           icon={<Target className="w-6 h-6" />}
           percentage={60}
-          estimatedTime={dailyMix.newContent.estimatedTime}
-          itemCount={dailyMix.newContent.items.length}
+          estimatedTime={dailyMix?.newContent?.estimatedTime || 0}
+          itemCount={dailyMix?.newContent?.items?.length || 0}
           color="blue"
           onStart={() =>
-            dailyMix.newContent.items[0] && onStartActivity(dailyMix.newContent.items[0], 'new')
+            dailyMix?.newContent?.items?.[0] && onStartActivity(dailyMix.newContent.items[0], 'new')
           }
         />
 
         {/* Interleaving (20%) */}
         <ActivityCard
           title="Interleaving"
-          subtitle={DOMAIN_LABELS[dailyMix.interleavingContent.domain]}
+          subtitle={DOMAIN_LABELS[dailyMix?.interleavingContent?.domain || 'trauma']}
           icon={<Repeat className="w-6 h-6" />}
           percentage={20}
-          estimatedTime={dailyMix.interleavingContent.estimatedTime}
-          itemCount={dailyMix.interleavingContent.items.length}
+          estimatedTime={dailyMix?.interleavingContent?.estimatedTime || 0}
+          itemCount={dailyMix?.interleavingContent?.items?.length || 0}
           color="purple"
           onStart={() =>
-            dailyMix.interleavingContent.items[0] &&
+            dailyMix?.interleavingContent?.items?.[0] &&
             onStartActivity(dailyMix.interleavingContent.items[0], 'interleave')
           }
         />
@@ -225,19 +225,19 @@ export default function DailyPlanDashboard({
         {/* SRS Reviews (20%) */}
         <ActivityCard
           title="Repetition (SRS)"
-          subtitle={`${dailyMix.srsReviews.cards.length} kort att repetera`}
+          subtitle={`${dailyMix?.srsReviews?.cards?.length || 0} kort att repetera`}
           icon={<Zap className="w-6 h-6" />}
           percentage={20}
-          estimatedTime={dailyMix.srsReviews.estimatedTime}
-          itemCount={dailyMix.srsReviews.cards.length}
+          estimatedTime={dailyMix?.srsReviews?.estimatedTime || 0}
+          itemCount={dailyMix?.srsReviews?.cards?.length || 0}
           color="green"
           onStart={() =>
-            dailyMix.srsReviews.cards[0] &&
+            dailyMix?.srsReviews?.cards?.[0] &&
             onStartActivity(dailyMix.srsReviews.cards[0].id, 'srs')
           }
-          urgent={dailyMix.srsReviews.cards.some(
+          urgent={dailyMix?.srsReviews?.cards?.some(
             (card) => card.dueDate < new Date()
-          )}
+          ) || false}
         />
       </div>
 

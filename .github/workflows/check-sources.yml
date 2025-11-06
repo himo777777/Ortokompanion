@@ -1,0 +1,56 @@
+name: Daily Medical Source Monitoring
+
+on:
+  # Run daily at 06:00 UTC (07:00 Swedish winter time, 08:00 summer time)
+  schedule:
+    - cron: '0 6 * * *'
+
+  # Allow manual triggering from GitHub Actions tab
+  workflow_dispatch:
+
+jobs:
+  check-medical-sources:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Trigger source monitoring
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          APP_URL: ${{ secrets.APP_URL || 'http://localhost:3000' }}
+        run: |
+          echo "Triggering medical source monitoring..."
+
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X GET \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${APP_URL}/api/cron/check-sources")
+
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | head -n-1)
+
+          echo "HTTP Status: $HTTP_CODE"
+          echo "Response: $BODY"
+
+          if [ "$HTTP_CODE" -ne 200 ]; then
+            echo "Error: Source monitoring failed with status $HTTP_CODE"
+            exit 1
+          fi
+
+          echo "Source monitoring completed successfully"
+
+      - name: Parse monitoring results
+        run: |
+          echo "Checking for critical alerts..."
+          # Could extend this to send notifications, create issues, etc.
+          echo "Monitoring workflow completed"
+
+      - name: Report status
+        if: always()
+        run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ Medical source monitoring completed successfully"
+          else
+            echo "❌ Medical source monitoring failed"
+          fi

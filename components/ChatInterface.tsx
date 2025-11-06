@@ -66,9 +66,16 @@ export default function ChatInterface({ level, userContext }: ChatInterfaceProps
   }, [messages]);
 
   const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
+    const trimmedInput = input.trim();
+    if (!trimmedInput || isLoading) return;
 
-    const userMessage: Message = { role: 'user', content: input };
+    // Validate input length
+    if (trimmedInput.length > 5000) {
+      console.warn('Message exceeds 5000 characters limit');
+      return;
+    }
+
+    const userMessage: Message = { role: 'user', content: trimmedInput };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
@@ -197,6 +204,7 @@ export default function ChatInterface({ level, userContext }: ChatInterfaceProps
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Skriv din fråga här..."
+            maxLength={5000}
             className="flex-1 p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
             rows={2}
           />

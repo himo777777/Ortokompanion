@@ -18,6 +18,8 @@ import {
   QUESTION_GENERATOR_SYSTEM_PROMPT,
   buildQuestionGenerationPrompt,
 } from '@/lib/generation-prompts';
+import { toCompetency } from '@/lib/ai-utils';
+import { contentVersioning } from '@/lib/content-versioning';
 
 // Initialize OpenAI client
 const openai = new OpenAI({
@@ -149,21 +151,54 @@ export async function generateQuestionBatch(
   const validated = QuestionBatchSchema.parse(questionsArray);
 
   // Transform to MCQQuestion format
-  const questions: MCQQuestion[] = validated.map((q: z.infer<typeof GeneratedQuestionSchema>) => ({
-    id: q.id,
-    domain: q.domain as Domain,
-    level: q.level as EducationLevel,
-    band: q.band,
-    question: q.question,
-    options: q.options,
-    correctAnswer: q.correctAnswer,
-    explanation: q.explanation,
-    competency: q.competency as any,  // Cast to Competency type
-    tags: q.tags,
-    references: q.references,
-    relatedGoals: q.relatedGoals,
-    tutorMode: q.tutorMode,
-  }));
+  type Competency = 'medicinsk-kunskap' | 'klinisk-färdighet' | 'kommunikation' | 'professionalism' | 'samverkan' | 'utveckling';
+
+  const questions: MCQQuestion[] = validated.map((q: z.infer<typeof GeneratedQuestionSchema>) => {
+    // Create source version snapshots for content versioning
+    const sourceVersionSnapshots = q.references.map((sourceId) => {
+      const source = VERIFIED_SOURCES[sourceId];
+      return contentVersioning.createSourceSnapshot(
+        sourceId,
+        source?.title || sourceId,
+        source?.year?.toString() || '2024',
+        source?.publicationDate || new Date()
+      );
+    });
+
+    // Create initial content version
+    contentVersioning.createContentVersion(
+      q.id,
+      'question',
+      [],
+      sourceVersionSnapshots,
+      'AI-generated content'
+    );
+
+    return {
+      id: q.id,
+      domain: q.domain as Domain,
+      level: q.level as EducationLevel,
+      band: q.band,
+      question: q.question,
+      options: q.options,
+      correctAnswer: q.correctAnswer,
+      explanation: q.explanation,
+      competency: (toCompetency(q.competency) || 'medicinsk-kunskap') as Competency,  // Use validated competency with fallback
+      tags: q.tags,
+      references: q.references,
+      relatedGoals: q.relatedGoals,
+      tutorMode: q.tutorMode,
+      // Version tracking fields
+      contentVersion: '1.0.0',
+      sourceVersions: sourceVersionSnapshots.map((snapshot) => ({
+        sourceId: snapshot.sourceId,
+        version: snapshot.versionAtTime,
+        publicationDate: snapshot.publicationDate,
+      })),
+      lastContentUpdate: new Date(),
+      needsReview: false,
+    };
+  });
 
   console.log(`✅ Generated ${questions.length} questions successfully`);
 
