@@ -17,13 +17,19 @@ export const mockProfile: IntegratedUserProfile = {
     createdAt: new Date('2025-01-01'),
   },
   gamification: {
-    totalXP: 500,
-    currentLevel: 5,
-    xpToNextLevel: 200,
-    streakDays: 3,
+    xp: 500,
+    level: 5,
+    badges: [],
+    streak: 3,
+    longestStreak: 5,
+    totalSessions: 20,
     lastActivity: new Date('2025-01-05'),
+    freezeTokens: 2,
+    prestigeLevel: 0,
+    lifetimeXP: 500,
   },
   progression: {
+    primaryDomain: 'TRAUMA',
     bandStatus: {
       currentBand: 'C',
       bandHistory: [
@@ -42,65 +48,23 @@ export const mockProfile: IntegratedUserProfile = {
       },
     },
     dailyMix: null,
-    domains: {
-      TRAUMA: {
-        domain: 'TRAUMA',
-        overallProgress: 0.3,
-        mastery: 0.25,
-        gates: {
-          fundamentals: {
-            id: 'fundamentals',
-            title: 'Grundläggande Traumakunskap',
-            completed: true,
-            progress: 1.0,
-            unlocked: true,
-          },
-          clinical: {
-            id: 'clinical',
-            title: 'Klinisk Traumahantering',
-            completed: false,
-            progress: 0.5,
-            unlocked: true,
-          },
-          advanced: {
-            id: 'advanced',
-            title: 'Avancerad Traumavård',
-            completed: false,
-            progress: 0.1,
-            unlocked: false,
-          },
-          expert: {
-            id: 'expert',
-            title: 'Expertkunskap',
-            completed: false,
-            progress: 0,
-            unlocked: false,
-          },
-        },
-        recentPerformance: {
-          questionsAnswered: 50,
-          correctAnswers: 38,
-          avgTimePerQuestion: 45,
-          lastPracticed: new Date('2025-01-05'),
-        },
-      },
+    domainStatuses: {} as any,
+    srs: {
+      cards: [],
+      dueToday: [],
+      overdueCards: [],
+      leechCards: [],
     },
     history: {
-      sessionResults: [],
       bandAdjustments: [],
       osceResults: [],
       retentionChecks: [],
+      sessionHistory: [],
     },
     preferences: {
       recoveryMode: false,
       targetMinutesPerDay: 30,
     },
-  },
-  srs: {
-    cards: [],
-    dueToday: [],
-    overdueCards: [],
-    leechCards: [],
   },
 };
 

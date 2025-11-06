@@ -6,6 +6,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import '@testing-library/jest-dom/vitest';
 import TutorMode from '../TutorMode';
 import { mockQuestion, createMockQuestion } from '@/lib/__tests__/mocks/mockData';
 
@@ -16,6 +17,9 @@ vi.mock('@/lib/ai-service', () => ({
   }),
   generatePersonalizedExplanation: vi.fn().mockResolvedValue({
     explanation: 'Detta är en AI-genererad förklaring.',
+    keyTakeaway: 'Viktig lärdom att komma ihåg.',
+    relatedConcepts: ['Relaterat koncept 1', 'Relaterat koncept 2'],
+    confidenceLevel: 0.9,
   }),
 }));
 
