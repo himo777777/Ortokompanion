@@ -25,6 +25,7 @@ interface SRSReviewSessionProps {
     grade: number;
     timestamp: Date;
     timeSpent: number;
+    hintsUsed?: number;
   }>;
 }
 
@@ -76,7 +77,7 @@ export default function SRSReviewSession({
           cardId: perf.cardId,
           grade: perf.grade,
           timeSpent: perf.timeSpent,
-          hintsUsed: 0, // TODO: Track hints used in performance data
+          hintsUsed: perf.hintsUsed || 0,
         })),
       });
       setAiPredictions(result.predictions);

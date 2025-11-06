@@ -52,7 +52,7 @@ export default function AILearningCoach({
           accuracy: s.accuracy,
           xpEarned: s.xpEarned,
           timeSpent: s.timeSpent,
-          hintsUsed: 0, // TODO: Track hints used in session data
+          hintsUsed: 0, // TODO: Track hints used in StudySession
         })),
         currentStreak,
         goalsAchieved,

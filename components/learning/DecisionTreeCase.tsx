@@ -1,13 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { DecisionTreeCase as DecisionTreeCaseType, DecisionNode } from '@/types/progression';
+import { ClinicalDecisionCase, DecisionNode } from '@/data/case-decision-trees';
 import { Brain, CheckCircle, XCircle, AlertCircle, Lightbulb, Target, Sparkles, Loader2, TrendingUp } from 'lucide-react';
 import { analyzeDecisionMaking } from '@/lib/ai-service';
 import { EducationLevel } from '@/types/education';
 
 interface DecisionTreeCaseProps {
-  caseStudy: DecisionTreeCaseType;
+  caseStudy: ClinicalDecisionCase;
   userLevel: EducationLevel;
   onComplete: (params: {
     outcomeId: string;
@@ -45,7 +45,7 @@ export default function DecisionTreeCase({
   const [loadingAIAnalysis, setLoadingAIAnalysis] = useState(false);
 
   // Get current node
-  const currentNode = caseStudy.nodes.find(n => n.id === currentNodeId);
+  const currentNode = caseStudy.nodes[currentNodeId];
 
   // Handle decision
   const handleDecision = (choiceId: string, nextNodeId: string | null) => {
@@ -56,10 +56,17 @@ export default function DecisionTreeCase({
       // Continue to next node
       setCurrentNodeId(nextNodeId);
     } else {
-      // Reached outcome
-      const outcome = caseStudy.outcomes.find(o => o.id === choiceId);
-      if (outcome) {
-        setFinalOutcome(outcome);
+      // Reached outcome (terminal node)
+      const outcomeNode = Object.values(caseStudy.nodes).find(n => n.isTerminal && n.id === currentNodeId);
+      if (outcomeNode && outcomeNode.outcome) {
+        // Create outcome object from node data
+        const outcome = {
+          id: outcomeNode.id,
+          quality: outcomeNode.outcome.type === 'success' ? 'optimal' :
+                   outcomeNode.outcome.type === 'suboptimal' ? 'acceptable' : 'poor',
+          ...outcomeNode.outcome
+        };
+        setFinalOutcome(outcome as any);
         setIsComplete(true);
 
         // Load AI analysis if enabled
@@ -91,13 +98,13 @@ export default function DecisionTreeCase({
     try {
       const result = await analyzeDecisionMaking({
         caseId: caseStudy.id,
-        userDecisions: fullPath.map((decision, index) => ({
-          nodeId: currentNodeId,
+        userDecisions: fullPath.map((decision) => ({
+          nodeId: decision,
           optionChosen: decision,
-          isOptimal: false, // TODO: Track optimal path
-          timeSpent: 0, // TODO: Track time per decision
+          isOptimal: true, // TODO: Track if decision was optimal
+          timeSpent: 0, // TODO: Track time spent on each decision
         })),
-        caseContext: caseStudy.description,
+        caseContext: caseStudy.introduction,
       });
       setAiAnalysis(result);
     } catch (error) {
@@ -173,7 +180,7 @@ export default function DecisionTreeCase({
           <Target className="w-5 h-5 text-blue-600" />
           Kliniskt Scenario
         </h2>
-        <p className="text-gray-800 leading-relaxed">{caseStudy.description}</p>
+        <p className="text-gray-800 leading-relaxed">{caseStudy.introduction}</p>
       </div>
 
       {/* Current Decision Node */}
@@ -181,30 +188,43 @@ export default function DecisionTreeCase({
         <div className="bg-white border-2 border-gray-200 rounded-lg shadow-lg mb-6">
           <div className="bg-gray-50 border-b border-gray-200 px-6 py-4">
             <h3 className="font-semibold text-gray-900">
-              {currentNode.type === 'assessment' && '🔍 Bedömning'}
-              {currentNode.type === 'investigation' && '🔬 Utredning'}
-              {currentNode.type === 'treatment' && '💊 Behandling'}
-              {currentNode.type === 'monitoring' && '📊 Uppföljning'}
+              {currentNode.nodeType === 'scenario' && '📋 Scenario'}
+              {currentNode.nodeType === 'decision' && '🤔 Beslut'}
+              {currentNode.nodeType === 'outcome' && '✅ Resultat'}
             </h3>
           </div>
 
           <div className="p-6">
-            <p className="text-lg text-gray-800 mb-6">{currentNode.question}</p>
+            <p className="text-lg text-gray-800 mb-6">{currentNode.decision || currentNode.scenario}</p>
 
-            {currentNode.clinicalInfo && (
+            {(currentNode.clinicalFindings || currentNode.imagingFindings || currentNode.labResults) && (
               <div className="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-4 mb-6">
                 <div className="flex items-start gap-2">
                   <Lightbulb className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-sm font-semibold text-blue-900 mb-1">Klinisk Information</p>
-                    <p className="text-sm text-blue-800">{currentNode.clinicalInfo}</p>
+                    {currentNode.clinicalFindings && (
+                      <div className="text-sm text-blue-800 mb-2">
+                        <strong>Kliniska fynd:</strong> {currentNode.clinicalFindings.join(', ')}
+                      </div>
+                    )}
+                    {currentNode.imagingFindings && (
+                      <div className="text-sm text-blue-800 mb-2">
+                        <strong>Bilddiagnostik:</strong> {currentNode.imagingFindings.join(', ')}
+                      </div>
+                    )}
+                    {currentNode.labResults && (
+                      <div className="text-sm text-blue-800">
+                        <strong>Lab:</strong> {currentNode.labResults.join(', ')}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
             )}
 
             <div className="space-y-3">
-              {currentNode.choices.map((choice, index) => (
+              {currentNode.options?.map((choice, index) => (
                 <button
                   key={index}
                   onClick={() => handleDecision(choice.id, choice.nextNodeId || null)}
@@ -216,8 +236,8 @@ export default function DecisionTreeCase({
                     </span>
                     <div className="flex-1">
                       <p className="text-gray-900 font-medium">{choice.text}</p>
-                      {choice.reasoning && (
-                        <p className="text-sm text-gray-600 mt-1 italic">💭 {choice.reasoning}</p>
+                      {choice.clinicalReasoning && (
+                        <p className="text-sm text-gray-600 mt-1 italic">💭 {choice.clinicalReasoning}</p>
                       )}
                     </div>
                   </div>
@@ -393,7 +413,9 @@ export default function DecisionTreeCase({
                           Beslut: {feedback.decision}
                         </p>
                         <p className="text-sm text-gray-700 mb-2">{feedback.feedback}</p>
-                        <p className="text-sm text-blue-700 italic">{feedback.improvement}</p>
+                        <p className="text-sm text-blue-800">
+                          <strong>Förbättring:</strong> {feedback.improvement}
+                        </p>
                       </div>
                     ))}
                   </div>

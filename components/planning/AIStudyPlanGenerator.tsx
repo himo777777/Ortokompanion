@@ -23,20 +23,19 @@ export default function AIStudyPlanGenerator({
   const [deadline, setDeadline] = useState<Date | null>(null);
   const [studyPlan, setStudyPlan] = useState<{
     weeklyPlan: Array<{
-      week: number;
-      focus: string[];
-      tasks: Array<{
-        day: string;
-        activity: string;
-        duration: number;
+      day: number;
+      activities: Array<{
+        type: 'questions' | 'cases' | 'reading' | 'review';
+        domain: Domain;
+        estimatedTime: number;
         priority: 'high' | 'medium' | 'low';
+        goal: string;
       }>;
-      milestone: string;
     }>;
     milestones: Array<{
       week: number;
-      title: string;
-      description: string;
+      goal: string;
+      successCriteria: string;
     }>;
     recommendations: string[];
   } | null>(null);
@@ -261,8 +260,8 @@ export default function AIStudyPlanGenerator({
                       <span className="font-bold text-green-700">V{milestone.week}</span>
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-semibold text-gray-900 mb-1">{milestone.title}</h4>
-                      <p className="text-sm text-gray-600">{milestone.description}</p>
+                      <h4 className="font-semibold text-gray-900 mb-1">{milestone.goal}</h4>
+                      <p className="text-sm text-gray-600">{milestone.successCriteria}</p>
                     </div>
                   </div>
                 ))}
@@ -277,36 +276,24 @@ export default function AIStudyPlanGenerator({
               Veckovis Plan
             </h3>
             <div className="space-y-6">
-              {studyPlan.weeklyPlan.map((week, idx) => (
+              {studyPlan.weeklyPlan.map((dayPlan, idx) => (
                 <div key={idx} className="border border-gray-200 rounded-lg overflow-hidden">
-                  {/* Week Header */}
+                  {/* Day Header */}
                   <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3">
                     <div className="flex items-center justify-between">
-                      <h4 className="font-bold text-lg">Vecka {week.week}</h4>
-                      <span className="text-sm opacity-90">{week.milestone}</span>
+                      <h4 className="font-bold text-lg">Dag {dayPlan.day}</h4>
+                      <span className="text-sm opacity-90">{dayPlan.activities.length} aktiviteter</span>
                     </div>
-                    {week.focus.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mt-2">
-                        {week.focus.map((focus, fidx) => (
-                          <span
-                            key={fidx}
-                            className="px-2 py-1 bg-white/20 rounded text-xs"
-                          >
-                            {focus}
-                          </span>
-                        ))}
-                      </div>
-                    )}
                   </div>
 
-                  {/* Week Tasks */}
+                  {/* Day Activities */}
                   <div className="p-4 bg-gray-50">
                     <div className="space-y-2">
-                      {week.tasks.map((task, tidx) => {
-                        const priorityColor = getPriorityColor(task.priority);
+                      {dayPlan.activities.map((activity, aidx) => {
+                        const priorityColor = getPriorityColor(activity.priority);
                         return (
                           <div
-                            key={tidx}
+                            key={aidx}
                             className="flex items-center gap-3 bg-white border border-gray-200 rounded-lg p-3"
                           >
                             <div
@@ -321,7 +308,7 @@ export default function AIStudyPlanGenerator({
                             <div className="flex-1">
                               <div className="flex items-center gap-2">
                                 <span className="text-xs font-semibold text-gray-500 uppercase">
-                                  {task.day}
+                                  {activity.type}
                                 </span>
                                 <span
                                   className={`text-xs px-2 py-0.5 rounded-full ${
@@ -332,14 +319,14 @@ export default function AIStudyPlanGenerator({
                                       : 'bg-blue-100 text-blue-700'
                                   }`}
                                 >
-                                  {task.priority === 'high' ? 'Hög prio' : task.priority === 'medium' ? 'Mellan' : 'Låg prio'}
+                                  {activity.priority === 'high' ? 'Hög prio' : activity.priority === 'medium' ? 'Mellan' : 'Låg prio'}
                                 </span>
                               </div>
-                              <p className="text-sm text-gray-900 mt-1">{task.activity}</p>
+                              <p className="text-sm text-gray-900 mt-1">{activity.goal} - {activity.domain}</p>
                             </div>
                             <div className="flex items-center gap-1 text-gray-600">
                               <Clock className="w-4 h-4" />
-                              <span className="text-sm font-medium">{task.duration} min</span>
+                              <span className="text-sm font-medium">{activity.estimatedTime} min</span>
                             </div>
                           </div>
                         );
