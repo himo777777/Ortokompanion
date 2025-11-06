@@ -509,7 +509,7 @@ describe('IntegratedContext', () => {
               dueDate: new Date(),
               stability: 0.8,
               difficulty: 0.3,
-              lastGrade: 'good',
+              lastGrade: 4,
               lastReviewed: new Date(),
               createdAt: new Date(),
               competencies: [],

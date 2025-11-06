@@ -26,7 +26,7 @@ export const mockProfile: IntegratedUserProfile = {
     dailyPush: true,
   },
   createdAt: new Date('2025-01-01'),
-  socialstyrelseMålProgress: {},
+  socialstyrelseMålProgress: [],
   aiAdaptationEnabled: true,
 
   // Gamification
@@ -121,7 +121,7 @@ export const mockSRSCard: SRSCard = {
   interval: 7,
   dueDate: new Date('2025-01-10'),
   difficulty: 0.3,
-  lastGrade: 'good',
+  lastGrade: 4,
   lastReviewed: new Date('2025-01-03'),
   reviewCount: 3,
   createdAt: new Date('2025-01-01'),
