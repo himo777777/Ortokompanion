@@ -25,6 +25,9 @@ export const mockProfile: IntegratedUserProfile = {
     preferMicrocases: false,
     dailyPush: true,
   },
+  createdAt: new Date('2025-01-01'),
+  socialstyrelseMålProgress: {},
+  aiAdaptationEnabled: true,
 
   // Gamification
   gamification: {
@@ -118,7 +121,11 @@ export const mockSRSCard: SRSCard = {
   interval: 7,
   dueDate: new Date('2025-01-10'),
   difficulty: 0.3,
+  lastGrade: 'good',
+  lastReviewed: new Date('2025-01-03'),
   reviewCount: 3,
+  createdAt: new Date('2025-01-01'),
+  competencies: [],
   failCount: 0,
   isLeech: false,
 };
