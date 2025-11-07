@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { ClerkProvider } from '@clerk/nextjs'
 import { IntegratedProvider } from '@/context/IntegratedContext'
 import { ToastProvider } from '@/components/ui/ToastContainer'
 import ErrorBoundary from '@/components/ui/ErrorBoundary'
@@ -18,16 +19,18 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="sv">
-      <body className={inter.className}>
-        <ErrorBoundary>
-          <ToastProvider>
-            <IntegratedProvider>
-              {children}
-            </IntegratedProvider>
-          </ToastProvider>
-        </ErrorBoundary>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="sv">
+        <body className={inter.className}>
+          <ErrorBoundary>
+            <ToastProvider>
+              <IntegratedProvider>
+                {children}
+              </IntegratedProvider>
+            </ToastProvider>
+          </ErrorBoundary>
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }

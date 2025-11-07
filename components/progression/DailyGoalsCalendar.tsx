@@ -36,11 +36,11 @@ export default function DailyGoalsCalendar({ profile }: DailyGoalsCalendarProps)
 
     // Process session history
     profile.progression.history.sessionHistory.forEach(session => {
-      const dateKey = new Date(session.timestamp).toDateString();
+      const dateKey = new Date(session.date).toDateString();
 
       if (!map.has(dateKey)) {
         map.set(dateKey, {
-          date: new Date(session.timestamp),
+          date: new Date(session.date),
           questionsAnswered: 0,
           correctAnswers: 0,
           xpEarned: 0,
@@ -52,8 +52,8 @@ export default function DailyGoalsCalendar({ profile }: DailyGoalsCalendarProps)
 
       const activity = map.get(dateKey)!;
       activity.questionsAnswered += session.questionsAnswered || 0;
-      activity.correctAnswers += session.correctAnswers || 0;
-      activity.xpEarned += session.xpGained || 0;
+      activity.correctAnswers += Math.round((session.accuracy || 0) * (session.questionsAnswered || 0));
+      activity.xpEarned += session.xpEarned || 0;
       activity.activitiesCompleted += 1;
 
       // Determine status
