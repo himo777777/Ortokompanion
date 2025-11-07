@@ -13,6 +13,7 @@ import { EducationLevel } from '@/types/education';
 import { Rotation, OrthoPlacement, getCurrentRotation } from '@/types/rotation';
 import {
   getMålForLevel,
+  getMålForDomain,
   getAllMålForLevel,
   SocialstyrelseMål,
   LÄKARPROGRAMMET_MÅL,
@@ -27,62 +28,45 @@ import { toLevelType } from '@/lib/ai-utils';
 /**
  * Assigns relevant goals for a specific rotation based on domain
  *
- * Filters goals using domain-specific keywords and includes general competency goals
- * (professionalism, communication, collaboration).
+ * Uses getMålForDomain() to get domain-specific goals including:
+ * - Level-specific goals (student/AT/ST1-5)
+ * - Domain-specific goals (trauma, höft, knä, etc.)
+ * - Subspecialty goals (hand, fot, sport, tumör)
  *
  * @param rotation - Current rotation with domain information
  * @param userLevel - User's education level (student, AT, ST1-5, specialist)
- * @returns Array of goal IDs relevant to the rotation (max 8 goals)
+ * @returns Array of goal IDs relevant to the rotation (max 10 goals)
  *
  * @example
  * ```typescript
  * const rotation = { domain: 'trauma', name: 'Traumakirurgi', ... };
  * const goals = assignGoalsForRotation(rotation, 'st1');
- * // Returns: ['st-ortopedi-trauma-1', 'st-ortopedi-trauma-2', ...]
+ * // Returns: ['st1-01', 'lp-03', 'at-01', ...] - domain-specific trauma goals
  * ```
  */
 export function assignGoalsForRotation(
   rotation: Rotation,
   userLevel: EducationLevel
 ): string[] {
-  // Get all goals for user's level
+  // Get domain-specific goals using enhanced getMålForDomain()
   const validLevel = toLevelType(userLevel);
   if (!validLevel) return [];
-  const allGoals = getAllMålForLevel(validLevel as EducationLevel);
 
-  // Domain-specific keywords to match goals
-  const domainKeywords: Record<Domain, string[]> = {
-    'trauma': ['trauma', 'fraktur', 'luxation', 'akut', 'skada', 'öppen'],
-    'höft': ['höft', 'femur', 'THA', 'höftfraktur', 'artroplastik'],
-    'knä': ['knä', 'TKA', 'menisk', 'ligament', 'artroskopi', 'patella'],
-    'axel-armbåge': ['axel', 'armbåge', 'rotator', 'humerus', 'impingement'],
-    'hand-handled': ['hand', 'finger', 'karpaltunnel', 'handled', 'metacarpal'],
-    'fot-fotled': ['fot', 'fotled', 'ankel', 'metatarsal', 'akillessena'],
-    'rygg': ['rygg', 'kotpelare', 'vertebra', 'ryggkirurgi', 'spinal'],
-    'sport': ['sport', 'idrottsskada', 'rehabilitering', 'korsband'],
-    'tumör': ['tumör', 'cancer', 'metastas', 'sarkom', 'skelettumör'],
-  };
-
-  const keywords = domainKeywords[rotation.domain] || [];
-
-  // Filter goals that match domain keywords
-  const relevantGoals = allGoals.filter(goal => {
-    const searchText = `${goal.title} ${goal.description} ${goal.category}`.toLowerCase();
-    return keywords.some(keyword => searchText.includes(keyword.toLowerCase()));
-  });
-
-  // Also include general goals (professionalism, communication, etc.)
-  const generalGoals = allGoals.filter(goal =>
-    goal.competencyArea === 'professionalism' ||
-    goal.competencyArea === 'kommunikation' ||
-    goal.competencyArea === 'samverkan'
+  // Get goals that combine level + domain + subspecialty
+  const domainGoals = getMålForDomain(
+    rotation.domain as Domain,
+    validLevel as EducationLevel
   );
 
-  // Combine and deduplicate
-  const combined = [...new Set([...relevantGoals, ...generalGoals])];
+  // Prioritize required goals first, then optional
+  const sortedGoals = domainGoals.sort((a, b) => {
+    if (a.required && !b.required) return -1;
+    if (!a.required && b.required) return 1;
+    return 0;
+  });
 
-  // Return goal IDs, max 8 per rotation
-  return combined.slice(0, 8).map(g => g.id);
+  // Return goal IDs, max 10 per rotation (increased from 8 due to better filtering)
+  return sortedGoals.slice(0, 10).map(g => g.id);
 }
 
 /**
