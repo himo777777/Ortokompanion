@@ -66,18 +66,43 @@ const AI_CONFIG = {
 
 /**
  * Helper: Format Socialstyrelsen goals for AI context
+ * ENHANCED: Prioritizes required goals, includes assessment criteria
  * Provides detailed goal information so AI can make intelligent recommendations
  */
-function formatGoalsForAI(goals: SocialstyrelseMål[]): string {
+function formatGoalsForAI(goals: SocialstyrelseMål[], options?: { includeAssessment?: boolean; maxGoals?: number }): string {
   if (goals.length === 0) return 'Inga specifika mål tillgängliga.';
 
-  return goals
-    .slice(0, 10) // Limit to top 10 to avoid token overflow
+  const maxGoals = options?.maxGoals || 10;
+  const includeAssessment = options?.includeAssessment ?? true;
+
+  // Sort: Required goals first, then by category
+  const sortedGoals = [...goals].sort((a, b) => {
+    // Required goals come first
+    if (a.required && !b.required) return -1;
+    if (!a.required && b.required) return 1;
+    // Then alphabetically by category for consistency
+    return a.category.localeCompare(b.category, 'sv');
+  });
+
+  return sortedGoals
+    .slice(0, maxGoals)
     .map((goal, index) => {
-      return `${index + 1}. ${goal.title}
+      let formatted = `${index + 1}. ${goal.title}
    Kategori: ${goal.category}
+   Nivå: ${goal.level}
    Beskrivning: ${goal.description || 'N/A'}
-   Obligatoriskt: ${goal.required ? 'Ja' : 'Nej'}`;
+   Obligatoriskt: ${goal.required ? 'JA ⭐' : 'Nej'}`;
+
+      // Include assessment criteria if requested and available
+      if (includeAssessment && goal.assessmentCriteria && goal.assessmentCriteria.length > 0) {
+        const criteriaList = goal.assessmentCriteria
+          .slice(0, 3) // Top 3 criteria
+          .map(c => `     - ${c.description}`)
+          .join('\n');
+        formatted += `\n   Bedömningskriterier:\n${criteriaList}`;
+      }
+
+      return formatted;
     })
     .join('\n\n');
 }
@@ -161,7 +186,7 @@ Svara i JSON-format:
       {
         model: AI_CONFIG.model,
         messages: [
-          { role: 'system', content: 'Du är en expert svensk ortopedkirurg och pedagog.' },
+          { role: 'system', content: 'Du är en expert svensk ortopedkirurg och pedagog. Referera alltid till Socialstyrelsen-målen när det är relevant för inlärningen.' },
           { role: 'user', content: prompt }
         ],
         temperature: AI_CONFIG.temperature,
@@ -208,6 +233,7 @@ Svara i JSON-format:
 /**
  * AI-powered knowledge gap analysis
  * Analyzes user performance and identifies specific gaps
+ * NOW GOAL-AWARE: Maps gaps to Socialstyrelsen goals
  * WITH: Caching, validation, timeouts, retry logic
  */
 export async function analyzeKnowledgeGaps(
@@ -221,6 +247,7 @@ export async function analyzeKnowledgeGaps(
     }>;
     userLevel: string;
     targetGoals?: string[];
+    currentDomain?: Domain; // NEW: For domain-specific goals
   },
   options?: { abortSignal?: AbortSignal }
 ): Promise<KnowledgeGap> {
@@ -231,16 +258,37 @@ export async function analyzeKnowledgeGaps(
     level: params.userLevel,
     questions: recentPerformance.map(p => `${p.questionId}:${p.correct}`).join(','),
     goals: params.targetGoals?.join(',') || '',
+    domain: params.currentDomain || '',
   });
 
   const cached = aiCache.get<KnowledgeGap>(cacheKey);
   if (cached) return cached;
+
+  // Get Socialstyrelsen goals for context
+  let goalContext = '';
+  if (params.currentDomain) {
+    const relevantGoals = getMålForDomain(
+      params.currentDomain,
+      params.userLevel as any
+    );
+    goalContext = `\n\n=== SOCIALSTYRELSEN-MÅL (${params.currentDomain.toUpperCase()}) ===
+${formatGoalsForAI(relevantGoals, { maxGoals: 8 })}
+
+VIKTIGT: Identifiera vilka mål användaren har svårigheter med baserat på prestationen.`;
+  } else if (params.userLevel) {
+    const levelGoals = getMålForLevel(params.userLevel as any).slice(0, 8);
+    goalContext = `\n\n=== SOCIALSTYRELSEN-MÅL (${params.userLevel.toUpperCase()}) ===
+${formatGoalsForAI(levelGoals, { maxGoals: 8 })}
+
+VIKTIGT: Identifiera vilka mål användaren har svårigheter med baserat på prestationen.`;
+  }
 
   const prompt = `Du är en AI-driven pedagogisk assistent för ortopedisk utbildning.
 
 Analysera denna användarens prestationshistorik:
 
 ANVÄNDARENS NIVÅ: ${params.userLevel}
+${params.currentDomain ? `NUVARANDE DOMÄN: ${params.currentDomain}` : ''}
 
 SENASTE 20 FRÅGOR:
 ${recentPerformance.map((p, i) => `
@@ -249,29 +297,27 @@ ${i + 1}. Domän: ${p.question.domain}, Band: ${p.question.band}
    Hints: ${p.hintsUsed}
    Tid: ${p.timeSpent}s
    Tags: ${p.question.tags.join(', ')}
-`).join('\n')}
-
-${params.targetGoals ? `MÅL: ${params.targetGoals.join(', ')}` : ''}
+`).join('\n')}${goalContext}
 
 Identifiera:
-1. Kunskapsluckor (topics där användaren konsekvent misslyckas)
-2. Styrkor (topics där användaren presterar bra)
-3. Prioriterade studieområden
-4. Övergripande bedömning
+1. Kunskapsluckor (topics där användaren konsekvent misslyckas) - KOPPLA TILL SOCIALSTYRELSEN-MÅL
+2. Styrkor (topics där användaren presterar bra) - KOPPLA TILL SOCIALSTYRELSEN-MÅL
+3. Prioriterade studieområden - REFERERA TILL SPECIFIKA MÅL
+4. Övergripande bedömning mot Socialstyrelsen-målen
 
 Svara i JSON-format:
 {
   "gaps": [
     {
-      "topic": "Ämne",
+      "topic": "Ämne (referera till Mål X om relevant)",
       "severity": "critical/moderate/minor",
       "evidence": ["Bevis 1", "Bevis 2"],
-      "recommendation": "Vad ska göras"
+      "recommendation": "Vad ska göras (referera till mål)"
     }
   ],
-  "strengths": ["Styrka 1", "Styrka 2"],
-  "overallAssessment": "Övergripande bedömning (2-3 meningar)",
-  "priorityStudyTopics": ["Prioritet 1", "Prioritet 2", "Prioritet 3"]
+  "strengths": ["Styrka 1 (Mål X klarad)", "Styrka 2"],
+  "overallAssessment": "Övergripande bedömning mot Socialstyrelsen-målen (2-3 meningar)",
+  "priorityStudyTopics": ["Prioritet 1 (Mål X)", "Prioritet 2", "Prioritet 3"]
 }`;
 
   try {
@@ -280,7 +326,7 @@ Svara i JSON-format:
       {
         model: AI_CONFIG.model,
         messages: [
-          { role: 'system', content: 'Du är en expert på medicinsk pedagogik och kunskapsanalys.' },
+          { role: 'system', content: 'Du är en expert på medicinsk pedagogik och kunskapsanalys. Koppla alltid kunskapsluckor och styrkor till Socialstyrelsen-målen.' },
           { role: 'user', content: prompt }
         ],
         temperature: 0.5,
@@ -324,6 +370,7 @@ Svara i JSON-format:
 /**
  * AI-generated adaptive hints
  * Creates personalized hints based on user's learning style and history
+ * NOW GOAL-AWARE: Links hints to relevant Socialstyrelsen goals
  * WITH: Caching, validation, timeouts, retry logic
  */
 export async function generateAdaptiveHints(
@@ -332,6 +379,7 @@ export async function generateAdaptiveHints(
     userLevel: string;
     learningStyle?: 'visual' | 'analytical' | 'clinical' | 'mixed';
     previousAttempts?: number;
+    currentDomain?: Domain; // NEW: For goal context
   },
   options?: { abortSignal?: AbortSignal }
 ): Promise<AdaptiveHints> {
@@ -344,6 +392,22 @@ export async function generateAdaptiveHints(
   const cached = aiCache.get<AdaptiveHints>(cacheKey);
   if (cached) return cached;
 
+  // Get goal context for better hints
+  let goalContext = '';
+  if (params.currentDomain && params.userLevel) {
+    const relevantGoals = getMålForDomain(
+      params.currentDomain,
+      params.userLevel as any
+    ).slice(0, 3); // Top 3 most relevant
+
+    if (relevantGoals.length > 0) {
+      goalContext = `\n\n=== RELEVANTA SOCIALSTYRELSEN-MÅL ===
+${formatGoalsForAI(relevantGoals, { maxGoals: 3, includeAssessment: false })}
+
+(Koppla gärna ledtrådar till dessa mål)`;
+    }
+  }
+
   const prompt = `Du är en pedagog som skapar adaptiva ledtrådar för ortopedisk utbildning.
 
 FRÅGA: ${params.question.question}
@@ -354,11 +418,12 @@ ${params.question.options.map((opt, i) => `${i + 1}. ${opt}`).join('\n')}
 KORREKT SVAR: ${params.question.correctAnswer}
 
 ANVÄNDARNIVÅ: ${params.userLevel}
+${params.currentDomain ? `DOMÄN: ${params.currentDomain}` : ''}
 INLÄRNINGSSTIL: ${params.learningStyle || 'mixed'}
-${params.previousAttempts ? `TIDIGARE FÖRSÖK: ${params.previousAttempts}` : ''}
+${params.previousAttempts ? `TIDIGARE FÖRSÖK: ${params.previousAttempts}` : ''}${goalContext}
 
 Skapa 3 progressiva ledtrådar:
-- Hint 1: Generell riktning, inga direkta svar
+- Hint 1: Generell riktning, inga direkta svar (koppla till Socialstyrelsen-mål om relevant)
 - Hint 2: Avgränsa alternativ, uteslut fel svar
 - Hint 3: Direkt vägledning mot rätt svar
 
@@ -368,12 +433,12 @@ Anpassa efter inlärningsstil:
 - Clinical: Kliniska tecken, praktiska tips
 - Mixed: Kombination
 
-Lägg till minnesregler om möjligt.
+Lägg till minnesregler om möjligt. Referera till Socialstyrelsen-mål där relevant.
 
 Svara i JSON-format:
 {
   "hints": ["Hint 1", "Hint 2", "Hint 3"],
-  "teachingPoints": ["Punkt 1", "Punkt 2", "Punkt 3"],
+  "teachingPoints": ["Punkt 1 (Mål X om relevant)", "Punkt 2", "Punkt 3"],
   "mnemonicOrTrick": "Minnesregel (om relevant)"
 }`;
 
@@ -383,7 +448,7 @@ Svara i JSON-format:
       {
         model: AI_CONFIG.model,
         messages: [
-          { role: 'system', content: 'Du är expert på pedagogik och minnesregler inom medicin.' },
+          { role: 'system', content: 'Du är expert på pedagogik och minnesregler inom medicin. Koppla ledtrådar till Socialstyrelsen-målen när relevant.' },
           { role: 'user', content: prompt }
         ],
         temperature: 0.8,
@@ -430,6 +495,7 @@ Svara i JSON-format:
 /**
  * AI conversational tutor
  * Interactive Q&A about orthopedic topics
+ * NOW GOAL-AWARE: AI knows Socialstyrelsen goals during conversation
  * WITH: Caching, validation, timeouts
  */
 export async function chatWithAITutor(
@@ -439,6 +505,7 @@ export async function chatWithAITutor(
     context?: {
       currentTopic?: string;
       userLevel?: string;
+      currentDomain?: Domain; // NEW: For goal context
       recentQuestions?: MCQQuestion[];
     };
   },
@@ -448,6 +515,25 @@ export async function chatWithAITutor(
   suggestedQuestions?: string[];
   relatedContent?: string[];
 }> {
+  // Get Socialstyrelsen goals for tutoring context
+  let goalContext = '';
+  if (params.context?.userLevel) {
+    let relevantGoals: SocialstyrelseMål[] = [];
+
+    if (params.context.currentDomain) {
+      relevantGoals = getMålForDomain(
+        params.context.currentDomain,
+        params.context.userLevel as any
+      ).slice(0, 5);
+    } else {
+      relevantGoals = getMålForLevel(params.context.userLevel as any).slice(0, 5);
+    }
+
+    if (relevantGoals.length > 0) {
+      goalContext = `\n\nSOCIALSTYRELSEN-MÅL FÖR ${params.context.userLevel.toUpperCase()}:\n${formatGoalsForAI(relevantGoals, { maxGoals: 5, includeAssessment: false })}\n\n(Referera till dessa mål i dina svar när relevant)`;
+    }
+  }
+
   const systemPrompt = `Du är en erfaren svensk ortopedkirurg och pedagog som hjälper ST-läkare att lära sig ortopedi.
 
 REGLER:
@@ -456,11 +542,13 @@ REGLER:
 - Ge konkreta, kliniskt relevanta svar
 - Använd svenska medicinska termer
 - Hänvisa till svenska riktlinjer när relevant (SVORF, Socialstyrelsen)
+- VIKTIGT: Koppla svar till Socialstyrelsen-mål när relevant (t.ex. "Detta tränar Mål 1: Akut handläggning")
 - Förklara komplexa koncept steg-för-steg
 - Ge exempel från klinisk praktik
 
 ${params.context?.currentTopic ? `AKTUELLT ÄMNE: ${params.context.currentTopic}` : ''}
-${params.context?.userLevel ? `ANVÄNDARNIVÅ: ${params.context.userLevel}` : ''}`;
+${params.context?.userLevel ? `ANVÄNDARNIVÅ: ${params.context.userLevel}` : ''}
+${params.context?.currentDomain ? `AKTUELL DOMÄN: ${params.context.currentDomain}` : ''}${goalContext}`;
 
   const messages = [
     { role: 'system' as const, content: systemPrompt },
@@ -659,6 +747,7 @@ export async function optimizeSRSSchedule(params: {
 /**
  * AI clinical reasoning analyzer
  * Analyzes decision-making in clinical cases
+ * NOW GOAL-AWARE: Links decisions to Socialstyrelsen competencies
  * WITH: Caching, validation, timeouts
  */
 export async function analyzeDecisionMaking(
@@ -671,6 +760,8 @@ export async function analyzeDecisionMaking(
       timeSpent: number;
     }>;
     caseContext: string;
+    userLevel?: string; // NEW: For goal context
+    caseDomain?: Domain; // NEW: For domain-specific goals
   },
   options?: { abortSignal?: AbortSignal }
 ): Promise<DecisionMakingAnalysis> {
@@ -682,37 +773,54 @@ export async function analyzeDecisionMaking(
   const cached = aiCache.get<DecisionMakingAnalysis>(cacheKey);
   if (cached) return cached;
 
-  const prompt = `Analysera denna ST-läkares kliniska beslutsfattande:
+  // Get relevant Socialstyrelsen goals for clinical reasoning context
+  let goalContext = '';
+  if (params.userLevel && params.caseDomain) {
+    const relevantGoals = getMålForDomain(
+      params.caseDomain,
+      params.userLevel as any
+    ).slice(0, 5);
+
+    if (relevantGoals.length > 0) {
+      goalContext = `\n\n=== RELEVANTA SOCIALSTYRELSEN-MÅL ===
+${formatGoalsForAI(relevantGoals, { maxGoals: 5, includeAssessment: true })}
+
+VIKTIGT: Bedöm beslutsfattandet mot dessa kompetenskrav.`;
+    }
+  }
+
+  const prompt = `Analysera denna ${params.userLevel || 'ST-läkares'} kliniska beslutsfattande:
 
 CASE: ${params.caseContext}
+${params.caseDomain ? `DOMÄN: ${params.caseDomain}` : ''}
 
 BESLUT:
 ${params.userDecisions.map((d, i) => `
 Beslut ${i + 1}: ${d.optionChosen}
 - Optimalt: ${d.isOptimal ? 'Ja' : 'Nej'}
 - Beslutst: ${d.timeSpent}s
-`).join('\n')}
+`).join('\n')}${goalContext}
 
 Analysera:
 1. Kvalitet på kliniskt resonemang
-2. Styrkor i beslutsfattandet
-3. Svagheter och förbättringsområden
+2. Styrkor i beslutsfattandet (koppla till Socialstyrelsen-mål om relevant)
+3. Svagheter och förbättringsområden (koppla till mål)
 4. Specifik feedback per beslut
-5. Övergripande rekommendation
+5. Övergripande rekommendation mot kompetenskraven
 
 Svara i JSON-format:
 {
   "reasoningQuality": "excellent/good/needs-improvement/poor",
-  "strengths": ["Styrka 1", "Styrka 2"],
-  "weaknesses": ["Svaghet 1", "Svaghet 2"],
+  "strengths": ["Styrka 1 (Mål X om relevant)", "Styrka 2"],
+  "weaknesses": ["Svaghet 1 (behöver träna Mål X)", "Svaghet 2"],
   "specificFeedback": [
     {
       "decision": "Beslut beskrivning",
-      "feedback": "Feedback text",
+      "feedback": "Feedback text (referera till mål)",
       "improvement": "Förbättringsförslag"
     }
   ],
-  "overallRecommendation": "Övergripande rekommendation"
+  "overallRecommendation": "Övergripande rekommendation kopplat till Socialstyrelsen-målen"
 }`;
 
   try {
@@ -721,7 +829,7 @@ Svara i JSON-format:
       {
         model: AI_CONFIG.model,
         messages: [
-          { role: 'system', content: 'Du är en klinisk handledare som analyserar ST-läkares beslutsfattande.' },
+          { role: 'system', content: 'Du är en klinisk handledare som analyserar ST-läkares beslutsfattande. Bedöm alltid beslutsfattandet mot Socialstyrelsen-kompetenskraven.' },
           { role: 'user', content: prompt }
         ],
         temperature: 0.6,
@@ -842,7 +950,7 @@ Svara i JSON-format med daglig plan och veckomilstolpar.`;
       {
         model: AI_CONFIG.model,
         messages: [
-          { role: 'system', content: 'Du är en expert på medicinsk studieplanering.' },
+          { role: 'system', content: 'Du är en expert på medicinsk studieplanering. Basera alltid studieplan på Socialstyrelsen-målen och referera explicit till dessa.' },
           { role: 'user', content: prompt }
         ],
         temperature: 0.7,
@@ -976,7 +1084,7 @@ Svara i JSON-format:
       {
         model: 'gpt-4o-mini',
         messages: [
-          { role: 'system', content: 'Du är en uppmuntrande lärarcoach inom medicin.' },
+          { role: 'system', content: 'Du är en uppmuntrande lärarcoach inom medicin. Koppla alltid feedback och framsteg till Socialstyrelsen-målen.' },
           { role: 'user', content: prompt }
         ],
         temperature: 0.8,
