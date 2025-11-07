@@ -6,6 +6,20 @@ Systemet är nu konfigurerat för att **ALLTID** prioritera svenska källor för
 
 ### Uppdateringar Gjorda
 
+#### 0. `data/verified-sources.ts` - 28 Nya Svenska Källor Integrerade (2025-11-07)
+
+**TOTALT: 28 nya svenska källor tillagda för ALLA specialiteter**
+
+Breakdown:
+- **Socialstyrelsen**: 4 nationella riktlinjer (höftfraktur, artros, fallprevention, ryggkirurgi)
+- **SVORF vårdprogram**: 8 specialitet-specifika (höftfraktur, öppna frakturer, ACL, rotatorcuff, diskbråck, hand-trauma, fotled, periprotesisk)
+- **Svenska register**: 4 nya (HAKIR, SKAR, Swespine, NKO)
+- **Ortopedhandboken.se**: 8 områden (höft, knä, axel, hand, fot, rygg, trauma, tumör)
+- **SBU rapporter**: 3 specifika (knäartroskopi, rotatorcuff, diskbråck)
+- **Läkemedelsverket**: 3 behandlingsrekommendationer (osteoporos, smärtbehandling, antibiotikaprofylax)
+
+**Total källor i systemet**: ~74 källor (46 ursprungliga + 28 nya)
+
 #### 1. `lib/generation-prompts.ts` - Uppdaterad KÄLLHIERARKI
 
 ```typescript
