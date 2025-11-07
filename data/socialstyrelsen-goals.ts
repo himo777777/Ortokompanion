@@ -1254,6 +1254,11 @@ export function getMålForSubspecialty(subspecialty: 'fotkirurgi' | 'handkirurgi
 /**
  * Get goals for a specific domain (used in question generation)
  * Maps OrtoKompanion domains to relevant Socialstyrelsen goals
+ *
+ * Combines:
+ * 1. Level-specific goals (student/AT/ST1-5)
+ * 2. Domain-specific goals by category filtering
+ * 3. Subspecialty-specific goals (direct inclusion)
  */
 export function getMålForDomain(
   domain: 'trauma' | 'höft' | 'knä' | 'axel-armbåge' | 'hand-handled' | 'fot-fotled' | 'rygg' | 'sport' | 'tumör',
@@ -1262,8 +1267,8 @@ export function getMålForDomain(
   // Get base goals for level
   const levelGoals = getMålForLevel(level);
 
-  // Get all goals for filtering
-  const allGoals = getAllGoals();
+  // Get all goals for category filtering
+  const allGoals = getAllMål();
 
   // Define domain-specific category mappings
   const domainCategories: Record<string, string[]> = {
@@ -1275,6 +1280,8 @@ export function getMålForDomain(
       'Frakturbehandling',
       'Kompartmentsyndrom',
       'Akut handläggning',
+      'Akut ortopedi',
+      'Luxationer',
     ],
     höft: [
       'Ledersättning',
@@ -1282,6 +1289,7 @@ export function getMålForDomain(
       'Revisionskirurgi',
       'Komplexa revisioner',
       'Elektivortopedi',
+      'Proteskirurgi',
     ],
     knä: [
       'Ledersättning',
@@ -1289,12 +1297,15 @@ export function getMålForDomain(
       'Revisionskirurgi',
       'Sportortopedi', // ACL, menisk
       'Elektivortopedi',
+      'Proteskirurgi',
+      'Artroskopi',
     ],
     'axel-armbåge': [
       'Elektivortopedi',
       'Ledersättning',
       'Sportortopedi', // Rotatorcuff
       'Traumaortopedi', // Frakturer
+      'Axelkirurgi',
     ],
     'hand-handled': [
       'Handkirurgi',
@@ -1305,6 +1316,7 @@ export function getMålForDomain(
       'subspeciality-foot',
       'Traumaortopedi', // Fotledsfrakturer
       'Elektivortopedi',
+      'Fotkirurgi',
     ],
     rygg: [
       'Ryggkirurgi',
@@ -1314,6 +1326,8 @@ export function getMålForDomain(
       'Sportortopedi',
       'subspeciality-sport',
       'Traumaortopedi', // Sportskador
+      'Artroskopi',
+      'Idrottsmedicin',
     ],
     tumör: [
       'Tumörortopedi',
@@ -1321,17 +1335,36 @@ export function getMålForDomain(
     ],
   };
 
+  // Get subspecialty-specific goals directly
+  const subspecialtyGoals: Record<string, SocialstyrelseMål[]> = {
+    'fot-fotled': FOTKIRURGI_MÅL,
+    'hand-handled': HANDKIRURGI_MÅL,
+    sport: SPORTORTOPEDI_MÅL,
+    tumör: TUMÖRORTOPEDI_MÅL,
+    // Axel/Knä får sport-mål via kategori-filtrering
+  };
+
   const relevantCategories = domainCategories[domain] || [];
 
   // Filter goals by relevant categories
-  const domainSpecificGoals = allGoals.filter(goal =>
+  const categoryFilteredGoals = allGoals.filter(goal =>
     relevantCategories.some(cat =>
       goal.category.toLowerCase().includes(cat.toLowerCase())
     )
   );
 
-  // Combine level-specific goals with domain-specific goals
-  const combinedGoals = [...levelGoals, ...domainSpecificGoals];
+  // Get direct subspecialty goals for this domain
+  const directSubspecialtyGoals = subspecialtyGoals[domain] || [];
+
+  // Combine all sources:
+  // 1. Level-specific goals
+  // 2. Category-filtered goals
+  // 3. Direct subspecialty goals
+  const combinedGoals = [
+    ...levelGoals,
+    ...categoryFilteredGoals,
+    ...directSubspecialtyGoals,
+  ];
 
   // Remove duplicates by ID
   const uniqueGoals = Array.from(
