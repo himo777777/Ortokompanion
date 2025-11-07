@@ -3,12 +3,14 @@
  * Next-level AI intelligence for OrtoKompanion
  *
  * Features:
- * - Personalized explanations
- * - Knowledge gap analysis
- * - Adaptive hints generation
- * - Clinical reasoning analysis
- * - Study plan generation
- * - Conversational tutoring
+ * - Personalized explanations (goal-aware)
+ * - Knowledge gap analysis (goal-aware)
+ * - Adaptive hints generation (goal-aware)
+ * - Clinical reasoning analysis (goal-aware)
+ * - Study plan generation (goal-aware)
+ * - Conversational tutoring (goal-aware)
+ * - SRS optimization (NEW: goal-aware, exam-focused)
+ * - Specialist readiness assessment (NEW: comprehensive evaluation)
  *
  * Optimizations:
  * - Response validation with Zod
@@ -16,6 +18,7 @@
  * - Request timeouts and retry logic
  * - Comprehensive error handling
  * - Type-safe responses
+ * - All 9 functions integrated with Socialstyrelsen goals
  */
 
 import { MCQQuestion } from '@/data/questions';
@@ -38,6 +41,8 @@ import {
   DecisionMakingAnalysisSchema,
   StudyPlanSchema,
   PerformanceInsightsSchema,
+  SRSOptimizationSchema,
+  SpecialistReadinessSchema,
   AIAPIResponseSchema,
   type PersonalizedExplanation,
   type KnowledgeGap,
@@ -45,6 +50,8 @@ import {
   type DecisionMakingAnalysis,
   type StudyPlan,
   type PerformanceInsights,
+  type SRSOptimization,
+  type SpecialistReadiness,
 } from './ai-schemas';
 import {
   aiCache,
@@ -678,26 +685,44 @@ Svara i JSON-format:
 
 /**
  * AI-powered SRS optimization
- * Predicts which cards user will forget and adjusts scheduling
+ * NOW GOAL-AWARE: Predicts forgetting probability and prioritizes based on Socialstyrelsen goals
+ * WITH: AI analysis, goal prioritization, exam preparation optimization
  */
-export async function optimizeSRSSchedule(params: {
-  cards: SRSCard[];
-  recentPerformance: Array<{
-    cardId: string;
-    grade: number;
-    timeSpent: number;
-    hintsUsed: number;
-  }>;
-}): Promise<{
-  predictions: Array<{
-    cardId: string;
-    forgettingProbability: number; // 0-1
-    recommendedReviewDate: Date;
-    reason: string;
-  }>;
-  optimizationSuggestions: string[];
-}> {
-  // This would use ML model in production, for now use heuristics + AI insights
+export async function optimizeSRSSchedule(
+  params: {
+    cards: SRSCard[];
+    recentPerformance: Array<{
+      cardId: string;
+      grade: number;
+      timeSpent: number;
+      hintsUsed: number;
+    }>;
+    userLevel: string; // NEW: For goal context
+    upcomingExam?: Date; // NEW: Prioritize critical goals if exam soon
+    targetGoals?: string[]; // NEW: Focus on specific goals
+    currentDomain?: Domain; // NEW: Domain context
+  },
+  options?: { abortSignal?: AbortSignal }
+): Promise<SRSOptimization> {
+  const cacheKey = generateCacheKey('srsOptimization', {
+    cards: params.cards.slice(0, 20).map(c => c.id).join(','),
+    performance: params.recentPerformance.slice(0, 10).map(p => `${p.cardId}:${p.grade}`).join(','),
+    level: params.userLevel,
+    domain: params.currentDomain || '',
+  });
+
+  const cached = aiCache.get<SRSOptimization>(cacheKey);
+  if (cached) return cached;
+
+  // Get all relevant Socialstyrelsen goals
+  let allGoals: SocialstyrelseMål[] = [];
+  if (params.currentDomain) {
+    allGoals = getMålForDomain(params.currentDomain, params.userLevel as any);
+  } else {
+    allGoals = getMålForLevel(params.userLevel as any);
+  }
+
+  // Calculate basic heuristics first
   const predictions = params.cards.map(card => {
     const performance = params.recentPerformance.find(p => p.cardId === card.id);
 
@@ -714,8 +739,32 @@ export async function optimizeSRSSchedule(params: {
     // Adjust based on stability
     forgettingProbability *= (1 - card.stability);
 
-    // Recommend earlier review if high probability
-    const daysToAdd = forgettingProbability > 0.7 ?
+    // Link card to Socialstyrelsen goal
+    const linkedGoal = card.relatedGoals && card.relatedGoals.length > 0
+      ? allGoals.find(g => g.id === card.relatedGoals![0])
+      : undefined;
+
+    // Priority score: Higher if goal is required or if exam is soon
+    let priorityScore = 50; // Base score
+
+    if (linkedGoal) {
+      if (linkedGoal.required) priorityScore += 30; // Required goals are critical
+      if (params.targetGoals?.includes(linkedGoal.id)) priorityScore += 20; // User-targeted goals
+    }
+
+    if (forgettingProbability > 0.7) priorityScore += 20; // High forgetting risk
+    if (card.failCount > 2) priorityScore += 15; // Leech cards need attention
+
+    // If exam soon, prioritize even more
+    if (params.upcomingExam) {
+      const daysToExam = Math.floor((params.upcomingExam.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+      if (daysToExam < 30 && linkedGoal?.required) {
+        priorityScore += 25; // CRITICAL before exam
+      }
+    }
+
+    // Recommend earlier review if high probability or high priority
+    const daysToAdd = forgettingProbability > 0.7 || priorityScore > 80 ?
       Math.floor(card.interval * 0.5) :
       card.interval;
 
@@ -725,23 +774,131 @@ export async function optimizeSRSSchedule(params: {
     return {
       cardId: card.id,
       forgettingProbability,
-      recommendedReviewDate: recommendedDate,
+      recommendedReviewDate: recommendedDate.toISOString(),
       reason: forgettingProbability > 0.7 ?
         'Hög risk att glömma - tidig repetition rekommenderas' :
         forgettingProbability > 0.4 ?
         'Måttlig retention - följ standardschema' :
-        'God retention - kan vänta'
+        'God retention - kan vänta',
+      linkedGoalId: linkedGoal?.id,
+      linkedGoalTitle: linkedGoal?.title,
+      priorityScore: Math.min(100, priorityScore),
     };
   });
 
-  return {
-    predictions: predictions.sort((a, b) => b.forgettingProbability - a.forgettingProbability),
-    optimizationSuggestions: [
-      'Fokusera på kort med hög glömskesannolikhet',
-      'Använd aktiv recall istället för passiv läsning',
-      'Repetera svåra kort samma dag',
-    ],
-  };
+  // Sort by priority score (highest first)
+  const sortedPredictions = predictions.sort((a, b) => b.priorityScore - a.priorityScore);
+
+  // Prepare context for AI
+  const topCards = sortedPredictions.slice(0, 10);
+  const cardsContext = topCards.map((p, i) => `
+${i + 1}. Kort: ${p.cardId}
+   Glömskesannolikhet: ${(p.forgettingProbability * 100).toFixed(0)}%
+   Prioritet: ${p.priorityScore}/100
+   Kopplat mål: ${p.linkedGoalTitle || 'Inget specifikt mål'}
+   Rekommenderad repetition: om ${Math.floor((new Date(p.recommendedReviewDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24))} dagar
+`).join('\n');
+
+  // Identify goal-focused review priorities
+  const goalGroups = new Map<string, number>();
+  sortedPredictions.forEach(p => {
+    if (p.linkedGoalId) {
+      goalGroups.set(p.linkedGoalId, (goalGroups.get(p.linkedGoalId) || 0) + 1);
+    }
+  });
+
+  const topGoals = Array.from(goalGroups.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5)
+    .map(([goalId]) => allGoals.find(g => g.id === goalId))
+    .filter(Boolean) as SocialstyrelseMål[];
+
+  const goalContext = topGoals.length > 0
+    ? `\n\n=== FOKUSERA PÅ DESSA MÅL ===\n${formatGoalsForAI(topGoals, { maxGoals: 5, includeAssessment: false })}`
+    : '';
+
+  const prompt = `Du är en AI-assistent som optimerar spaced repetition för en ${params.userLevel}.
+
+=== AKTUELL SITUATION ===
+Antal kort att schemalägga: ${params.cards.length}
+${params.upcomingExam ? `VIKTIGT: Examen om ${Math.floor((params.upcomingExam.getTime() - Date.now()) / (1000 * 60 * 60 * 24))} dagar!` : ''}
+${params.currentDomain ? `Nuvarande domän: ${params.currentDomain}` : ''}
+${params.targetGoals ? `Målsatta mål: ${params.targetGoals.join(', ')}` : ''}
+
+=== TOPP 10 KORT (sorterade efter prioritet) ===
+${cardsContext}${goalContext}
+
+=== UPPGIFT ===
+Ge 3-5 specifika optimeringsförslag för SRS-schemat som:
+1. Prioriterar obligatoriska Socialstyrelsen-mål
+2. Tar hänsyn till glömskesannolikhet
+3. ${params.upcomingExam ? 'Fokuserar på examensförberedelser' : 'Optimerar långsiktig retention'}
+4. Identifierar vilka mål som behöver mest uppmärksamhet idag/denna vecka
+
+Ge också 3-5 "goal-focused review" förslag, t.ex.:
+"Fokusera på Mål 2: Akut handläggning idag - 5 kort behöver repetition"
+
+Svara i JSON-format:
+{
+  "optimizationSuggestions": ["Förslag 1", "Förslag 2", "Förslag 3"],
+  "goalFocusedReview": ["Mål 1: X kort", "Mål 2: Y kort", ...]
+}`;
+
+  try {
+    const response = await makeAIRequest(
+      '/api/ai/generate',
+      {
+        model: AI_CONFIG.model,
+        messages: [
+          { role: 'system', content: 'Du är expert på spaced repetition och medicinsk pedagogik.' },
+          { role: 'user', content: prompt }
+        ],
+        temperature: 0.6,
+        max_tokens: 800,
+        response_format: { type: 'json_object' },
+      },
+      AIAPIResponseSchema.transform((data) => {
+        if (data.error) throw new Error(data.error);
+        if (!data.content) throw new Error('No content in response');
+        return JSON.parse(data.content);
+      }).pipe(z.object({
+        optimizationSuggestions: z.array(z.string()),
+        goalFocusedReview: z.array(z.string()),
+      })),
+      {
+        timeout: AI_CONFIG.timeout,
+        retries: AI_CONFIG.retries,
+        abortSignal: options?.abortSignal,
+      }
+    );
+
+    if (isAISuccess(response)) {
+      const result: SRSOptimization = {
+        predictions: sortedPredictions,
+        optimizationSuggestions: response.data.optimizationSuggestions,
+        goalFocusedReview: response.data.goalFocusedReview,
+      };
+
+      aiCache.set(cacheKey, result, getCacheTTL('learningPath'));
+      return result;
+    }
+
+    // Fallback if AI fails
+    throw new Error(response.error?.message || 'AI request failed');
+  } catch (error) {
+    // Fallback to heuristic-only optimization
+    return {
+      predictions: sortedPredictions,
+      optimizationSuggestions: [
+        'Fokusera på kort med prioritet >80/100',
+        'Repetera obligatoriska Socialstyrelsen-mål först',
+        'Använd aktiv recall för kort med hög glömskesannolikhet',
+      ],
+      goalFocusedReview: topGoals.map(g =>
+        `${g.title}: ${goalGroups.get(g.id)} kort behöver repetition`
+      ),
+    };
+  }
 }
 
 /**
@@ -1122,6 +1279,273 @@ Svara i JSON-format:
       recommendations: ['Fortsätt träna regelbundet'],
       nextMilestone: 'Nästa mål',
       estimatedTimeToMilestone: '2 veckor',
+    };
+  }
+}
+
+/**
+ * AI Specialist Readiness Assessment
+ * NEW: Comprehensive readiness evaluation for specialist exam
+ * Analyzes ALL user data against Socialstyrelsen requirements
+ * WITH: Goal completion tracking, domain mastery, exam prediction
+ */
+export async function assessSpecialistReadiness(
+  params: {
+    userId: string;
+    targetLevel: 'ST5'; // Must be ready for specialist
+    performanceHistory: Array<{
+      questionId: string;
+      question: MCQQuestion;
+      correct: boolean;
+      hintsUsed: number;
+      timeSpent: number;
+      date: Date;
+    }>;
+    completedGoalIds: string[];
+    domainPerformance: Record<Domain, {
+      accuracy: number;
+      questionsAttempted: number;
+      avgTimePerQuestion: number;
+    }>;
+    srsCards?: SRSCard[];
+    examDate?: Date;
+  },
+  options?: { abortSignal?: AbortSignal }
+): Promise<SpecialistReadiness> {
+  const cacheKey = generateCacheKey('specialistReadiness', {
+    userId: params.userId,
+    completedGoals: params.completedGoalIds.slice(0, 10).join(','),
+    totalQuestions: params.performanceHistory.length.toString(),
+    avgAccuracy: Object.values(params.domainPerformance)
+      .reduce((sum, d) => sum + d.accuracy, 0) / Object.keys(params.domainPerformance).length,
+  });
+
+  const cached = aiCache.get<SpecialistReadiness>(cacheKey);
+  if (cached) return cached;
+
+  // Get ALL ST5 Socialstyrelsen goals
+  const allST5Goals = getMålForLevel('ST5');
+  const requiredGoals = allST5Goals.filter(g => g.required);
+  const optionalGoals = allST5Goals.filter(g => !g.required);
+
+  // Calculate goal completion
+  const goalCompletion = allST5Goals.map(goal => {
+    const isCompleted = params.completedGoalIds.includes(goal.id);
+
+    // Estimate completion based on domain performance if available
+    let completionPercentage = isCompleted ? 100 : 0;
+
+    if (!isCompleted && goal.domain) {
+      const domainPerf = params.domainPerformance[goal.domain];
+      if (domainPerf) {
+        completionPercentage = Math.min(95, domainPerf.accuracy * 100);
+      }
+    }
+
+    // Assess status
+    let assessmentStatus: 'klarad' | 'delvis' | 'ej-påbörjad' = 'ej-påbörjad';
+    if (completionPercentage >= 80) assessmentStatus = 'klarad';
+    else if (completionPercentage >= 40) assessmentStatus = 'delvis';
+
+    // Estimate time to completion
+    let estimatedTime = '4+ veckor';
+    if (assessmentStatus === 'klarad') estimatedTime = 'Klar';
+    else if (completionPercentage >= 60) estimatedTime = '1-2 veckor';
+    else if (completionPercentage >= 30) estimatedTime = '2-4 veckor';
+
+    // Priority: Required goals that aren't completed are CRITICAL
+    let priority: 'kritisk' | 'hög' | 'medel' | 'låg' = 'medel';
+    if (goal.required && assessmentStatus === 'ej-påbörjad') priority = 'kritisk';
+    else if (goal.required && assessmentStatus === 'delvis') priority = 'hög';
+    else if (!goal.required && assessmentStatus === 'ej-påbörjad') priority = 'låg';
+
+    return {
+      goalId: goal.id,
+      goalTitle: goal.title,
+      completionPercentage,
+      assessmentStatus,
+      estimatedTimeToCompletion: estimatedTime,
+      priority,
+    };
+  });
+
+  // Calculate overall readiness
+  const requiredGoalCompletion = goalCompletion
+    .filter(gc => requiredGoals.some(rg => rg.id === gc.goalId))
+    .reduce((sum, gc) => sum + gc.completionPercentage, 0) / requiredGoals.length;
+
+  const optionalGoalCompletion = goalCompletion
+    .filter(gc => optionalGoals.some(og => og.id === gc.goalId))
+    .reduce((sum, gc) => sum + gc.completionPercentage, 0) / Math.max(1, optionalGoals.length);
+
+  // Overall readiness: 80% weight on required, 20% on optional
+  const overallReadiness = Math.round(requiredGoalCompletion * 0.8 + optionalGoalCompletion * 0.2);
+
+  // Strongest and weakest domains
+  const domainEntries = Object.entries(params.domainPerformance)
+    .sort((a, b) => b[1].accuracy - a[1].accuracy);
+
+  const strongestDomains = domainEntries.slice(0, 3).map(([domain]) => domain);
+  const weakestDomains = domainEntries.slice(-3).reverse().map(([domain]) => domain);
+
+  // Critical gaps: Required goals not completed
+  const criticalGaps = goalCompletion
+    .filter(gc => gc.priority === 'kritisk' || gc.priority === 'hög')
+    .map(gc => gc.goalTitle);
+
+  // Recent performance trend
+  const recentQuestions = params.performanceHistory.slice(-50);
+  const recentAccuracy = recentQuestions.filter(q => q.correct).length / Math.max(1, recentQuestions.length);
+
+  // Prepare detailed context for AI analysis
+  const performanceContext = `
+=== ÖVERGRIPANDE STATISTIK ===
+Totalt antal frågor: ${params.performanceHistory.length}
+Senaste 50 frågor accuracy: ${(recentAccuracy * 100).toFixed(1)}%
+Genomsnittlig tid per fråga: ${(params.performanceHistory.reduce((s, p) => s + p.timeSpent, 0) / params.performanceHistory.length).toFixed(0)}s
+
+=== DOMÄNPRESTANDA ===
+${Object.entries(params.domainPerformance).map(([domain, perf]) =>
+  `${domain}: ${(perf.accuracy * 100).toFixed(0)}% accuracy (${perf.questionsAttempted} frågor)`
+).join('\n')}
+
+=== MÅLAVKLARING ===
+Obligatoriska mål: ${requiredGoals.length} st
+- Klarade: ${goalCompletion.filter(gc => gc.assessmentStatus === 'klarad' && requiredGoals.some(rg => rg.id === gc.goalId)).length}
+- Delvis: ${goalCompletion.filter(gc => gc.assessmentStatus === 'delvis' && requiredGoals.some(rg => rg.id === gc.goalId)).length}
+- Ej påbörjade: ${goalCompletion.filter(gc => gc.assessmentStatus === 'ej-påbörjad' && requiredGoals.some(rg => rg.id === gc.goalId)).length}
+
+Valbara mål: ${optionalGoals.length} st
+- Klarade: ${goalCompletion.filter(gc => gc.assessmentStatus === 'klarad' && optionalGoals.some(og => og.id === gc.goalId)).length}
+
+=== KRITISKA LUCKOR ===
+${criticalGaps.slice(0, 10).map((gap, i) => `${i + 1}. ${gap}`).join('\n')}
+`;
+
+  const topCriticalGoals = goalCompletion
+    .filter(gc => gc.priority === 'kritisk')
+    .slice(0, 5);
+
+  const topCriticalGoalsContext = topCriticalGoals.length > 0
+    ? `\n\n=== TOPP 5 KRITISKA MÅL ===\n${topCriticalGoals.map((gc, i) =>
+      `${i + 1}. ${gc.goalTitle}\n   Status: ${gc.assessmentStatus}\n   Färdig om: ${gc.estimatedTimeToCompletion}`
+    ).join('\n\n')}`
+    : '';
+
+  const prompt = `Du är en specialist-handledare som bedömer en ST5-läkares examensberedskap.
+
+${performanceContext}${topCriticalGoalsContext}
+
+${params.examDate ? `EXAMENSDATUM: ${params.examDate.toLocaleDateString('sv-SE')} (om ${Math.floor((params.examDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24))} dagar)` : ''}
+
+=== UPPGIFT ===
+Baserat på data ovan, bedöm ST5-läkarens readiness för specialistexamen.
+
+1. **Pass Likelihood (0-100%)**: Sannolikhet att klara specialistexamen
+2. **Recommended Focus**: 3-5 konkreta studieområden att prioritera
+3. **Estimated Ready Date**: När kommer läkaren vara redo? (om ej redan redo)
+4. **Personalized Advice**: 2-3 meningar med personlig rådgivning
+5. **Milestones**: 3 konkreta milstolpar med deadlines och actions
+
+VIKTIGT:
+- Obligatoriska mål MÅSTE vara klarade för godkänt
+- Starkaste domäner: ${strongestDomains.join(', ')}
+- Svagaste domäner: ${weakestDomains.join(', ')}
+- Overall readiness score: ${overallReadiness}%
+
+Svara i JSON-format:
+{
+  "examPrediction": {
+    "passLikelihood": 75,
+    "criticalGaps": ["Kritisk lucka 1", "Kritisk lucka 2"],
+    "recommendedFocus": ["Fokus 1", "Fokus 2", "Fokus 3"],
+    "estimatedReadyDate": "2025-06-15"
+  },
+  "personalizedAdvice": "Din personliga råd här (2-3 meningar)",
+  "milestones": [
+    {
+      "title": "Milstolpe 1",
+      "deadline": "2025-05-01",
+      "requiredActions": ["Action 1", "Action 2"]
+    }
+  ]
+}`;
+
+  try {
+    const response = await makeAIRequest(
+      '/api/ai/generate',
+      {
+        model: AI_CONFIG.model,
+        messages: [
+          { role: 'system', content: 'Du är en erfaren specialist-handledare som bedömer ST-läkares examensberedskap baserat på Socialstyrelsen-krav.' },
+          { role: 'user', content: prompt }
+        ],
+        temperature: 0.5,
+        max_tokens: 1500,
+        response_format: { type: 'json_object' },
+      },
+      AIAPIResponseSchema.transform((data) => {
+        if (data.error) throw new Error(data.error);
+        if (!data.content) throw new Error('No content in response');
+        return JSON.parse(data.content);
+      }).pipe(z.object({
+        examPrediction: z.object({
+          passLikelihood: z.number(),
+          criticalGaps: z.array(z.string()),
+          recommendedFocus: z.array(z.string()),
+          estimatedReadyDate: z.string().optional(),
+        }),
+        personalizedAdvice: z.string(),
+        milestones: z.array(z.object({
+          title: z.string(),
+          deadline: z.string(),
+          requiredActions: z.array(z.string()),
+        })),
+      })),
+      {
+        timeout: AI_CONFIG.timeout,
+        retries: AI_CONFIG.retries,
+        abortSignal: options?.abortSignal,
+      }
+    );
+
+    if (isAISuccess(response)) {
+      const result: SpecialistReadiness = {
+        overallReadiness,
+        goalCompletion,
+        strongestDomains,
+        weakestDomains,
+        examPrediction: response.data.examPrediction,
+        personalizedAdvice: response.data.personalizedAdvice,
+        milestones: response.data.milestones,
+      };
+
+      aiCache.set(cacheKey, result, getCacheTTL('learningPath'));
+      return result;
+    }
+
+    throw new Error(response.error?.message || 'AI request failed');
+  } catch (error) {
+    // Fallback if AI fails
+    return {
+      overallReadiness,
+      goalCompletion,
+      strongestDomains,
+      weakestDomains,
+      examPrediction: {
+        passLikelihood: overallReadiness,
+        criticalGaps: criticalGaps.slice(0, 5),
+        recommendedFocus: weakestDomains,
+        estimatedReadyDate: params.examDate?.toISOString().split('T')[0],
+      },
+      personalizedAdvice: `Din overall readiness är ${overallReadiness}%. Fokusera på att täcka de ${criticalGaps.length} kritiska luckorna i obligatoriska mål.`,
+      milestones: [
+        {
+          title: 'Täck alla obligatoriska mål',
+          deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+          requiredActions: criticalGaps.slice(0, 3),
+        },
+      ],
     };
   }
 }

@@ -69,17 +69,22 @@ export type FollowUpQuestions = z.infer<typeof FollowUpQuestionsSchema>;
 
 /**
  * SRS Optimization Schema
+ * ENHANCED: Now includes goal-awareness and priority scoring
  */
 export const SRSOptimizationSchema = z.object({
   predictions: z.array(
     z.object({
       cardId: z.string(),
       forgettingProbability: z.number().min(0).max(1),
-      recommendedReviewDate: z.date(),
+      recommendedReviewDate: z.string(), // ISO date string
       reason: z.string(),
+      linkedGoalId: z.string().optional(),
+      linkedGoalTitle: z.string().optional(),
+      priorityScore: z.number().min(0).max(100),
     })
   ),
   optimizationSuggestions: z.array(z.string()),
+  goalFocusedReview: z.array(z.string()),
 });
 
 export type SRSOptimization = z.infer<typeof SRSOptimizationSchema>;
@@ -145,6 +150,42 @@ export const PerformanceInsightsSchema = z.object({
 });
 
 export type PerformanceInsights = z.infer<typeof PerformanceInsightsSchema>;
+
+/**
+ * Specialist Readiness Assessment Schema
+ * NEW: Comprehensive readiness evaluation for specialist exam
+ */
+export const SpecialistReadinessSchema = z.object({
+  overallReadiness: z.number().min(0).max(100),
+  goalCompletion: z.array(
+    z.object({
+      goalId: z.string(),
+      goalTitle: z.string(),
+      completionPercentage: z.number().min(0).max(100),
+      assessmentStatus: z.enum(['klarad', 'delvis', 'ej-påbörjad']),
+      estimatedTimeToCompletion: z.string(),
+      priority: z.enum(['kritisk', 'hög', 'medel', 'låg']),
+    })
+  ),
+  strongestDomains: z.array(z.string()),
+  weakestDomains: z.array(z.string()),
+  examPrediction: z.object({
+    passLikelihood: z.number().min(0).max(100),
+    criticalGaps: z.array(z.string()),
+    recommendedFocus: z.array(z.string()),
+    estimatedReadyDate: z.string().optional(),
+  }),
+  personalizedAdvice: z.string(),
+  milestones: z.array(
+    z.object({
+      title: z.string(),
+      deadline: z.string(),
+      requiredActions: z.array(z.string()),
+    })
+  ),
+});
+
+export type SpecialistReadiness = z.infer<typeof SpecialistReadinessSchema>;
 
 /**
  * Generic AI API Response Schema (wrapper from our API)
