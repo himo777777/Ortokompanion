@@ -7,6 +7,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { getOrCreateUser, createSession, updateStreak, incrementXP } from '@/lib/db-utils'
+import {
+  CreateSessionSchema,
+  validateRequest,
+  formatValidationError,
+} from '@/lib/api-validation'
 
 /**
  * POST /api/profile/session
@@ -27,8 +32,20 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
-    // Get session data from request
+    // Validate request body
     const body = await req.json()
+    const validation = validateRequest(CreateSessionSchema, body)
+
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          error: 'Invalid request data',
+          details: formatValidationError(validation.error),
+        },
+        { status: 400 }
+      )
+    }
+
     const {
       questionsAnswered,
       correctAnswers,
@@ -39,22 +56,7 @@ export async function POST(req: NextRequest) {
       topics,
       mistakes,
       relatedGoals,
-    } = body
-
-    // Validate required fields
-    if (
-      questionsAnswered === undefined ||
-      correctAnswers === undefined ||
-      xpGained === undefined ||
-      !domain ||
-      !band ||
-      !activityType
-    ) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      )
-    }
+    } = validation.data
 
     // Create session record
     const session = await createSession(user.id, {

@@ -15,6 +15,12 @@ import {
   updateProfile,
   profileToIntegratedUserProfile,
 } from '@/lib/db-utils'
+import {
+  CreateProfileSchema,
+  UpdateProfileSchema,
+  validateRequest,
+  formatValidationError,
+} from '@/lib/api-validation'
 import type { IntegratedUserProfile } from '@/types/integrated'
 
 /**
@@ -71,10 +77,22 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // Get or create user
+    // Validate request body
     const body = await req.json()
-    const email = body.email || ''
-    const user = await getOrCreateUser(clerkId, email)
+    const validation = validateRequest(CreateProfileSchema, body)
+
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          error: 'Invalid request data',
+          details: formatValidationError(validation.error),
+        },
+        { status: 400 }
+      )
+    }
+
+    const { profile: profileData, email } = validation.data
+    const user = await getOrCreateUser(clerkId, email || '')
 
     if (!user) {
       return NextResponse.json(
@@ -94,8 +112,6 @@ export async function POST(req: NextRequest) {
     }
 
     // Create new profile
-    const profileData: Partial<IntegratedUserProfile> = body.profile
-
     if (!profileData.role) {
       return NextResponse.json(
         { error: 'Role is required' },
@@ -103,7 +119,7 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const profile = await createProfile(user.id, profileData)
+    const profile = await createProfile(user.id, profileData as Partial<IntegratedUserProfile>)
 
     const userProfile = profileToIntegratedUserProfile(profile)
 
@@ -149,11 +165,22 @@ export async function PUT(req: NextRequest) {
       )
     }
 
-    // Update profile
+    // Validate request body
     const body = await req.json()
-    const updates: Partial<IntegratedUserProfile> = body.updates
+    const validation = validateRequest(UpdateProfileSchema, body)
 
-    const updatedProfile = await updateProfile(user.id, updates)
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          error: 'Invalid request data',
+          details: formatValidationError(validation.error),
+        },
+        { status: 400 }
+      )
+    }
+
+    const { updates } = validation.data
+    const updatedProfile = await updateProfile(user.id, updates as Partial<IntegratedUserProfile>)
 
     const userProfile = profileToIntegratedUserProfile(updatedProfile)
 
