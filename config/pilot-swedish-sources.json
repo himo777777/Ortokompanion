@@ -1,0 +1,123 @@
+{
+  "name": "Pilot Generation med Svenska Källor",
+  "description": "Första batch med 50 frågor prioriterat mot kritiska gap, alla med svenska källor först",
+  "quality_requirements": {
+    "medical_accuracy": ">99%",
+    "source_requirement": "Minst 2 källor, svenska källor prioriterade först",
+    "swedish_terminology": "Inga anglicismer, korrekt medicinsk svenska"
+  },
+  "batches": [
+    {
+      "name": "Trauma Band A - Grundläggande",
+      "domain": "trauma",
+      "level": "student",
+      "specificTopics": [
+        "ATLS ABCDE",
+        "Frakturterminologi",
+        "Öppen vs sluten fraktur",
+        "Compartmentsyndrom basics"
+      ],
+      "prioritySources": [
+        "atls-sverige-2022",
+        "svorf-handbook-2023",
+        "socialstyrelsen-2021"
+      ],
+      "bandDistribution": {
+        "A": 10
+      },
+      "startId": 1001,
+      "output": "generated/pilot-trauma-band-a.json"
+    },
+    {
+      "name": "Tumör Band A - Grundläggande",
+      "domain": "tumör",
+      "level": "student",
+      "specificTopics": [
+        "Benign vs malign tumörer",
+        "Röda flaggor",
+        "Vanliga benigna tumörer (enchondrom, osteokondrom)",
+        "Metastaser basics"
+      ],
+      "prioritySources": [
+        "who-bone-tumours-2020",
+        "campbell-13ed",
+        "socialstyrelsen-2021"
+      ],
+      "bandDistribution": {
+        "A": 10
+      },
+      "startId": 1011,
+      "output": "generated/pilot-tumor-band-a.json"
+    },
+    {
+      "name": "Sport Band A - Grundläggande",
+      "domain": "sport",
+      "level": "at",
+      "specificTopics": [
+        "Idrottsskador akut handläggning",
+        "PRICE-principen",
+        "Vanliga knäskador (ACL, menisk)",
+        "Fotled distorsion"
+      ],
+      "prioritySources": [
+        "rikskna-2024",
+        "svorf-handbook-2023",
+        "aaos-acl-2022"
+      ],
+      "bandDistribution": {
+        "A": 10
+      },
+      "startId": 1021,
+      "output": "generated/pilot-sport-band-a.json"
+    },
+    {
+      "name": "Höft Band B - Intermediär",
+      "domain": "höft",
+      "level": "st1",
+      "specificTopics": [
+        "Garden-klassifikation",
+        "Behandlingsalgoritm collumfrakturer",
+        "Hemiprotes vs totalprotes",
+        "Rikshöft data"
+      ],
+      "prioritySources": [
+        "rikshoft-2024",
+        "socialstyrelsen-2021",
+        "nice-hip-fracture-2023"
+      ],
+      "bandDistribution": {
+        "B": 10
+      },
+      "startId": 1031,
+      "output": "generated/pilot-hoeft-band-b.json"
+    },
+    {
+      "name": "Knä Band B - Intermediär",
+      "domain": "knä",
+      "level": "st1",
+      "specificTopics": [
+        "Meniskskador diagnostik",
+        "ACL-rekonstruktion indikationer",
+        "Patellofemoral smärta",
+        "Knäartroskopi indikationer"
+      ],
+      "prioritySources": [
+        "rikskna-2024",
+        "svorf-handbook-2023",
+        "aaos-acl-2022"
+      ],
+      "bandDistribution": {
+        "B": 10
+      },
+      "startId": 1041,
+      "output": "generated/pilot-kna-band-b.json"
+    }
+  ],
+  "total_questions": 50,
+  "estimated_cost_usd": 0.10,
+  "estimated_review_time_hours": 2.5,
+  "reviewer_requirements": [
+    "1 legitimerad ortoped för medical review",
+    "1 ST-läkare för peer review"
+  ]
+}
