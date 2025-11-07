@@ -55,7 +55,9 @@ export async function getOrCreateUser(clerkId: string, email: string) {
     let user = await getUserByClerkId(clerkId)
 
     if (!user) {
-      user = await createUserFromClerk(clerkId, email)
+      const newUser = await createUserFromClerk(clerkId, email)
+      // Fetch again with profile included
+      user = await getUserByClerkId(clerkId)
     }
 
     return user
@@ -111,14 +113,14 @@ export async function createProfile(
         lifetimeXP: profileData.gamification?.lifetimeXP || 0,
 
         // JSON fields
-        progression: profileData.progression as Prisma.InputJsonValue || {},
-        socialstyrelseMålProgress: profileData.socialstyrelseMålProgress as Prisma.InputJsonValue || [],
-        wrongQuestions: profileData.wrongQuestions as Prisma.InputJsonValue || [],
-        preferences: profileData.preferences as Prisma.InputJsonValue || {},
+        progression: (profileData.progression as unknown as Prisma.InputJsonValue) || {},
+        socialstyrelseMålProgress: (profileData.socialstyrelseMålProgress as unknown as Prisma.InputJsonValue) || [],
+        wrongQuestions: (profileData.wrongQuestions as unknown as Prisma.InputJsonValue) || [],
+        preferences: (profileData.preferences as unknown as Prisma.InputJsonValue) || {},
 
         // Rotation data
-        rotationTimeline: profileData.rotationTimeline as Prisma.InputJsonValue,
-        orthoPlacement: profileData.orthoPlacement as Prisma.InputJsonValue,
+        rotationTimeline: profileData.rotationTimeline as unknown as Prisma.InputJsonValue,
+        orthoPlacement: profileData.orthoPlacement as unknown as Prisma.InputJsonValue,
         placementTiming: profileData.placementTiming,
       },
     })
@@ -189,14 +191,14 @@ export async function updateProfile(
     }
 
     // JSON fields
-    if (updates.progression) updateData.progression = updates.progression as Prisma.InputJsonValue
-    if (updates.socialstyrelseMålProgress) updateData.socialstyrelseMålProgress = updates.socialstyrelseMålProgress as Prisma.InputJsonValue
-    if (updates.wrongQuestions) updateData.wrongQuestions = updates.wrongQuestions as Prisma.InputJsonValue
-    if (updates.preferences) updateData.preferences = updates.preferences as Prisma.InputJsonValue
+    if (updates.progression) updateData.progression = updates.progression as unknown as Prisma.InputJsonValue
+    if (updates.socialstyrelseMålProgress) updateData.socialstyrelseMålProgress = updates.socialstyrelseMålProgress as unknown as Prisma.InputJsonValue
+    if (updates.wrongQuestions) updateData.wrongQuestions = updates.wrongQuestions as unknown as Prisma.InputJsonValue
+    if (updates.preferences) updateData.preferences = updates.preferences as unknown as Prisma.InputJsonValue
 
     // Rotation data
-    if (updates.rotationTimeline) updateData.rotationTimeline = updates.rotationTimeline as Prisma.InputJsonValue
-    if (updates.orthoPlacement) updateData.orthoPlacement = updates.orthoPlacement as Prisma.InputJsonValue
+    if (updates.rotationTimeline) updateData.rotationTimeline = updates.rotationTimeline as unknown as Prisma.InputJsonValue
+    if (updates.orthoPlacement) updateData.orthoPlacement = updates.orthoPlacement as unknown as Prisma.InputJsonValue
     if (updates.placementTiming) updateData.placementTiming = updates.placementTiming
 
     const profile = await prisma.profile.update({
@@ -276,7 +278,7 @@ export async function createSession(
         band: sessionData.band,
         activityType: sessionData.activityType,
         topics: sessionData.topics,
-        mistakes: sessionData.mistakes as Prisma.InputJsonValue[],
+        mistakes: sessionData.mistakes as unknown as Prisma.InputJsonValue[],
         relatedGoals: sessionData.relatedGoals,
       },
     })
@@ -347,12 +349,12 @@ export async function saveDailyMix(
       where: { userId },
       update: {
         date,
-        mixData: mixData as Prisma.InputJsonValue,
+        mixData: mixData as unknown as Prisma.InputJsonValue,
       },
       create: {
         userId,
         date,
-        mixData: mixData as Prisma.InputJsonValue,
+        mixData: mixData as unknown as Prisma.InputJsonValue,
       },
     })
     return dailyMix

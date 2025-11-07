@@ -5,8 +5,10 @@
 
 import React, { ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
+import { beforeEach } from 'vitest';
 import { IntegratedProvider } from '@/context/IntegratedContext';
-import type { IntegratedUserProfile, DailyMix } from '@/types/integrated';
+import type { IntegratedUserProfile } from '@/types/integrated';
+import type { DailyMix } from '@/types/progression';
 
 // Mock localStorage
 export const mockLocalStorage = (() => {

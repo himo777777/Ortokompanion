@@ -234,7 +234,7 @@ describe('SRS Algorithm', () => {
         { ...mockCard, id: '3', isLeech: false, stability: 0.5 },
       ];
 
-      const prioritized = prioritizeCards(cards);
+      const prioritized = prioritizeCards(cards, 'trauma');
 
       expect(prioritized[0].id).toBe('2'); // Leech first
     });
@@ -246,7 +246,7 @@ describe('SRS Algorithm', () => {
         { ...mockCard, id: '3', isLeech: false, stability: 0.5 },
       ];
 
-      const prioritized = prioritizeCards(cards);
+      const prioritized = prioritizeCards(cards, 'trauma');
 
       expect(prioritized[0].id).toBe('2'); // Lowest stability first
       expect(prioritized[1].id).toBe('3');
@@ -264,7 +264,7 @@ describe('SRS Algorithm', () => {
         { ...mockCard, id: '2', dueDate: lastWeek, isLeech: false, stability: 0.5 },
       ];
 
-      const prioritized = prioritizeCards(cards);
+      const prioritized = prioritizeCards(cards, 'trauma');
 
       expect(prioritized[0].id).toBe('2'); // Most overdue first
     });
