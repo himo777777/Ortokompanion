@@ -19,7 +19,12 @@
     "add-tutormode": "npx tsx scripts/add-tutormode.ts",
     "map-content-to-goals": "npx tsx scripts/map-content-to-goals.ts",
     "test-goal-system": "npx tsx scripts/test-goal-generation.ts",
-    "generate-goal-questions": "npx tsx scripts/generate-goal-questions.ts"
+    "generate-goal-questions": "npx tsx scripts/generate-goal-questions.ts",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "db:seed": "npx tsx prisma/seed.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.34.3",
@@ -31,10 +36,10 @@
     "lucide-react": "^0.469.0",
     "next": "^15.1.7",
     "openai": "^4.77.1",
-    "prisma": "^6.19.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "recharts": "^3.3.0",
+    "svix": "^1.81.0",
     "zod": "^3.25.76"
   },
   "devDependencies": {
@@ -54,6 +59,7 @@
     "jsdom": "^27.1.0",
     "msw": "^2.12.0",
     "postcss": "^8.4.49",
+    "prisma": "^6.19.0",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3",
     "vitest": "^4.0.7"
