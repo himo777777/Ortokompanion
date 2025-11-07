@@ -940,15 +940,14 @@ export const VERIFIED_SOURCES: Record<string, SourceReference> = {
   'hakir-2024': {
     id: 'hakir-2024',
     type: 'registry-data',
-    title: 'Svenska Höftartroskopregistret (HAKIR) - Årsrapport 2024',
-    author: 'HAKIR',
+    title: 'HAKIR - Handkirurgiskt Kvalitetsregister Årsrapport 2024',
+    author: 'Svenska Handkirurgiska Föreningen',
     year: 2024,
-    url: 'https://hakir.registercentrum.se/arsrapporter/p/ByCsgmR2f',
+    url: 'https://hakir.se/',
     verificationStatus: 'verified',
     lastVerified: createDate(2025, 11, 7),
     verifiedBy: 'Manual',
-    publicationDate: createDate(2024, 9, 1),
-    expirationDate: createDate(2026, 9, 1),
+    publicationDate: createDate(2024, 8, 28),
     updateFrequency: 'annual',
     evidenceLevel: '1B',
     reliability: 98,
@@ -1230,6 +1229,154 @@ export const VERIFIED_SOURCES: Record<string, SourceReference> = {
     updateFrequency: 'annual',
     evidenceLevel: '1A',
     reliability: 99,
+  },
+
+  // ============================================================================
+  // PHASE 2: ADDITIONAL SWEDISH SOURCES - Added 2025-11-07
+  // Research-identified sources to fill critical gaps
+  // Total: 8 NEW sources (2 critical, 6 high priority)
+  // Note: HAKIR already existed from Phase 1, corrected title
+  // ============================================================================
+
+  // CRITICAL PRIORITY: Regional Guidelines - Spinal Stenosis
+  'viss-spinal-stenos-2024': {
+    id: 'viss-spinal-stenos-2024',
+    type: 'clinical-guideline',
+    title: 'VISS Vårdprogram: Lumbal Spinal Stenos',
+    author: 'Region Stockholm - Nationellt kliniskt kunskapsstöd',
+    year: 2024,
+    url: 'https://viss.nu/kunskapsstod/vardprogram/lumbal-spinal-stenos',
+    verificationStatus: 'verified',
+    lastVerified: createDate(2025, 11, 7),
+    verifiedBy: 'Manual',
+    publicationDate: createDate(2024, 1, 1),
+    updateFrequency: 'biannual',
+    evidenceLevel: '1A',
+    reliability: 98,
+  },
+
+  // CRITICAL PRIORITY: National Care Program - Hip Fracture 2024
+  'npo-hoftfraktur-2024': {
+    id: 'npo-hoftfraktur-2024',
+    type: 'clinical-guideline',
+    title: 'Nationellt Vårdprogram för Höftfraktur 2024',
+    author: 'Nationellt Programområde Rörelseorganens Sjukdomar & SOF',
+    year: 2024,
+    url:
+      'https://vardpersonal.1177.se/globalassets/nkk/nationell/media/dokument/kunskapsstod/vardprogram/nationellt-vardprogram-for-hoftfraktur.pdf',
+    verificationStatus: 'verified',
+    lastVerified: createDate(2025, 11, 7),
+    verifiedBy: 'Manual',
+    publicationDate: createDate(2024, 1, 15),
+    updateFrequency: 'biannual',
+    evidenceLevel: '1A',
+    reliability: 99,
+  },
+
+  // HIGH PRIORITY: Quality Registers - Foot Surgery
+  'riksfot-2023': {
+    id: 'riksfot-2023',
+    type: 'registry-data',
+    title: 'Riksfot/Swefoot - Svenska Fotkirurgiregistret Årsrapport 2023',
+    author: 'Svenska Fotkirurgiska Sällskapet',
+    year: 2023,
+    url:
+      'https://registercentrum.blob.core.windows.net/fot/r/RIKSFOT-rsrapport-23_slutv-8tAEujDGM.pdf',
+    verificationStatus: 'verified',
+    lastVerified: createDate(2025, 11, 7),
+    verifiedBy: 'Manual',
+    publicationDate: createDate(2023, 12, 1),
+    updateFrequency: 'annual',
+    evidenceLevel: '1B',
+    reliability: 98,
+  },
+
+  // HIGH PRIORITY: Tertiary Hospital - Skeletal Metastases
+  'karolinska-skelettmetastaser-2021': {
+    id: 'karolinska-skelettmetastaser-2021',
+    type: 'clinical-guideline',
+    title: 'Vårdprogram för Kirurgisk Behandling av Skelettmetastaser',
+    author: 'Karolinska Universitetssjukhuset',
+    year: 2021,
+    url:
+      'https://www.karolinska.se/499bd2/globalassets/global/1-teman/tema-akut-och-reparativ-medicin/me--trauma-akutkirurgi-och-ortopedi/vardprogram-skelettmetastaser.pdf',
+    verificationStatus: 'verified',
+    lastVerified: createDate(2025, 11, 7),
+    verifiedBy: 'Manual',
+    publicationDate: createDate(2021, 1, 1),
+    updateFrequency: 'as-needed',
+    evidenceLevel: '2A',
+    reliability: 96,
+  },
+
+  // HIGH PRIORITY: National Care Program - Distal Radius Fractures
+  'npo-distal-radius-2021': {
+    id: 'npo-distal-radius-2021',
+    type: 'clinical-guideline',
+    title: 'Nationellt Vårdprogram för Behandling av Distala Radiusfrakturer',
+    author: 'Nationellt Programområde Rörelseorganens Sjukdomar & SOF',
+    year: 2021,
+    url:
+      'https://d2flujgsl7escs.cloudfront.net/external/Nationellt+v%C3%A5rdprogram+f%C3%B6r+behandling+av+distala+radiusfrakturer.pdf',
+    verificationStatus: 'verified',
+    lastVerified: createDate(2025, 11, 7),
+    verifiedBy: 'Manual',
+    publicationDate: createDate(2021, 9, 1),
+    updateFrequency: 'biannual',
+    evidenceLevel: '1A',
+    reliability: 98,
+  },
+
+  // HIGH PRIORITY: Subspecialty Society - Shoulder Surgery Indications
+  'ssas-axelkirurgi-indikationer': {
+    id: 'ssas-axelkirurgi-indikationer',
+    type: 'clinical-guideline',
+    title: 'Nationella Medicinska Indikationer för Axelkirurgi',
+    author: 'Svenska Skulder- och Armbågssällskapet (SSAS) & NKO',
+    year: 2006,
+    url: 'https://ssas.se/files/docs/indik axelkir NKO.pdf',
+    verificationStatus: 'verified',
+    lastVerified: createDate(2025, 11, 7),
+    verifiedBy: 'Manual',
+    publicationDate: createDate(2006, 1, 1),
+    updateFrequency: 'as-needed',
+    evidenceLevel: '2A',
+    reliability: 95,
+  },
+
+  // HIGH PRIORITY: Quality Registers - Shoulder and Elbow
+  'ssar-2024': {
+    id: 'ssar-2024',
+    type: 'registry-data',
+    title: 'SSAR - Svenska Skulder- och Armbågsregistret',
+    author: 'Svenska Skulder- och Armbågssällskapet (SSAS)',
+    year: 2024,
+    url: 'https://www.ssar-rapport.se/',
+    verificationStatus: 'verified',
+    lastVerified: createDate(2025, 11, 7),
+    verifiedBy: 'Manual',
+    publicationDate: createDate(2024, 1, 1),
+    updateFrequency: 'annual',
+    evidenceLevel: '1B',
+    reliability: 98,
+  },
+
+  // HIGH PRIORITY: Perioperative Management - Thromboprophylaxis
+  'janusinfo-trombosprofylax-2018': {
+    id: 'janusinfo-trombosprofylax-2018',
+    type: 'clinical-guideline',
+    title: 'Riktlinjer för Trombosprofylax vid Ortopedisk Kirurgi',
+    author: 'Janusinfo Expertgrupp - Region Stockholm',
+    year: 2018,
+    url:
+      'https://janusinfo.se/behandling/expertgruppsutlatanden/koagulationssjukdomarochvenostromboembolism/koagulationssjukdomarochplasmaprodukter/riktlinjerfortrombosprofylaxvidortopediskkirurgi.5.31eea6bb16990d7cd3b157fd.html',
+    verificationStatus: 'verified',
+    lastVerified: createDate(2025, 11, 7),
+    verifiedBy: 'Manual',
+    publicationDate: createDate(2018, 1, 1),
+    updateFrequency: 'biannual',
+    evidenceLevel: '1A',
+    reliability: 98,
   },
 
 };
