@@ -18,7 +18,7 @@ import { Domain } from '@/types/onboarding';
 import { DifficultyBand } from '@/types/progression';
 import { SourceReference } from '@/types/verification';
 import { VERIFIED_SOURCES } from '@/data/verified-sources';
-import { getMålForLevel, getMålForSubspecialty } from '@/data/socialstyrelsen-goals';
+import { getMålForLevel, getMålForSubspecialty, getMålForDomain } from '@/data/socialstyrelsen-goals';
 import {
   generateQuestionBatch,
   generateWithBandDistribution,
@@ -126,9 +126,9 @@ async function runSingleGeneration(options: CLIOptions) {
   const sources = filterSourcesByDomain(domain);
   console.log(`✅ Found ${sources.length} relevant sources\n`);
 
-  // Get goals
-  const goals = getMålForLevel(level);
-  console.log(`✅ Found ${goals.length} relevant goals\n`);
+  // Get domain-specific goals (combines level + domain filtering)
+  const goals = getMålForDomain(domain, level);
+  console.log(`✅ Found ${goals.length} relevant goals for ${domain} @ ${level}\n`);
 
   // Generate
   let result;
@@ -208,7 +208,7 @@ async function runBatchGeneration(batchName: string) {
 
   // Get sources and goals
   const sources = filterSourcesByDomain(batch.domain);
-  const goals = getMålForLevel(batch.level);
+  const goals = getMålForDomain(batch.domain, batch.level);
 
   // Generate
   const result = await generateWithBandDistribution({
@@ -256,7 +256,7 @@ async function runConfigGeneration(configPath: string) {
     console.log('='.repeat(60));
 
     const sources = filterSourcesByDomain(batch.domain);
-    const goals = getMålForLevel(batch.level);
+    const goals = getMålForDomain(batch.domain, batch.level);
 
     const result = await generateWithBandDistribution({
       domain: batch.domain,

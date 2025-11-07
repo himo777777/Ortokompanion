@@ -1252,6 +1252,96 @@ export function getMålForSubspecialty(subspecialty: 'fotkirurgi' | 'handkirurgi
 }
 
 /**
+ * Get goals for a specific domain (used in question generation)
+ * Maps OrtoKompanion domains to relevant Socialstyrelsen goals
+ */
+export function getMålForDomain(
+  domain: 'trauma' | 'höft' | 'knä' | 'axel-armbåge' | 'hand-handled' | 'fot-fotled' | 'rygg' | 'sport' | 'tumör',
+  level: 'student' | 'at' | 'st1' | 'st2' | 'st3' | 'st4' | 'st5' | 'st-allmänmedicin' | 'st-akutsjukvård' | 'specialist-ortopedi' | 'specialist-allmänmedicin' | 'specialist-akutsjukvård'
+): SocialstyrelseMål[] {
+  // Get base goals for level
+  const levelGoals = getMålForLevel(level);
+
+  // Get all goals for filtering
+  const allGoals = getAllGoals();
+
+  // Define domain-specific category mappings
+  const domainCategories: Record<string, string[]> = {
+    trauma: [
+      'Traumaortopedi',
+      'Traumahandläggning',
+      'Akut traumahandläggning',
+      'Frakturhandläggning akut',
+      'Frakturbehandling',
+      'Kompartmentsyndrom',
+      'Akut handläggning',
+    ],
+    höft: [
+      'Ledersättning',
+      'Avancerad artroplastik',
+      'Revisionskirurgi',
+      'Komplexa revisioner',
+      'Elektivortopedi',
+    ],
+    knä: [
+      'Ledersättning',
+      'Avancerad artroplastik',
+      'Revisionskirurgi',
+      'Sportortopedi', // ACL, menisk
+      'Elektivortopedi',
+    ],
+    'axel-armbåge': [
+      'Elektivortopedi',
+      'Ledersättning',
+      'Sportortopedi', // Rotatorcuff
+      'Traumaortopedi', // Frakturer
+    ],
+    'hand-handled': [
+      'Handkirurgi',
+      'subspeciality-hand',
+      'Traumaortopedi', // Handfrakturer
+    ],
+    'fot-fotled': [
+      'subspeciality-foot',
+      'Traumaortopedi', // Fotledsfrakturer
+      'Elektivortopedi',
+    ],
+    rygg: [
+      'Ryggkirurgi',
+      'Traumaortopedi', // Ryggradfrakturer
+    ],
+    sport: [
+      'Sportortopedi',
+      'subspeciality-sport',
+      'Traumaortopedi', // Sportskador
+    ],
+    tumör: [
+      'Tumörortopedi',
+      'subspeciality-tumor',
+    ],
+  };
+
+  const relevantCategories = domainCategories[domain] || [];
+
+  // Filter goals by relevant categories
+  const domainSpecificGoals = allGoals.filter(goal =>
+    relevantCategories.some(cat =>
+      goal.category.toLowerCase().includes(cat.toLowerCase())
+    )
+  );
+
+  // Combine level-specific goals with domain-specific goals
+  const combinedGoals = [...levelGoals, ...domainSpecificGoals];
+
+  // Remove duplicates by ID
+  const uniqueGoals = Array.from(
+    new Map(combinedGoals.map(goal => [goal.id, goal])).values()
+  );
+
+  return uniqueGoals;
+}
+
+/**
  * Competency areas for categorization
  */
 export const COMPETENCY_AREAS = {
