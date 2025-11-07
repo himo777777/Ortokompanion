@@ -500,7 +500,144 @@ Svara i JSON-format:
 }
 
 /**
- * AI conversational tutor
+ * AI conversational tutor (STREAMING VERSION)
+ * NEW: Real-time streaming responses for better UX
+ * Interactive Q&A with instant feedback as AI "thinks"
+ * WITH: Streaming API, abort support, goal awareness
+ */
+export async function* chatWithAITutorStreaming(
+  params: {
+    userMessage: string;
+    conversationHistory: Array<{ role: 'user' | 'assistant'; content: string }>;
+    context?: {
+      currentTopic?: string;
+      userLevel?: string;
+      currentDomain?: Domain;
+      recentQuestions?: MCQQuestion[];
+    };
+  },
+  options?: { abortSignal?: AbortSignal }
+): AsyncGenerator<string, void, unknown> {
+  // Get Socialstyrelsen goals for tutoring context
+  let goalContext = '';
+  if (params.context?.userLevel) {
+    let relevantGoals: SocialstyrelseMål[] = [];
+
+    if (params.context.currentDomain) {
+      relevantGoals = getMålForDomain(
+        params.context.currentDomain,
+        params.context.userLevel as any
+      ).slice(0, 5);
+    } else {
+      relevantGoals = getMålForLevel(params.context.userLevel as any).slice(0, 5);
+    }
+
+    if (relevantGoals.length > 0) {
+      goalContext = `\n\nSOCIALSTYRELSEN-MÅL FÖR ${params.context.userLevel.toUpperCase()}:\n${formatGoalsForAI(relevantGoals, { maxGoals: 5, includeAssessment: false })}\n\n(Referera till dessa mål i dina svar när relevant)`;
+    }
+  }
+
+  const systemPrompt = `Du är en erfaren svensk ortopedkirurg och pedagog som hjälper ST-läkare att lära sig ortopedi.
+
+REGLER:
+- Svara på svenska
+- Var pedagogisk och uppmuntrande
+- Ge konkreta, kliniskt relevanta svar
+- Använd svenska medicinska termer
+- Hänvisa till svenska riktlinjer när relevant (SVORF, Socialstyrelsen)
+- VIKTIGT: Koppla svar till Socialstyrelsen-mål när relevant (t.ex. "Detta tränar Mål 1: Akut handläggning")
+- Förklara komplexa koncept steg-för-steg
+- Ge exempel från klinisk praktik
+
+${params.context?.currentTopic ? `AKTUELLT ÄMNE: ${params.context.currentTopic}` : ''}
+${params.context?.userLevel ? `ANVÄNDARNIVÅ: ${params.context.userLevel}` : ''}
+${params.context?.currentDomain ? `AKTUELL DOMÄN: ${params.context.currentDomain}` : ''}${goalContext}`;
+
+  const messages = [
+    { role: 'system' as const, content: systemPrompt },
+    ...params.conversationHistory,
+    { role: 'user' as const, content: params.userMessage },
+  ];
+
+  try {
+    // Call streaming API endpoint
+    const response = await fetch('/api/ai/chat-stream', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages,
+        temperature: 0.7,
+        max_tokens: 1000,
+        stream: true,
+      }),
+      signal: options?.abortSignal,
+    });
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    if (!response.body) {
+      throw new Error('No response body');
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+
+    while (true) {
+      const { done, value } = await reader.read();
+
+      if (done) {
+        break;
+      }
+
+      const chunk = decoder.decode(value, { stream: true });
+
+      // Parse Server-Sent Events format
+      const lines = chunk.split('\n');
+      for (const line of lines) {
+        if (line.startsWith('data: ')) {
+          const data = line.slice(6);
+
+          if (data === '[DONE]') {
+            return;
+          }
+
+          try {
+            const parsed = JSON.parse(data);
+            const content = parsed.choices?.[0]?.delta?.content;
+
+            if (content) {
+              yield content;
+            }
+          } catch (e) {
+            // Skip invalid JSON
+            continue;
+          }
+        }
+      }
+    }
+  } catch (error) {
+    if (error instanceof Error && error.name === 'AbortError') {
+      // User cancelled - gracefully exit
+      return;
+    }
+
+    // Fallback: yield error message
+    yield 'Jag har för tillfället problem med att svara. Försök igen snart!';
+
+    logAIError('chatWithAITutorStreaming', new AIError(
+      error instanceof Error ? error.message : 'Unknown streaming error',
+      'STREAMING_ERROR'
+    ));
+  }
+}
+
+/**
+ * AI conversational tutor (NON-STREAMING VERSION - kept for backwards compatibility)
  * Interactive Q&A about orthopedic topics
  * NOW GOAL-AWARE: AI knows Socialstyrelsen goals during conversation
  * WITH: Caching, validation, timeouts
