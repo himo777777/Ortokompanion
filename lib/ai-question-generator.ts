@@ -5,6 +5,10 @@
  * based on structured prompts and verified sources.
  */
 
+// Load environment variables
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.local' });
+
 import { z } from 'zod';
 import { EducationLevel } from '@/types/education';
 import { Domain } from '@/types/onboarding';
