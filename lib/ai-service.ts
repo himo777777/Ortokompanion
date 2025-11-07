@@ -53,6 +53,7 @@ import {
   withCache,
 } from './ai-cache';
 import { z } from 'zod';
+import { getMålForDomain, getMålForLevel, getAllMål, type SocialstyrelseMål } from '@/data/socialstyrelsen-goals';
 
 // AI Service Configuration
 const AI_CONFIG = {
@@ -64,8 +65,27 @@ const AI_CONFIG = {
 };
 
 /**
+ * Helper: Format Socialstyrelsen goals for AI context
+ * Provides detailed goal information so AI can make intelligent recommendations
+ */
+function formatGoalsForAI(goals: SocialstyrelseMål[]): string {
+  if (goals.length === 0) return 'Inga specifika mål tillgängliga.';
+
+  return goals
+    .slice(0, 10) // Limit to top 10 to avoid token overflow
+    .map((goal, index) => {
+      return `${index + 1}. ${goal.title}
+   Kategori: ${goal.category}
+   Beskrivning: ${goal.description || 'N/A'}
+   Obligatoriskt: ${goal.required ? 'Ja' : 'Nej'}`;
+    })
+    .join('\n\n');
+}
+
+/**
  * AI-powered personalized explanation generator
  * Explains why the user got a question wrong based on their answer
+ * NOW GOAL-AWARE: Links explanations to relevant Socialstyrelsen goals
  * WITH: Caching, validation, timeouts, retry logic
  */
 export async function generatePersonalizedExplanation(
@@ -74,6 +94,8 @@ export async function generatePersonalizedExplanation(
     userAnswer: string;
     correctAnswer: string;
     previousMistakes?: string[];
+    userLevel?: string; // NEW: For goal context
+    currentDomain?: Domain; // NEW: For domain-specific goals
   },
   options?: { abortSignal?: AbortSignal }
 ): Promise<PersonalizedExplanation> {
@@ -90,7 +112,23 @@ export async function generatePersonalizedExplanation(
     return cached;
   }
 
-  const prompt = `Du är en erfaren svensk ortopedkirurg och pedagog. En ST-läkare har precis svarat fel på denna fråga:
+  // Get relevant Socialstyrelsen goals if user level provided
+  let goalContext = '';
+  if (params.userLevel && params.currentDomain) {
+    const relevantGoals = getMålForDomain(
+      params.currentDomain,
+      params.userLevel as any
+    ).slice(0, 5); // Top 5 most relevant
+
+    if (relevantGoals.length > 0) {
+      goalContext = `\n\n=== RELEVANTA SOCIALSTYRELSEN-MÅL ===
+${formatGoalsForAI(relevantGoals)}
+
+(Koppla gärna förklaringen till dessa mål om relevant)`;
+    }
+  }
+
+  const prompt = `Du är en erfaren svensk ortopedkirurg och pedagog. En ${params.userLevel || 'ST-läkare'} har precis svarat fel på denna fråga:
 
 FRÅGA: ${params.question.question}
 
@@ -99,13 +137,14 @@ ANVÄNDARENS SVAR: ${params.userAnswer}
 
 STANDARDFÖRKLARING: ${params.question.explanation}
 
-${params.previousMistakes ? `TIDIGARE SVÅRIGHETER: Användaren har tidigare haft problem med: ${params.previousMistakes.join(', ')}` : ''}
+${params.previousMistakes ? `TIDIGARE SVÅRIGHETER: Användaren har tidigare haft problem med: ${params.previousMistakes.join(', ')}` : ''}${goalContext}
 
 Ge en PERSONLIG förklaring anpassad för denna användare som:
 1. Förklarar varför deras svar var felaktigt (utan att vara nedlåtande)
 2. Kopplar till eventuella tidigare svårigheter
-3. Ger konkreta tips för att komma ihåg detta nästa gång
-4. Är kortfattad men pedagogisk (max 150 ord)
+3. Kopplar till relevanta Socialstyrelsen-mål om möjligt
+4. Ger konkreta tips för att komma ihåg detta nästa gång
+5. Är kortfattad men pedagogisk (max 150 ord)
 
 Svara i JSON-format:
 {
@@ -727,6 +766,7 @@ Svara i JSON-format:
 /**
  * AI study plan generator
  * Creates personalized study plan based on goals and performance
+ * NOW DOMAIN-AWARE: Uses Socialstyrelsen goals for intelligent planning
  * WITH: Caching, validation, timeouts
  */
 export async function generateStudyPlan(
@@ -736,6 +776,7 @@ export async function generateStudyPlan(
     weakDomains: Domain[];
     availableTimePerDay: number;
     deadline?: Date;
+    currentDomain?: Domain; // NEW: Current rotation/placement domain
   },
   options?: { abortSignal?: AbortSignal }
 ): Promise<StudyPlan> {
@@ -744,24 +785,54 @@ export async function generateStudyPlan(
     goals: params.targetGoals.join(','),
     domains: params.weakDomains.join(','),
     time: params.availableTimePerDay.toString(),
+    currentDomain: params.currentDomain || '',
   });
 
   const cached = aiCache.get<StudyPlan>(cacheKey);
   if (cached) return cached;
 
+  // Get relevant Socialstyrelsen goals with full context
+  let socialstyrelseMål: SocialstyrelseMål[] = [];
+
+  // If user has current domain (rotation/placement), get domain-specific goals
+  if (params.currentDomain) {
+    socialstyrelseMål = getMålForDomain(
+      params.currentDomain,
+      params.userLevel as any // Convert to EducationLevel
+    );
+  }
+  // Otherwise get level-specific goals
+  else {
+    socialstyrelseMål = getMålForLevel(params.userLevel as any);
+  }
+
+  const formattedGoals = formatGoalsForAI(socialstyrelseMål);
+
   const prompt = `Skapa en personlig studieplan för en ${params.userLevel}:
 
-MÅL: ${params.targetGoals.join(', ')}
+=== SOCIALSTYRELSEN MÅL (Officiella utbildningsmål) ===
+${formattedGoals}
+
+${params.currentDomain ? `=== NUVARANDE FOKUS ===\nDomän: ${params.currentDomain} (prioritera mål relevanta för detta område)\n` : ''}
+
+=== ANVÄNDARENS SITUATION ===
 SVAGA OMRÅDEN: ${params.weakDomains.join(', ')}
 TILLGÄNGLIG TID: ${params.availableTimePerDay} min/dag
 ${params.deadline ? `DEADLINE: ${params.deadline.toLocaleDateString('sv-SE')}` : ''}
 
-Skapa en 4-veckors plan som:
-- Prioriterar svaga områden
-- Balanserar nya koncept och repetition
-- Inkluderar varierade aktivitetstyper
-- Är realistisk för tillgänglig tid
-- Sätter tydliga milstolpar
+=== UPPGIFT ===
+Skapa en 4-veckors studieplan som:
+1. PRIORITERAR Socialstyrelsen-målen ovan (särskilt obligatoriska mål)
+2. Fokuserar på användarens svaga områden
+3. Balanserar nya koncept och repetition (80/20-regel)
+4. Inkluderar varierade aktivitetstyper (MCQ, kliniska fall, repetition)
+5. Är realistisk för tillgänglig tid
+6. Sätter tydliga milstolpar kopplade till specifika mål
+
+VIKTIGT:
+- Referera till specifika Socialstyrelsen-mål med nummer (t.ex. "Mål 1: Akut handläggning")
+- Ge konkreta aktiviteter som täcker målen
+- Anpassa svårighetsgrad till ${params.userLevel}-nivå
 
 Svara i JSON-format med daglig plan och veckomilstolpar.`;
 
@@ -814,6 +885,7 @@ Svara i JSON-format med daglig plan och veckomilstolpar.`;
 /**
  * AI performance insights and coaching
  * Provides motivational coaching based on performance trends
+ * NOW GOAL-AWARE: Connects performance to Socialstyrelsen goals
  * WITH: Caching, validation, timeouts
  */
 export async function generatePerformanceInsights(
@@ -828,6 +900,9 @@ export async function generatePerformanceInsights(
     currentStreak: number;
     goalsAchieved: number;
     totalGoals: number;
+    userLevel?: string; // NEW: For goal context
+    currentDomain?: Domain; // NEW: For domain goals
+    completedGoalIds?: string[]; // NEW: Track completed goals
   },
   options?: { abortSignal?: AbortSignal }
 ): Promise<PerformanceInsights> {
@@ -844,27 +919,47 @@ export async function generatePerformanceInsights(
     streak: params.currentStreak.toString(),
     goals: `${params.goalsAchieved}/${params.totalGoals}`,
     trend,
+    completed: params.completedGoalIds?.slice(0, 3).join(',') || '',
   });
 
   const cached = aiCache.get<PerformanceInsights>(cacheKey);
   if (cached) return cached;
 
-  const prompt = `Ge motiverande feedback till en ST-läkare:
+  // Get goal context if available
+  let goalContext = '';
+  if (params.userLevel && params.currentDomain) {
+    const allGoals = getMålForDomain(
+      params.currentDomain,
+      params.userLevel as any
+    );
+    const remainingGoals = allGoals.filter(
+      g => !params.completedGoalIds?.includes(g.id)
+    ).slice(0, 5);
+
+    if (remainingGoals.length > 0) {
+      goalContext = `\n\n=== ÅTERSTÅENDE SOCIALSTYRELSEN-MÅL ===
+${formatGoalsForAI(remainingGoals)}
+
+(Ge feedback kopplad till dessa mål)`;
+    }
+  }
+
+  const prompt = `Ge motiverande feedback till en ${params.userLevel || 'ST-läkare'}:
 
 SENASTE 7 DAGARNA:
 - Genomsnittlig träffsäkerhet: ${(recentAccuracy * 100).toFixed(0)}%
 - Trend: ${trend}
 - Streak: ${params.currentStreak} dagar
-- Mål uppnådda: ${params.goalsAchieved}/${params.totalGoals}
+- Mål uppnådda: ${params.goalsAchieved}/${params.totalGoals}${goalContext}
 
 Ge:
 1. 3-4 specifika insikter om prestationen
-2. Personlig uppmuntran
-3. Konkreta rekommendationer
-4. Nästa milstolpe att sikta på
+2. Personlig uppmuntran kopplat till Socialstyrelsen-målen
+3. Konkreta rekommendationer för att nå nästa mål
+4. Nästa milstolpe att sikta på (helst kopplat till Socialstyrelsen-mål)
 5. Uppskattad tid till milstolpen
 
-Var positiv och specifik, inte generisk!
+Var positiv, specifik och koppla till de officiella utbildningsmålen!
 
 Svara i JSON-format:
 {
