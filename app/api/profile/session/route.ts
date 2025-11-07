@@ -12,6 +12,7 @@ import {
   validateRequest,
   formatValidationError,
 } from '@/lib/api-validation'
+import { logger } from '@/lib/logger'
 
 /**
  * POST /api/profile/session
@@ -93,7 +94,7 @@ export async function POST(req: NextRequest) {
       },
     })
   } catch (error) {
-    console.error('Error saving session:', error)
+    logger.error('Failed to save session', error, { operation: 'POST /api/profile/session' })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

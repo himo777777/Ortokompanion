@@ -8,6 +8,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { getOrCreateUser, getDailyMix, saveDailyMix, isDailyMixStale } from '@/lib/db-utils'
+import {
+  SaveDailyMixSchema,
+  validateRequest,
+  formatValidationError,
+} from '@/lib/api-validation'
+import { logger } from '@/lib/logger'
 import type { DailyMix } from '@/types/progression'
 
 /**
@@ -49,7 +55,7 @@ export async function GET() {
       hasMix: true,
     })
   } catch (error) {
-    console.error('Error fetching daily mix:', error)
+    logger.error('Failed to fetch daily mix', error, { operation: 'GET /api/daily-mix' })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -76,20 +82,25 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
-    // Get daily mix data from request
+    // Validate request body
     const body = await req.json()
-    const { mixData, date } = body
+    const validation = validateRequest(SaveDailyMixSchema, body)
 
-    if (!mixData) {
+    if (!validation.success) {
       return NextResponse.json(
-        { error: 'mixData is required' },
+        {
+          error: 'Invalid request data',
+          details: formatValidationError(validation.error),
+        },
         { status: 400 }
       )
     }
 
+    const { mixData, date } = validation.data
+
     // Save daily mix
-    const mixDate = date ? new Date(date) : new Date()
-    const savedMix = await saveDailyMix(user.id, mixDate, mixData as DailyMix)
+    const mixDate = date || new Date()
+    const savedMix = await saveDailyMix(user.id, mixDate, mixData as unknown as DailyMix)
 
     return NextResponse.json({
       message: 'Daily mix saved successfully',
@@ -97,7 +108,7 @@ export async function POST(req: NextRequest) {
       date: savedMix.date,
     })
   } catch (error) {
-    console.error('Error saving daily mix:', error)
+    logger.error('Failed to save daily mix', error, { operation: 'POST /api/daily-mix' })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

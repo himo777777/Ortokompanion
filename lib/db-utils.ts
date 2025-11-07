@@ -5,6 +5,7 @@
  */
 
 import { prisma } from './prisma'
+import { logger } from './logger'
 import type { IntegratedUserProfile, SessionResults, MålProgress } from '@/types/integrated'
 import type { DailyMix } from '@/types/progression'
 import { Prisma } from '@prisma/client'
@@ -26,7 +27,7 @@ export async function createUserFromClerk(clerkId: string, email: string) {
     })
     return user
   } catch (error) {
-    console.error('Error creating user:', error)
+    logger.error('Failed to create user', error, { operation: 'createUserFromClerk' })
     throw error
   }
 }
@@ -42,7 +43,7 @@ export async function getUserByClerkId(clerkId: string) {
     })
     return user
   } catch (error) {
-    console.error('Error getting user by Clerk ID:', error)
+    logger.error('Failed to getting user by Clerk ID:', error)
     throw error
   }
 }
@@ -62,7 +63,7 @@ export async function getOrCreateUser(clerkId: string, email: string) {
 
     return user
   } catch (error) {
-    console.error('Error in getOrCreateUser:', error)
+    logger.error('Failed to in getOrCreateUser:', error)
     throw error
   }
 }
@@ -77,7 +78,7 @@ export async function deleteUser(clerkId: string) {
     })
     return user
   } catch (error) {
-    console.error('Error deleting user:', error)
+    logger.error('Failed to deleting user:', error)
     throw error
   }
 }
@@ -126,7 +127,7 @@ export async function createProfile(
     })
     return profile
   } catch (error) {
-    console.error('Error creating profile:', error)
+    logger.error('Failed to creating profile:', error)
     throw error
   }
 }
@@ -141,7 +142,7 @@ export async function getProfileByUserId(userId: string) {
     })
     return profile
   } catch (error) {
-    console.error('Error getting profile:', error)
+    logger.error('Failed to getting profile:', error)
     throw error
   }
 }
@@ -157,7 +158,7 @@ export async function getProfileByClerkId(clerkId: string) {
     })
     return user?.profile || null
   } catch (error) {
-    console.error('Error getting profile by Clerk ID:', error)
+    logger.error('Failed to getting profile by Clerk ID:', error)
     throw error
   }
 }
@@ -208,7 +209,7 @@ export async function updateProfile(
 
     return profile
   } catch (error) {
-    console.error('Error updating profile:', error)
+    logger.error('Failed to updating profile:', error)
     throw error
   }
 }
@@ -284,7 +285,7 @@ export async function createSession(
     })
     return session
   } catch (error) {
-    console.error('Error creating session:', error)
+    logger.error('Failed to creating session:', error)
     throw error
   }
 }
@@ -301,7 +302,7 @@ export async function getRecentSessions(userId: string, limit: number = 10) {
     })
     return sessions
   } catch (error) {
-    console.error('Error getting recent sessions:', error)
+    logger.error('Failed to getting recent sessions:', error)
     throw error
   }
 }
@@ -327,7 +328,7 @@ export async function getSessionsByDateRange(
     })
     return sessions
   } catch (error) {
-    console.error('Error getting sessions by date range:', error)
+    logger.error('Failed to getting sessions by date range:', error)
     throw error
   }
 }
@@ -359,7 +360,7 @@ export async function saveDailyMix(
     })
     return dailyMix
   } catch (error) {
-    console.error('Error saving daily mix:', error)
+    logger.error('Failed to saving daily mix:', error)
     throw error
   }
 }
@@ -374,7 +375,7 @@ export async function getDailyMix(userId: string) {
     })
     return dailyMix
   } catch (error) {
-    console.error('Error getting daily mix:', error)
+    logger.error('Failed to getting daily mix:', error)
     throw error
   }
 }
@@ -396,7 +397,7 @@ export async function isDailyMixStale(userId: string): Promise<boolean> {
 
     return mixDate < today
   } catch (error) {
-    console.error('Error checking daily mix staleness:', error)
+    logger.error('Failed to checking daily mix staleness:', error)
     return true
   }
 }
@@ -439,7 +440,7 @@ export async function incrementXP(userId: string, xpToAdd: number) {
       leveledUp: newLevel > profile.level,
     }
   } catch (error) {
-    console.error('Error incrementing XP:', error)
+    logger.error('Failed to incrementing XP:', error)
     throw error
   }
 }
@@ -505,7 +506,7 @@ export async function updateStreak(userId: string) {
       usedFreezeToken,
     }
   } catch (error) {
-    console.error('Error updating streak:', error)
+    logger.error('Failed to updating streak:', error)
     throw error
   }
 }
@@ -524,7 +525,7 @@ export async function getFullUserProfile(clerkId: string): Promise<IntegratedUse
 
     return profileToIntegratedUserProfile(user.profile)
   } catch (error) {
-    console.error('Error getting full user profile:', error)
+    logger.error('Failed to getting full user profile:', error)
     throw error
   }
 }

@@ -21,6 +21,7 @@ import {
   validateRequest,
   formatValidationError,
 } from '@/lib/api-validation'
+import { logger } from '@/lib/logger'
 import type { IntegratedUserProfile } from '@/types/integrated'
 
 /**
@@ -57,7 +58,7 @@ export async function GET() {
 
     return NextResponse.json({ profile: userProfile, hasProfile: true })
   } catch (error) {
-    console.error('Error fetching profile:', error)
+    logger.error('Failed to fetch profile', error, { clerkId: 'hidden' })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -128,7 +129,7 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     )
   } catch (error) {
-    console.error('Error creating profile:', error)
+    logger.error('Failed to create profile', error, { operation: 'POST /api/profile' })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -189,7 +190,7 @@ export async function PUT(req: NextRequest) {
       message: 'Profile updated successfully',
     })
   } catch (error) {
-    console.error('Error updating profile:', error)
+    logger.error('Failed to update profile', error, { operation: 'PUT /api/profile' })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

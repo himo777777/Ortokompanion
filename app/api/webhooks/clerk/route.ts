@@ -12,6 +12,7 @@ import { headers } from 'next/headers'
 import { Webhook } from 'svix'
 import { WebhookEvent } from '@clerk/nextjs/server'
 import { createUserFromClerk, deleteUser } from '@/lib/db-utils'
+import { logger } from '@/lib/logger'
 
 /**
  * Verify and handle Clerk webhook events
@@ -22,7 +23,7 @@ export async function POST(req: NextRequest) {
     const webhookSecret = process.env.CLERK_WEBHOOK_SECRET
 
     if (!webhookSecret) {
-      console.error('CLERK_WEBHOOK_SECRET is not set')
+      logger.error('CLERK_WEBHOOK_SECRET is not set')
       return NextResponse.json(
         { error: 'Webhook secret not configured' },
         { status: 500 }
@@ -60,7 +61,7 @@ export async function POST(req: NextRequest) {
         'svix-signature': svix_signature,
       }) as WebhookEvent
     } catch (err) {
-      console.error('Error verifying webhook:', err)
+      logger.error('Failed to verify webhook signature', err)
       return NextResponse.json(
         { error: 'Invalid signature' },
         { status: 400 }
@@ -70,7 +71,7 @@ export async function POST(req: NextRequest) {
     // Handle the webhook event
     const eventType = evt.type
 
-    console.log('Received webhook event:', eventType)
+    logger.info('Received webhook event', { eventType })
 
     switch (eventType) {
       case 'user.created': {
@@ -78,25 +79,25 @@ export async function POST(req: NextRequest) {
         const email = email_addresses[0]?.email_address
 
         if (!email) {
-          console.error('No email found for user:', id)
+          logger.error('No email found for user in webhook', null, { clerkId: id })
           return NextResponse.json(
             { error: 'No email found' },
             { status: 400 }
           )
         }
 
-        console.log('Creating user in database:', { clerkId: id, email })
+        logger.info('Creating user in database', { clerkId: id })
 
         try {
           const user = await createUserFromClerk(id, email)
-          console.log('User created successfully:', user.id)
+          logger.info('User created successfully', { userId: user.id })
 
           return NextResponse.json(
             { message: 'User created', userId: user.id },
             { status: 201 }
           )
         } catch (error) {
-          console.error('Error creating user:', error)
+          logger.error('Failed to create user from webhook', error, { clerkId: id })
           return NextResponse.json(
             { error: 'Failed to create user' },
             { status: 500 }
@@ -108,7 +109,7 @@ export async function POST(req: NextRequest) {
         const { id, email_addresses } = evt.data
         const email = email_addresses[0]?.email_address
 
-        console.log('User updated event received:', { clerkId: id, email })
+        logger.info('User updated event received', { clerkId: id })
 
         // For now, we don't update email as it's rarely changed
         // You can add update logic here if needed
@@ -123,25 +124,25 @@ export async function POST(req: NextRequest) {
         const { id } = evt.data
 
         if (!id) {
-          console.error('No user ID found in delete event')
+          logger.error('No user ID found in delete event')
           return NextResponse.json(
             { error: 'No user ID found' },
             { status: 400 }
           )
         }
 
-        console.log('Deleting user from database:', id)
+        logger.info('Deleting user from database', { clerkId: id })
 
         try {
           await deleteUser(id)
-          console.log('User deleted successfully:', id)
+          logger.info('User deleted successfully', { clerkId: id })
 
           return NextResponse.json(
             { message: 'User deleted' },
             { status: 200 }
           )
         } catch (error) {
-          console.error('Error deleting user:', error)
+          logger.error('Failed to delete user from webhook', error, { clerkId: id })
           return NextResponse.json(
             { error: 'Failed to delete user' },
             { status: 500 }
@@ -150,14 +151,14 @@ export async function POST(req: NextRequest) {
       }
 
       default:
-        console.log('Unhandled webhook event type:', eventType)
+        logger.info('Unhandled webhook event type', { eventType })
         return NextResponse.json(
           { message: 'Event type not handled' },
           { status: 200 }
         )
     }
   } catch (error) {
-    console.error('Webhook error:', error)
+    logger.error('Webhook processing failed', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
