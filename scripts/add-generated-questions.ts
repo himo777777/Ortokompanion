@@ -314,6 +314,6 @@ async function main() {
 }
 
 main().catch(error => {
-  console.error('\n❌ Error:', error);
+  logger.error('\n❌ Error:', error);
   process.exit(1);
 });

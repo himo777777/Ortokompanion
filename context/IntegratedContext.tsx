@@ -19,6 +19,7 @@ import { isGateRequirementMet } from '@/lib/domain-progression';
 import { ALL_QUESTIONS } from '@/data/questions';
 import { safeGetItem, safeSetItem, handleErrorSync } from '@/lib/error-handler';
 import { useToast } from '@/components/ui/ToastContainer';
+import { logger } from '@/lib/logger';
 
 interface IntegratedContextType {
   profile: IntegratedUserProfile | null;
@@ -92,7 +93,7 @@ export function IntegratedProvider({ children }: IntegratedProviderProps) {
       // Save profile
       const saveSuccess = safeSetItem('ortokompanion_integrated_profile', profile);
       if (!saveSuccess) {
-        console.warn('Failed to save profile to localStorage - data may be lost on refresh');
+        logger.warn('Failed to save profile to localStorage - data may be lost on refresh');
       }
 
       // Recalculate analytics when profile changes
@@ -114,7 +115,7 @@ export function IntegratedProvider({ children }: IntegratedProviderProps) {
   // Function to refresh daily mix - defined before useEffect that uses it
   const refreshDailyMix = useCallback(() => {
     if (!profile) {
-      console.warn('Cannot refresh daily mix: no profile');
+      logger.warn('Cannot refresh daily mix: no profile');
       return;
     }
 
@@ -134,7 +135,7 @@ export function IntegratedProvider({ children }: IntegratedProviderProps) {
     if (newMix) {
       setDailyMix(newMix);
     } else {
-      console.error('Failed to generate daily mix - user will see empty dashboard');
+      logger.error('Failed to generate daily mix - user will see empty dashboard');
       // Could set a fallback empty mix or show error state
     }
   }, [profile]);
@@ -142,6 +143,20 @@ export function IntegratedProvider({ children }: IntegratedProviderProps) {
   // Load daily mix from localStorage
   useEffect(() => {
     if (!profile) return;
+
+    // Check if we already have a valid mix that matches the current recovery mode state
+    if (dailyMix) {
+      const mixDate = new Date(dailyMix.date);
+      const today = new Date();
+      mixDate.setHours(0, 0, 0, 0);
+      today.setHours(0, 0, 0, 0);
+
+      // If mix is for today and matches recovery mode state, don't regenerate
+      const recoveryModeActive = profile.preferences?.recoveryMode || false;
+      if (mixDate.getTime() === today.getTime() && dailyMix.isRecoveryDay === recoveryModeActive) {
+        return; // Keep current mix
+      }
+    }
 
     const savedMix = safeGetItem<DailyMix | null>('ortokompanion_daily_mix', null);
 
@@ -153,7 +168,14 @@ export function IntegratedProvider({ children }: IntegratedProviderProps) {
       today.setHours(0, 0, 0, 0);
 
       if (mixDate.getTime() === today.getTime()) {
-        setDailyMix(savedMix);
+        // Also check if saved mix matches recovery mode state
+        const recoveryModeActive = profile.preferences?.recoveryMode || false;
+        if (savedMix.isRecoveryDay === recoveryModeActive) {
+          setDailyMix(savedMix);
+        } else {
+          // Recovery mode state changed, regenerate
+          refreshDailyMix();
+        }
       } else {
         // Mix is outdated, generate new one
         refreshDailyMix();
@@ -162,7 +184,7 @@ export function IntegratedProvider({ children }: IntegratedProviderProps) {
       // No saved mix, generate one
       refreshDailyMix();
     }
-  }, [profile, refreshDailyMix]);
+  }, [profile, refreshDailyMix, dailyMix]);
 
   // Save daily mix to localStorage
   useEffect(() => {
@@ -181,7 +203,7 @@ export function IntegratedProvider({ children }: IntegratedProviderProps) {
 
   const completeSession = (results: SessionResults) => {
     if (!profile || !dailyMix) {
-      console.warn('Cannot complete session: missing profile or daily mix');
+      logger.warn('Cannot complete session: missing profile or daily mix');
       return;
     }
 
@@ -216,14 +238,16 @@ export function IntegratedProvider({ children }: IntegratedProviderProps) {
 
       // Auto-refresh daily mix if band changed or recovery mode triggered
       if (bandChanged) {
-        console.log('🔄 Band adjusted! Regenerating daily mix for new difficulty level...');
+        logger.info('Band adjusted! Regenerating daily mix for new difficulty level', {
+          newBand: updatedProfile.progression.bandStatus.currentBand,
+        });
         toast.info('Band Adjusted', `Moved to Band ${updatedProfile.progression.bandStatus.currentBand}`);
         refreshDailyMix();
       }
 
       // Notify user if recovery mode auto-triggered
       if (enteredRecoveryMode) {
-        console.log('⚠️ Recovery mode auto-triggered after 2 difficult days');
+        logger.info('Recovery mode auto-triggered after 2 difficult days');
         toast.warning(
           'Recovery Mode Activated',
           'Two difficult days detected. Content adjusted to easier level to help you recover.'
@@ -241,7 +265,7 @@ export function IntegratedProvider({ children }: IntegratedProviderProps) {
       }
 
       // Track event (could integrate with analytics service)
-      console.log('Session completed:', {
+      logger.debug('Session completed', {
         xp: results.summary.xpEarned,
         accuracy: results.summary.accuracy,
         band: updatedProfile.progression.bandStatus.currentBand,
@@ -250,14 +274,14 @@ export function IntegratedProvider({ children }: IntegratedProviderProps) {
         leechCardsDetected,
       });
     } else {
-      console.error('Failed to complete session - profile not updated');
+      logger.error('Failed to complete session - profile not updated');
       toast.error('Session Error', 'Failed to save session progress');
     }
   };
 
   const completeMiniOSCE = (result: OSCEResult) => {
     if (!profile) {
-      console.warn('Cannot complete Mini-OSCE: no profile');
+      logger.warn('Cannot complete Mini-OSCE: no profile');
       return;
     }
 
@@ -341,15 +365,15 @@ export function IntegratedProvider({ children }: IntegratedProviderProps) {
 
     if (updatedProfile) {
       setProfileState(updatedProfile);
-      console.log('Mini-OSCE completed successfully');
+      logger.info('Mini-OSCE completed successfully', { osceId: result.osceId, passed: result.passed });
     } else {
-      console.error('Failed to complete Mini-OSCE - profile not updated');
+      logger.error('Failed to complete Mini-OSCE - profile not updated');
     }
   };
 
   const requestRecovery = () => {
     if (!profile) {
-      console.warn('Cannot request recovery: no profile');
+      logger.warn('Cannot request recovery: no profile');
       return;
     }
 
@@ -379,9 +403,9 @@ export function IntegratedProvider({ children }: IntegratedProviderProps) {
     if (result) {
       setProfileState(result.updatedProfile);
       setDailyMix(result.recoveryMix);
-      console.log('Recovery mode activated');
+      logger.info('Recovery mode activated');
     } else {
-      console.error('Failed to activate recovery mode');
+      logger.error('Failed to activate recovery mode');
     }
   };
 

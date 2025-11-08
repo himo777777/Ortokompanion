@@ -20,6 +20,7 @@ import {
 import { Alert as AlertType, AlertFilter, alertEngine } from '@/lib/alert-engine';
 import { sourceMonitor } from '@/lib/source-monitor';
 import { colors } from '@/lib/design-tokens';
+import { logger } from '@/lib/logger';
 import {
   VERIFIED_SOURCES,
   getSourcesNeedingReview,
@@ -90,7 +91,7 @@ export default function MedicalQualityDashboard({
     setRefreshing(true);
     try {
       const report = await sourceMonitor.checkAllSources();
-      console.log('Monitor report:', report);
+      logger.info('Monitor report received', { report });
       loadAlerts();
       loadMonitoringStatus();
     } finally {

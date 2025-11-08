@@ -8,6 +8,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { ContentVersion } from '@/lib/content-versioning';
+import { logger } from '../logger';
 
 const STORAGE_DIR = path.join(process.cwd(), 'data');
 const VERSIONS_FILE = path.join(STORAGE_DIR, 'version-history.json');
@@ -59,7 +60,7 @@ export function loadVersions(): Map<string, ContentVersion[]> {
 
     return versionMap;
   } catch (error) {
-    console.error('[VersionStorage] Error loading versions:', error);
+    logger.error('Failed to load version history', error);
     return new Map();
   }
 }
@@ -86,7 +87,7 @@ export function saveVersions(versions: Map<string, ContentVersion[]>): boolean {
 
     return true;
   } catch (error) {
-    console.error('[VersionStorage] Error saving versions:', error);
+    logger.error('Failed to save version history', error);
     return false;
   }
 }
@@ -310,7 +311,7 @@ export function importVersionHistory(jsonData: string): boolean {
 
     return saveVersions(versions);
   } catch (error) {
-    console.error('[VersionStorage] Error importing version history:', error);
+    logger.error('Failed to import version history', error);
     return false;
   }
 }

@@ -1,10 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import { logger } from '@/lib/logger';
 import { Calendar, Target, Clock, CheckSquare, BookOpen, Sparkles, Loader2, TrendingUp, AlertCircle } from 'lucide-react';
+import { logger } from '@/lib/logger';
 import { generateStudyPlan } from '@/lib/ai-service';
+import { logger } from '@/lib/logger';
 import { EducationLevel } from '@/types/education';
+import { logger } from '@/lib/logger';
 import { Domain } from '@/types/onboarding';
+import { logger } from '@/lib/logger';
 
 interface AIStudyPlanGeneratorProps {
   userLevel: EducationLevel;
@@ -53,7 +58,7 @@ export default function AIStudyPlanGenerator({
       });
       setStudyPlan(result as any); // TODO: Align AI response type with state type
     } catch (error) {
-      console.error('Failed to generate study plan:', error);
+      logger.error('Failed to generate study plan', error);
       setStudyPlan(null);
     } finally {
       setLoadingPlan(false);

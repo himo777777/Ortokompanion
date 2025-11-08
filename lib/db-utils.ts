@@ -7,7 +7,16 @@
 import { prisma } from './prisma'
 import type { IntegratedUserProfile, SessionResults, MålProgress } from '@/types/integrated'
 import type { DailyMix } from '@/types/progression'
-import { Prisma } from '@prisma/client'
+import { Prisma, Profile } from '@prisma/client'
+import { logger } from './logger'
+
+// Type for session mistakes
+interface SessionMistake {
+  questionId: string;
+  userAnswer: string;
+  correctAnswer: string;
+  topic?: string;
+}
 
 // ============================================================================
 // User Operations
@@ -26,7 +35,7 @@ export async function createUserFromClerk(clerkId: string, email: string) {
     })
     return user
   } catch (error) {
-    console.error('Error creating user:', error)
+    logger.error('Failed to create user from Clerk webhook', error)
     throw error
   }
 }
@@ -42,7 +51,7 @@ export async function getUserByClerkId(clerkId: string) {
     })
     return user
   } catch (error) {
-    console.error('Error getting user by Clerk ID:', error)
+    logger.error('Failed to get user by Clerk ID', error, { clerkId })
     throw error
   }
 }
@@ -62,7 +71,7 @@ export async function getOrCreateUser(clerkId: string, email: string) {
 
     return user
   } catch (error) {
-    console.error('Error in getOrCreateUser:', error)
+    logger.error('Failed to get or create user', error, { clerkId })
     throw error
   }
 }
@@ -77,7 +86,7 @@ export async function deleteUser(clerkId: string) {
     })
     return user
   } catch (error) {
-    console.error('Error deleting user:', error)
+    logger.error('Failed to delete user', error, { clerkId })
     throw error
   }
 }
@@ -126,7 +135,7 @@ export async function createProfile(
     })
     return profile
   } catch (error) {
-    console.error('Error creating profile:', error)
+    logger.error('Failed to create profile', error, { userId })
     throw error
   }
 }
@@ -141,7 +150,7 @@ export async function getProfileByUserId(userId: string) {
     })
     return profile
   } catch (error) {
-    console.error('Error getting profile:', error)
+    logger.error('Failed to get profile by user ID', error, { userId })
     throw error
   }
 }
@@ -157,7 +166,7 @@ export async function getProfileByClerkId(clerkId: string) {
     })
     return user?.profile || null
   } catch (error) {
-    console.error('Error getting profile by Clerk ID:', error)
+    logger.error('Failed to get profile by Clerk ID', error, { clerkId })
     throw error
   }
 }
@@ -208,7 +217,7 @@ export async function updateProfile(
 
     return profile
   } catch (error) {
-    console.error('Error updating profile:', error)
+    logger.error('Failed to update profile', error, { userId })
     throw error
   }
 }
@@ -216,7 +225,11 @@ export async function updateProfile(
 /**
  * Convert database Profile to IntegratedUserProfile
  */
-export function profileToIntegratedUserProfile(profile: any): IntegratedUserProfile {
+export function profileToIntegratedUserProfile(profile: Profile): IntegratedUserProfile {
+  // Parse JSON fields safely
+  const progression = profile.progression as Prisma.JsonValue;
+  const progressionObj = progression && typeof progression === 'object' ? progression : {};
+
   return {
     id: profile.userId,
     role: profile.role,
@@ -226,7 +239,7 @@ export function profileToIntegratedUserProfile(profile: any): IntegratedUserProf
     gamification: {
       xp: profile.xp,
       level: profile.level,
-      badges: (profile.progression as any)?.badges || [],
+      badges: (progressionObj as Record<string, unknown>)?.badges || [],
       streak: profile.streak,
       longestStreak: profile.longestStreak,
       totalSessions: profile.totalSessions,
@@ -236,12 +249,12 @@ export function profileToIntegratedUserProfile(profile: any): IntegratedUserProf
       lifetimeXP: profile.lifetimeXP,
     },
 
-    progression: profile.progression as any,
+    progression: progression as IntegratedUserProfile['progression'],
     socialstyrelseMålProgress: profile.socialstyrelseMålProgress as MålProgress[],
-    wrongQuestions: profile.wrongQuestions as any,
-    preferences: profile.preferences as any,
-    rotationTimeline: profile.rotationTimeline as any,
-    orthoPlacement: profile.orthoPlacement as any,
+    wrongQuestions: profile.wrongQuestions as IntegratedUserProfile['wrongQuestions'],
+    preferences: profile.preferences as IntegratedUserProfile['preferences'],
+    rotationTimeline: profile.rotationTimeline as IntegratedUserProfile['rotationTimeline'],
+    orthoPlacement: profile.orthoPlacement as IntegratedUserProfile['orthoPlacement'],
     placementTiming: profile.placementTiming,
   } as IntegratedUserProfile
 }
@@ -263,7 +276,7 @@ export async function createSession(
     band: string
     activityType: string
     topics: string[]
-    mistakes: any[]
+    mistakes: SessionMistake[]
     relatedGoals: string[]
   }
 ) {
@@ -284,7 +297,7 @@ export async function createSession(
     })
     return session
   } catch (error) {
-    console.error('Error creating session:', error)
+    logger.error('Failed to create session', error, { userId, domain: sessionData.domain })
     throw error
   }
 }
@@ -301,7 +314,7 @@ export async function getRecentSessions(userId: string, limit: number = 10) {
     })
     return sessions
   } catch (error) {
-    console.error('Error getting recent sessions:', error)
+    logger.error('Failed to get recent sessions', error, { userId, limit })
     throw error
   }
 }
@@ -327,7 +340,7 @@ export async function getSessionsByDateRange(
     })
     return sessions
   } catch (error) {
-    console.error('Error getting sessions by date range:', error)
+    logger.error('Failed to get sessions by date range', error, { userId, startDate, endDate })
     throw error
   }
 }
@@ -359,7 +372,7 @@ export async function saveDailyMix(
     })
     return dailyMix
   } catch (error) {
-    console.error('Error saving daily mix:', error)
+    logger.error('Failed to save daily mix', error, { userId })
     throw error
   }
 }
@@ -374,7 +387,7 @@ export async function getDailyMix(userId: string) {
     })
     return dailyMix
   } catch (error) {
-    console.error('Error getting daily mix:', error)
+    logger.error('Failed to get daily mix', error, { userId })
     throw error
   }
 }
@@ -396,7 +409,7 @@ export async function isDailyMixStale(userId: string): Promise<boolean> {
 
     return mixDate < today
   } catch (error) {
-    console.error('Error checking daily mix staleness:', error)
+    logger.error('Failed to check daily mix staleness', error, { userId })
     return true
   }
 }
@@ -439,7 +452,7 @@ export async function incrementXP(userId: string, xpToAdd: number) {
       leveledUp: newLevel > profile.level,
     }
   } catch (error) {
-    console.error('Error incrementing XP:', error)
+    logger.error('Failed to increment XP', error, { userId, xpToAdd })
     throw error
   }
 }
@@ -505,7 +518,7 @@ export async function updateStreak(userId: string) {
       usedFreezeToken,
     }
   } catch (error) {
-    console.error('Error updating streak:', error)
+    logger.error('Failed to update streak', error, { userId })
     throw error
   }
 }
@@ -524,7 +537,54 @@ export async function getFullUserProfile(clerkId: string): Promise<IntegratedUse
 
     return profileToIntegratedUserProfile(user.profile)
   } catch (error) {
-    console.error('Error getting full user profile:', error)
+    logger.error('Failed to get full user profile', error, { clerkId })
     throw error
   }
+}
+
+// ============================================================================
+// Test-Friendly Wrapper Functions
+// ============================================================================
+
+/**
+ * Save/update user profile (wrapper for updateProfile)
+ * @param userId - User ID
+ * @param profile - Profile data to save
+ */
+export async function saveProfile(userId: string, profile: Partial<IntegratedUserProfile>) {
+  return updateProfile(userId, profile)
+}
+
+/**
+ * Load user profile (wrapper for getProfileByUserId)
+ * @param userId - User ID
+ * @returns User profile or null
+ */
+export async function loadProfile(userId: string) {
+  return getProfileByUserId(userId)
+}
+
+/**
+ * Save session data (wrapper for createSession)
+ */
+export async function saveSession(sessionData: {
+  userId: string
+  questionsAnswered: number
+  correctAnswers: number
+  xpGained: number
+  domain: string
+  band: string
+  activityType: string
+  topics?: string[]
+  mistakes?: SessionMistake[]
+  relatedGoals?: string[]
+}) {
+  return createSession(sessionData)
+}
+
+/**
+ * Get user sessions with optional limit (wrapper for getRecentSessions)
+ */
+export async function getUserSessions(userId: string, limit?: number) {
+  return getRecentSessions(userId, limit || 10)
 }

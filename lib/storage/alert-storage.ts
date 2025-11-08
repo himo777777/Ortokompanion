@@ -8,6 +8,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { Alert } from '@/lib/alert-engine';
+import { logger } from '../logger';
 
 const STORAGE_DIR = path.join(process.cwd(), 'data');
 const ALERTS_FILE = path.join(STORAGE_DIR, 'alert-history.json');
@@ -47,7 +48,7 @@ export function loadAlerts(): Alert[] {
       resolvedAt: alert.resolvedAt ? new Date(alert.resolvedAt) : undefined,
     }));
   } catch (error) {
-    console.error('[AlertStorage] Error loading alerts:', error);
+    logger.error('Failed to load alerts from storage', error);
     return [];
   }
 }
@@ -73,7 +74,7 @@ export function saveAlerts(alerts: Alert[]): boolean {
 
     return true;
   } catch (error) {
-    console.error('[AlertStorage] Error saving alerts:', error);
+    logger.error('Failed to save alerts to storage', error);
     return false;
   }
 }
@@ -195,7 +196,7 @@ export function importAlerts(jsonData: string): boolean {
 
     return saveAlerts(alerts);
   } catch (error) {
-    console.error('[AlertStorage] Error importing alerts:', error);
+    logger.error('Failed to import alerts', error);
     return false;
   }
 }

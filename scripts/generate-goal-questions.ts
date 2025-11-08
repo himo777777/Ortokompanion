@@ -4,8 +4,11 @@
  */
 
 import * as fs from 'fs';
+import { logger } from '../lib/logger';
 import * as path from 'path';
+import { logger } from '../lib/logger';
 import {
+import { logger } from '../lib/logger';
   BT_GOALS,
   AT_GOALS,
   ORTOPEDI_GOALS,
@@ -13,6 +16,7 @@ import {
   type SocialstyrelsensGoal,
 } from '../data/focused-socialstyrelsen-goals';
 import { generateQuestionsForGoal } from '../lib/goal-aware-generator';
+import { logger } from '../lib/logger';
 
 interface GenerationOptions {
   program: 'bt' | 'at' | 'st';
@@ -41,7 +45,7 @@ async function generateGoalQuestions(options: GenerationOptions) {
     // Find specific goal
     const goal = getGoalsByProgram(program).find((g) => g.id === goalId);
     if (!goal) {
-      console.error(`❌ Goal ${goalId} not found in ${program.toUpperCase()} program`);
+      logger.error(`❌ Goal ${goalId} not found in ${program.toUpperCase()} program`);
       process.exit(1);
     }
     targetGoals = [goal];
@@ -81,7 +85,7 @@ async function generateGoalQuestions(options: GenerationOptions) {
       allGeneratedQuestions.push(...questions);
       totalGenerated += questions.length;
     } catch (error) {
-      console.error(`   ❌ Failed to generate questions:`, error);
+      logger.error(`   ❌ Failed to generate questions:`, error);
       totalFailed++;
     }
 
@@ -201,7 +205,7 @@ if (require.main === module) {
   const count = parseInt(args[2] || '3', 10);
 
   if (!['bt', 'at', 'st'].includes(program)) {
-    console.error('❌ Invalid program. Use: bt, at, or st');
+    logger.error('❌ Invalid program. Use: bt, at, or st');
     console.log('\nUsage: npm run generate-goal-questions [program] [goalId] [count]');
     console.log('\nExamples:');
     console.log('  npm run generate-goal-questions bt');
@@ -222,7 +226,7 @@ if (require.main === module) {
       process.exit(0);
     })
     .catch((error) => {
-      console.error('❌ Error:', error);
+      logger.error('❌ Error:', error);
       process.exit(1);
     });
 }

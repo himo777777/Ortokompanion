@@ -16,6 +16,7 @@ import {
   profileToIntegratedUserProfile,
 } from '@/lib/db-utils'
 import type { IntegratedUserProfile } from '@/types/integrated'
+import { logger } from '@/lib/logger'
 
 /**
  * GET /api/profile
@@ -51,7 +52,7 @@ export async function GET() {
 
     return NextResponse.json({ profile: userProfile, hasProfile: true })
   } catch (error) {
-    console.error('Error fetching profile:', error)
+    logger.error('Error fetching profile', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -112,7 +113,7 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     )
   } catch (error) {
-    console.error('Error creating profile:', error)
+    logger.error('Error creating profile', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -162,7 +163,7 @@ export async function PUT(req: NextRequest) {
       message: 'Profile updated successfully',
     })
   } catch (error) {
-    console.error('Error updating profile:', error)
+    logger.error('Error updating profile', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

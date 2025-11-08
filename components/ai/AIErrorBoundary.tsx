@@ -63,7 +63,7 @@ export class AIErrorBoundary extends Component<
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('AI Error Boundary caught error:', error, errorInfo);
+    logger.error('AI Error Boundary caught error', error, { errorInfo });
 
     this.setState({
       error,

@@ -91,7 +91,7 @@ function ClinicalCaseSession({
       // Validate and sanitize for guided mode
       const validation = safeValidate(StepAnswerInputSchema, value);
       if (!validation.success) {
-        console.warn('Invalid answer input:', validation.error.errors[0]?.message);
+        logger.warn('Invalid answer input', { message: validation.error.errors[0]?.message });
         return;
       }
 

@@ -4,6 +4,7 @@
  */
 
 import {
+import { logger } from '../lib/logger';
   ALL_FOCUSED_GOALS,
   BT_GOALS,
   AT_GOALS,
@@ -11,6 +12,7 @@ import {
   getGoalsByProgram,
 } from '../data/focused-socialstyrelsen-goals';
 import { generateQuestionsForGoal } from '../lib/goal-aware-generator';
+import { logger } from '../lib/logger';
 
 async function testGoalSystem() {
   console.log('🧪 Testing Goal-Aware Generation System\n');
@@ -89,7 +91,7 @@ async function testGoalSystem() {
         }
       }
     } catch (error) {
-      console.error('❌ Error during question generation:', error);
+      logger.error('❌ Error during question generation:', error);
       console.log('   (This might be due to API rate limits or key issues)\n');
     }
   } else {
@@ -141,7 +143,7 @@ if (require.main === module) {
       process.exit(0);
     })
     .catch((error) => {
-      console.error('❌ Test failed:', error);
+      logger.error('❌ Test failed:', error);
       process.exit(1);
     });
 }

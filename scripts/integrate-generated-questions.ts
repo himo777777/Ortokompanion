@@ -7,7 +7,9 @@
  */
 
 import * as fs from 'fs';
+import { logger } from '../lib/logger';
 import * as path from 'path';
+import { logger } from '../lib/logger';
 
 // Questions to EXCLUDE (problematic ones)
 const EXCLUDED_IDS = new Set([
@@ -169,7 +171,7 @@ async function main() {
   for (const file of files) {
     const filePath = path.join(generatedDir, file);
     if (!fs.existsSync(filePath)) {
-      console.warn(`⚠️  File not found: ${file}`);
+      logger.warn(`⚠️  File not found: ${file}`);
       continue;
     }
 
@@ -211,4 +213,4 @@ async function main() {
   console.log(`\nNext: Copy the code from this file and paste into data/questions.ts`);
 }
 
-main().catch(console.error);
+main().catch((error) => { logger.error('Script error', error); process.exit(1); });

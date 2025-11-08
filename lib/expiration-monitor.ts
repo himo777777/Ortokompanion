@@ -4,6 +4,7 @@
  */
 
 import { SourceReference, ContentVerification } from '@/types/verification';
+import { logger } from './logger';
 
 export interface ExpirationAlert {
   sourceId: string;
@@ -314,11 +315,16 @@ export async function sendExpirationNotifications(
   // - Create dashboard notifications
   // - Log to monitoring systems
 
-  console.log(`[Expiration Monitor] Would send ${alerts.length} alerts to ${recipients.length} recipients`);
+  logger.info('Expiration notifications scheduled', {
+    alertsCount: alerts.length,
+    recipientsCount: recipients.length
+  });
 
   const criticalAlerts = alerts.filter(a => a.severity === 'critical');
   if (criticalAlerts.length > 0) {
-    console.log(`[Expiration Monitor] ${criticalAlerts.length} CRITICAL alerts require immediate attention`);
+    logger.warn('Critical expiration alerts require immediate attention', {
+      criticalCount: criticalAlerts.length
+    });
   }
 
   return {

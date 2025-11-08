@@ -5,7 +5,9 @@
  */
 
 import { VERIFIED_SOURCES } from '../data/verified-sources';
+import { logger } from '../lib/logger';
 import {
+import { logger } from '../lib/logger';
   validateAllSources,
   getValidationSummary,
 } from '../lib/source-validation';

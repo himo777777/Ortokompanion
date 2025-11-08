@@ -102,7 +102,7 @@ function StepByStepTutor({
     const validation = safeValidate(StepAnswerInputSchema, value);
 
     if (!validation.success) {
-      console.warn('Invalid answer input:', validation.error.errors[0]?.message);
+      logger.warn('Invalid answer input', { message: validation.error.errors[0]?.message });
       // Don't update if validation fails (e.g., too long)
       return;
     }

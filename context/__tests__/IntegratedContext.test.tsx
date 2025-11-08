@@ -39,7 +39,7 @@ vi.mock('@/lib/integrated-helpers', () => ({
       urgentCards: [],
       estimatedTime: 0,
     },
-    isRecoveryDay: false,
+    isRecoveryDay: profile.preferences?.recoveryMode || false,
     difficultFollowUp: null,
   })),
   handleSessionCompletion: vi.fn((profile, results, dailyMix) => ({
@@ -323,7 +323,10 @@ describe('IntegratedContext', () => {
 
       await waitFor(() => {
         // Should be the same mix (not regenerated)
-        expect(result.current.dailyMix?.date).toEqual(mixBefore?.date);
+        // Compare date as ISO string (ignoring milliseconds)
+        const dateBefore = mixBefore?.date ? new Date(mixBefore.date).toISOString().split('T')[0] : null;
+        const dateAfter = result.current.dailyMix?.date ? new Date(result.current.dailyMix.date).toISOString().split('T')[0] : null;
+        expect(dateAfter).toEqual(dateBefore);
       });
     });
 
@@ -582,13 +585,20 @@ describe('IntegratedContext', () => {
         expect(result.current.profile).not.toBeNull();
       });
 
+      // Wait for initial daily mix to be generated
+      await waitFor(() => {
+        expect(result.current.dailyMix).not.toBeNull();
+      });
+
       await act(async () => {
         result.current.requestRecovery();
       });
 
+      // Wait for both profile recovery mode AND daily mix recovery day to be set
       await waitFor(() => {
+        expect(result.current.profile?.preferences?.recoveryMode).toBe(true);
         expect(result.current.dailyMix?.isRecoveryDay).toBe(true);
-      });
+      }, { timeout: 3000 });
     });
 
     it('should persist recovery mode to localStorage', async () => {

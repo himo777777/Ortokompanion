@@ -240,11 +240,18 @@ export function getDueCards(cards: SRSCard[]): SRSCard[] {
   const now = new Date();
   now.setHours(0, 0, 0, 0); // Start of today
 
-  return cards.filter((card) => {
-    const dueDate = new Date(card.dueDate);
-    dueDate.setHours(0, 0, 0, 0);
-    return dueDate <= now;
-  });
+  return cards
+    .filter((card) => {
+      const dueDate = new Date(card.dueDate);
+      dueDate.setHours(0, 0, 0, 0);
+      return dueDate <= now;
+    })
+    .sort((a, b) => {
+      // Sort by due date (oldest first)
+      const dateA = new Date(a.dueDate).getTime();
+      const dateB = new Date(b.dueDate).getTime();
+      return dateA - dateB;
+    });
 }
 
 /**

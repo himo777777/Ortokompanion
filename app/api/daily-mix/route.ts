@@ -9,6 +9,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { getOrCreateUser, getDailyMix, saveDailyMix, isDailyMixStale } from '@/lib/db-utils'
 import type { DailyMix } from '@/types/progression'
+import { logger } from '@/lib/logger'
 
 /**
  * GET /api/daily-mix
@@ -49,7 +50,7 @@ export async function GET() {
       hasMix: true,
     })
   } catch (error) {
-    console.error('Error fetching daily mix:', error)
+    logger.error('Error fetching daily mix', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -97,7 +98,7 @@ export async function POST(req: NextRequest) {
       date: savedMix.date,
     })
   } catch (error) {
-    console.error('Error saving daily mix:', error)
+    logger.error('Error saving daily mix', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

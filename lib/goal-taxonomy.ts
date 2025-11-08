@@ -8,6 +8,7 @@ import {
   ALL_FOCUSED_GOALS,
   type SocialstyrelsensGoal,
 } from '@/data/focused-socialstyrelsen-goals';
+import { logger } from './logger';
 
 // Lazy initialize OpenAI client only when needed (optional for viewing existing content)
 let openai: OpenAI | null = null;
@@ -151,7 +152,7 @@ function extractKeywords(goal: SocialstyrelsensGoal): string[] {
  * Generate embeddings for all goals (batch process)
  */
 export async function generateAllGoalEmbeddings(): Promise<GoalEmbedding[]> {
-  console.log('🧠 Generating embeddings for all goals...');
+  logger.info('Generating embeddings for all goals', { totalGoals: ALL_FOCUSED_GOALS.length });
 
   const embeddings: GoalEmbedding[] = [];
   const batchSize = 10;
@@ -163,9 +164,10 @@ export async function generateAllGoalEmbeddings(): Promise<GoalEmbedding[]> {
     );
     embeddings.push(...batchEmbeddings);
 
-    console.log(
-      `✅ Generated ${embeddings.length}/${ALL_FOCUSED_GOALS.length} embeddings`
-    );
+    logger.info('Generated goal embeddings batch', {
+      current: embeddings.length,
+      total: ALL_FOCUSED_GOALS.length
+    });
 
     // Rate limiting
     if (i + batchSize < ALL_FOCUSED_GOALS.length) {
@@ -534,9 +536,9 @@ export async function generateGoalBasedLearningPath(
 // ==================== PROGRESS TRACKING ====================
 
 /**
- * Calculate user's progress towards all goals
+ * Calculate user's progress towards all goals (detailed version for production use)
  */
-export function calculateGoalProgress(
+export function calculateGoalProgressDetailed(
   userProgram: 'bt' | 'at' | 'st',
   userSpecialty: string,
   completedActivities: {
@@ -604,6 +606,28 @@ export function calculateGoalProgress(
   };
 }
 
+/**
+ * Calculate progress for a specific goal (simplified test interface)
+ *
+ * @param goalId - Goal identifier
+ * @param completedContentIds - IDs of completed content items
+ * @param allRelevantContentIds - IDs of all relevant content items
+ * @returns Progress as a number between 0 and 1
+ */
+export function calculateGoalProgress(
+  goalId: string,
+  completedContentIds: string[],
+  allRelevantContentIds: string[]
+): number {
+  if (allRelevantContentIds.length === 0) return 1;
+
+  const completedCount = allRelevantContentIds.filter(id =>
+    completedContentIds.includes(id)
+  ).length;
+
+  return completedCount / allRelevantContentIds.length;
+}
+
 const GoalTaxonomy = {
   generateGoalEmbedding,
   generateAllGoalEmbeddings,
@@ -613,6 +637,7 @@ const GoalTaxonomy = {
   generateGoalTargetedQuestion,
   generateGoalBasedLearningPath,
   calculateGoalProgress,
+  calculateGoalProgressDetailed,
 };
 
 export default GoalTaxonomy;

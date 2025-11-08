@@ -5,6 +5,7 @@
  */
 
 import { AIResponse } from './ai-utils';
+import { logger } from './logger';
 
 /**
  * Cache entry structure
@@ -136,7 +137,7 @@ class PersistentCache {
       this.stats.hits++;
       return entry.data;
     } catch (error) {
-      console.error('PersistentCache.get error:', error);
+      logger.error('Failed to get item from persistent cache', error, { key });
       this.stats.misses++;
       return null;
     }
@@ -156,7 +157,7 @@ class PersistentCache {
       localStorage.setItem(this.prefix + key, JSON.stringify(entry));
     } catch (error) {
       // LocalStorage might be full or disabled
-      console.warn('PersistentCache.set failed:', error);
+      logger.warn('Failed to set item in persistent cache - storage may be full', { key });
     }
   }
 
@@ -179,7 +180,7 @@ class PersistentCache {
       keysToRemove.forEach((key) => localStorage.removeItem(key));
       this.stats = { hits: 0, misses: 0 };
     } catch (error) {
-      console.error('PersistentCache.clear error:', error);
+      logger.error('Failed to clear persistent cache', error);
     }
   }
 
@@ -235,7 +236,7 @@ class PersistentCache {
 
       keysToRemove.forEach((key) => localStorage.removeItem(key));
     } catch (error) {
-      console.error('PersistentCache.cleanup error:', error);
+      logger.error('Failed to cleanup expired cache entries', error);
     }
   }
 }

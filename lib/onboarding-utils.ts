@@ -2,6 +2,7 @@ import { OnboardingData, UserProfile, SevenDayPlan, DayPlan, PlanItem, Domain, B
 import { EducationLevel } from '@/types/education';
 import { Rotation, OrthoPlacement, getRotationStatus } from '@/types/rotation';
 import { autoAssignGoals } from './goal-assignment';
+import { logger } from './logger';
 
 export function initializeOnboarding(): OnboardingData {
   return {
@@ -444,7 +445,7 @@ export function updateStreak(profile: UserProfile): number {
 export function trackEvent(eventName: string, data?: any) {
   // Enkel event tracking - i produktion skulle detta skickas till analytics
   if (typeof window !== 'undefined') {
-    console.log(`[Analytics] ${eventName}`, data);
+    logger.debug(`Analytics event: ${eventName}`, data);
     // localStorage för demo
     const events = JSON.parse(localStorage.getItem('ortokompanion_events') || '[]');
     events.push({

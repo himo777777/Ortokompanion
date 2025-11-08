@@ -9,6 +9,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { checkRateLimit, RateLimitPresets, createRateLimitHeaders } from '@/lib/rate-limiter';
+import { logger } from '@/lib/logger';
 
 export const runtime = 'edge';
 
@@ -81,7 +82,7 @@ export async function POST(request: NextRequest) {
     const apiKey = process.env.OPENAI_API_KEY;
 
     if (!apiKey) {
-      console.error('OpenAI API key not configured');
+      logger.error('OpenAI API key not configured');
       return NextResponse.json(
         { error: 'AI-tjänsten är inte konfigurerad korrekt' },
         { status: 500 }
@@ -113,11 +114,9 @@ export async function POST(request: NextRequest) {
       if (!response.ok) {
         const error = await response.json().catch(() => ({}));
         // Log full error server-side for debugging
-        console.error('OpenAI chat error:', {
+        logger.error('OpenAI chat error', error, {
           status: response.status,
-          error,
-          model,
-          timestamp: new Date().toISOString(),
+          model
         });
 
         // Return sanitized error to client
@@ -129,7 +128,7 @@ export async function POST(request: NextRequest) {
 
       // Validate response structure
       if (!data.choices || !data.choices[0] || !data.choices[0].message) {
-        console.error('Invalid OpenAI response structure:', data);
+        logger.error('Invalid OpenAI response structure', null, { hasChoices: !!data.choices });
         return NextResponse.json(
           { error: 'Ogiltigt svar från AI-tjänsten' },
           { status: 500 }
@@ -150,7 +149,7 @@ export async function POST(request: NextRequest) {
       clearTimeout(timeoutId);
 
       if (fetchError instanceof Error && fetchError.name === 'AbortError') {
-        console.error('OpenAI chat timeout');
+        logger.error('OpenAI chat timeout');
         return NextResponse.json(
           { error: 'Förfrågan tog för lång tid. Försök igen.', code: 'TIMEOUT' },
           { status: 408 }
@@ -161,11 +160,7 @@ export async function POST(request: NextRequest) {
     }
   } catch (error) {
     // Log full error server-side
-    console.error('AI chat error:', {
-      error: error instanceof Error ? error.message : 'Unknown error',
-      stack: error instanceof Error ? error.stack : undefined,
-      timestamp: new Date().toISOString(),
-    });
+    logger.error('AI chat error', error);
 
     // Return generic error to client (no details)
     return NextResponse.json(

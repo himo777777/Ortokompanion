@@ -108,7 +108,7 @@ export default function DecisionTreeCase({
       });
       setAiAnalysis(result);
     } catch (error) {
-      console.error('Failed to generate AI analysis:', error);
+      logger.error('Failed to generate AI analysis', error);
       setAiAnalysis(null);
     } finally {
       setLoadingAIAnalysis(false);

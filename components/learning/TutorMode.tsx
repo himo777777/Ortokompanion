@@ -125,7 +125,7 @@ export default function TutorMode({
       });
       setAiHints(result.hints);
     } catch (error) {
-      console.error('Failed to generate AI hints:', error);
+      logger.error('Failed to generate AI hints', error);
       setAiHints(null); // Fallback to static hints
     } finally {
       setLoadingAIHints(false);
@@ -153,7 +153,7 @@ export default function TutorMode({
       });
       setAiExplanation(result);
     } catch (error) {
-      console.error('Failed to generate AI explanation:', error);
+      logger.error('Failed to generate AI explanation', error);
       setAiExplanation(null); // Fallback to static explanation
     } finally {
       setLoadingAIExplanation(false);
@@ -259,14 +259,14 @@ export default function TutorMode({
           {/* Answer Options */}
           <div className="space-y-3 mb-6">
             {question.options.map((option, index) => {
-              const isSelected = selectedAnswer === option;
-              const isThisCorrect = option === question.correctAnswer;
+              const isSelected = selectedAnswer === String(index);
+              const isThisCorrect = String(index) === question.correctAnswer;
               const showFeedback = showAnswer;
 
               return (
                 <button
                   key={index}
-                  onClick={() => handleSelectAnswer(option)}
+                  onClick={() => handleSelectAnswer(String(index))}
                   disabled={showAnswer}
                   className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
                     showFeedback && isThisCorrect

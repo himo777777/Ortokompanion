@@ -95,8 +95,8 @@ export class GapAnalyzer {
    * Analyze current content coverage and identify gaps
    */
   analyzeCoverage(): CoverageMetrics {
-    const questions = ALL_QUESTIONS;
-    const cases = UNIFIED_CLINICAL_CASES;
+    const questions = ALL_QUESTIONS.filter(q => q != null);
+    const cases = UNIFIED_CLINICAL_CASES.filter(c => c != null);
 
     // Count by domain
     const byDomain = new Map<Domain, number>();
@@ -524,6 +524,13 @@ export class GapAnalyzer {
     });
 
     return lines.join('\n');
+  }
+
+  /**
+   * Alias for backward compatibility with tests
+   */
+  createGenerationPlan(targetCount: number): GenerationPlan {
+    return this.createDailyPlan(targetCount);
   }
 }
 

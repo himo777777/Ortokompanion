@@ -11,6 +11,7 @@ import {
 } from '@/data/focused-socialstyrelsen-goals';
 import { VERIFIED_SOURCES } from '@/data/verified-sources';
 import { generateGoalTargetedQuestion } from './goal-taxonomy';
+import { logger } from './logger';
 
 const openai = new OpenAI({
   apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
@@ -89,7 +90,11 @@ export async function generateQuestionsForGoal(
   count: number = 5,
   difficulties: Array<'A' | 'B' | 'C' | 'D' | 'E'> = ['B', 'C', 'D']
 ): Promise<GoalAwareQuestion[]> {
-  console.log(`🎯 Generating ${count} questions for goal: ${goal.title}`);
+  logger.info('Generating questions for Socialstyrelsen goal', {
+    goalId: goal.id,
+    goalTitle: goal.title,
+    count
+  });
 
   const questions: GoalAwareQuestion[] = [];
 
@@ -141,12 +146,19 @@ export async function generateQuestionsForGoal(
       };
 
       questions.push(question);
-      console.log(`  ✅ Generated question ${i + 1}/${count} (quality: ${(qualityScore * 100).toFixed(1)}%)`);
+      logger.debug('Generated question for goal', {
+        questionNumber: i + 1,
+        totalCount: count,
+        qualityScore: (qualityScore * 100).toFixed(1) + '%'
+      });
 
       // Rate limiting
       await new Promise((resolve) => setTimeout(resolve, 1000));
     } catch (error) {
-      console.error(`  ❌ Error generating question ${i + 1}:`, error);
+      logger.error('Failed to generate question for goal', error, {
+        questionNumber: i + 1,
+        goalId: goal.id
+      });
     }
   }
 
@@ -196,7 +208,7 @@ Svara endast med ett nummer 0-100.`;
     const score = parseInt(response.choices[0].message.content?.trim() || '70');
     return Math.min(100, Math.max(0, score)) / 100;
   } catch (error) {
-    console.warn('Could not calculate quality score, using default 0.7');
+    logger.warn('Could not calculate quality score, using default 0.7', { goalId: goal.id });
     return 0.7;
   }
 }
@@ -298,7 +310,10 @@ FORMATERA SOM JSON:
 export async function generateLearningModuleForGoal(
   goal: SocialstyrelsensGoal
 ): Promise<LearningModule> {
-  console.log(`📚 Generating learning module for: ${goal.title}`);
+  logger.info('Generating learning module for Socialstyrelsen goal', {
+    goalId: goal.id,
+    goalTitle: goal.title
+  });
 
   // Generate theory content
   const theoryPrompt = `Skapa pedagogiskt innehåll för följande Socialstyrelsen-mål:
@@ -377,9 +392,12 @@ export async function generateContentForProgram(
     (g) => g.specialty === specialty || specialty === 'all'
   );
 
-  console.log(
-    `🎯 Generating ${contentType} for ${goals.length} goals in ${program.toUpperCase()}`
-  );
+  logger.info('Generating content for program goals', {
+    contentType,
+    goalsCount: goals.length,
+    program: program.toUpperCase(),
+    specialty
+  });
 
   const items: Array<
     GoalAwareQuestion | GoalAwareClinicalCase | LearningModule
@@ -403,12 +421,17 @@ export async function generateContentForProgram(
         generated++;
       }
 
-      console.log(`  ✅ Completed goal ${goal.id}: ${goal.title}`);
+      logger.debug('Completed goal content generation', {
+        goalId: goal.id,
+        goalTitle: goal.title
+      });
 
       // Rate limiting
       await new Promise((resolve) => setTimeout(resolve, 2000));
     } catch (error) {
-      console.error(`  ❌ Failed goal ${goal.id}:`, error);
+      logger.error('Failed to generate content for goal', error, {
+        goalId: goal.id
+      });
       failed++;
     }
   }
@@ -454,8 +477,10 @@ export async function generatePersonalizedContent(
     .slice(0, 5)
     .map((g) => g.goal);
 
-  console.log(`👤 Generating personalized content for user ${userId}`);
-  console.log(`   Focusing on ${prioritizedGoals.length} priority goals`);
+  logger.info('Generating personalized content for user', {
+    userId,
+    priorityGoalsCount: prioritizedGoals.length
+  });
 
   // Generate content for top priority goals
   const generatedQuestions: GoalAwareQuestion[] = [];

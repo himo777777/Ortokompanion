@@ -1,8 +1,11 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { logger } from '@/lib/logger';
 import { TrendingUp, Award, Target, Flame, Heart, MessageCircle, Sparkles, Loader2, Trophy, Calendar, CheckCircle, Clock } from 'lucide-react';
+import { logger } from '@/lib/logger';
 import { generatePerformanceInsights } from '@/lib/ai-service';
+import { logger } from '@/lib/logger';
 
 interface StudySession {
   date: Date;
@@ -53,7 +56,7 @@ export default function AILearningCoach({
       });
       setAiInsights(result);
     } catch (error) {
-      console.error('Failed to generate AI insights:', error);
+      logger.error('Failed to generate AI insights', error);
       setAiInsights(null);
     } finally {
       setLoadingInsights(false);

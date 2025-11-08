@@ -224,7 +224,7 @@ export function calculateBandAdjustment(
     return {
       fromBand: currentBand,
       toBand: getHarderBand(currentBand),
-      reason: 'Stark prestanda över flera dagar - redo för nästa nivå!',
+      reason: 'Stark prestanda/performance över flera dagar - redo för nästa nivå!',
       date: new Date(),
       performanceMetrics: {
         streak: bandStatus.streakAtBand,

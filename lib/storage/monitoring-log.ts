@@ -7,6 +7,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { logger } from '../logger';
 
 const STORAGE_DIR = path.join(process.cwd(), 'data');
 const LOG_FILE = path.join(STORAGE_DIR, 'monitoring-log.json');
@@ -63,7 +64,7 @@ export function loadMonitoringLog(): MonitoringLogEntry[] {
       timestamp: new Date(entry.timestamp),
     }));
   } catch (error) {
-    console.error('[MonitoringLog] Error loading log:', error);
+    logger.error('Failed to load monitoring log', error);
     return [];
   }
 }
@@ -84,7 +85,7 @@ export function saveMonitoringLog(log: MonitoringLogEntry[]): boolean {
 
     return true;
   } catch (error) {
-    console.error('[MonitoringLog] Error saving log:', error);
+    logger.error('Failed to save monitoring log', error);
     return false;
   }
 }
@@ -322,7 +323,7 @@ export function importMonitoringLog(jsonData: string): boolean {
 
     return saveMonitoringLog(log);
   } catch (error) {
-    console.error('[MonitoringLog] Error importing log:', error);
+    logger.error('Failed to import monitoring log', error);
     return false;
   }
 }

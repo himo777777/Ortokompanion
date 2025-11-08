@@ -113,7 +113,7 @@ async function runSingleQuestion(questionId: string) {
 
   const question = ALL_QUESTIONS.find(q => q.id === questionId);
   if (!question) {
-    console.error(`❌ Question not found: ${questionId}`);
+    logger.error(`❌ Question not found: ${questionId}`);
     process.exit(1);
   }
 
@@ -167,7 +167,7 @@ async function runSingleQuestion(questionId: string) {
     console.log('\n📋 Next: Review and manually integrate into questions.ts');
 
   } catch (error) {
-    console.error(`\n❌ Failed to generate TutorMode:`, error);
+    logger.error(`\n❌ Failed to generate TutorMode:`, error);
     process.exit(1);
   }
 }
@@ -345,6 +345,6 @@ Current status:
 // ============================================================================
 
 main().catch(error => {
-  console.error('\n❌ Fatal error:', error);
+  logger.error('\n❌ Fatal error:', error);
   process.exit(1);
 });

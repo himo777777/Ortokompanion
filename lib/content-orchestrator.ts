@@ -12,8 +12,18 @@ import { contentVersioning } from './content-versioning';
 import { alertEngine } from './alert-engine';
 import { ALL_QUESTIONS } from '@/data/questions';
 import { VERIFIED_SOURCES } from '@/data/verified-sources';
+import { logger } from './logger';
 import * as fs from 'fs';
 import * as path from 'path';
+
+export interface ContentGap {
+  domain: string;
+  band: string;
+  level: string;
+  currentCount: number;
+  targetCount: number;
+  priority: number;
+}
 
 export interface OrchestrationRun {
   id: string;
@@ -24,6 +34,7 @@ export interface OrchestrationRun {
     targetCount: number;
     estimatedCost: number;
     estimatedDuration: number;
+    gaps: ContentGap[];
   };
   results: {
     generated: number;
@@ -32,6 +43,9 @@ export interface OrchestrationRun {
     rejected: number;
     totalCost: number;
     totalDuration: number;
+    validated?: number;
+    published?: number;
+    queued?: number;
   };
   generatedContent: GeneratedContent[];
   errors: Array<{
@@ -88,7 +102,7 @@ export class ContentOrchestrator {
    * Run the complete daily content generation pipeline
    */
   async runDaily(): Promise<OrchestrationRun> {
-    console.log('[Orchestrator] Starting daily content generation pipeline');
+    logger.info('Starting daily content generation pipeline');
 
     const runId = `run-${Date.now()}`;
     this.currentRun = {
@@ -99,6 +113,7 @@ export class ContentOrchestrator {
         targetCount: 0,
         estimatedCost: 0,
         estimatedDuration: 0,
+        gaps: [],
       },
       results: {
         generated: 0,
@@ -107,6 +122,9 @@ export class ContentOrchestrator {
         rejected: 0,
         totalCost: 0,
         totalDuration: 0,
+        validated: 0,
+        published: 0,
+        queued: 0,
       },
       generatedContent: [],
       errors: [],
@@ -114,34 +132,35 @@ export class ContentOrchestrator {
 
     try {
       // Phase 1: Analyze content gaps
-      console.log('[Orchestrator] Phase 1: Analyzing content gaps');
-      const plan = await this.analyzeGaps();
+      logger.info('Phase 1: Analyzing content gaps');
+      const plan = await this.analyzeGapsInternal();
       this.currentRun.plan = plan;
 
       // Phase 2: Generate content batch
-      console.log('[Orchestrator] Phase 2: Generating content batch');
+      logger.info('Phase 2: Generating content batch');
       const generated = await this.generateContentBatch(plan);
       this.currentRun.generatedContent = generated;
       this.currentRun.results.generated = generated.length;
 
       // Phase 3: Validate and score content
-      console.log('[Orchestrator] Phase 3: Validating and scoring content');
+      logger.info('Phase 3: Validating and scoring content');
       const validated = await this.validateContent(generated);
+      this.currentRun.results.validated = validated.length;
 
       // Phase 4: Auto-publish or queue for review
-      console.log('[Orchestrator] Phase 4: Publishing/queueing content');
+      logger.info('Phase 4: Publishing/queueing content');
       await this.processValidatedContent(validated);
 
       // Phase 5: Generate reports and notifications
-      console.log('[Orchestrator] Phase 5: Generating reports');
+      logger.info('Phase 5: Generating reports');
       await this.generateReports();
 
       this.currentRun.status = 'completed';
       this.currentRun.endTime = new Date();
 
-      console.log('[Orchestrator] Pipeline completed successfully');
+      logger.info('Pipeline completed successfully');
     } catch (error) {
-      console.error('[Orchestrator] Pipeline failed:', error);
+      logger.error('Pipeline failed', error);
       this.currentRun.status = 'failed';
       this.currentRun.endTime = new Date();
       this.currentRun.errors.push({
@@ -158,26 +177,73 @@ export class ContentOrchestrator {
   }
 
   /**
-   * Phase 1: Analyze content gaps and create generation plan
+   * Phase 1: Analyze content gaps and create generation plan (internal)
    */
-  private async analyzeGaps(): Promise<{
+  private async analyzeGapsInternal(): Promise<{
     targetCount: number;
     estimatedCost: number;
     estimatedDuration: number;
+    gaps: ContentGap[];
   }> {
     const coverage = gapAnalyzer.analyzeCoverage();
     const plan = gapAnalyzer.createDailyPlan(this.config.dailyTarget);
 
-    console.log(`[Orchestrator] Identified ${coverage.gaps.length} content gaps`);
-    console.log(`[Orchestrator] Plan: Generate ${plan.totalItems} items`);
-    console.log(`[Orchestrator] Estimated cost: $${plan.estimatedCost.toFixed(2)}`);
-    console.log(`[Orchestrator] Estimated duration: ${Math.round(plan.estimatedDuration / 60)}min`);
+    // Map priority strings to numbers
+    const priorityMap: Record<string, number> = {
+      'critical': 4,
+      'high': 3,
+      'medium': 2,
+      'low': 1,
+    };
+
+    // Convert gaps to ContentGap format
+    const gaps: ContentGap[] = coverage.gaps.map((gap, index) => ({
+      domain: gap.domain,
+      band: gap.band || 'C',
+      level: gap.level || 'st3',
+      currentCount: gap.currentCount,
+      targetCount: gap.targetCount,
+      priority: priorityMap[gap.priority] || 0,
+    }));
+
+    logger.info('Content gaps identified', {
+      gaps: coverage.gaps.length,
+      planItems: plan.totalItems,
+      estimatedCost: plan.estimatedCost.toFixed(2),
+      estimatedDurationMin: Math.round(plan.estimatedDuration / 60),
+    });
 
     return {
       targetCount: plan.totalItems,
       estimatedCost: plan.estimatedCost,
       estimatedDuration: plan.estimatedDuration,
+      gaps,
     };
+  }
+
+  /**
+   * Analyze content gaps (public interface for tests)
+   */
+  async analyzeGaps(): Promise<ContentGap[]> {
+    const coverage = gapAnalyzer.analyzeCoverage();
+
+    // Map priority strings to numbers
+    const priorityMap: Record<string, number> = {
+      'critical': 4,
+      'high': 3,
+      'medium': 2,
+      'low': 1,
+    };
+
+    // Convert gaps to ContentGap format
+    return coverage.gaps.map((gap, index) => ({
+      domain: gap.domain,
+      band: gap.band || 'C',
+      level: gap.level || 'st3',
+      currentCount: gap.currentCount,
+      targetCount: gap.targetCount,
+      priority: priorityMap[gap.priority] || 0,
+    })).sort((a, b) => b.priority - a.priority); // Sort by priority descending
   }
 
   /**
@@ -200,7 +266,7 @@ export class ContentOrchestrator {
       targetCount: item.count,
     }));
 
-    console.log(`[Orchestrator] Generating ${requests.length} content items`);
+    logger.info('Generating content items', { count: requests.length });
 
     // Generate content in batches to manage API rate limits
     const batchSize = 10;
@@ -208,7 +274,10 @@ export class ContentOrchestrator {
 
     for (let i = 0; i < requests.length; i += batchSize) {
       const batch = requests.slice(i, i + batchSize);
-      console.log(`[Orchestrator] Batch ${Math.floor(i / batchSize) + 1}/${Math.ceil(requests.length / batchSize)}`);
+      logger.debug('Processing batch', {
+        batch: Math.floor(i / batchSize) + 1,
+        total: Math.ceil(requests.length / batchSize),
+      });
 
       try {
         const batchResults = await aiContentFactory.generateBatch(batch);
@@ -224,14 +293,17 @@ export class ContentOrchestrator {
 
         // Check budget limit
         if (this.currentRun && this.currentRun.results.totalCost >= this.config.maxCostPerDay) {
-          console.warn('[Orchestrator] Daily budget limit reached, stopping generation');
+          logger.warn('Daily budget limit reached, stopping generation', {
+            totalCost: this.currentRun.results.totalCost,
+            maxCost: this.config.maxCostPerDay,
+          });
           break;
         }
 
         // Rate limiting: Wait between batches
         await this.sleep(2000); // 2 second delay between batches
       } catch (error) {
-        console.error('[Orchestrator] Batch generation failed:', error);
+        logger.error('Batch generation failed', error);
         if (this.currentRun) {
           this.currentRun.errors.push({
             phase: 'generation',
@@ -249,7 +321,7 @@ export class ContentOrchestrator {
    * Phase 3: Validate and score all generated content
    */
   private async validateContent(generated: GeneratedContent[]): Promise<GeneratedContent[]> {
-    console.log(`[Orchestrator] Validating ${generated.length} generated items`);
+    logger.info('Validating generated items', { count: generated.length });
 
     for (const item of generated) {
       try {
@@ -262,11 +334,12 @@ export class ContentOrchestrator {
         item.medicalAccuracy = metrics.medicalAccuracy;
         item.pedagogicalQuality = metrics.pedagogicalQuality;
 
-        console.log(
-          `[Orchestrator] ${item.content.id}: Confidence ${(metrics.overall * 100).toFixed(1)}%`
-        );
+        logger.debug('Item validated', {
+          id: item.content.id,
+          confidence: (metrics.overall * 100).toFixed(1),
+        });
       } catch (error) {
-        console.error('[Orchestrator] Validation failed for item:', error);
+        logger.error('Validation failed for item', error);
         if (this.currentRun) {
           this.currentRun.errors.push({
             phase: 'validation',
@@ -296,18 +369,21 @@ export class ContentOrchestrator {
         await this.autoPublish(item);
         if (this.currentRun) {
           this.currentRun.results.autoPublished++;
+          this.currentRun.results.published = this.currentRun.results.autoPublished; // Alias
         }
       } else if (item.confidenceScore >= 0.90) {
         // Queue for admin review (good enough to review)
         reviewQueue.push(item);
         if (this.currentRun) {
           this.currentRun.results.queuedForReview++;
+          this.currentRun.results.queued = this.currentRun.results.queuedForReview; // Alias
         }
       } else {
         // Reject (too low confidence)
-        console.warn(
-          `[Orchestrator] Rejecting ${item.content.id} - confidence too low (${(item.confidenceScore * 100).toFixed(1)}%)`
-        );
+        logger.warn('Rejecting item - confidence too low', {
+          id: item.content.id,
+          confidence: (item.confidenceScore * 100).toFixed(1),
+        });
         if (this.currentRun) {
           this.currentRun.results.rejected++;
         }
@@ -324,9 +400,10 @@ export class ContentOrchestrator {
    * Auto-publish content to production
    */
   private async autoPublish(item: GeneratedContent): Promise<void> {
-    console.log(
-      `[Orchestrator] Auto-publishing ${item.content.id} (confidence: ${(item.confidenceScore * 100).toFixed(1)}%)`
-    );
+    logger.info('Auto-publishing item', {
+      id: item.content.id,
+      confidence: (item.confidenceScore * 100).toFixed(1),
+    });
 
     try {
       // Create content version record
@@ -369,9 +446,9 @@ export class ContentOrchestrator {
 
       fs.writeFileSync(aiGeneratedFile, JSON.stringify(existingQuestions, null, 2), 'utf-8');
 
-      console.log(`[Orchestrator] Successfully published ${item.content.id}`);
+      logger.info('Successfully published item', { id: item.content.id });
     } catch (error) {
-      console.error('[Orchestrator] Failed to auto-publish:', error);
+      logger.error('Failed to auto-publish', error);
       throw error;
     }
   }
@@ -380,7 +457,7 @@ export class ContentOrchestrator {
    * Save content to review queue
    */
   private async saveToReviewQueue(items: GeneratedContent[]): Promise<void> {
-    console.log(`[Orchestrator] Adding ${items.length} items to review queue`);
+    logger.info('Adding items to review queue', { count: items.length });
 
     let existingQueue: GeneratedContent[] = [];
 
@@ -401,7 +478,7 @@ export class ContentOrchestrator {
     if (!this.currentRun) return;
 
     const report = this.generateSummaryReport();
-    console.log('\n' + report + '\n');
+    logger.info('Daily content generation report', { report });
 
     // Send notification if enabled
     if (this.config.enableNotifications) {
@@ -478,7 +555,7 @@ export class ContentOrchestrator {
     }
 
     // TODO: Send email notification
-    console.log('[Orchestrator] Admin notification sent');
+    logger.debug('Admin notification sent');
   }
 
   /**
@@ -526,6 +603,45 @@ export class ContentOrchestrator {
 
     const data = fs.readFileSync(this.runHistoryFile, 'utf-8');
     return JSON.parse(data);
+  }
+
+  /**
+   * Generate a batch of questions (public interface for tests)
+   */
+  async generateBatch(params: {
+    domain: string;
+    band: string;
+    count: number;
+    onProgress?: (progress: number) => void;
+  }): Promise<GeneratedContent[]> {
+    const { domain, band, count, onProgress } = params;
+
+    const requests: ContentGenerationRequest[] = [{
+      type: 'question',
+      domain: domain as any,
+      level: 'st3',
+      band: band as any,
+      targetCount: count,
+    }];
+
+    const results: GeneratedContent[] = [];
+
+    for (let i = 0; i < count; i++) {
+      try {
+        const generated = await aiContentFactory.generateSingle(requests[0]);
+        results.push(generated);
+
+        // Call progress callback if provided
+        if (onProgress) {
+          onProgress((i + 1) / count);
+        }
+      } catch (error) {
+        logger.error('Failed to generate question in batch', error);
+        // Continue with next question even if one fails
+      }
+    }
+
+    return results;
   }
 
   /**

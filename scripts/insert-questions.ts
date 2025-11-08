@@ -4,7 +4,9 @@
  */
 
 import * as fs from 'fs';
+import { logger } from '../lib/logger';
 import * as path from 'path';
+import { logger } from '../lib/logger';
 
 async function main() {
   const questionsFile = path.join(__dirname, '../data/questions.ts');
@@ -62,4 +64,4 @@ async function main() {
   console.log('2. Integrate TutorMode additions');
 }
 
-main().catch(console.error);
+main().catch((error) => { logger.error('Script error', error); process.exit(1); });

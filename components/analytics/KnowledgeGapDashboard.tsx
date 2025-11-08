@@ -1,10 +1,15 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { logger } from '@/lib/logger';
 import { Target, TrendingDown, TrendingUp, AlertTriangle, CheckCircle, Brain, Sparkles, Loader2, BookOpen, Flame } from 'lucide-react';
+import { logger } from '@/lib/logger';
 import { analyzeKnowledgeGaps } from '@/lib/ai-service';
+import { logger } from '@/lib/logger';
 import { Domain } from '@/types/onboarding';
+import { logger } from '@/lib/logger';
 import { EducationLevel } from '@/types/education';
+import { logger } from '@/lib/logger';
 
 interface PerformanceRecord {
   domain: Domain;
@@ -67,7 +72,7 @@ export default function KnowledgeGapDashboard({
       });
       setAiAnalysis(result);
     } catch (error) {
-      console.error('Failed to analyze knowledge gaps:', error);
+      logger.error('Failed to analyze knowledge gaps', error);
       setAiAnalysis(null);
     } finally {
       setLoadingAnalysis(false);

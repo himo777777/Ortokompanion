@@ -8,6 +8,7 @@
 
 import { openai } from '@/lib/openai-client';
 import { ComprehensiveSocialstyrelseMål } from '@/data/comprehensive-goals-database';
+import { logger } from './logger';
 
 // ==================== ULTRA SMART AI CONFIGURATION ====================
 
@@ -59,7 +60,9 @@ export class UltraSmartAI {
     goals.forEach(goal => {
       this.goalKnowledge.set(goal.id, goal);
     });
-    console.log(`✅ Loaded ${this.goalKnowledge.size} official Socialstyrelsen goals`);
+    logger.info('Loaded Socialstyrelsen goals', {
+      goalCount: this.goalKnowledge.size
+    });
   }
 
   private async fetchOfficialGoals(): Promise<ComprehensiveSocialstyrelseMål[]> {
@@ -242,7 +245,7 @@ export class UltraSmartAI {
   // ==================== SEMANTIC UNDERSTANDING ====================
 
   private async buildSemanticIndex() {
-    console.log('🧠 Building semantic understanding...');
+    logger.info('Building semantic understanding for goals');
 
     for (const [goalId, goal] of this.goalKnowledge) {
       // Create rich text representation
@@ -268,7 +271,7 @@ export class UltraSmartAI {
       });
       return new Float32Array(response.data[0].embedding);
     } catch (error) {
-      console.error('Embedding generation failed:', error);
+      logger.error('Embedding generation failed', error);
       return new Float32Array(3072).fill(0); // Fallback
     }
   }
@@ -621,7 +624,7 @@ Varje steg ska:
 
   private loadMedicalKnowledgeGraph() {
     // Build knowledge graph of medical concepts
-    console.log('📊 Loading medical knowledge graph...');
+    logger.info('Loading medical knowledge graph');
 
     // Create relationships between goals
     // Build prerequisite chains
@@ -645,7 +648,7 @@ Varje steg ska:
 
       return parsed;
     } catch (error) {
-      console.error('Parse error:', error);
+      logger.error('Failed to parse and validate AI response', error);
       return {
         content: response,
         goalMappings: goals.map(g => g.id)

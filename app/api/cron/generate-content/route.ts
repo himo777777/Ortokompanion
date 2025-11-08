@@ -11,6 +11,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { contentOrchestrator } from '@/lib/content-orchestrator';
+import { logger } from '@/lib/logger';
 
 export const maxDuration = 300; // 5 minutes max execution time
 export const runtime = 'nodejs'; // Use Node.js runtime for file system access
@@ -26,7 +27,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    console.log('[CRON] Starting automated content generation');
+    logger.info('[CRON] Starting automated content generation');
 
     // Run the complete orchestration pipeline
     const run = await contentOrchestrator.runDaily();
@@ -44,14 +45,14 @@ export async function GET(request: NextRequest) {
       timestamp: new Date().toISOString(),
     };
 
-    console.log('[CRON] Content generation complete:', summary);
+    logger.info('[CRON] Content generation complete', summary);
 
     return NextResponse.json({
       success: run.status === 'completed',
       summary,
     });
   } catch (error) {
-    console.error('[CRON] Error during content generation:', error);
+    logger.error('[CRON] Error during content generation', error);
 
     return NextResponse.json(
       {
@@ -79,7 +80,7 @@ export async function POST(request: NextRequest) {
       enableAutoPublish?: boolean;
     } = body;
 
-    console.log('[CRON] Manual trigger with custom config:', {
+    logger.info('[CRON] Manual trigger with custom config', {
       targetCount,
       confidenceThreshold,
       enableAutoPublish,

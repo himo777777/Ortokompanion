@@ -1,5 +1,6 @@
 /**
  * Source Monitoring Cron Endpoint
+import { logger } from '@/lib/logger';
  *
  * Scheduled job that:
  * 1. Discovers new medical sources
@@ -30,20 +31,21 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    console.log('[SOURCE-MONITOR] Starting source monitoring job...');
+    logger.info('[SOURCE-MONITOR] Starting source monitoring job...');
     const startTime = Date.now();
 
     // Phase 1: Run source discovery
-    console.log('[SOURCE-MONITOR] Phase 1: Discovering new sources...');
+    logger.info('[SOURCE-MONITOR] Phase 1: Discovering new sources...');
     const discoveryRun = await autoSourceDiscovery.runDiscovery();
-    console.log(`[SOURCE-MONITOR] Discovered ${discoveryRun.sourcesAdded} high-confidence sources`);
+    logger.info('[SOURCE-MONITOR] Discovered high-confidence sources', { count: discoveryRun.sourcesAdded });
 
     // Phase 2: Run update check
-    console.log('[SOURCE-MONITOR] Phase 2: Checking sources for updates...');
+    logger.info('[SOURCE-MONITOR] Phase 2: Checking sources for updates...');
     const updateRun = await autoUpdateEngine.runUpdateCheck();
-    console.log(
-      `[SOURCE-MONITOR] Found ${updateRun.sourcesUpdated} source updates, regenerated ${updateRun.contentRegenerated} items`
-    );
+    logger.info('[SOURCE-MONITOR] Found source updates', {
+      sourcesUpdated: updateRun.sourcesUpdated,
+      contentRegenerated: updateRun.contentRegenerated
+    });
 
     // Phase 3: Generate reports
     const discoveryReport = autoSourceDiscovery.generateReport(discoveryRun);
@@ -53,7 +55,7 @@ export async function GET(request: NextRequest) {
     const alerts = autoUpdateEngine.createUpdateAlerts(updateRun);
 
     const duration = Date.now() - startTime;
-    console.log(`[SOURCE-MONITOR] Completed in ${(duration / 1000).toFixed(1)}s`);
+    logger.info('[SOURCE-MONITOR] Completed', { durationSeconds: (duration / 1000).toFixed(1) });
 
     // Return comprehensive report
     return NextResponse.json({
@@ -88,7 +90,7 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('[SOURCE-MONITOR] Error:', error);
+    logger.error('[SOURCE-MONITOR] Error:', error);
 
     return NextResponse.json(
       {
@@ -114,7 +116,7 @@ export async function POST(request: NextRequest) {
       regenerateContent: body.regenerateContent !== false, // Default: true
     };
 
-    console.log('[SOURCE-MONITOR] Manual trigger with options:', options);
+    logger.info('[SOURCE-MONITOR] Manual trigger with options:', options);
     const startTime = Date.now();
 
     const result: any = {
@@ -149,7 +151,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(result);
   } catch (error) {
-    console.error('[SOURCE-MONITOR] Error:', error);
+    logger.error('[SOURCE-MONITOR] Error:', error);
 
     return NextResponse.json(
       {

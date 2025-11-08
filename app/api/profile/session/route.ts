@@ -7,6 +7,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { getOrCreateUser, createSession, updateStreak, incrementXP } from '@/lib/db-utils'
+import { logger } from '@/lib/logger'
 
 /**
  * POST /api/profile/session
@@ -91,7 +92,7 @@ export async function POST(req: NextRequest) {
       },
     })
   } catch (error) {
-    console.error('Error saving session:', error)
+    logger.error('Error saving session', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

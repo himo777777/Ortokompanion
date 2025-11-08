@@ -7,6 +7,7 @@
  */
 
 import { ALL_FOCUSED_GOALS } from '@/data/focused-socialstyrelsen-goals';
+import { logger } from './logger';
 
 // Legacy goal ID patterns
 const LEGACY_PATTERNS = {
@@ -52,7 +53,7 @@ export function findCompatibleGoal(legacyGoalId: string): {
   const program = getProgramFromLegacyId(legacyGoalId);
 
   if (!program) {
-    console.warn(`[Goal Compatibility] Unknown legacy pattern: ${legacyGoalId}`);
+    logger.warn('Unknown legacy goal ID pattern', { legacyGoalId });
     return null;
   }
 
@@ -60,7 +61,7 @@ export function findCompatibleGoal(legacyGoalId: string): {
   const matchingGoals = ALL_FOCUSED_GOALS.filter((g) => g.program === program);
 
   if (matchingGoals.length === 0) {
-    console.warn(`[Goal Compatibility] No goals found for program: ${program} (legacy: ${legacyGoalId})`);
+    logger.warn('No goals found for program', { program, legacyGoalId });
     return null;
   }
 

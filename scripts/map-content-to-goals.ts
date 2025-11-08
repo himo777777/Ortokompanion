@@ -4,8 +4,11 @@
  */
 
 import * as fs from 'fs';
+import { logger } from '../lib/logger';
 import * as path from 'path';
+import { logger } from '../lib/logger';
 import {
+import { logger } from '../lib/logger';
   generateAllGoalEmbeddings,
   mapQuestionToGoals,
   mapClinicalPearlToGoals,
@@ -165,7 +168,7 @@ async function mapAllContentToGoals() {
       );
       allMappings.push(mapping);
     } catch (error) {
-      console.error(`  ❌ Error mapping question ${q.id}:`, error);
+      logger.error(`  ❌ Error mapping question ${q.id}:`, error);
     }
 
     // Rate limiting
@@ -187,7 +190,7 @@ async function mapAllContentToGoals() {
       );
       allMappings.push(mapping);
     } catch (error) {
-      console.error(`  ❌ Error mapping pearl ${p.id}:`, error);
+      logger.error(`  ❌ Error mapping pearl ${p.id}:`, error);
     }
 
     // Rate limiting
@@ -330,7 +333,7 @@ if (require.main === module) {
       process.exit(0);
     })
     .catch((error) => {
-      console.error('❌ Error during mapping:', error);
+      logger.error('❌ Error during mapping:', error);
       process.exit(1);
     });
 }

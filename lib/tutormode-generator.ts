@@ -15,6 +15,7 @@ import {
   TUTORMODE_GENERATOR_SYSTEM_PROMPT,
   buildTutorModePrompt,
 } from '@/lib/generation-prompts';
+import { logger } from './logger';
 
 // Initialize OpenAI client
 const openai = new OpenAI({
@@ -44,7 +45,7 @@ export type TutorModeContent = z.infer<typeof TutorModeSchema>;
 export async function generateTutorMode(
   question: MCQQuestion
 ): Promise<TutorModeContent> {
-  console.log(`🎓 Generating TutorMode for ${question.id}...`);
+  logger.info('Generating TutorMode for question', { questionId: question.id });
 
   // Build the prompt
   const userPrompt = buildTutorModePrompt({
@@ -79,7 +80,7 @@ export async function generateTutorMode(
   const parsed = JSON.parse(content);
   const validated = TutorModeSchema.parse(parsed);
 
-  console.log(`✅ TutorMode generated for ${question.id}`);
+  logger.debug('TutorMode generated successfully', { questionId: question.id });
 
   return validated;
 }
@@ -98,7 +99,7 @@ export async function generateTutorModeBatch(
   tutorMode: TutorModeContent | null;
   error?: string;
 }>> {
-  console.log(`📚 Generating TutorMode for ${questions.length} questions...`);
+  logger.info('Generating TutorMode batch', { questionCount: questions.length });
 
   const results: Array<{
     questionId: string;
@@ -117,7 +118,9 @@ export async function generateTutorModeBatch(
       // Rate limiting: 1 request per 2 seconds
       await new Promise(resolve => setTimeout(resolve, 2000));
     } catch (error) {
-      console.error(`❌ Failed to generate TutorMode for ${question.id}:`, error);
+      logger.error('Failed to generate TutorMode for question', error, {
+        questionId: question.id
+      });
       results.push({
         questionId: question.id,
         tutorMode: null,
@@ -129,10 +132,10 @@ export async function generateTutorModeBatch(
   const successCount = results.filter(r => r.tutorMode !== null).length;
   const failureCount = results.filter(r => r.tutorMode === null).length;
 
-  console.log(`✅ Generated ${successCount} TutorModes successfully`);
-  if (failureCount > 0) {
-    console.log(`⚠️  Failed to generate ${failureCount} TutorModes`);
-  }
+  logger.info('TutorMode batch generation completed', {
+    successCount,
+    failureCount
+  });
 
   return results;
 }

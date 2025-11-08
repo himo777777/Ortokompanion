@@ -169,15 +169,15 @@ describe('TutorMode', () => {
       );
 
       // Reveal hint 1
-      await user.click(screen.getByText(/Visa ledtråd/i));
+      await user.click(screen.getByText(/Visa ledtråd 1/i));
       await waitFor(() => expect(screen.getByText(/ABCDE-principen/i)).toBeInTheDocument());
 
       // Reveal hint 2
-      await user.click(screen.getByText(/Visa nästa ledtråd/i));
+      await user.click(screen.getByText(/Visa ledtråd 2/i));
       await waitFor(() => expect(screen.getByText(/A står för Airway/i)).toBeInTheDocument());
 
       // Reveal hint 3
-      await user.click(screen.getByText(/Visa sista ledtråden/i));
+      await user.click(screen.getByText(/Visa ledtråd 3/i));
       await waitFor(() => expect(screen.getByText(/säkrar man alltid luftvägen först/i)).toBeInTheDocument());
     });
   });
@@ -201,10 +201,14 @@ describe('TutorMode', () => {
       // Submit
       await user.click(screen.getByText(/Svara/i));
 
+      // Wait for answer to be shown, then click next
+      await waitFor(() => expect(screen.getByText(/Nästa fråga/i)).toBeInTheDocument());
+      await user.click(screen.getByText(/Nästa fråga/i));
+
       await waitFor(() => {
         expect(mockOnAnswer).toHaveBeenCalledWith(
           expect.objectContaining({
-            selectedAnswer: 1,
+            selectedAnswer: '1',
             correct: true,
             hintsUsed: 0,
             xpEarned: 20,
@@ -235,9 +239,14 @@ describe('TutorMode', () => {
       // Submit
       await user.click(screen.getByText(/Svara/i));
 
+      // Wait for answer to be shown, then click next
+      await waitFor(() => expect(screen.getByText(/Nästa fråga/i)).toBeInTheDocument());
+      await user.click(screen.getByText(/Nästa fråga/i));
+
       await waitFor(() => {
         expect(mockOnAnswer).toHaveBeenCalledWith(
           expect.objectContaining({
+            selectedAnswer: '1',
             correct: true,
             hintsUsed: 1,
             xpEarned: 16, // 20 * 0.8 (20% penalty)
@@ -284,6 +293,10 @@ describe('TutorMode', () => {
       // Select wrong answer
       await user.click(screen.getByText(/A\) Kontrollera andning/i));
       await user.click(screen.getByText(/Svara/i));
+
+      // Wait for answer to be shown, then click next
+      await waitFor(() => expect(screen.getByText(/Nästa fråga/i)).toBeInTheDocument());
+      await user.click(screen.getByText(/Nästa fråga/i));
 
       await waitFor(() => {
         expect(mockOnAnswer).toHaveBeenCalledWith(

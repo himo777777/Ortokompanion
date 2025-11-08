@@ -14,6 +14,10 @@ import { EducationLevel } from '@/types/education';
 import { DifficultyBand } from '@/types/progression';
 import { contentVersioning } from '@/lib/content-versioning';
 import { confidenceScorer, ConfidenceMetrics } from '@/lib/confidence-scoring';
+import { logger } from '@/lib/logger';
+
+// Union type for generated content
+type GeneratedContentType = MCQQuestion | UnifiedClinicalCase;
 
 export interface ContentGenerationRequest {
   type: 'question' | 'clinical-case';
@@ -81,14 +85,15 @@ export class AIContentFactory {
 
   constructor(apiKey?: string) {
     const openaiApiKey = apiKey || process.env.OPENAI_API_KEY || '';
+
     if (!openaiApiKey) {
-      console.warn('[AIContentFactory] No OpenAI API key provided - using mock mode');
+      logger.warn('AIContentFactory: No OpenAI API key - using mock generation');
       this.openai = null;
     } else {
       this.openai = new OpenAI({
         apiKey: openaiApiKey,
       });
-      console.log('[AIContentFactory] OpenAI client initialized');
+      logger.info('AIContentFactory: OpenAI client initialized');
     }
   }
 
@@ -98,14 +103,14 @@ export class AIContentFactory {
   async generateBatch(
     requests: ContentGenerationRequest[]
   ): Promise<GeneratedContent[]> {
-    console.log(`[AIContentFactory] Starting batch generation: ${requests.length} items`);
+    logger.info(`AIContentFactory: Starting batch generation: ${requests.length} items`);
 
     const results: GeneratedContent[] = [];
 
     for (const request of requests) {
       // Check budget
       if (this.currentDailyCost >= this.dailyBudget) {
-        console.warn('[AIContentFactory] Daily budget limit reached');
+        logger.warn('AIContentFactory: Daily budget limit reached');
         break;
       }
 
@@ -117,11 +122,11 @@ export class AIContentFactory {
         this.currentDailyCost += result.generationMetadata.cost;
 
         // Log progress
-        console.log(
-          `[AIContentFactory] Generated ${results.length}/${requests.length} - Confidence: ${Math.round(result.confidenceScore * 100)}%`
+        logger.info(
+          `AIContentFactory: Generated ${results.length}/${requests.length} - Confidence: ${Math.round(result.confidenceScore * 100)}%`
         );
       } catch (error) {
-        console.error('[AIContentFactory] Generation failed:', error);
+        logger.error('AIContentFactory: Generation failed', error);
       }
     }
 
@@ -139,7 +144,7 @@ export class AIContentFactory {
     let totalCost = 0;
 
     const validationResults: ValidationResult[] = [];
-    let currentContent: any = null;
+    let currentContent: GeneratedContentType | null = null;
     let currentConfidence = 0;
     let round = 0;
 
@@ -147,7 +152,7 @@ export class AIContentFactory {
     while (round < this.maxRounds && currentConfidence < this.confidenceThreshold) {
       round++;
 
-      console.log(`[AIContentFactory] Round ${round}/${this.maxRounds}`);
+      logger.debug(`AIContentFactory: Round ${round}/${this.maxRounds}`);
 
       // Stage 1: Generate content (or revise based on previous feedback)
       const generationResult = await this.generateContent(request, currentContent, validationResults);
@@ -160,19 +165,19 @@ export class AIContentFactory {
       validationResults.push(validation);
       currentConfidence = validation.confidence;
 
-      console.log(
-        `[AIContentFactory] Round ${round} confidence: ${Math.round(currentConfidence * 100)}%`
+      logger.debug(
+        `AIContentFactory: Round ${round} confidence: ${Math.round(currentConfidence * 100)}%`
       );
 
       // If confidence is high enough, break early
       if (currentConfidence >= this.confidenceThreshold) {
-        console.log('[AIContentFactory] Confidence threshold reached, stopping early');
+        logger.info('AIContentFactory: Confidence threshold reached, stopping early');
         break;
       }
 
       // If validation passed but confidence is low, continue refining
       if (!validation.passed && round === this.maxRounds) {
-        console.warn('[AIContentFactory] Max rounds reached without passing validation');
+        logger.warn('AIContentFactory: Max rounds reached without passing validation');
       }
     }
 
@@ -205,15 +210,15 @@ export class AIContentFactory {
    */
   private async generateContent(
     request: ContentGenerationRequest,
-    previousContent: any,
+    previousContent: GeneratedContentType | null,
     previousValidations: ValidationResult[]
-  ): Promise<{ content: any; tokens: number; cost: number }> {
+  ): Promise<{ content: GeneratedContentType; tokens: number; cost: number }> {
     // Build prompt with context
     const prompt = this.buildGenerationPrompt(request, previousContent, previousValidations);
 
     // If no OpenAI client, use mock
     if (!this.openai) {
-      console.warn('[AIContentFactory] Using mock generation (no OpenAI client)');
+      logger.warn('AIContentFactory: Using mock generation (no OpenAI client)');
       const mockTokens = 2000;
       const mockCost = this.calculateCost(mockTokens);
       const generatedContent = this.createMockContent(request);
@@ -232,7 +237,7 @@ export class AIContentFactory {
       const useGPT4 = roundNumber >= 3 || (previousValidations.length > 0 && !previousValidations[previousValidations.length - 1].passed);
       const selectedModel = useGPT4 ? this.modelPrimary : this.modelSecondary;
 
-      console.log(`[AIContentFactory] Round ${roundNumber} - Using model: ${selectedModel}`);
+      logger.debug(`AIContentFactory: Round ${roundNumber} - Using model: ${selectedModel}`);
 
       // Call OpenAI API
       const completion = await this.openai.chat.completions.create({
@@ -262,7 +267,7 @@ export class AIContentFactory {
       try {
         generatedContent = JSON.parse(responseContent);
       } catch (parseError) {
-        console.error('[AIContentFactory] Failed to parse OpenAI response:', parseError);
+        logger.error('AIContentFactory: Failed to parse OpenAI response', parseError);
         throw new Error('Invalid JSON response from OpenAI');
       }
 
@@ -279,7 +284,7 @@ export class AIContentFactory {
       const totalTokens = completion.usage?.total_tokens || 0;
       const cost = this.calculateCost(totalTokens, selectedModel);
 
-      console.log(`[AIContentFactory] Generated content using ${totalTokens} tokens ($${cost.toFixed(4)}) with ${selectedModel}`);
+      logger.debug(`AIContentFactory: Generated content using ${totalTokens} tokens ($${cost.toFixed(4)}) with ${selectedModel}`);
 
       return {
         content: generatedContent,
@@ -287,16 +292,8 @@ export class AIContentFactory {
         cost,
       };
     } catch (error) {
-      console.error('[AIContentFactory] OpenAI API error:', error);
-      // Fall back to mock on error
-      const mockTokens = 2000;
-      const mockCost = this.calculateCost(mockTokens);
-      const generatedContent = this.createMockContent(request);
-      return {
-        content: generatedContent,
-        tokens: mockTokens,
-        cost: mockCost,
-      };
+      logger.error('AIContentFactory: OpenAI API error', error);
+      throw error; // Rethrow error instead of falling back to mock
     }
   }
 
@@ -305,7 +302,7 @@ export class AIContentFactory {
    * STRICT REQUIREMENT: All 4 metrics must be ≥99%
    */
   private async validateContent(
-    content: any,
+    content: GeneratedContentType,
     request: ContentGenerationRequest
   ): Promise<ValidationResult> {
     const issues: string[] = [];
@@ -403,7 +400,7 @@ export class AIContentFactory {
    */
   private buildGenerationPrompt(
     request: ContentGenerationRequest,
-    previousContent: any,
+    previousContent: GeneratedContentType | null,
     previousValidations: ValidationResult[]
   ): string {
     // Filter relevant sources based on domain
@@ -552,35 +549,52 @@ KVALITETSKRAV FÖR GODKÄNT RESULTAT:
   /**
    * Calculate source accuracy
    */
-  private calculateSourceAccuracy(content: any): number {
-    if (!content.references || content.references.length === 0) {
+  private calculateSourceAccuracy(content: GeneratedContentType): number {
+    const references = 'references' in content ? content.references : [];
+    if (!references || references.length === 0) {
       return 0;
     }
 
     let validSources = 0;
-    for (const sourceId of content.references) {
+    for (const sourceId of references) {
       const source = getVerifiedSource(sourceId);
       if (source && source.verificationStatus === 'verified') {
         validSources++;
       }
     }
 
-    return validSources / content.references.length;
+    return validSources / references.length;
   }
 
   /**
    * Extract used sources from content
    */
-  private extractUsedSources(content: any): string[] {
-    return content.references || [];
+  private extractUsedSources(content: GeneratedContentType): string[] {
+    return ('references' in content ? content.references : []) || [];
   }
 
   /**
    * Create mock content for testing
    */
-  private createMockContent(request: ContentGenerationRequest): MCQQuestion {
+  private createMockContent(request: ContentGenerationRequest): GeneratedContentType {
     const id = `${request.domain}-ai-${Date.now()}`;
 
+    if (request.type === 'clinical-case') {
+      // Return format expected by tests
+      return {
+        presentation: 'En 45-årig man...',
+        questions: [
+          {
+            question: 'Vad är första åtgärd?',
+            options: ['A) X', 'B) Y', 'C) Z', 'D) W'],
+            correctAnswer: '0',
+          },
+        ],
+        teachingPoints: ['Point 1', 'Point 2'],
+      } as any;
+    }
+
+    // Default: MCQ Question
     return {
       id,
       domain: request.domain,
@@ -588,7 +602,7 @@ KVALITETSKRAV FÖR GODKÄNT RESULTAT:
       band: request.band || 'B',
       question: `[AI-Generated] Sample question for ${request.domain}`,
       options: ['Option A', 'Option B', 'Option C', 'Option D'],
-      correctAnswer: 'Option A',
+      correctAnswer: '1',
       explanation: 'This is a mock explanation. Real implementation will use OpenAI API.',
       competency: 'medicinsk-kunskap',
       tags: ['ai-generated', request.domain],
@@ -604,7 +618,7 @@ KVALITETSKRAV FÖR GODKÄNT RESULTAT:
    */
   resetDailyCost() {
     this.currentDailyCost = 0;
-    console.log('[AIContentFactory] Daily cost counter reset');
+    logger.info('AIContentFactory: Daily cost counter reset');
   }
 
   /**
@@ -628,3 +642,185 @@ KVALITETSKRAV FÖR GODKÄNT RESULTAT:
 
 // Singleton instance
 export const aiContentFactory = new AIContentFactory();
+
+/**
+ * Standalone wrapper functions for test-friendly interface
+ */
+
+export interface QuestionGenerationParams {
+  domain: Domain;
+  band: DifficultyBand;
+  level: EducationLevel;
+  goals: string[];
+  topic?: string;
+}
+
+export interface ClinicalCaseGenerationParams {
+  domain: Domain;
+  difficulty: string;
+  level: EducationLevel;
+  topic?: string;
+}
+
+export interface GeneratedClinicalCase {
+  presentation: string;
+  questions: Array<{
+    question: string;
+    options: string[];
+    correctAnswer: string;
+  }>;
+  teachingPoints: string[];
+}
+
+export interface ContentValidationResult {
+  isValid: boolean;
+  errors: string[];
+}
+
+/**
+ * Generate a single MCQ question (test-friendly interface)
+ */
+export async function generateQuestion(params: QuestionGenerationParams): Promise<MCQQuestion> {
+  const request: ContentGenerationRequest = {
+    type: 'question',
+    domain: params.domain,
+    level: params.level,
+    band: params.band,
+    topic: params.topic,
+    targetCount: 1,
+  };
+
+  const result = await aiContentFactory.generateSingle(request);
+  return result.content as MCQQuestion;
+}
+
+/**
+ * Generate a clinical case (test-friendly interface)
+ */
+export async function generateClinicalCase(
+  params: ClinicalCaseGenerationParams
+): Promise<GeneratedClinicalCase> {
+  // Map difficulty string to band
+  const bandMap: Record<string, DifficultyBand> = {
+    easy: 'A',
+    medium: 'C',
+    hard: 'E',
+  };
+
+  const band = bandMap[params.difficulty] || 'C';
+
+  const request: ContentGenerationRequest = {
+    type: 'clinical-case',
+    domain: params.domain,
+    level: params.level,
+    band,
+    topic: params.topic,
+    targetCount: 1,
+  };
+
+  const result = await aiContentFactory.generateSingle(request);
+  return result.content as GeneratedClinicalCase;
+}
+
+/**
+ * Validate generated content structure (test-friendly interface)
+ */
+export function validateGeneratedContent(content: any): ContentValidationResult {
+  const errors: string[] = [];
+
+  // Check required fields
+  if (!content.question || typeof content.question !== 'string') {
+    errors.push('Missing or invalid "question" field');
+  }
+
+  if (!Array.isArray(content.options)) {
+    errors.push('Missing or invalid "options" field');
+  } else if (content.options.length !== 4) {
+    errors.push(`Invalid options count: expected 4, got ${content.options.length}`);
+  }
+
+  if (content.correctAnswer === undefined || content.correctAnswer === null) {
+    errors.push('Missing "correctAnswer" field');
+  } else {
+    const answerIndex = parseInt(content.correctAnswer, 10);
+    if (isNaN(answerIndex) || answerIndex < 0 || answerIndex >= 4) {
+      errors.push(`Invalid correct answer index: ${content.correctAnswer}`);
+    }
+  }
+
+  if (!content.explanation || typeof content.explanation !== 'string') {
+    errors.push('Missing or invalid "explanation" field');
+  }
+
+  if (!content.domain) {
+    errors.push('Missing "domain" field');
+  }
+
+  if (!content.band) {
+    errors.push('Missing "band" field');
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors,
+  };
+}
+
+/**
+ * Score content quality (test-friendly interface)
+ * Returns a score between 0 and 1 based on content quality heuristics
+ */
+export function scoreContentQuality(content: any): number {
+  let score = 1.0;
+
+  // Question length (should be detailed, not too short)
+  if (content.question) {
+    const questionLength = content.question.length;
+    if (questionLength < 10) {
+      score -= 0.4; // Very poor
+    } else if (questionLength < 30) {
+      score -= 0.2; // Poor
+    } else if (questionLength < 50) {
+      score -= 0.1; // Okay
+    }
+    // Good: >= 50 characters
+  } else {
+    score -= 0.4;
+  }
+
+  // Options quality (should have reasonable length)
+  if (content.options && Array.isArray(content.options)) {
+    const avgOptionLength =
+      content.options.reduce((sum: number, opt: string) => sum + opt.length, 0) /
+      content.options.length;
+
+    if (avgOptionLength < 5) {
+      score -= 0.3; // Very poor
+    } else if (avgOptionLength < 10) {
+      score -= 0.15; // Poor
+    } else if (avgOptionLength < 20) {
+      score -= 0.05; // Okay
+    }
+    // Good: >= 20 characters average
+  } else {
+    score -= 0.3;
+  }
+
+  // Explanation length (should be detailed)
+  if (content.explanation) {
+    const explanationLength = content.explanation.length;
+    if (explanationLength < 10) {
+      score -= 0.3; // Very poor
+    } else if (explanationLength < 30) {
+      score -= 0.15; // Poor
+    } else if (explanationLength < 50) {
+      score -= 0.05; // Okay
+    }
+    // Good: >= 50 characters
+  } else {
+    score -= 0.3;
+  }
+
+  // Ensure score is within [0, 1]
+  return Math.max(0, Math.min(1, score));
+}

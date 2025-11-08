@@ -12,6 +12,7 @@ import { ActivitySessionPropsSchema, safeValidate } from '@/lib/validation-schem
 import { calculateSessionAssessment } from '@/lib/session-assessment';
 import TutorMode from '../learning/TutorMode';
 import { X, CheckCircle, Award, TrendingUp } from 'lucide-react';
+import { logger } from '@/lib/logger';
 import {
   GoalProgressionSection,
   WeakDomainSection,
@@ -57,10 +58,10 @@ function ActivitySession({
     });
 
     if (!validation.success) {
-      console.error('ActivitySession received invalid props:', validation.error.format());
+      logger.error('ActivitySession received invalid props', null, { errors: validation.error.format() });
       // Log specific validation errors for debugging
       validation.error.errors.forEach((err) => {
-        console.error(`  - ${err.path.join('.')}: ${err.message}`);
+        logger.error('Validation error', null, { path: err.path.join('.'), message: err.message });
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -87,7 +88,7 @@ function ActivitySession({
     if (questionIds && questionIds.length > 0) {
       // Filter out any undefined/null/empty values from questionIds first
       const validIds = questionIds.filter((id): id is string => id != null && id !== '');
-      console.log('ActivitySession: Filtering questionIds', {
+      logger.info('Filtering questionIds', {
         original: questionIds.length,
         valid: validIds.length,
         filtered: questionIds.length - validIds.length
@@ -99,7 +100,10 @@ function ActivitySession({
 
       // Log if some IDs weren't found
       if (selectedQuestions.length < validIds.length) {
-        console.warn(`Found ${selectedQuestions.length} questions out of ${validIds.length} valid IDs`);
+        logger.warn('Some question IDs not found', {
+          found: selectedQuestions.length,
+          total: validIds.length
+        });
       }
     } else {
       // Fallback to intelligent filtering if no questionIds provided
@@ -182,7 +186,7 @@ function ActivitySession({
       }
     }
 
-    console.log('ActivitySession: Loaded questions', {
+    logger.info('Loaded questions', {
       activityType,
       domain,
       selectedCount: selectedQuestions.length,
@@ -203,7 +207,7 @@ function ActivitySession({
 
     // Guard against undefined question
     if (!currentQ) {
-      console.error('handleQuestionComplete called but currentQ is undefined', {
+      logger.error('handleQuestionComplete called but currentQ is undefined', null, {
         currentQuestionIndex,
         questionsLength: questions.length
       });
@@ -247,7 +251,7 @@ function ActivitySession({
     setSrsCards(prev => [...prev, updatedCard]);
 
     // Move to next question or show summary
-    console.log('handleQuestionComplete: Checking next step', {
+    logger.info('Checking next step', {
       currentIndex: currentQuestionIndex,
       totalQuestions: questions.length,
       hasMore: currentQuestionIndex < questions.length - 1
@@ -255,14 +259,14 @@ function ActivitySession({
 
     if (currentQuestionIndex < questions.length - 1) {
       const nextIndex = currentQuestionIndex + 1;
-      console.log('handleQuestionComplete: Moving to next question', {
+      logger.info('Moving to next question', {
         nextIndex,
         nextQuestionExists: !!questions[nextIndex],
         nextQuestionId: questions[nextIndex]?.id
       });
       setCurrentQuestionIndex(prev => prev + 1);
     } else {
-      console.log('handleQuestionComplete: Showing summary');
+      logger.info('Showing summary');
       setShowSummary(true);
     }
   };

@@ -54,6 +54,7 @@ import { RotationActivityLog } from './rotation-tracker';
 import { getAppropriateBands, isLevelAppropriate } from './level-utils';
 import { getGoalById as getGoalFromDatabase } from '@/data/focused-socialstyrelsen-goals';
 import { normalizeGoalIds, isLegacyGoalId } from './goal-id-compatibility';
+import { logger } from './logger';
 
 /**
  * Creates initial band status for a new user
@@ -221,8 +222,9 @@ export function generateIntegratedDailyMix(
 
   // Early warning if no questions available
   if (validQuestions.length === 0) {
-    console.warn('⚠️ No valid questions available for daily mix generation!');
-    console.log('📊 Total questions provided:', availableQuestions.length);
+    logger.warn('No valid questions available for daily mix generation', {
+      totalQuestionsProvided: availableQuestions.length,
+    });
   }
 
   // Build AI adaptation context
@@ -274,12 +276,12 @@ export function generateIntegratedDailyMix(
   );
 
   if (weakDomains.length > 0) {
-    console.log('📊 Weak domains detected (training focus):',
-      weakDomains.map(({ domain, accuracy }) => ({
+    logger.info('Weak domains detected (training focus)', {
+      weakDomains: weakDomains.map(({ domain, accuracy }) => ({
         domain,
-        accuracy: `${Math.round(accuracy)}%`
-      }))
-    );
+        accuracy: Math.round(accuracy),
+      })),
+    });
   }
 
   // Use AI-recommended focus domains but ensure rotation domain is first
@@ -293,7 +295,9 @@ export function generateIntegratedDailyMix(
   if (weakDomainsToAdd.length > 0) {
     // Insert weak domains after primary domain
     focusDomains = [primaryDomain, ...weakDomainsToAdd, ...focusDomains.filter(d => d !== primaryDomain)];
-    console.log('💪 Adding weak domains to training focus:', weakDomainsToAdd.slice(0, 2));
+    logger.info('Adding weak domains to training focus', {
+      domains: weakDomainsToAdd.slice(0, 2),
+    });
   }
 
   // Ensure primaryDomain is always first if not already there
@@ -307,7 +311,8 @@ export function generateIntegratedDailyMix(
   // Filter by band, level hierarchy, and AI recommendations
   const appropriateBands = getAppropriateBands(targetBand, false, 2); // Allow ±2 band variation for better availability
 
-  console.log(`🎯 Generating daily mix for ${profile.role}:`, {
+  logger.debug('Generating daily mix', {
+    role: profile.role,
     primaryDomain,
     targetBand,
     appropriateBands,
@@ -349,13 +354,14 @@ export function generateIntegratedDailyMix(
     // Log top priorities for debugging
     if (sortedByGoalPriority.length > 0) {
       const topPriorities = sortedByGoalPriority.slice(0, 3);
-      console.log(`🎯 Top ${domain} questions by goal priority:`,
-        topPriorities.map(({ question, priority }) => ({
+      logger.debug('Top questions by goal priority', {
+        domain,
+        questions: topPriorities.map(({ question, priority }) => ({
           id: question.id.substring(0, 20),
           priority: Math.round(priority),
-          goals: question.relatedGoals?.length || 0
-        }))
-      );
+          goals: question.relatedGoals?.length || 0,
+        })),
+      });
     }
 
     let domainQuestions = sortedByGoalPriority
@@ -364,7 +370,7 @@ export function generateIntegratedDailyMix(
 
     // FALLBACK: If no questions match strict filters, relax the filters
     if (domainQuestions.length === 0) {
-      console.warn(`No questions found for domain ${domain} with strict filters, relaxing...`);
+      logger.warn('No questions found for domain with strict filters, relaxing filters', { domain });
 
       // Try without AI recommendation filter, but still prioritize by goals
       const fallbackFiltered = validQuestions
@@ -387,7 +393,7 @@ export function generateIntegratedDailyMix(
 
     // FALLBACK 2: If still empty, try with any band
     if (domainQuestions.length === 0) {
-      console.warn(`Still no questions for domain ${domain}, trying any band...`);
+      logger.warn('Still no questions for domain, trying any band', { domain });
 
       const fallback2Filtered = validQuestions
         .filter((q) => {
@@ -408,7 +414,7 @@ export function generateIntegratedDailyMix(
 
     // FINAL FALLBACK: If still empty, get ANY question from domain
     if (domainQuestions.length === 0) {
-      console.warn(`No level-appropriate questions for ${domain}, using any available...`);
+      logger.warn('No level-appropriate questions for domain, using any available', { domain });
 
       const finalFallback = validQuestions
         .filter((q) => q.domain === domain);
@@ -426,12 +432,12 @@ export function generateIntegratedDailyMix(
 
     availableContent.set(domain, domainQuestions);
 
-    console.log(`📝 Domain ${domain}: ${domainQuestions.length} questions available`);
+    logger.debug('Domain questions available', { domain, count: domainQuestions.length });
   });
 
   // Log summary
   const totalAvailable = Array.from(availableContent.values()).reduce((sum, ids) => sum + ids.length, 0);
-  console.log(`✅ Total questions available across all domains: ${totalAvailable}`);
+  logger.debug('Total questions available across all domains', { totalAvailable });
 
   const completedDomains = getCompletedDomains(progression.domainStatuses);
 
@@ -601,15 +607,15 @@ export function handleSessionCompletion(
   }
   if (newLevel >= MAX_LEVEL && !newBadges.includes('max_level')) {
     newBadges.push('max_level');
-    console.log('🏆 MAX LEVEL ACHIEVED! Consider prestige to reset and earn exclusive badges.');
+    logger.info('Max level achieved! Consider prestige to reset and earn exclusive badges');
   }
 
   // Log level cap warning
   if (isAtLevelCap && calculatedLevel > MAX_LEVEL) {
-    console.warn(
-      `⚠️ Level cap reached (${MAX_LEVEL}). Earning XP but not leveling up. ` +
-      `Would be level ${calculatedLevel} without cap.`
-    );
+    logger.warn('Level cap reached - earning XP but not leveling up', {
+      maxLevel: MAX_LEVEL,
+      wouldBeLevel: calculatedLevel,
+    });
   }
 
   // 1b. Create session history entry
@@ -674,14 +680,14 @@ export function handleSessionCompletion(
   // Auto-enable recovery mode if 2 difficult days detected
   let updatedPreferences = profile.preferences;
   if (shouldEnterRecovery && !currentlyInRecovery) {
-    console.log('⚠️ Two difficult days detected - auto-enabling recovery mode');
+    logger.info('Two difficult days detected - auto-enabling recovery mode');
     updatedPreferences = {
       ...profile.preferences,
       recoveryMode: true,
     };
   } else if (!shouldEnterRecovery && currentlyInRecovery) {
     // Auto-disable recovery mode when performance improves
-    console.log('✅ Performance improved - disabling recovery mode');
+    logger.info('Performance improved - disabling recovery mode');
     updatedPreferences = {
       ...profile.preferences,
       recoveryMode: false,
@@ -747,10 +753,11 @@ export function handleSessionCompletion(
     };
 
     // Log completion
-    console.log(
-      `🎉 Domain completed: ${profile.progression.primaryDomain}`,
-      result.allCompleted ? '🏆 ALL DOMAINS COMPLETE!' : `➡️ Next: ${result.nextDomain}`
-    );
+    logger.info('Domain completed', {
+      domain: profile.progression.primaryDomain,
+      allCompleted: result.allCompleted,
+      nextDomain: result.nextDomain,
+    });
   }
 
   // 6. Update Socialstyrelsen progress
@@ -781,10 +788,10 @@ export function handleSessionCompletion(
   const newLeechCards = leechCards.filter((card: SRSCard) => !previousLeechIds.has(card.id));
 
   if (newLeechCards.length > 0) {
-    console.warn(
-      `⚠️ ${newLeechCards.length} leech card(s) detected! These cards need focused review:`,
-      newLeechCards.map((c: SRSCard) => ({ id: c.id, domain: c.domain, failCount: c.failCount }))
-    );
+    logger.warn('Leech cards detected - these need focused review', {
+      count: newLeechCards.length,
+      cards: newLeechCards.map((c: SRSCard) => ({ id: c.id, domain: c.domain, failCount: c.failCount })),
+    });
     // Note: Toast notification shown in IntegratedContext
   }
 
@@ -797,10 +804,10 @@ export function handleSessionCompletion(
 
   // Log wrong answers for debugging
   if (results.wrongAnswers.length > 0) {
-    console.log(`📊 Wrong answers this session: ${results.wrongAnswers.length}`);
-    console.log('Domains with errors:',
-      Array.from(new Set(results.wrongAnswers.map(w => w.domain))).join(', ')
-    );
+    logger.debug('Wrong answers this session', {
+      count: results.wrongAnswers.length,
+      domainsWithErrors: Array.from(new Set(results.wrongAnswers.map(w => w.domain))),
+    });
   }
 
   // 9. Build updated profile
@@ -917,7 +924,7 @@ function updateSocialstyrelseMålProgress(
 
   // Log warnings about legacy goal mappings
   if (warnings.length > 0) {
-    console.warn(`[Goal Tracking] Legacy goal ID mappings:`, warnings);
+    logger.warn('Legacy goal ID mappings detected', { warnings });
   }
 
   // Performance threshold to advance criteria
@@ -941,16 +948,21 @@ function updateSocialstyrelseMålProgress(
         // Add it if not already present
         if (!existing.completedCriteria.includes(nextCriterionIndex)) {
           existing.completedCriteria.push(nextCriterionIndex);
-          console.log(
-            `✅ Goal ${goalId}: Criterion ${nextCriterionIndex + 1}/${existing.totalCriteria} completed`
-          );
+          logger.debug('Goal criterion completed', {
+            goalId,
+            criterion: nextCriterionIndex + 1,
+            total: existing.totalCriteria,
+          });
         }
       }
 
       // Check if goal is now achieved
       if (existing.completedCriteria.length >= existing.totalCriteria && !existing.achieved) {
         existing.achieved = true;
-        console.log(`🎯 Goal ${goalId} ACHIEVED! All ${existing.totalCriteria} criteria completed!`);
+        logger.info('Goal achieved! All criteria completed', {
+          goalId,
+          totalCriteria: existing.totalCriteria,
+        });
       }
     } else {
       // Create new goal progress entry
@@ -962,7 +974,10 @@ function updateSocialstyrelseMålProgress(
       // If performance is good, mark first criterion as complete
       if (shouldAdvanceCriteria) {
         completedCriteria.push(0);
-        console.log(`✅ Goal ${goalId}: Criterion 1/${totalCriteria} completed (new goal)`);
+        logger.debug('First criterion completed for new goal', {
+          goalId,
+          totalCriteria,
+        });
       }
 
       updated.push({
@@ -1040,7 +1055,10 @@ export function calculateIntegratedAnalytics(
         }
       }
     } catch (error) {
-      console.warn(`Could not process goal ${progress.goalId} for competency breakdown:`, error);
+      logger.warn('Could not process goal for competency breakdown', {
+        goalId: progress.goalId,
+        error,
+      });
     }
   });
 
@@ -1261,11 +1279,10 @@ export function prestigeProfile(
     newBadges.push(prestigeBadge);
   }
 
-  console.log(
-    `🌟 PRESTIGE ${newPrestigeLevel}! Level reset to 1. ` +
-    `Lifetime XP: ${profile.gamification.lifetimeXP}. ` +
-    `All progression and knowledge retained.`
-  );
+  logger.info('Prestige level increased - level reset to 1', {
+    prestigeLevel: newPrestigeLevel,
+    lifetimeXP: profile.gamification.lifetimeXP,
+  });
 
   return {
     ...profile,

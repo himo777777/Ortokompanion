@@ -20,6 +20,7 @@ import {
 } from '@/lib/generation-prompts';
 import { toCompetency } from '@/lib/ai-utils';
 import { contentVersioning } from '@/lib/content-versioning';
+import { logger } from './logger';
 
 // Initialize OpenAI client
 const openai = new OpenAI({
@@ -110,7 +111,13 @@ export async function generateQuestionBatch(
     startId = 1,
   } = params;
 
-  console.log(`🤖 Generating ${count} questions for ${domain} (${level}, Band ${band})...`);
+  logger.info('Generating questions with AI', {
+    domain,
+    level,
+    band,
+    count,
+    sourcesCount: sources.length
+  });
 
   // Build the generation prompt
   const userPrompt = buildQuestionGenerationPrompt({
@@ -200,7 +207,11 @@ export async function generateQuestionBatch(
     };
   });
 
-  console.log(`✅ Generated ${questions.length} questions successfully`);
+  logger.info('Successfully generated questions', {
+    count: questions.length,
+    domain,
+    band
+  });
 
   return {
     questions,
@@ -233,7 +244,12 @@ export async function generateWithBandDistribution(params: {
   const { domain, level, bandDistribution, sources, goals, startId = 1 } = params;
 
   const totalCount = Object.values(bandDistribution).reduce((sum, count) => sum + count, 0);
-  console.log(`📊 Generating ${totalCount} questions across multiple bands...`);
+  logger.info('Generating questions across multiple difficulty bands', {
+    domain,
+    level,
+    totalCount,
+    bandDistribution
+  });
 
   const allQuestions: MCQQuestion[] = [];
   let currentId = startId;
@@ -242,7 +258,7 @@ export async function generateWithBandDistribution(params: {
   for (const [band, count] of Object.entries(bandDistribution) as [DifficultyBand, number][]) {
     if (count === 0) continue;
 
-    console.log(`  • Band ${band}: ${count} questions`);
+    logger.debug('Generating questions for band', { band, count });
 
     const result = await generateQuestionBatch({
       domain,
@@ -263,7 +279,9 @@ export async function generateWithBandDistribution(params: {
     }
   }
 
-  console.log(`✅ Generated ${allQuestions.length} questions total`);
+  logger.info('Completed multi-band question generation', {
+    totalGenerated: allQuestions.length
+  });
 
   return {
     questions: allQuestions,

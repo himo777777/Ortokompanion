@@ -17,6 +17,7 @@ import { SourceReference } from '@/types/verification';
 import { confidenceScorer } from './confidence-scoring';
 import { aiContentFactory } from './ai-content-factory';
 import { AlertType } from '@/lib/alert-engine';
+import { logger } from './logger';
 
 export interface SourceUpdate {
   sourceId: string;
@@ -326,7 +327,7 @@ export class AutoUpdateEngine {
           }
         }
       } catch (error) {
-        console.error(`Failed to regenerate ${content.contentId}:`, error);
+        logger.error('Failed to regenerate content', error, { contentId: content.contentId });
       }
     }
 
@@ -346,7 +347,10 @@ export class AutoUpdateEngine {
     // 3. If confidence > 99%, auto-update
     // 4. Otherwise, queue for review with diff
 
-    console.log(`[AUTO-UPDATE] Regenerating question ${originalQuestion.id} due to source update ${updatedSourceId}`);
+    logger.info('Regenerating question due to source update', {
+      questionId: originalQuestion.id,
+      sourceId: updatedSourceId
+    });
 
     // Mock: Simulate regeneration
     // In real implementation, would use aiContentFactory.generateSingle()
@@ -359,7 +363,10 @@ export class AutoUpdateEngine {
     originalCase: UnifiedClinicalCase,
     updatedSourceId: string
   ): Promise<void> {
-    console.log(`[AUTO-UPDATE] Regenerating case ${originalCase.id} due to source update ${updatedSourceId}`);
+    logger.info('Regenerating case due to source update', {
+      caseId: originalCase.id,
+      sourceId: updatedSourceId
+    });
 
     // Mock: Simulate regeneration
   }

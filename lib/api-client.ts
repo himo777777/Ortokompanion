@@ -6,6 +6,7 @@
 
 import type { IntegratedUserProfile, SessionResults } from '@/types/integrated'
 import type { DailyMix } from '@/types/progression'
+import { logger } from './logger'
 
 // ============================================================================
 // Profile API
@@ -52,7 +53,7 @@ export async function fetchProfile(): Promise<{
 
     return { profile: data.profile, hasProfile: data.hasProfile }
   } catch (error) {
-    console.error('Error fetching profile:', error)
+    logger.error('Failed to fetch user profile from API', error)
     throw error
   }
 }
@@ -83,7 +84,7 @@ export async function createProfile(
     const data = await response.json()
     return data.profile
   } catch (error) {
-    console.error('Error creating profile:', error)
+    logger.error('Failed to create user profile via API', error)
     throw error
   }
 }
@@ -110,7 +111,7 @@ export async function updateProfileAPI(
     const data = await response.json()
     return data.profile
   } catch (error) {
-    console.error('Error updating profile:', error)
+    logger.error('Failed to update user profile via API', error)
     throw error
   }
 }
@@ -162,7 +163,10 @@ export async function saveSession(sessionData: {
       gamification: data.gamification,
     }
   } catch (error) {
-    console.error('Error saving session:', error)
+    logger.error('Failed to save session via API', error, {
+      domain: sessionData.domain,
+      questionsAnswered: sessionData.questionsAnswered
+    })
     throw error
   }
 }
@@ -204,7 +208,7 @@ export async function fetchDailyMix(): Promise<{
       hasMix: data.hasMix,
     }
   } catch (error) {
-    console.error('Error fetching daily mix:', error)
+    logger.error('Failed to fetch daily mix from API', error)
     throw error
   }
 }
@@ -232,7 +236,7 @@ export async function saveDailyMixAPI(
       throw new Error(`Failed to save daily mix: ${response.statusText}`)
     }
   } catch (error) {
-    console.error('Error saving daily mix:', error)
+    logger.error('Failed to save daily mix via API', error)
     throw error
   }
 }
@@ -257,7 +261,7 @@ export async function checkAuth(): Promise<boolean> {
 
     return true
   } catch (error) {
-    console.error('Error checking auth:', error)
+    logger.error('Failed to check authentication status', error)
     return false
   }
 }

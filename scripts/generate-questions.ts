@@ -12,20 +12,30 @@
  */
 
 import * as fs from 'fs/promises';
+import { logger } from '../lib/logger';
 import * as path from 'path';
+import { logger } from '../lib/logger';
 import { EducationLevel } from '@/types/education';
+import { logger } from '../lib/logger';
 import { Domain } from '@/types/onboarding';
+import { logger } from '../lib/logger';
 import { DifficultyBand } from '@/types/progression';
+import { logger } from '../lib/logger';
 import { SourceReference } from '@/types/verification';
+import { logger } from '../lib/logger';
 import { VERIFIED_SOURCES } from '@/data/verified-sources';
+import { logger } from '../lib/logger';
 import { getMålForLevel, getMålForSubspecialty } from '@/data/socialstyrelsen-goals';
+import { logger } from '../lib/logger';
 import {
+import { logger } from '../lib/logger';
   generateQuestionBatch,
   generateWithBandDistribution,
   validateQuestionBatch,
   estimateGenerationCost,
 } from '@/lib/ai-question-generator';
 import { GENERATION_BATCHES } from '@/lib/generation-prompts';
+import { logger } from '../lib/logger';
 
 // ============================================================================
 // TYPES
@@ -112,7 +122,7 @@ async function runSingleGeneration(options: CLIOptions) {
   } = options;
 
   if (!domain || !level) {
-    console.error('❌ Error: --domain and --level are required');
+    logger.error('❌ Error: --domain and --level are required');
     process.exit(1);
   }
 
@@ -191,7 +201,7 @@ async function runBatchGeneration(batchName: string) {
   );
 
   if (!batch) {
-    console.error(`❌ Batch not found: ${batchName}`);
+    logger.error(`❌ Batch not found: ${batchName}`);
     console.log('\nAvailable batches:');
     GENERATION_BATCHES.forEach(b => {
       console.log(`  - ${b.outputFile.replace('.json', '')} (${b.domain}, ${b.level}, ${b.totalCount} questions)`);
@@ -243,7 +253,7 @@ async function runConfigGeneration(configPath: string) {
 
   // Validate config
   if (!config.batches || !Array.isArray(config.batches)) {
-    console.error('❌ Invalid config: must have "batches" array');
+    logger.error('❌ Invalid config: must have "batches" array');
     process.exit(1);
   }
 
@@ -450,6 +460,6 @@ ${GENERATION_BATCHES.map(b => `  - ${b.outputFile.replace('.json', '')} (${b.dom
 // ============================================================================
 
 main().catch(error => {
-  console.error('\n❌ Fatal error:', error);
+  logger.error('\n❌ Fatal error:', error);
   process.exit(1);
 });

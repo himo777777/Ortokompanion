@@ -4,6 +4,7 @@
  */
 
 import { z } from 'zod';
+import { logger } from './logger';
 
 /**
  * AI Response Wrapper
@@ -351,7 +352,7 @@ export function logAIError(
 
   // In development, log to console
   if (process.env.NODE_ENV === 'development') {
-    console.error('[AI Error]', errorInfo);
+    logger.error('AI Error', errorInfo);
   }
 
   // In production, this could send to monitoring service

@@ -5,6 +5,8 @@
  * This reduces code duplication and makes it easier to add features like Sentry integration.
  */
 
+import { logger } from './logger';
+
 export interface ErrorHandlerOptions {
   /** Name of the operation being performed (e.g., 'loadProfile', 'generateStudyPlan') */
   operation: string;
@@ -93,10 +95,10 @@ export function handleErrorSync<T>(
 function logError(error: unknown, options: ErrorHandlerOptions): void {
   // Always log to console in development
   if (process.env.NODE_ENV === 'development') {
-    console.error(
-      `[${options.operation}] Error:`,
+    logger.error(
+      `Error in ${options.operation}`,
       error,
-      options.context ? `\nContext: ${JSON.stringify(options.context, null, 2)}` : ''
+      options.context
     );
   }
 
@@ -108,7 +110,7 @@ function logError(error: unknown, options: ErrorHandlerOptions): void {
   // Show toast notification if requested
   if (options.showToast && typeof window !== 'undefined') {
     const message = getErrorMessage(error);
-    console.warn(`[${options.operation}] ${message}`);
+    logger.warn(`${options.operation}: ${message}`);
     // TODO: Integrate with toast/notification system when available
   }
 }
@@ -268,9 +270,9 @@ export function safeSetItem<T>(key: string, value: T): boolean {
       localStorage.removeItem('__test__');
     } catch (testError) {
       if (isQuotaExceededError(testError)) {
-        console.warn(
-          `localStorage quota exceeded. Current usage: ${getStorageSize()}KB. Consider clearing old data.`
-        );
+        logger.warn('localStorage quota exceeded - consider clearing old data', {
+          currentUsageKB: getStorageSize()
+        });
         // TODO: Implement automatic cleanup strategy
         // - Remove oldest items
         // - Compress data

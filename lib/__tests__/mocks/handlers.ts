@@ -52,6 +52,58 @@ export const handlers = [
   }),
 ];
 
+// Mock internal API routes
+export const apiHandlers = [
+  // Mock /api/profile
+  http.get('/api/profile', () => {
+    return HttpResponse.json({
+      id: 'test-user-001',
+      role: 'st3',
+      stYear: 3,
+      gamification: {
+        xp: 500,
+        level: 5,
+        streak: 3,
+      },
+    });
+  }),
+
+  // Mock /api/profile/session
+  http.post('/api/profile/session', async ({ request }) => {
+    const body = await request.json();
+    return HttpResponse.json({
+      success: true,
+      xpGained: 70,
+      newLevel: 5,
+    });
+  }),
+
+  // Mock /api/daily-mix
+  http.get('/api/daily-mix', () => {
+    return HttpResponse.json({
+      date: new Date().toISOString(),
+      newContent: {
+        domain: 'trauma',
+        questionIds: ['q1', 'q2', 'q3'],
+        estimatedTime: 15,
+      },
+      srsReviews: {
+        dueCards: [],
+        estimatedTime: 0,
+      },
+      isRecoveryDay: false,
+    });
+  }),
+
+  // Mock /api/chat
+  http.post('/api/chat', async ({ request }) => {
+    const body = await request.json();
+    return HttpResponse.json({
+      message: 'Detta är ett mockat AI-svar för testing.',
+    });
+  }),
+];
+
 // Error handlers for testing error scenarios
 export const errorHandlers = [
   http.post('https://api.openai.com/v1/chat/completions', () => {
@@ -67,3 +119,6 @@ export const errorHandlers = [
     );
   }),
 ];
+
+// All handlers combined
+export const allHandlers = [...handlers, ...apiHandlers];

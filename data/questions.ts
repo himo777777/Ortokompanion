@@ -17340,23 +17340,23 @@ export const ALL_QUESTIONS: MCQQuestion[] = [
 
 // UTILITY FUNCTIONS
 export function getQuestionsByDomain(domain: Domain): MCQQuestion[] {
-  return ALL_QUESTIONS.filter(q => q.domain === domain);
+  return ALL_QUESTIONS.filter(q => q != null && q.domain === domain);
 }
 
 export function getQuestionsByLevel(level: EducationLevel): MCQQuestion[] {
-  return ALL_QUESTIONS.filter(q => q.level === level);
+  return ALL_QUESTIONS.filter(q => q != null && q.level === level);
 }
 
 export function getQuestionsByBand(band: DifficultyBand): MCQQuestion[] {
-  return ALL_QUESTIONS.filter(q => q.band === band);
+  return ALL_QUESTIONS.filter(q => q != null && q.band === band);
 }
 
 export function getQuestionsByDomainAndLevel(domain: Domain, level: EducationLevel): MCQQuestion[] {
-  return ALL_QUESTIONS.filter(q => q.domain === domain && q.level === level);
+  return ALL_QUESTIONS.filter(q => q != null && q.domain === domain && q.level === level);
 }
 
 export function getQuestionsByDomainAndBand(domain: Domain, band: DifficultyBand): MCQQuestion[] {
-  return ALL_QUESTIONS.filter(q => q.domain === domain && q.band === band);
+  return ALL_QUESTIONS.filter(q => q != null && q.domain === domain && q.band === band);
 }
 
 export function getRandomQuestions(count: number, filters?: {
@@ -17364,7 +17364,7 @@ export function getRandomQuestions(count: number, filters?: {
   level?: EducationLevel;
   band?: DifficultyBand;
 }): MCQQuestion[] {
-  let filtered = ALL_QUESTIONS;
+  let filtered = ALL_QUESTIONS.filter(q => q != null);
 
   if (filters?.domain) {
     filtered = filtered.filter(q => q.domain === filters.domain);
@@ -17386,14 +17386,14 @@ export function getQuestionStats() {
   const byLevel: Record<string, number> = {};
   const byBand: Record<string, number> = {};
 
-  ALL_QUESTIONS.forEach(q => {
+  ALL_QUESTIONS.filter(q => q != null).forEach(q => {
     byDomain[q.domain] = (byDomain[q.domain] || 0) + 1;
     byLevel[q.level] = (byLevel[q.level] || 0) + 1;
     byBand[q.band] = (byBand[q.band] || 0) + 1;
   });
 
   return {
-    total: ALL_QUESTIONS.length,
+    total: ALL_QUESTIONS.filter(q => q != null).length,
     byDomain,
     byLevel,
     byBand,

@@ -18,19 +18,30 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <ClerkProvider>
-      <html lang="sv">
-        <body className={inter.className}>
-          <ErrorBoundary>
-            <ToastProvider>
-              <IntegratedProvider>
-                {children}
-              </IntegratedProvider>
-            </ToastProvider>
-          </ErrorBoundary>
-        </body>
-      </html>
-    </ClerkProvider>
+  // Check if we have real Clerk credentials (not placeholder)
+  const clerkPublishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+  const hasRealClerkKey = clerkPublishableKey &&
+    !clerkPublishableKey.includes('placeholder') &&
+    clerkPublishableKey.length > 30
+
+  const content = (
+    <html lang="sv">
+      <body className={inter.className}>
+        <ErrorBoundary>
+          <ToastProvider>
+            <IntegratedProvider>
+              {children}
+            </IntegratedProvider>
+          </ToastProvider>
+        </ErrorBoundary>
+      </body>
+    </html>
   )
+
+  // Only use ClerkProvider if we have real credentials
+  if (hasRealClerkKey) {
+    return <ClerkProvider>{content}</ClerkProvider>
+  }
+
+  return content
 }

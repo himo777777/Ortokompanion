@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { logger } from '@/lib/logger';
 
 export type TimerPhase = 'work' | 'break' | 'longBreak' | 'paused';
 
@@ -70,7 +71,7 @@ export function useFocusTimer(config: Partial<FocusTimerConfig> = {}) {
         oscillator.start(audioContext.currentTime);
         oscillator.stop(audioContext.currentTime + 0.2);
       } catch (error) {
-        console.log('Sound not supported');
+        logger.debug('Sound not supported', { error });
       }
     }
   }, [fullConfig.soundEnabled]);

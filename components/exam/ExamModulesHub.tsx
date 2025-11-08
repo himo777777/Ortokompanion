@@ -23,7 +23,7 @@ export default function ExamModulesHub() {
         examTitle={info.title}
         passingScore={info.passingScore}
         onComplete={(results) => {
-          console.log('Exam completed:', results);
+          logger.info('Exam completed', { results });
           setActiveExamSession(null);
           setSelectedExam(null);
         }}

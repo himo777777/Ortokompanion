@@ -19,7 +19,19 @@ export default defineConfig({
         '**/mockData',
         'data/**', // Exclude large data files
         'scripts/**', // Exclude utility scripts
+        '.next/**',
+        'public/**',
+        '**/__tests__/**',
+        '**/mocks/**',
       ],
+      // Target >99% coverage
+      thresholds: {
+        lines: 99,
+        functions: 99,
+        branches: 95,
+        statements: 99,
+      },
+      all: true,
     },
   },
   resolve: {

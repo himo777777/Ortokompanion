@@ -15,6 +15,8 @@
  * → All components get the same result
  */
 
+import { logger } from './logger';
+
 interface PendingRequest<T> {
   promise: Promise<T>;
   timestamp: number;
@@ -97,7 +99,7 @@ export async function deduplicateRequest<T>(
   const existing = pendingRequests.get(key);
 
   if (existing) {
-    console.log(`[Dedup] Reusing pending request: ${key}`);
+    logger.debug('Reusing pending request', { key });
     existing.subscribers++;
 
     try {
@@ -113,7 +115,7 @@ export async function deduplicateRequest<T>(
   }
 
   // No pending request, create new one
-  console.log(`[Dedup] Creating new request: ${key}`);
+  logger.debug('Creating new request', { key });
 
   const promise = requestFn().finally(() => {
     // Remove from pending after completion

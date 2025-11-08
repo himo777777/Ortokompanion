@@ -1,12 +1,19 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { logger } from '@/lib/logger';
 import { SRSCard, SRSGrade } from '@/types/progression';
+import { logger } from '@/lib/logger';
 import { CaseStudy } from '@/types/education';
+import { logger } from '@/lib/logger';
 import { MCQQuestion } from '@/data/questions';
+import { logger } from '@/lib/logger';
 import { Clock, BookOpen, CheckCircle, XCircle, Brain, Zap, Target, AlertTriangle, Sparkles, Loader2 } from 'lucide-react';
+import { logger } from '@/lib/logger';
 import { processReview, behaviorToGrade } from '@/lib/srs-algorithm';
+import { logger } from '@/lib/logger';
 import { optimizeSRSSchedule } from '@/lib/ai-service';
+import { logger } from '@/lib/logger';
 
 interface SRSReviewSessionProps {
   dueCards: SRSCard[];
@@ -75,7 +82,7 @@ export default function SRSReviewSession({
       });
       setAiPredictions(result.predictions);
     } catch (error) {
-      console.error('Failed to load AI predictions:', error);
+      logger.error('Failed to load AI predictions', error);
       setAiPredictions(null);
     } finally {
       setLoadingAIPredictions(false);

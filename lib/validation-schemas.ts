@@ -6,6 +6,7 @@
  */
 
 import { z } from 'zod';
+import { logger } from './logger';
 
 // ==================== Enum Schemas ====================
 
@@ -253,7 +254,9 @@ export function validateOrFallback<T extends z.ZodType>(
   if (result.success) {
     return result.data;
   } else {
-    console.warn('Validation failed, using fallback:', result.error.format());
+    logger.warn('Validation failed, using fallback value', {
+      errors: result.error.format()
+    });
     return fallback;
   }
 }

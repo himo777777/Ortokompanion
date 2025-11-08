@@ -32,6 +32,7 @@ import {
 } from '../data/questions';
 
 import { Domain } from '../types/onboarding';
+import { logger } from '../lib/logger';
 
 // Color codes for console output
 const colors = {
@@ -311,6 +312,6 @@ function analyzeContent() {
 try {
   analyzeContent();
 } catch (error) {
-  console.error('Error running analysis:', error);
+  logger.error('Error running analysis', error);
   process.exit(1);
 }

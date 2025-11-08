@@ -1,5 +1,6 @@
 /**
  * API endpoint for source monitoring cron job
+import { logger } from '@/lib/logger';
  *
  * This endpoint should be called daily via a cron service (e.g., Vercel Cron)
  * to check for updates to medical sources.
@@ -21,13 +22,13 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    console.log('[CRON] Starting source monitoring check...');
+    logger.info('[CRON] Starting source monitoring check...');
 
     // Run source monitoring checks
     const monitorReport = await sourceMonitor.checkAllSources();
 
-    console.log(`[CRON] Checked ${monitorReport.totalChecked} sources`);
-    console.log(`[CRON] Found ${monitorReport.updatesFound} updates`);
+    logger.info('[CRON] Checked sources', { total: monitorReport.totalChecked });
+    logger.info('[CRON] Found updates', { count: monitorReport.updatesFound });
 
     // Generate alerts for critical updates
     if (monitorReport.criticalUpdates.length > 0) {
@@ -62,10 +63,10 @@ export async function GET(request: NextRequest) {
     const sourceMap = new Map(Object.entries(VERIFIED_SOURCES));
     const expiringAlerts = await alertEngine.checkSourceUpdates(sourceMap);
 
-    console.log(`[CRON] Created ${expiringAlerts.length} expiration alerts`);
+    logger.info('[CRON] Created expiration alerts', { count: expiringAlerts.length });
 
     // Check if content needs updating due to source changes
-    console.log('[CRON] Checking for content updates needed...');
+    logger.info('[CRON] Checking for content updates needed...');
 
     let contentUpdateAlerts = 0;
     const currentVersions = new Map(
@@ -92,7 +93,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    console.log(`[CRON] Created ${contentUpdateAlerts} content update alerts`);
+    logger.info('[CRON] Created content update alerts', { count: contentUpdateAlerts });
 
     // Generate content mapping report
     const mappingReport = generateMappingReport();
@@ -116,7 +117,7 @@ export async function GET(request: NextRequest) {
       }
     };
 
-    console.log('[CRON] Source monitoring complete:', summary);
+    logger.info('[CRON] Source monitoring complete:', summary);
 
     return NextResponse.json({
       success: true,
@@ -124,7 +125,7 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('[CRON] Error during source monitoring:', error);
+    logger.error('[CRON] Error during source monitoring:', error);
 
     // Create alert for monitoring failure
     alertEngine.createAlert(

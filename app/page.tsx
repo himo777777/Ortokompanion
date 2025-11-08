@@ -1,6 +1,11 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
+
+// Force dynamic rendering to avoid build-time localStorage access
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+export const revalidate = 0;
 import { EducationLevel } from '@/types/education';
 import { SevenDayPlan, UserProfile, Domain } from '@/types/onboarding';
 import { DifficultyBand } from '@/types/progression';
@@ -10,6 +15,7 @@ import DayPlanView from '@/components/dashboard/DayPlanView';
 import ChatInterface from '@/components/ChatInterface';
 import { trackEvent, updateStreak, checkBadgeEarned } from '@/lib/onboarding-utils';
 import { useIntegrated } from '@/context/IntegratedContext';
+import { logger } from '@/lib/logger';
 import {
   createIntegratedProfile,
   migrateToIntegratedProfile,
@@ -163,7 +169,7 @@ export default function Home() {
 
             // Check if onboarding was completed
             if (!integratedProfile.onboardingCompletedAt) {
-              console.log('⚠️ Profile found but onboarding not completed - showing onboarding');
+              logger.info('Profile found but onboarding not completed - showing onboarding');
               setShowOnboarding(true);
               trackEvent('onboard_incomplete');
               return;
@@ -177,7 +183,7 @@ export default function Home() {
 
             trackEvent('profile_migrated', { userId: integratedProfile.id });
           } catch (error) {
-            console.error('Migration failed:', error);
+            logger.error('Migration failed', error);
             setShowOnboarding(true);
           }
         } else {
@@ -449,8 +455,8 @@ export default function Home() {
               profile={profile}
               recoveryMode={profile.preferences?.recoveryMode}
               onStartActivity={(activityId, type) => {
-                console.log('🎯 Starting activity:', { activityId, type });
-                console.log('📦 DailyMix state:', {
+                logger.info('Starting activity', { activityId, type });
+                logger.info('DailyMix state', {
                   hasDailyMix: !!dailyMix,
                   hasNewContent: !!dailyMix?.newContent,
                   newContentItems: dailyMix?.newContent?.items?.length,
@@ -468,21 +474,21 @@ export default function Home() {
                 if (type === 'new' && dailyMix?.newContent) {
                   domain = dailyMix.newContent.domain;
                   questionIds = (dailyMix.newContent.items || []).filter((id): id is string => id != null && id !== '');
-                  console.log('✅ NEW content:', { domain, questionCount: questionIds.length });
+                  logger.info('NEW content loaded', { domain, questionCount: questionIds.length });
                 } else if (type === 'interleave' && dailyMix?.interleavingContent) {
                   domain = dailyMix.interleavingContent.domain;
                   questionIds = (dailyMix.interleavingContent.items || []).filter((id): id is string => id != null && id !== '');
-                  console.log('✅ INTERLEAVE content:', { domain, questionCount: questionIds.length });
+                  logger.info('INTERLEAVE content loaded', { domain, questionCount: questionIds.length });
                 } else if (type === 'srs' && dailyMix?.srsReviews?.cards) {
                   // For SRS, extract domain from first card
                   domain = dailyMix.srsReviews.cards[0]?.domain || 'trauma';
                   questionIds = dailyMix.srsReviews.cards
                     .map(card => card.contentId)
                     .filter((id): id is string => id != null && id !== '');
-                  console.log('✅ SRS content:', { domain, questionCount: questionIds.length });
+                  logger.info('SRS content loaded', { domain, questionCount: questionIds.length });
                 }
 
-                console.log('🚀 Setting activeActivity:', {
+                logger.info('Setting activeActivity', {
                   id: activityId,
                   type,
                   domain,
@@ -751,10 +757,10 @@ export default function Home() {
             <MedicalQualityDashboard
               userId={profile?.id || 'current-user'}
               onReviewStart={(contentId) => {
-                console.log('Starting review for:', contentId);
+                logger.info('Starting review', { contentId });
               }}
               onAlertAction={(alertId, action) => {
-                console.log(`Alert ${alertId}: ${action}`);
+                logger.info('Alert action', { alertId, action });
               }}
             />
           </div>

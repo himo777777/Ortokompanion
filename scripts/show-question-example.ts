@@ -5,6 +5,7 @@
  */
 
 import { aiContentFactory } from '../lib/ai-content-factory';
+import { logger } from '../lib/logger';
 
 async function showExample() {
   console.log('='.repeat(80));
@@ -109,7 +110,7 @@ async function showExample() {
     console.log('\n' + '='.repeat(80) + '\n');
 
   } catch (error) {
-    console.error('❌ Fel vid generering:', error);
+    logger.error('❌ Fel vid generering:', error);
     process.exit(1);
   }
 }

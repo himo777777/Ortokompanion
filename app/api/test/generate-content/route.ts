@@ -9,6 +9,7 @@ import { aiContentFactory } from '@/lib/ai-content-factory';
 import { Domain } from '@/types/onboarding';
 import { EducationLevel } from '@/types/education';
 import { DifficultyBand } from '@/types/progression';
+import { logger } from '@/lib/logger';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60; // 60 seconds for testing
@@ -19,7 +20,7 @@ export const maxDuration = 60; // 60 seconds for testing
  */
 export async function GET(request: NextRequest) {
   try {
-    console.log('[TEST] Starting AI content generation test...');
+    logger.info('[TEST] Starting AI content generation test');
 
     // Test parameters
     const testRequest = {
@@ -30,15 +31,16 @@ export async function GET(request: NextRequest) {
       topic: 'Öppna frakturer och Gustilo-Anderson klassifikation',
     };
 
-    console.log('[TEST] Request:', testRequest);
+    logger.info('[TEST] Request', testRequest);
 
     // Generate single item
     const result = await aiContentFactory.generateSingle(testRequest);
 
-    console.log('[TEST] Generation complete!');
-    console.log(`[TEST] Confidence: ${(result.confidenceScore * 100).toFixed(1)}%`);
-    console.log(`[TEST] Rounds: ${result.generationRounds}`);
-    console.log(`[TEST] Cost: $${result.generationMetadata.cost.toFixed(4)}`);
+    logger.info('[TEST] Generation complete', {
+      confidence: `${(result.confidenceScore * 100).toFixed(1)}%`,
+      rounds: result.generationRounds,
+      cost: `$${result.generationMetadata.cost.toFixed(4)}`
+    });
 
     return NextResponse.json({
       success: true,
@@ -62,7 +64,7 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('[TEST] Error:', error);
+    logger.error('[TEST] Error', error);
     return NextResponse.json(
       {
         success: false,
@@ -100,7 +102,7 @@ export async function POST(request: NextRequest) {
       topic: body.topic,
     };
 
-    console.log('[TEST] Custom request:', testRequest);
+    logger.info('[TEST] Custom request', testRequest);
 
     // Generate content
     const result = await aiContentFactory.generateSingle(testRequest);
@@ -125,7 +127,7 @@ export async function POST(request: NextRequest) {
       validation: result.validationResults,
     });
   } catch (error) {
-    console.error('[TEST] Error:', error);
+    logger.error('[TEST] Error', error);
     return NextResponse.json(
       {
         success: false,

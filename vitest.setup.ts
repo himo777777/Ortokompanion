@@ -1,31 +1,12 @@
-import { expect, afterEach } from 'vitest';
-import { cleanup } from '@testing-library/react';
-import * as matchers from '@testing-library/jest-dom/matchers';
+/**
+ * Vitest setup file
+ * Runs before all tests
+ */
 
-// Extend Vitest's expect with jest-dom matchers
-expect.extend(matchers);
+import '@testing-library/jest-dom/vitest';
 
-// Cleanup after each test
-afterEach(() => {
-  cleanup();
-});
+// Clear OpenAI API key to force mock mode in tests
+delete process.env.OPENAI_API_KEY;
 
-// Mock localStorage
-const localStorageMock = (() => {
-  let store: Record<string, string> = {};
-
-  return {
-    getItem: (key: string) => store[key] || null,
-    setItem: (key: string, value: string) => {
-      store[key] = value.toString();
-    },
-    removeItem: (key: string) => {
-      delete store[key];
-    },
-    clear: () => {
-      store = {};
-    },
-  };
-})();
-
-global.localStorage = localStorageMock as any;
+// Setup test environment
+export {};

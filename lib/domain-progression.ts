@@ -22,6 +22,7 @@ import {
   DAILY_MIX_RATIOS,
   DOMAIN_SELECTION_WEIGHTS,
 } from '@/types/progression';
+import type { IntegratedUserProfile } from '@/types/integrated';
 import { getLastReviewedCards, getAverageStability, getDueCards } from './srs-algorithm';
 import { getQuestionsByDomain } from '@/data/questions';
 
@@ -284,18 +285,19 @@ export function createInitialDomainStatuses(
 }
 
 /**
- * Generate daily content mix
+ * Generate daily content mix (Core implementation)
  * From spec: 60% new, 20% interleaving, 20% SRS
  *
  * @param params - Parameters for mix generation
  * @returns Daily mix object
  */
-export function generateDailyMix(params: {
+export function generateDailyMixCore(params: {
   primaryDomain: Domain;
   targetBand: DifficultyBand;
   srsCards: SRSCard[];
   availableNewContent: Map<Domain, string[]>; // Domain -> content IDs
   completedDomains: Domain[];
+  userDomains?: Domain[]; // User's enrolled domains
   isRecoveryDay: boolean;
   targetMinutes: number;
 }): DailyMix {
@@ -305,6 +307,7 @@ export function generateDailyMix(params: {
     srsCards,
     availableNewContent,
     completedDomains,
+    userDomains = [],
     isRecoveryDay,
     targetMinutes,
   } = params;
@@ -322,21 +325,25 @@ export function generateDailyMix(params: {
     ? `Lättare innehåll från ${primaryDomain} för att konsolidera kunskap i återhämtningsläge`
     : `Nytt innehåll från din primära domän ${primaryDomain} för att bygga djup förståelse`;
 
-  // 2. Interleaving (20% from neighbor domain)
+  // 2. Interleaving (20% from neighbor domain or user's other domains)
   const neighbors = getNeighborDomains(primaryDomain);
   let interleaveDomain: Domain | null = null;
   let interleaveContent: string[] = [];
   let interleaveReasoning = '';
 
-  if (neighbors.length > 0) {
-    // Select random neighbor
-    interleaveDomain = neighbors[Math.floor(Math.random() * neighbors.length)];
-    const neighborContent = availableNewContent.get(interleaveDomain) || [];
+  // Prefer user's other domains (excluding primary) for interleaving
+  const userOtherDomains = userDomains.filter(d => d !== primaryDomain);
+  const preferredInterleaveDomains = userOtherDomains.length > 0 ? userOtherDomains : neighbors;
+
+  if (preferredInterleaveDomains.length > 0) {
+    // Select random domain from preferred list
+    interleaveDomain = preferredInterleaveDomains[Math.floor(Math.random() * preferredInterleaveDomains.length)];
+    const domainContent = availableNewContent.get(interleaveDomain) || [];
     const interleaveCount = Math.ceil(interleaveTime / 2);
-    interleaveContent = neighborContent.slice(0, interleaveCount);
+    interleaveContent = domainContent.slice(0, interleaveCount);
     interleaveReasoning = `Blandat innehåll från ${interleaveDomain} för att stärka långtidsminnet och hitta samband`;
   } else if (completedDomains.length > 0) {
-    // Use long-term recall if no neighbors
+    // Use long-term recall if no other options
     interleaveDomain = completedDomains[Math.floor(Math.random() * completedDomains.length)];
     const recallContent = availableNewContent.get(interleaveDomain) || [];
     const interleaveCount = Math.ceil(interleaveTime / 2);
@@ -517,4 +524,43 @@ export function completeDomainAndUnlockNext(
     nextDomain,
     allCompleted,
   };
+}
+
+/**
+ * Generate daily mix from user profile (Wrapper for tests)
+ *
+ * @param profile - User's integrated profile
+ * @returns Daily mix object
+ */
+export function generateDailyMix(profile: IntegratedUserProfile): DailyMix {
+  const { progression, domains } = profile;
+
+  // Build available content map
+  const availableNewContent = new Map<Domain, string[]>();
+  domains.forEach(domain => {
+    const questions = getQuestionsByDomain(domain)
+      .filter(q => q.band === progression.bandStatus.currentBand)
+      .map(q => q.id);
+    availableNewContent.set(domain, questions);
+  });
+
+  // Get completed domains
+  const completedDomains = Object.entries(progression.domainStatuses || {})
+    .filter(([_, status]) => status.status === 'completed')
+    .map(([domain]) => domain as Domain);
+
+  // Check for recovery day
+  const recentPerf = progression.bandStatus.recentPerformance;
+  const isRecoveryDay = recentPerf.correctRate < 0.5 && recentPerf.confidence < 0.4;
+
+  // Generate mix using core function
+  return generateDailyMixCore({
+    primaryDomain: progression.primaryDomain,
+    targetBand: progression.bandStatus.currentBand,
+    srsCards: progression.srs.cards,
+    availableNewContent,
+    completedDomains,
+    isRecoveryDay,
+    targetMinutes: 30,
+  });
 }

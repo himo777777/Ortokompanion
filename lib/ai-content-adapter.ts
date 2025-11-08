@@ -18,6 +18,7 @@ import {
   predictRotationCompletion,
   RotationActivityLog,
 } from './rotation-tracker';
+import { logger } from './logger';
 
 export interface ContentAdaptationContext {
   profile: UserProfile;
@@ -305,7 +306,7 @@ function selectQuestions(
 ): string[] {
   // FALLBACK: If no questions available, return empty array (caller must handle)
   if (questions.length === 0) {
-    console.warn('selectQuestions: No questions available to select from');
+    logger.warn('No questions available to select from', { targetCount });
     return [];
   }
 
@@ -348,7 +349,7 @@ function selectQuestions(
   const selected = scored.slice(0, Math.max(1, targetCount)).map(s => s.question.id);
 
   if (selected.length === 0 && questions.length > 0) {
-    console.warn('selectQuestions: Fallback - returning first available question');
+    logger.warn('Fallback - returning first available question', { questionsLength: questions.length });
     return [questions[0].id];
   }
 

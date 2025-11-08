@@ -5,10 +5,15 @@
  */
 
 import { aiContentFactory } from '../lib/ai-content-factory';
+import { logger } from '../lib/logger';
 import type { ContentGenerationRequest } from '../lib/ai-content-factory';
+import { logger } from '../lib/logger';
 import type { Domain } from '../types/onboarding';
+import { logger } from '../lib/logger';
 import type { EducationLevel } from '../types/education';
+import { logger } from '../lib/logger';
 import type { DifficultyBand } from '../types/progression';
+import { logger } from '../lib/logger';
 
 // Test configuration - 5 questions with varied domains
 const TEST_REQUESTS: ContentGenerationRequest[] = [
@@ -223,6 +228,6 @@ runTest()
     }
   })
   .catch(error => {
-    console.error('\n❌ Test FAILED:', error);
+    logger.error('\n❌ Test FAILED:', error);
     process.exit(1);
   });

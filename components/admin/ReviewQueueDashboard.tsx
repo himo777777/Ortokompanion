@@ -9,10 +9,15 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { logger } from '@/lib/logger';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { logger } from '@/lib/logger';
 import { Badge } from '@/components/ui/badge';
+import { logger } from '@/lib/logger';
 import { Button } from '@/components/ui/button';
+import { logger } from '@/lib/logger';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { logger } from '@/lib/logger';
 import {
   CheckCircle,
   XCircle,
@@ -60,7 +65,7 @@ export default function ReviewQueueDashboard() {
       const mockData = generateMockReviewQueue();
       setQueueItems(mockData);
     } catch (error) {
-      console.error('Failed to load review queue:', error);
+      logger.error('Failed to load review queue', error);
     } finally {
       setIsLoading(false);
     }

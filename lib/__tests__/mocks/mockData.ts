@@ -154,7 +154,7 @@ export const mockDailyMix = {
 
 // Helper: Create mock profile with overrides
 export function createMockProfile(overrides?: Partial<IntegratedUserProfile>): IntegratedUserProfile {
-  return {
+  const result = {
     ...mockProfile,
     ...overrides,
     gamification: {
@@ -164,8 +164,30 @@ export function createMockProfile(overrides?: Partial<IntegratedUserProfile>): I
     progression: {
       ...mockProfile.progression,
       ...(overrides?.progression || {}),
+      // Deep merge bandStatus if provided
+      ...(overrides?.progression?.bandStatus && {
+        bandStatus: {
+          ...mockProfile.progression.bandStatus,
+          ...overrides.progression.bandStatus,
+          // Deep merge recentPerformance if provided
+          ...(overrides.progression.bandStatus.recentPerformance && {
+            recentPerformance: {
+              ...mockProfile.progression.bandStatus.recentPerformance,
+              ...overrides.progression.bandStatus.recentPerformance,
+            },
+          }),
+        },
+      }),
+      // Deep merge srs if provided
+      ...(overrides?.progression?.srs && {
+        srs: {
+          ...mockProfile.progression.srs,
+          ...overrides.progression.srs,
+        },
+      }),
     },
   };
+  return result;
 }
 
 // Helper: Create mock question with overrides

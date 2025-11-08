@@ -5,6 +5,7 @@ import { EducationLevel } from '@/types/education';
 import { educationLevels } from '@/data/levels';
 import { Send, Loader2, User, Bot, Lightbulb } from 'lucide-react';
 import { Domain } from '@/types/onboarding';
+import { logger } from '@/lib/logger';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -71,7 +72,7 @@ export default function ChatInterface({ level, userContext }: ChatInterfaceProps
 
     // Validate input length
     if (trimmedInput.length > 5000) {
-      console.warn('Message exceeds 5000 characters limit');
+      logger.warn('Message exceeds character limit', { length: trimmedInput.length, limit: 5000 });
       return;
     }
 
@@ -101,7 +102,7 @@ export default function ChatInterface({ level, userContext }: ChatInterfaceProps
       };
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
-      console.error('Error:', error);
+      logger.error('Chat error', error);
       const errorMessage: Message = {
         role: 'assistant',
         content: 'Tyvärr uppstod ett fel. Försök igen senare.'

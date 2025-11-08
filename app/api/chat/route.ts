@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { EducationLevel } from '@/types/education';
 import { educationLevels } from '@/data/levels';
+import { logger } from '@/lib/logger';
 
 export const runtime = 'edge';
 
@@ -102,7 +103,7 @@ Ge alltid:
     });
 
     if (!response.ok) {
-      console.error('OpenAI API error');
+      logger.error('OpenAI API error', null, { status: response.status });
       // Fallback to mock
       const mockResponse = generateMockResponse(messages[messages.length - 1].content, level, levelInfo);
       return NextResponse.json({ message: mockResponse });
@@ -115,7 +116,7 @@ Ge alltid:
       usage: data.usage,
     });
   } catch (error) {
-    console.error('Chat API error:', error);
+    logger.error('Chat API error', error);
     // Fallback to mock on error
     const { messages, level } = await request.json();
     const levelInfo = educationLevels.find(l => l.id === level);
